@@ -16,23 +16,6 @@
 
 
 
-    <!--select id="findByStaff_no"  resultType="Staff">
-        SELECT * FROM Staff WHERE Staff_no = #{Staff_no}
-    </select>
-
-    <select id="countByStaff_no"  resultType="java.lang.Integer">
-        SELECT count(*) FROM Staff WHERE Staff_no = #{Staff_no}
-    </select>
-
-    <delete id="deleteByStaff_no">
-         delete from Staff where Staff_no= #{Staff_no}
-    </delete>
-
-    <insert id="insertStaff">
-         insert into Staff(Staff_no,Staff_name) values(#{Staff_no},#{Staff_name})
-    </insert-->
-
-
     <select id="exist_or_not"  resultType="java.lang.Integer">
             SELECT count(*) FROM Staff WHERE Staff_no = #{Staff_no}
     </select>
