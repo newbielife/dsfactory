@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.Export_RecordMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Export_Record" >
+            <id column="Export_no" jdbcType="VARCHAR" property="Export_no" />
+            <result column="Staff_no" jdbcType="VARCHAR" property="Staff_no" />
+            <result column="Order_no_details" jdbcType="VARCHAR" property="Order_no_details" />
+            <result column="Source_place" jdbcType="VARCHAR" property="Source_place" />
+            <result column="Target_place" jdbcType="VARCHAR" property="Target_place" />
+            <result column="Delivery_date" jdbcType="TIMESTAMP" property="Delivery_date" />
+            <result column="Transport_link" jdbcType="VARCHAR" property="Transport_link" />
+            <result column="Progress" jdbcType="VARCHAR" property="Progress" />
+    </resultMap>
+
+    <select id="exist_or_not"  resultType="java.lang.Integer">
+                SELECT count(*) FROM Export_Record WHERE Export_no = #{Export_no}
+        </select>
+
+    <select id="exist_or_not_by_Order_no_details"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Export_Record WHERE Order_no_details = #{Order_no_details}
+    </select>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Base_Column_List">
+    Export_no,          Staff_no,           Order_no_details,       Source_place,
+    Target_place,       Delivery_date,      Transport_link,         Progress
+    </sql>
+
+    <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Export_RecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Export_Record
+    <if test="_parameter != null">
+        <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+        order by ${orderByClause}
+    </if>
+    </select>
+
+
+
+    <select id="select_Biggest_Export_no"  resultType="java.lang.String">
+        select Export_no
+        from Export_Record
+        order by Export_no desc
+        limit 1
+    </select>
+
+
+
+
+    <select id="countByExample" parameterType="com.ds.factory.dao.Example.Export_RecordExample" resultType="java.lang.Integer">
+    select count(*) from Export_Record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Export_Record
+    where Export_no = #{Export_no,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByOrder_no_details" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Export_Record
+    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Export_Record
+    where Order_no_details like '${Order_no}%'
+    </select>
+
+    <select id="getAll_orderByDelivery_date" resultMap="BaseResultMap">
+    select *
+    from Export_Record
+    order by Delivery_date desc
+    </select>
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Export_Record
+    where Export_no = #{Export_no,jdbcType=VARCHAR}
+    </delete>
+
+
+    <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.Export_RecordExample">
+    delete from Export_Record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.ds.factory.datasource.entities.Export_Record">
+    insert
+    into Export_Record (Export_no,          Staff_no,           Order_no_details,       Source_place,
+                        Target_place,       Delivery_date,      Transport_link,         Progress)
+    values (#{Export_no,jdbcType=VARCHAR},          #{Staff_no,jdbcType=VARCHAR},
+            #{Order_no_details,jdbcType=VARCHAR},   #{Source_place,jdbcType=VARCHAR},
+            #{Target_place,jdbcType=VARCHAR},       #{Delivery_date,jdbcType=TIMESTAMP},
+            #{Transport_link,jdbcType=VARCHAR},      #{Progress,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.ds.factory.datasource.entities.Export_Record">
+    insert into Export_Record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="Export_no != null">
+        Export_no,
+      </if>
+      <if test="Staff_no != null">
+        Staff_no,
+      </if>
+      <if test="Order_no_details != null">
+        Order_no_details,
+      </if>
+      <if test="Source_place != null">
+        Source_place,
+      </if>
+      <if test="Target_place != null">
+        Target_place,
+      </if>
+      <if test="Delivery_date != null">
+        Delivery_date,
+      </if>
+      <if test="Transport_link != null">
+        Transport_link,
+      </if>
+      <if test="Progress != null">
+          Progress,
+        </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="Export_no != null">
+        #{Export_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no != null">
+         #{Staff_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Order_no_details != null">
+        #{Order_no_details,jdbcType=VARCHAR},
+      </if>
+      <if test="Source_place != null">
+        #{Source_place,jdbcType=VARCHAR},
+      </if>
+      <if test="Target_place != null">
+        #{Target_place,jdbcType=VARCHAR},
+      </if>
+      <if test="Delivery_date != null">
+       #{Delivery_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Transport_link != null">
+        #{Transport_link,jdbcType=VARCHAR},
+      </if>
+      <if test="Progress != null">
+         #{Progress,jdbcType=VARCHAR},
+        </if>
+    </trim>
+
+    </insert>
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update Export_Record
+    <set>
+      <if test="record.Export_no != null">
+        Export_no = #{record.Export_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Staff_no != null">
+        Staff_no = #{record.Staff_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Order_no_Progress!= null">
+        Order_no_Progress= #{record.Order_no_details,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Source_place != null">
+        Source_place = #{record.Source_place,jdbcType=VARCHAR},
+      </if>
+        <if test="record.Target_place != null">
+          Target_place = #{record.Target_place,jdbcType=VARCHAR},
+        </if>
+        <if test="record.Delivery_date != null">
+          Delivery_date = #{record.Delivery_date,jdbcType=TIMESTAMP},
+        </if>
+        <if test="record.Transport_link != null">
+          Transport_link = #{record.Transport_link,jdbcType=VARCHAR},
+        </if>
+        <if test="record.Progress!= null">
+          Progress= #{record.Details,jdbcType=VARCHAR},
+        </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByExample" parameterType="map">
+    update Export_Record
+    set Export_no = #{record.Export_no,jdbcType=VARCHAR},
+        Staff_no = #{record.Staff_no,jdbcType=VARCHAR},
+        Order_no_Progress= #{record.Order_no_details,jdbcType=VARCHAR},
+        Source_place = #{record.Source_place,jdbcType=VARCHAR},
+        Target_place = #{record.Target_place,jdbcType=VARCHAR},
+        Delivery_date = #{record.Delivery_date,jdbcType=TIMESTAMP},
+        Transport_link = #{record.Transport_link,jdbcType=VARCHAR},
+        Progress= #{record.Details,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Export_Record">
+    update Export_Record
+    <set>
+      <if test="Export_no != null">
+        Export_no = #{Export_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no != null">
+        Staff_no = #{Staff_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Order_no_Progress!= null">
+        Order_no_Progress= #{Order_no_details,jdbcType=VARCHAR},
+      </if>
+      <if test="Source_place != null">
+        Source_place = #{Source_place,jdbcType=VARCHAR},
+      </if>
+        <if test="Target_place != null">
+          Target_place = #{Target_place,jdbcType=VARCHAR},
+        </if>
+        <if test="Delivery_date != null">
+          Delivery_date = #{Delivery_date,jdbcType=TIMESTAMP},
+        </if>
+        <if test="Transport_link != null">
+          Transport_link = #{Transport_link,jdbcType=VARCHAR},
+        </if>
+        <if test="Progress!= null">
+          Progress= #{Details,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where Export_no = #{Export_no,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ds.factory.datasource.entities.Export_Record">
+    update Export_Record
+    set Export_no = #{Export_no,jdbcType=VARCHAR},
+        Staff_no = #{Staff_no,jdbcType=VARCHAR},
+        Order_no_Progress= #{Order_no_details,jdbcType=VARCHAR},
+        Source_place = #{Source_place,jdbcType=VARCHAR},
+        Target_place = #{Target_place,jdbcType=VARCHAR},
+        Delivery_date = #{Delivery_date,jdbcType=TIMESTAMP},
+        Transport_link = #{Transport_link,jdbcType=VARCHAR},
+        Progress= #{Details,jdbcType=VARCHAR}
+    where Export_no = #{Export_no,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

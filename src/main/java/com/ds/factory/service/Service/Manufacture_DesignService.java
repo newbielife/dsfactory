@@ -1,0 +1,20 @@
+package com.ds.factory.service.Service;
+
+import com.ds.factory.datasource.entities.Manufacture_Design;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface Manufacture_DesignService {
+    int insertManufacture_Design(String Order_no_details, String Staff_no_design, String Workshop,
+                                 String Product_no, String Products_requirement);
+    int deleteByPrimaryKey(String Manufacture_no);
+    int update(Manufacture_Design manufacture_design);
+    List<Manufacture_Design> selectByStaff_no_Design(String Staff_no_Design);
+    List<Manufacture_Design> selectByStaff_no_manufacture(String Staff_no_manufacture);
+    List<Manufacture_Design> selectByWorkshop(String Workshop);
+    List<Manufacture_Design> selectAll();
+    List<Manufacture_Design> selectByOrder_no(String Order_no);
+    Manufacture_Design selectByOrder_no_details(String Order_no_details);
+}

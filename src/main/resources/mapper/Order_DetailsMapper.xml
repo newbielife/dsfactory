@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.Order_DetailsMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Order_Details" >
+        <id column="Order_no_details" jdbcType="VARCHAR" property="Order_no_details" />
+        <result column="Product_no" jdbcType="VARCHAR" property="Product_no" />
+        <result column="Products_requirement" jdbcType="VARCHAR" property="Products_requirement" />
+        <result column="Client_no" jdbcType="VARCHAR" property="Client_no" />
+        <result column="Delivery_date" jdbcType="TIMESTAMP" property="Delivery_date" />
+        <result column="Payment_deadline" jdbcType="TIMESTAMP" property="Payment_deadline" />
+        <result column="Check" jdbcType="BIGINT" property="Check" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Base_Column_List">
+    Order_no_details,   Product_no,         Products_requirement,
+    Client_no,          Delivery_date,      Payment_deadline,           Check
+    </sql>
+
+    <select id="exist_or_not"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Order_Details WHERE Order_no_details = #{Order_no_details}
+    </select>
+
+    <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Order_DetailsExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+          distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from Order_Details
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from Order_Details
+        where Order_no_details = #{Order_no_details}
+    </select>
+
+    <select id="countLikeOrder_no_Check_zero" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*)
+        from Order_Details
+        where Order_no_details like '${part}%' and Order_Details.`Check` = 0
+    </select>
+
+
+
+    <select id="selectLikeOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from Order_Details
+        where Order_no_details like '${part}%'
+        order by Order_no_details asc
+    </select>
+
+
+    <select id="selectByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from Order_Details
+        where Client_no = #{Client_no}
+        order by Order_no_details asc
+    </select>
+
+
+
+
+    <!--select id="orderByPopularity" resultMap="BaseResultMap2">
+        select Product_Criteria.Product_no,Product_Criteria.Product_name,Product_Criteria.Product_type,
+                    Product_Criteria.Ingredient_List,Product_Criteria.Guarantee_period,a.num
+        from Product_Criteria left join (select Product_no,count(Order_Details.Product_no) as num
+                                            from Order_Details
+                                            GROUP BY Order_Details.Product_no) as a
+                                         on(Product_Criteria.Product_no=a.Product_no)
+        order by a.num desc
+    </select-->
+
+
+
+    <select id="selectFinished_orderByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from Order_Details
+        where Client_no = #{Client_no} and Order_Details.`Check` = 1
+        order by Order_no_details asc
+    </select>
+
+
+
+    <select id="selectUnFinished_orderByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from Order_Details
+        where Client_no = #{Client_no} and Order_Details.`Check` = 0
+        order by Order_no_details asc
+    </select>
+
+
+    <select id="selectAll_Finished" resultMap="BaseResultMap">
+        select *
+        from Order_Details
+        where Order_Details.`Check` = 1
+        order by Payment_deadline desc
+    </select>
+
+
+
+    <select id="selectAll_UnFinished" resultMap="BaseResultMap">
+        select *
+        from Order_Details
+        where Order_Details.`Check` = 0
+        order by Payment_deadline desc
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Order_Details
+    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
+    </delete>
+
+
+    <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.Order_DetailsExample">
+    delete from Order_Details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.ds.factory.datasource.entities.Order_Details">
+    insert
+    into Order_Details (Order_no_details,   Product_no,         Products_requirement,
+                        Client_no,          Delivery_date,      Payment_deadline,           `Check`)
+    values (#{Order_no_details,jdbcType=VARCHAR},               #{Product_no,jdbcType=VARCHAR},
+            #{Products_requirement,jdbcType=VARCHAR},           #{Client_no,jdbcType=VARCHAR},
+            #{Delivery_date,jdbcType=TIMESTAMP},                #{Payment_deadline,jdbcType=TIMESTAMP},
+            #{Check,jdbcType=BIGINT})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.ds.factory.datasource.entities.Order_Details">
+    insert into Order_Details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="Order_no_details != null">
+        Order_no_details,
+      </if>
+      <if test="Product_no != null">
+        Product_no,
+      </if>
+      <if test="Products_requirement != null">
+        Products_requirement,
+      </if>
+      <if test="Client_no != null">
+        Client_no,
+      </if>
+      <if test="Delivery_date != null">
+        Delivery_date,
+      </if>
+      <if test="Payment_deadline != null">
+        Payment_deadline,
+      </if>
+      <if test="Check != null">
+        `Check`,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="Order_no_details != null">
+        #{Order_no_details,jdbcType=VARCHAR},
+      </if>
+      <if test="Product_no != null">
+        #{Product_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Products_requirement != null">
+        #{Products_requirement,jdbcType=VARCHAR},
+      </if>
+      <if test="Client_no != null">
+        #{Client_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Delivery_date != null">
+        #{Delivery_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Payment_deadline != null">
+        #{Payment_deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Check != null">
+        #{Check,jdbcType=BIGINT},
+      </if>
+    </trim>
+
+    </insert>
+
+
+    <select id="countByExample" parameterType="com.ds.factory.dao.Example.Order_DetailsExample" resultType="java.lang.Integer">
+    select count(*) from Order_Details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </select>
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update Order_Details
+    <set>
+      <if test="record.Order_no_details != null">
+        Order_no_details = #{record.Order_no_details,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Product_no != null">
+        Product_no = #{record.Product_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Products_requirement != null">
+        Products_requirement = #{record.Products_requirement,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Client_no != null">
+        Client_no = #{record.Client_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Delivery_date != null">
+        Delivery_date = #{record.Delivery_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.Payment_deadline != null">
+        Payment_deadline = #{record.Payment_deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.Check != null">
+        Order_Details.`Check` = #{record.Check,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByExample" parameterType="map">
+    update Order_Details
+    set Order_no_details = #{record.Order_no_details,jdbcType=VARCHAR},
+        Product_no = #{record.Product_no,jdbcType=VARCHAR},
+        Products_requirement = #{record.Products_requirement,jdbcType=VARCHAR},
+        Client_no = #{record.Client_no,jdbcType=VARCHAR},
+        Delivery_date = #{record.Delivery_date,jdbcType=TIMESTAMP},
+        Payment_deadline = #{record.Payment_deadline,jdbcType=TIMESTAMP},
+        Order_Details.`Check` = #{record.Check,jdbcType=BIGINT}
+
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Order_Details">
+    update Order_Details
+    <set>
+      <if test="Order_no_details != null">
+        Order_no_details = #{Order_no_details,jdbcType=VARCHAR},
+      </if>
+      <if test="Product_no != null">
+        Product_no = #{Product_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Products_requirement != null">
+        Products_requirement = #{Products_requirement,jdbcType=VARCHAR},
+      </if>
+      <if test="Client_no != null">
+        Client_no = #{Client_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Delivery_date != null">
+        Delivery_date = #{Delivery_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Payment_deadline != null">
+        Payment_deadline = #{Payment_deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Check != null">
+        Order_Details.`Check` = #{Check,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ds.factory.datasource.entities.Order_Details">
+    update Order_Details
+    set Order_no_details = #{Order_no_details,jdbcType=VARCHAR},
+        Product_no = #{Product_no,jdbcType=VARCHAR},
+        Products_requirement = #{Products_requirement,jdbcType=VARCHAR},
+        Client_no = #{Client_no,jdbcType=VARCHAR},
+        Delivery_date = #{Delivery_date,jdbcType=TIMESTAMP},
+        Payment_deadline = #{Payment_deadline,jdbcType=TIMESTAMP},
+        Order_Details.`Check` = #{Check,jdbcType=BIGINT}
+    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>

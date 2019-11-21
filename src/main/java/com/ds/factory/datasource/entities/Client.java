@@ -1,4 +1,4 @@
-package com.ds.factory.domain;
+package com.ds.factory.datasource.entities;
 
 public class Client {
     String Client_no;
@@ -30,8 +30,8 @@ public class Client {
 
     }
 
-    public Client(String Client_no, String Client_name, String Password,
-                  String Client_type, Long Credit, String Details) {
+    public Client(String Client_no,	    String Client_name,	    String Password,
+                  String Client_type,	Long Credit,	        String Details) {
         this.Client_no=Client_no;
         this.Client_name=Client_name;
         this.Password=Password;

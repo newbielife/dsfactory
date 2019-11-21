@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.Raw_Materials_CriteriaMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Raw_Materials_Criteria" >
+            <id column="Material_no" jdbcType="VARCHAR" property="Material_no" />
+            <result column="Material_name" jdbcType="VARCHAR" property="Material_name" />
+            <result column="Material_type" jdbcType="VARCHAR" property="Material_type" />
+            <result column="Guarantee_period" jdbcType="VARCHAR" property="Guarantee_period" />
+    </resultMap>
+
+    <select id="exist_or_not"  resultType="java.lang.Integer">
+                SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_no = #{Material_no}
+        </select>
+
+     <select id="exist_or_notByName"  resultType="java.lang.Integer">
+             SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_name = #{Material_name}
+     </select>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Base_Column_List">
+        Material_no,        Material_name,      Material_type,      Guarantee_period
+    </sql>
+
+    <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Raw_Materials_CriteriaExample" resultMap="BaseResultMap">
+      select
+      <if test="distinct">
+        distinct
+      </if>
+      <include refid="Base_Column_List" />
+      from Raw_Materials_Criteria
+      <if test="_parameter != null">
+          <include refid="Example_Where_Clause" />
+      </if>
+      <if test="orderByClause != null">
+          order by ${orderByClause}
+      </if>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+          select *
+          from Raw_Materials_Criteria
+          order by Material_no asc
+        </select>
+
+
+
+    <select id="countByExample" parameterType="com.ds.factory.dao.Example.Raw_Materials_CriteriaExample" resultType="java.lang.Integer">
+      select count(*) from Raw_Materials_Criteria
+      <if test="_parameter != null">
+        <include refid="Example_Where_Clause" />
+      </if>
+    </select>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from Raw_Materials_Criteria
+      where Material_no = #{Material_no,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByMaterial_name" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select *
+      from Raw_Materials_Criteria
+      where Material_name = #{Material_name,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Raw_Materials_Criteria
+    where Material_no = #{Material_no,jdbcType=VARCHAR}
+    </delete>
+
+
+    <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.Raw_Materials_CriteriaExample">
+    delete from Raw_Materials_Criteria
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </delete>
+
+
+
+
+    <insert id="insert" parameterType="com.ds.factory.datasource.entities.Raw_Materials_Criteria">
+    insert
+    into Raw_Materials_Criteria (Material_no, Material_name,  Material_type,  Guarantee_period)
+    values (#{Material_no,jdbcType=VARCHAR},        #{Material_name,jdbcType=VARCHAR},
+            #{Material_type,jdbcType=VARCHAR},      #{Guarantee_period,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.ds.factory.datasource.entities.Raw_Materials_Criteria">
+    insert into Raw_Materials_Criteria
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="Material_no != null">
+        Material_no,
+      </if>
+      <if test="Material_name != null">
+        Material_name,
+      </if>
+      <if test="Material_type != null">
+        Material_type,
+      </if>
+      <if test="Guarantee_period != null">
+        Guarantee_period,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="Material_no != null">
+        #{Material_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Material_name != null">
+        #{Material_name,jdbcType=VARCHAR},
+      </if>
+      <if test="Material_type != null">
+        #{Material_type,jdbcType=VARCHAR},
+      </if>
+      <if test="Guarantee_period != null">
+        #{Guarantee_period,jdbcType=VARCHAR},
+      </if>
+    </trim>
+
+    </insert>
+
+
+
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update Raw_Materials_Criteria
+    <set>
+      <if test="record.Material_no != null">
+        Material_no = #{record.Material_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Material_name != null">
+        Material_name = #{record.Material_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Material_type != null">
+        Material_type = #{record.Material_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Guarantee_period != null">
+        Guarantee_period = #{record.Guarantee_period,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByExample" parameterType="map">
+    update Raw_Materials_Criteria
+    set Material_no = #{record.Material_no,jdbcType=VARCHAR},
+        Material_name = #{record.Material_name,jdbcType=VARCHAR},
+        Material_type = #{record.Material_type,jdbcType=VARCHAR},
+        Guarantee_period = #{record.Guarantee_period,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Raw_Materials_Criteria">
+    update Raw_Materials_Criteria
+    <set>
+      <if test="Material_no != null">
+        Material_no = #{Material_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Material_name != null">
+        Material_name = #{Material_name,jdbcType=VARCHAR},
+      </if>
+      <if test="Material_type != null">
+        Material_type = #{Material_type,jdbcType=VARCHAR},
+      </if>
+      <if test="Guarantee_period != null">
+        Guarantee_period = #{Guarantee_period,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Material_no = #{Material_no,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ds.factory.datasource.entities.Raw_Materials_Criteria">
+    update Raw_Materials_Criteria
+    set Material_no = #{Material_no,jdbcType=VARCHAR},
+        Material_name = #{Material_name,jdbcType=VARCHAR},
+        Material_type = #{Material_type,jdbcType=VARCHAR},
+        Guarantee_period = #{Guarantee_period,jdbcType=VARCHAR}
+    where Material_no = #{Material_no,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>

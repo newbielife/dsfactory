@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.Product_PopularityMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Product_Popularity" >
+            <id column="Product_no" jdbcType="VARCHAR" property="Product_no" />
+            <result column="Product_name" jdbcType="VARCHAR" property="Product_name" />
+            <result column="Product_type" jdbcType="VARCHAR" property="Product_type" />
+            <result column="Manufacture_duration" jdbcType="VARCHAR" property="Manufacture_duration" />
+            <result column="Guarantee_period" jdbcType="VARCHAR" property="Guarantee_period" />
+            <result column="Unit_Price" jdbcType="BIGINT" property="Unit_Price" />
+            <result column="Purchase_times" jdbcType="BIGINT" property="Purchase_times" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+    Product_no,             Product_name,           Product_type,
+    Guarantee_period,       Unit_Price,             Purchase_times
+    </sql>
+
+    <select id="orderByPopularity" resultMap="BaseResultMap">
+        select Product_Criteria.Product_no,Product_Criteria.Product_name,Product_Criteria.Product_type,
+                         Product_Criteria.Guarantee_period,Product_Criteria.Unit_Price,a.num as Purchase_times
+                from Product_Criteria left join (select Product_no,count(Order_Details.Product_no) as num
+                                                    from Order_Details
+                                                    GROUP BY Order_Details.Product_no) as a
+                                                 on(Product_Criteria.Product_no=a.Product_no)
+                order by a.num desc
+    </select>
+</mapper>

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement//开启事务管理
 @ServletComponentScan
 @EnableScheduling
-@MapperScan("com.ds.factory.dao")
+@MapperScan("com.ds.factory.datasource.mappers")
 public class FactoryApplication {
 
     public static void main(String[] args) {

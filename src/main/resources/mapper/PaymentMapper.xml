@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.PaymentMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Payment" >
+        <id column="Payment_no" jdbcType="VARCHAR" property="Payment_no" />
+        <result column="Order_no" jdbcType="VARCHAR" property="Order_no" />
+        <result column="Staff_no_accountant" jdbcType="VARCHAR" property="Staff_no_accountant" />
+        <result column="Money" jdbcType="BIGINT" property="Money" />
+        <result column="Payment_date" jdbcType="TIMESTAMP" property="Payment_date" />
+        <result column="Details" jdbcType="VARCHAR" property="Details" />
+    </resultMap>
+
+
+    <select id="exist_or_not"  resultType="java.lang.Integer">
+    SELECT count(*) FROM Payment WHERE Payment_no = #{Payment_no}
+    </select>
+
+
+    <sql id="Example_Where_Clause">
+    <where>
+    <foreach collection="oredCriteria" item="criteria" separator="or">
+    <if test="criteria.valid">
+    <trim prefix="(" prefixOverrides="and" suffix=")">
+    <foreach collection="criteria.criteria" item="criterion">
+      <choose>
+        <when test="criterion.noValue">
+          and ${criterion.condition}
+        </when>
+        <when test="criterion.singleValue">
+          and ${criterion.condition} #{criterion.value}
+        </when>
+        <when test="criterion.betweenValue">
+          and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+        </when>
+        <when test="criterion.listValue">
+          and ${criterion.condition}
+          <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+            #{listItem}
+          </foreach>
+        </when>
+      </choose>
+    </foreach>
+    </trim>
+    </if>
+    </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+    <foreach collection="example.oredCriteria" item="criteria" separator="or">
+    <if test="criteria.valid">
+      <trim prefix="(" prefixOverrides="and" suffix=")">
+        <foreach collection="criteria.criteria" item="criterion">
+          <choose>
+            <when test="criterion.noValue">
+              and ${criterion.condition}
+            </when>
+            <when test="criterion.singleValue">
+              and ${criterion.condition} #{criterion.value}
+            </when>
+            <when test="criterion.betweenValue">
+              and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+            </when>
+            <when test="criterion.listValue">
+              and ${criterion.condition}
+              <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                #{listItem}
+              </foreach>
+            </when>
+          </choose>
+        </foreach>
+      </trim>
+    </if>
+    </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Base_Column_List">
+    Payment_no,      Order_no,        Staff_no_accountant,       Money,        Payment_date,     Details
+    </sql>
+
+
+    <select id="countByExample" parameterType="com.ds.factory.dao.Example.PaymentExample" resultType="java.lang.Integer">
+    select count(*) from Payment
+    <if test="_parameter != null">
+    <include refid="Example_Where_Clause" />
+    </if>
+    </select>
+
+
+    <select id="select_Biggest_Payment_no"  resultType="java.lang.String">
+    select Payment_no
+    from Payment
+    order by Payment_no desc
+    limit 1
+    </select>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Payment
+    where Payment_no = #{Payment_no,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByStaff_no_accountant" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Payment
+    where Staff_no_accountant = #{Staff_no_accountant,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Payment
+    where Order_no = #{Order_no,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Payment
+    where Client_no = #{Client_no,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAll" resultMap="BaseResultMap">
+    select *
+    from Payment
+    </select>
+
+
+
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Payment
+    where Payment_no = #{Payment_no,jdbcType=VARCHAR}
+    </delete>
+
+
+    <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.PaymentExample">
+    delete from Payment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </delete>
+
+
+
+
+
+
+
+    <insert id="insert" parameterType="com.ds.factory.datasource.entities.Payment">
+    insert
+    into Payment (Payment_no,     Order_no,    Staff_no_accountant,   Money,    Payment_date,     Details)
+    values (#{Payment_no,jdbcType=VARCHAR},      #{Order_no,jdbcType=VARCHAR},              #{Staff_no_accountant,jdbcType=VARCHAR},
+            #{Money,jdbcType=BIGINT},            #{Payment_date,jdbcType=TIMESTAMP},        #{Details,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.ds.factory.datasource.entities.Payment">
+    insert into Payment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="Payment_no != null">
+        Payment_no,
+      </if>
+      <if test="Order_no != null">
+        Order_no,
+      </if>
+      <if test="Staff_no_accountant != null">
+        Staff_no_accountant,
+      </if>
+      <if test="Money != null">
+        Money,
+      </if>
+      <if test="Payment_date != null">
+        Payment_date,
+      </if>
+      <if test="Details != null">
+        Details,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="Payment_no != null">
+        #{Payment_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Order_no != null">
+        #{Order_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no_accountant != null">
+        #{Staff_no_accountant,jdbcType=VARCHAR},
+      </if>
+      <if test="Money != null">
+        #{Money,jdbcType=VARCHAR},
+      </if>
+      <if test="Payment_date != null">
+        #{Payment_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Details != null">
+        #{Details,jdbcType=VARCHAR},
+      </if>
+    </trim>
+
+    </insert>
+
+
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update Payment
+    <set>
+    <if test="record.Payment_no != null">
+    Payment_no = #{record.Payment_no,jdbcType=VARCHAR},
+    </if>
+    <if test="record.Order_no != null">
+    Order_no = #{record.Order_no,jdbcType=VARCHAR},
+    </if>
+    <if test="record.Staff_no_accountant != null">
+    Staff_no_accountant = #{record.Staff_no_accountant,jdbcType=VARCHAR},
+    </if>
+    <if test="record.Money != null">
+    Money = #{record.Money,jdbcType=VARCHAR},
+    </if>
+    <if test="record.Payment_date != null">
+    Payment_date = #{record.Payment_date,jdbcType=TIMESTAMP},
+    </if>
+    <if test="record.Details != null">
+    Details = #{record.Details,jdbcType=VARCHAR},
+    </if>
+    </set>
+    <if test="_parameter != null">
+    <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByExample" parameterType="map">
+    update Payment
+    set Payment_no = #{record.Payment_no,jdbcType=VARCHAR},
+    Order_no = #{record.Order_no,jdbcType=VARCHAR},
+    Staff_no_accountant = #{record.Staff_no_accountant,jdbcType=VARCHAR},
+    Money = #{record.Money,jdbcType=VARCHAR},
+    Payment_date = #{record.Payment_date,jdbcType=TIMESTAMP},
+    Details = #{record.Details,jdbcType=VARCHAR}
+
+    <if test="_parameter != null">
+    <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Payment">
+    update Payment
+    <set>
+    <if test="Payment_no != null">
+    Payment_no = #{Payment_no,jdbcType=VARCHAR},
+    </if>
+    <if test="Order_no != null">
+    Order_no = #{Order_no,jdbcType=VARCHAR},
+    </if>
+    <if test="Staff_no_accountant != null">
+    Staff_no_accountant = #{Staff_no_accountant,jdbcType=VARCHAR},
+    </if>
+    <if test="Money != null">
+    Money = #{Money,jdbcType=VARCHAR},
+    </if>
+    <if test="Payment_date != null">
+    Payment_date = #{Payment_date,jdbcType=TIMESTAMP},
+    </if>
+    <if test="Details != null">
+    Details = #{Details,jdbcType=VARCHAR},
+    </if>
+    </set>
+    where Payment_no = #{Payment_no,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ds.factory.datasource.entities.Payment">
+    update Payment
+    set Order_no = #{record.Order_no,jdbcType=VARCHAR},
+        Staff_no_accountant = #{record.Staff_no_accountant,jdbcType=VARCHAR},
+        Money = #{record.Money,jdbcType=VARCHAR},
+        Payment_date = #{record.Payment_date,jdbcType=TIMESTAMP},
+        Details = #{record.Details,jdbcType=VARCHAR}
+    where Payment_no = #{record.Payment_no,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>

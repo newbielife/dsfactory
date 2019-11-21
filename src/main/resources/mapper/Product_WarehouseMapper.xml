@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.Product_WarehouseMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Product_Warehouse" >
+            <id column="Stock_no" jdbcType="VARCHAR" property="Stock_no" />
+            <result column="Product_no" jdbcType="VARCHAR" property="Product_no" />
+            <result column="Staff_no_storage" jdbcType="VARCHAR" property="Staff_no_storage" />
+            <result column="Manufacture_date" jdbcType="TIMESTAMP" property="Manufacture_date" />
+            <result column="Stock_num" jdbcType="VARCHAR" property="Stock_num" />
+            <result column="Storage_address" jdbcType="VARCHAR" property="Storage_address" />
+            <result column="Staff_no_workshop" jdbcType="VARCHAR" property="Staff_no_workshop" />
+            <result column="Details" jdbcType="VARCHAR" property="Details" />
+    </resultMap>
+
+    <select id="exist_or_not"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Product_Warehouse WHERE Stock_no = #{Stock_no}
+    </select>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Base_Column_List">
+    Stock_no,           Product_no,             Staff_no_storage,       Manufacture_date
+    Stock_num,          Storage_address,        Staff_no_workshop,      Details
+    </sql>
+
+    <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Product_CriteriaExample" resultMap="BaseResultMap">
+      select
+      <if test="distinct">
+        distinct
+      </if>
+      <include refid="Base_Column_List" />
+      from Product_Warehouse
+      <if test="_parameter != null">
+          <include refid="Example_Where_Clause" />
+      </if>
+      <if test="orderByClause != null">
+          order by ${orderByClause}
+      </if>
+    </select>
+
+
+    <select id="select_Biggest_Stock_no"  resultType="java.lang.String">
+      select Stock_no
+      from Product_Warehouse
+      order by Stock_no desc
+      limit 1
+    </select>
+
+
+    <select id="countByExample" parameterType="com.ds.factory.dao.Example.Product_WarehouseExample" resultType="java.lang.Integer">
+      select count(*) from Product_Warehouse
+      <if test="_parameter != null">
+        <include refid="Example_Where_Clause" />
+      </if>
+    </select>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from Product_Warehouse
+      where Stock_no = #{Stock_no,jdbcType=VARCHAR}
+    </select>
+
+    <select id="orderByDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
+      order by Manufacture_date desc
+    </select>
+
+
+
+    <select id="today_data" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
+      where to_days(Manufacture_date) = to_days(now())
+      order by Manufacture_date desc
+    </select>
+
+    <select id="this_week_data" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
+      WHERE YEARWEEK(date_format(Manufacture_date,'%Y-%m-%d')) = YEARWEEK(now())
+      order by Manufacture_date desc
+    </select>
+
+
+    <select id="this_month_data" resultMap="BaseResultMap">
+    select *
+    from Product_Warehouse
+    WHERE DATE_FORMAT( Manufacture_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    order by Manufacture_date desc
+    </select>
+
+
+    <select id="this_season_data" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
+      where QUARTER(Manufacture_date)=QUARTER(NOW())
+      order by Manufacture_date desc
+    </select>
+
+
+    <select id="this_year_data" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
+      where YEAR(Manufacture_date)=YEAR(NOW())
+      order by Manufacture_date desc
+    </select>
+
+
+
+
+    <select id="selectByProduct_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
+      where Product_no = #{Product_no,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByStaff_no_workshop" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
+      where Staff_no_workshop = #{Staff_no_workshop,jdbcType=VARCHAR}
+    </select>
+
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Product_Warehouse
+    where Product_no = #{Product_no,jdbcType=VARCHAR}
+    </delete>
+
+
+    <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.Product_WarehouseExample">
+    delete from Product_Warehouse
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </delete>
+
+
+
+
+    <insert id="insert" parameterType="com.ds.factory.datasource.entities.Product_Warehouse">
+    insert
+    into Product_Warehouse (Stock_no,           Product_no,             Staff_no_storage,       Manufacture_date
+                            Stock_num,          Storage_address,        Staff_no_workshop,      Details)
+    values (#{Stock_no,jdbcType=VARCHAR},                   #{Product_no,jdbcType=VARCHAR},
+            #{Staff_no_storage,jdbcType=VARCHAR},           #{Manufacture_date,jdbcType=TIMESTAMP},
+            #{Stock_num,jdbcType=VARCHAR},                  #{Storage_address,jdbcType=VARCHAR},
+            #{Staff_no_workshop,jdbcType=VARCHAR},          #{Details,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.ds.factory.datasource.entities.Product_Warehouse">
+    insert into Product_Warehouse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="Stock_no != null">
+        Stock_no,
+      </if>
+      <if test="Product_no != null">
+        Product_no,
+      </if>
+      <if test="Staff_no_storage != null">
+        Staff_no_storage,
+      </if>
+      <if test="Manufacture_date != null">
+        Manufacture_date,
+      </if>
+      <if test="Stock_num != null">
+        Stock_num,
+      </if>
+      <if test="Storage_address != null">
+        Storage_address,
+      </if>
+      <if test="Staff_no_workshop != null">
+        Staff_no_workshop,
+      </if>
+      <if test="Details != null">
+          Details,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="Stock_no != null">
+        #{Stock_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Product_no != null">
+        #{Product_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no_storage != null">
+        #{Staff_no_storage,jdbcType=VARCHAR},
+      </if>
+      <if test="Manufacture_date != null">
+        #{Manufacture_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Stock_num != null">
+        #{Stock_num,jdbcType=VARCHAR},
+      </if>
+      <if test="Storage_address != null">
+        #{Storage_address,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no_workshop != null">
+        #{Staff_no_workshop,jdbcType=VARCHAR},
+      </if>
+      <if test="Details != null">
+        #{Details,jdbcType=VARCHAR},
+      </if>
+    </trim>
+
+    </insert>
+
+
+
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update Product_Warehouse
+    <set>
+      <if test="record.Stock_no != null">
+        Stock_no = #{record.Stock_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Product_no != null">
+        Product_no = #{record.Product_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Staff_no_storage != null">
+        Staff_no_storage = #{record.Staff_no_storage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Manufacture_date != null">
+        Manufacture_date = #{record.Manufacture_date,jdbcType=TIMESTAMP},
+      </if>
+        <if test="record.Stock_num != null">
+          Stock_num = #{record.Stock_num,jdbcType=VARCHAR},
+        </if>
+        <if test="record.Storage_address != null">
+          Storage_address = #{record.Storage_address,jdbcType=VARCHAR},
+        </if>
+        <if test="record.Staff_no_workshop != null">
+          Staff_no_workshop = #{record.Staff_no_workshop,jdbcType=VARCHAR},
+        </if>
+        <if test="record.Details != null">
+          Details = #{record.Details,jdbcType=VARCHAR},
+        </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByExample" parameterType="map">
+    update Product_Warehouse
+    set Stock_no = #{record.Stock_no,jdbcType=VARCHAR},
+        Product_no = #{record.Product_no,jdbcType=VARCHAR},
+        Staff_no_storage = #{record.Staff_no_storage,jdbcType=VARCHAR},
+        Manufacture_date = #{record.Manufacture_date,jdbcType=TIMESTAMP},
+        Stock_num = #{record.Stock_num,jdbcType=VARCHAR},
+        Storage_address = #{record.Storage_address,jdbcType=VARCHAR},
+        Staff_no_workshop = #{record.Staff_no_workshop,jdbcType=VARCHAR},
+        Details = #{record.Details,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Product_Warehouse">
+    update Product_Warehouse
+    <set>
+      <if test="Stock_no != null">
+        Stock_no = #{Stock_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Product_no != null">
+        Product_no = #{Product_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no_storage != null">
+        Staff_no_storage = #{Staff_no_storage,jdbcType=VARCHAR},
+      </if>
+      <if test="Manufacture_date != null">
+        Manufacture_date = #{Manufacture_date,jdbcType=TIMESTAMP},
+      </if>
+        <if test="Stock_num != null">
+          Stock_num = #{Stock_num,jdbcType=VARCHAR},
+        </if>
+        <if test="Storage_address != null">
+          Storage_address = #{Storage_address,jdbcType=VARCHAR},
+        </if>
+        <if test="Staff_no_workshop != null">
+          Staff_no_workshop = #{Staff_no_workshop,jdbcType=VARCHAR},
+        </if>
+        <if test="Details != null">
+          Details = #{Details,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where Stock_no = #{Stock_no,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ds.factory.datasource.entities.Product_Warehouse">
+    update Product_Warehouse
+    set Stock_no = #{Stock_no,jdbcType=VARCHAR},
+        Product_no = #{Product_no,jdbcType=VARCHAR},
+        Staff_no_storage = #{Staff_no_storage,jdbcType=VARCHAR},
+        Manufacture_date = #{Manufacture_date,jdbcType=TIMESTAMP},
+        Stock_num = #{Stock_num,jdbcType=VARCHAR},
+        Storage_address = #{Storage_address,jdbcType=VARCHAR},
+        Staff_no_workshop = #{Staff_no_workshop,jdbcType=VARCHAR},
+        Details = #{Details,jdbcType=VARCHAR}
+    where Stock_no = #{Stock_no,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>
+

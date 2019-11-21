@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.Expired_FoodMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Expired_Food" >
+            <id column="Food_no" jdbcType="VARCHAR" property="Food_no" />
+            <result column="Food_type" jdbcType="VARCHAR" property="Food_type" />
+            <result column="Food_name" jdbcType="VARCHAR" property="Food_name" />
+            <result column="Expired_date" jdbcType="TIMESTAMP" property="Expired_date" />
+            <result column="Loss_num" jdbcType="VARCHAR" property="Loss_num" />
+            <result column="Loss_money" jdbcType="BIGINT" property="Loss_money" />
+            <result column="Processing_method" jdbcType="VARCHAR" property="Processing_method" />
+    </resultMap>
+
+    <select id="exist_or_not"  resultType="java.lang.Integer">
+                SELECT count(*) FROM Expired_Food WHERE Food_no = #{Food_no}
+        </select>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Base_Column_List">
+    Food_no,        Food_type,      Food_name,      Expired_date,
+    Loss_num,       Loss_money,     Processing_method
+    </sql>
+
+
+    <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Expired_FoodExample" resultMap="BaseResultMap">
+      select
+      <if test="distinct">
+        distinct
+      </if>
+      <include refid="Base_Column_List" />
+      from Expired_Food
+      <if test="_parameter != null">
+          <include refid="Example_Where_Clause" />
+      </if>
+      <if test="orderByClause != null">
+          order by ${orderByClause}
+      </if>
+    </select>
+
+
+    <select id="select_Biggest_Food_no"  resultType="java.lang.String">
+      select Food_no
+      from Expired_Food
+      order by Food_no desc
+      limit 1
+    </select>
+
+
+
+
+    <select id="countByExample" parameterType="com.ds.factory.dao.Example.Expired_FoodExample" resultType="java.lang.Integer">
+      select count(*) from Expired_Food
+      <if test="_parameter != null">
+        <include refid="Example_Where_Clause" />
+      </if>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from Expired_Food
+      where Food_no = #{Food_no,jdbcType=VARCHAR}
+    </select>
+
+    <select id="orderByExpired_date" resultMap="BaseResultMap">
+          select *
+          from Expired_Food
+          order by Expired_date desc
+    </select>
+
+    <select id="orderByLoss_num" resultMap="BaseResultMap">
+          select *
+          from Expired_Food
+          order by Loss_num desc
+    </select>
+
+    <select id="orderByLoss_money" resultMap="BaseResultMap">
+          select *
+          from Expired_Food
+          order by Loss_money desc
+    </select>
+
+
+    <select id="Expired_Raw_materials" resultMap="BaseResultMap">
+          select *
+          from Expired_Food
+          where Food_type = '原料'
+          order by Expired_date desc
+    </select>
+
+    <select id="Expired_Products" resultMap="BaseResultMap">
+          select *
+          from Expired_Food
+          where Food_type = '成品'
+          order by Expired_date desc
+    </select>
+
+
+
+
+
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Expired_Food
+    where Food_no = #{Food_no,jdbcType=VARCHAR}
+    </delete>
+
+
+    <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.Expired_FoodExample">
+    delete from Expired_Food
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.ds.factory.datasource.entities.Expired_Food">
+    insert
+    into Expired_Food (Food_no,        Food_type,      Food_name,      Expired_date,
+                       Loss_num,       Loss_money,     Processing_method)
+    values (#{Food_no,jdbcType=VARCHAR},                #{Food_type,jdbcType=VARCHAR},
+            #{Food_name,jdbcType=VARCHAR},              #{Expired_date,jdbcType=TIMESTAMP},
+            #{Loss_num,jdbcType=BIGINT},                #{Loss_money,jdbcType=BIGINT},
+            #{Processing_method,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.ds.factory.datasource.entities.Expired_Food">
+    insert into Expired_Food
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="Food_no != null">
+        Food_no,
+      </if>
+      <if test="Food_type != null">
+        Food_type,
+      </if>
+      <if test="Food_name != null">
+        Food_name,
+      </if>
+      <if test="Expired_date != null">
+        Expired_date,
+      </if>
+      <if test="Loss_num != null">
+        Loss_num,
+      </if>
+      <if test="Loss_money != null">
+        Loss_money,
+      </if>
+      <if test="Processing_method != null">
+        Processing_method,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="Food_no != null">
+        #{Food_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Food_type != null">
+        #{Food_type,jdbcType=VARCHAR},
+      </if>
+      <if test="Food_name != null">
+        #{Food_name,jdbcType=VARCHAR},
+      </if>
+      <if test="Expired_date != null">
+        #{Expired_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Loss_num != null">
+        #{Loss_num,jdbcType=BIGINT},
+      </if>
+      <if test="Loss_money != null">
+        #{Loss_money,jdbcType=BIGINT},
+      </if>
+      <if test="Processing_method != null">
+        #{Processing_method,jdbcType=VARCHAR},
+      </if>
+    </trim>
+
+    </insert>
+
+
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update Expired_Food
+    <set>
+      <if test="record.Food_no != null">
+        Food_no = #{record.Food_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Food_type != null">
+        Food_type = #{record.Food_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Food_name != null">
+        Food_name = #{record.Food_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Expired_date != null">
+        Expired_date = #{record.Expired_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.Loss_num != null">
+        Loss_num = #{record.Loss_num,jdbcType=BIGINT},
+      </if>
+      <if test="record.Loss_money != null">
+        Loss_money = #{record.Loss_money,jdbcType=BIGINT},
+      </if>
+      <if test="record.Processing_method != null">
+      Processing_method = #{record.Processing_method,jdbcType=BIGINT},
+    </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map">
+    update Expired_Food
+    set Food_no = #{record.Food_no,jdbcType=VARCHAR},
+        Food_type = #{record.Food_type,jdbcType=VARCHAR},
+        Food_name = #{record.Food_name,jdbcType=VARCHAR},
+        Expired_date = #{record.Expired_date,jdbcType=TIMESTAMP},
+        Loss_num = #{record.Loss_num,jdbcType=BIGINT},
+        Loss_money = #{record.Loss_money,jdbcType=BIGINT},
+        Processing_method = #{record.Processing_method,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Expired_Food">
+    update Expired_Food
+    <set>
+      <if test="Food_no != null">
+        Food_no = #{Food_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Food_type != null">
+        Food_type = #{Food_type,jdbcType=VARCHAR},
+      </if>
+      <if test="Food_name != null">
+        Food_name = #{Food_name,jdbcType=VARCHAR},
+      </if>
+      <if test="Expired_date != null">
+        Expired_date = #{Expired_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Loss_num != null">
+        Loss_num = #{Loss_num,jdbcType=BIGINT},
+      </if>
+      <if test="Loss_money != null">
+        Loss_money = #{Loss_money,jdbcType=BIGINT},
+      </if>
+      <if test="Processing_method != null">
+      Processing_method = #{Processing_method,jdbcType=VARCHAR},
+    </if>
+    </set>
+    where Food_no = #{Food_no,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ds.factory.datasource.entities.Expired_Food">
+    update Expired_Food
+    set Food_no = #{Food_no,jdbcType=VARCHAR},
+        Food_type = #{Food_type,jdbcType=VARCHAR},
+        Food_name = #{Food_name,jdbcType=VARCHAR},
+        Expired_date = #{Expired_date,jdbcType=TIMESTAMP},
+        Loss_num = #{Loss_num,jdbcType=BIGINT},
+        Loss_money = #{Loss_money,jdbcType=BIGINT},
+        Processing_method = #{Processing_method,jdbcType=VARCHAR}
+    where Food_no = #{Food_no,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>

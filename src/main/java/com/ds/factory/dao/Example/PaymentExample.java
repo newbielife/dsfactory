@@ -1,14 +1,14 @@
-package com.ds.factory.domain;
+package com.ds.factory.dao.Example;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientExample {
+public class PaymentExample {
     protected String orderByClause;
     protected boolean distinct;
     protected List<Criteria> oredCriteria;
 
-    public ClientExample() {
+    public PaymentExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -1138,4 +1138,5 @@ public class ClientExample {
         }
     }
 }
+
 

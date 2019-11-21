@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.Refund_ApplicationMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Refund_Application" >
+            <id column="Refund_no" jdbcType="VARCHAR" property="Refund_no" />
+            <result column="Order_no" jdbcType="VARCHAR" property="Order_no" />
+            <result column="Client_no" jdbcType="VARCHAR" property="Client_no" />
+            <result column="Reason" jdbcType="VARCHAR" property="Reason" />
+            <result column="Staff_no_checker" jdbcType="VARCHAR" property="Staff_no_checker" />
+            <result column="Progress" jdbcType="VARCHAR" property="Progress" />
+            <result column="Permission" jdbcType="BIGINT" property="Permission" />
+            <result column="Refund_Payment" jdbcType="BIGINT" property="Refund_Payment" />
+    </resultMap>
+
+    <select id="exist_or_not"  resultType="java.lang.Integer">
+                SELECT count(*) FROM Refund_Application WHERE Refund_no = #{Refund_no}
+        </select>
+
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    </sql>
+
+
+    <sql id="Base_Column_List">
+    Refund_no,              Order_no,           Client_no,          Reason,
+    Staff_no_checker,       Progress,           Permission,         Refund_Payment
+    </sql>
+
+    <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Refund_ApplicationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Refund_Application
+    <if test="_parameter != null">
+        <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+        order by ${orderByClause}
+    </if>
+    </select>
+
+
+
+    <select id="select_Biggest_Refund_no"  resultType="java.lang.String">
+        select Refund_no
+        from Refund_Application
+        order by Refund_no desc
+        limit 1
+    </select>
+
+
+
+
+    <select id="countByExample" parameterType="com.ds.factory.dao.Example.Refund_ApplicationExample" resultType="java.lang.Integer">
+    select count(*) from Refund_Application
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Refund_Application
+    where Refund_no = #{Refund_no,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from Refund_Application
+    </select>
+
+    <select id="selectByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Refund_Application
+    where Client_no = #{Client_no,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByStaff_no_checker" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Refund_Application
+    where Staff_no_checker = #{Staff_no_checker,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from Refund_Application
+    where Order_no = #{Order_no,jdbcType=VARCHAR}
+    </select>
+
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Refund_Application
+    where Product_no = #{Product_no,jdbcType=VARCHAR}
+    </delete>
+
+
+    <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.Refund_ApplicationExample">
+    delete from Refund_Application
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.ds.factory.datasource.entities.Refund_Application">
+    insert
+    into Refund_Application (Refund_no,              Order_no,           Client_no,          Reason,
+                             Staff_no_checker,       Progress,           Permission,         Refund_Payment)
+    values (#{Refund_no,jdbcType=VARCHAR},                  #{Order_no,jdbcType=VARCHAR},
+            #{Client_no,jdbcType=VARCHAR},                  #{Reason,jdbcType=VARCHAR},
+            #{Staff_no_checker,jdbcType=VARCHAR},           #{Progress,jdbcType=VARCHAR},
+            #{Permission,jdbcType=BIGINT},                  #{Refund_Payment,jdbcType=BIGINT})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.ds.factory.datasource.entities.Refund_Application">
+    insert into Refund_Application
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="Refund_no != null">
+          Refund_no,
+        </if>
+        <if test="Order_no != null">
+          Order_no,
+        </if>
+        <if test="Client_no != null">
+          Client_no,
+        </if>
+        <if test="Reason != null">
+          Reason,
+        </if>
+        <if test="Staff_no_checker != null">
+          Staff_no_checker,
+        </if>
+        <if test="Progress != null">
+          Progress,
+        </if>
+        <if test="Permission != null">
+          Permission,
+        </if>
+        <if test="Refund_Payment != null">
+            Refund_Payment,
+        </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="Refund_no != null">
+          #{Refund_no,jdbcType=VARCHAR},
+        </if>
+        <if test="Order_no != null">
+           #{Order_no,jdbcType=VARCHAR},
+        </if>
+        <if test="Client_no != null">
+          #{Client_no,jdbcType=VARCHAR},
+        </if>
+        <if test="Reason != null">
+          #{Reason,jdbcType=VARCHAR},
+        </if>
+        <if test="Staff_no_checker != null">
+          #{Staff_no_checker,jdbcType=VARCHAR},
+        </if>
+        <if test="Progress != null">
+         #{Progress,jdbcType=VARCHAR},
+        </if>
+        <if test="Permission != null">
+          #{Permission,jdbcType=BIGINT},
+        </if>
+        <if test="Refund_Payment != null">
+           #{Refund_Payment,jdbcType=BIGINT},
+        </if>
+    </trim>
+
+    </insert>
+
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update Refund_Application
+    <set>
+      <if test="record.Refund_no != null">
+        Refund_no = #{record.Refund_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Order_no != null">
+        Order_no = #{record.Order_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Client_no != null">
+        Client_no = #{record.Client_no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.Reason != null">
+        Reason = #{record.Reason,jdbcType=VARCHAR},
+      </if>
+        <if test="record.Staff_no_checker != null">
+          Staff_no_checker = #{record.Staff_no_checker,jdbcType=VARCHAR},
+        </if>
+        <if test="record.Progress != null">
+          Progress = #{record.Progress,jdbcType=VARCHAR},
+        </if>
+        <if test="record.Permission != null">
+          Permission = #{record.Permission,jdbcType=BIGINT},
+        </if>
+        <if test="record.Refund_Payment!= null">
+          Refund_Payment= #{record.Refund_Payment,jdbcType=BIGINT},
+        </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByExample" parameterType="map">
+    update Refund_Application
+    set Refund_no = #{record.Refund_no,jdbcType=VARCHAR},
+        Order_no = #{record.Order_no,jdbcType=VARCHAR},
+        Client_no = #{record.Client_no,jdbcType=VARCHAR},
+        Reason = #{record.Reason,jdbcType=VARCHAR},
+        Staff_no_checker = #{record.Staff_no_checker,jdbcType=VARCHAR},
+        Progress = #{record.Progress,jdbcType=VARCHAR},
+        Permission = #{record.Permission,jdbcType=BIGINT},
+        Refund_Payment= #{record.Refund_Payment,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Refund_Application">
+    update Refund_Application
+    <set>
+      <if test="Refund_no != null">
+        Refund_no = #{Refund_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Order_no != null">
+        Order_no = #{Order_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Client_no != null">
+        Client_no = #{Client_no,jdbcType=VARCHAR},
+      </if>
+      <if test="Reason != null">
+        Reason = #{Reason,jdbcType=VARCHAR},
+      </if>
+        <if test="Staff_no_checker != null">
+          Staff_no_checker = #{Staff_no_checker,jdbcType=VARCHAR},
+        </if>
+        <if test="Progress != null">
+          Progress = #{Progress,jdbcType=VARCHAR},
+        </if>
+        <if test="Permission != null">
+          Permission = #{Permission,jdbcType=BIGINT},
+        </if>
+        <if test="Refund_Payment!= null">
+          Refund_Payment= #{Refund_Payment,jdbcType=BIGINT},
+        </if>
+    </set>
+    where Refund_no = #{Refund_no,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ds.factory.datasource.entities.Refund_Application">
+    update Refund_Application
+    set Refund_no = #{Refund_no,jdbcType=VARCHAR},
+        Order_no = #{Order_no,jdbcType=VARCHAR},
+        Client_no = #{Client_no,jdbcType=VARCHAR},
+        Reason = #{Reason,jdbcType=VARCHAR},
+        Staff_no_checker = #{Staff_no_checker,jdbcType=VARCHAR},
+        Progress = #{Progress,jdbcType=VARCHAR},
+        Permission = #{Permission,jdbcType=BIGINT},
+        Refund_Payment= #{Refund_Payment,jdbcType=BIGINT}
+    where Refund_no = #{Refund_no,jdbcType=VARCHAR}
+    </update>
+
+
+
+</mapper>
