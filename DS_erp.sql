@@ -74,7 +74,7 @@ INSERT INTO `DS_functions` VALUES (22, '010101', '商品类别', '0101', '/pages
 INSERT INTO `DS_functions` VALUES (23, '010102', '商品信息', '0101', '/pages/materials/material.html', b'0', '0240', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (24, '0102', '基本资料', '0', '', b'0', '0750', b'1', '电脑版', NULL, 'icon-grid', '0');
 INSERT INTO `DS_functions` VALUES (26, '010202', '仓库信息', '0102', '/pages/manage/depot.html', b'0', '0270', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (31, '010206', '经手人管理', '0102', '/pages/materials/person.html', b'0', '0284', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (31, '010206', '经手人管理', '0102', '/pages/materials/client.html', b'0', '0284', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (32, '0502', '采购管理', '0', '', b'0', '0230', b'1', '电脑版', '', 'icon-loop', '0');
 INSERT INTO `DS_functions` VALUES (33, '050201', '采购入库', '0502', '/pages/materials/purchase_in_list.html', b'0', '0340', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (38, '0603', '销售管理', '0', '', b'0', '0290', b'1', '电脑版', '', 'icon-briefcase', '0');
