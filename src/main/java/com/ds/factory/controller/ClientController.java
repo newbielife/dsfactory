@@ -132,4 +132,25 @@ public class ClientController {
         return result;
     }
 
+    @GetMapping(value = "/getAllClient")
+    public @ResponseBody BaseResponseInfo getAllClient(HttpServletRequest request)throws Exception {
+        BaseResponseInfo res = new BaseResponseInfo();
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            Object userInfo = request.getSession().getAttribute("user");
+            if(userInfo!=null) {
+                Client user = (Client) userInfo;
+                user.setPassword(null);
+                data.put("user", user);
+            }
+            res.code = 200;
+            res.data = data;
+        } catch(Exception e){
+            e.printStackTrace();
+            res.code = 500;
+            res.data = "获取session失败";
+        }
+        return res;
+    }
+
 }
