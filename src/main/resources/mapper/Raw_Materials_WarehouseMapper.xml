@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Raw_Materials_Warehouse WHERE Stock_no = #{Stock_no}
+            SELECT count(*) FROM Raw_Materials_Warehouse WHERE Stock_no = #{Stock_no} and flag=0
     </select>
 
     <sql id="Example_Where_Clause">
@@ -92,6 +92,7 @@
       </if>
       <include refid="Base_Column_List" />
       from Raw_Materials_Warehouse
+      where flag=0
       <if test="_parameter != null">
           <include refid="Example_Where_Clause" />
       </if>
@@ -104,6 +105,7 @@
     <select id="select_Biggest_Stock_no"  resultType="java.lang.String">
       select Stock_no
       from Raw_Materials_Warehouse
+      where flag=0
       order by Stock_no desc
       limit 1
     </select>
@@ -112,14 +114,14 @@
     <select id="today_data" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
-      where to_days(Product_date) = to_days(now())
+      where to_days(Product_date) = to_days(now()) and flag=0
       order by Product_date desc
     </select>
 
     <select id="this_week_data" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
-      WHERE YEARWEEK(date_format(Product_date,'%Y-%m-%d')) = YEARWEEK(now())
+      WHERE YEARWEEK(date_format(Product_date,'%Y-%m-%d')) = YEARWEEK(now()) and flag=0
       order by Product_date desc
     </select>
 
@@ -127,7 +129,7 @@
     <select id="this_month_data" resultMap="BaseResultMap">
     select *
     from Raw_Materials_Warehouse
-    WHERE DATE_FORMAT( Product_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    WHERE DATE_FORMAT( Product_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and flag=0
     order by Product_date desc
     </select>
 
@@ -135,7 +137,7 @@
     <select id="this_season_data" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
-      where QUARTER(Product_date)=QUARTER(NOW())
+      where QUARTER(Product_date)=QUARTER(NOW()) and flag=0
       order by Product_date desc
     </select>
 
@@ -143,7 +145,7 @@
     <select id="this_year_data" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
-      where YEAR(Product_date)=YEAR(NOW())
+      where YEAR(Product_date)=YEAR(NOW()) and flag=0
       order by Product_date desc
     </select>
 
@@ -151,6 +153,7 @@
     <select id="orderByDate" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
+      where flag=0
       order by Product_date desc
     </select>
 
@@ -159,19 +162,19 @@
     <select id="selectByMaterial_no" parameterType="java.lang.String" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
-      where Material_no = #{Material_no,jdbcType=VARCHAR}
+      where Material_no = #{Material_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectByStaff_no_storage" parameterType="java.lang.String" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
-      where Staff_no_storage = #{Staff_no_storage,jdbcType=VARCHAR}
+      where Staff_no_storage = #{Staff_no_storage,jdbcType=VARCHAR} and flag=0
     </select>
 
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Raw_Materials_WarehouseExample" resultType="java.lang.Integer">
-      select count(*) from Raw_Materials_Warehouse
+      select count(*) from Raw_Materials_Warehouse where flag=0
       <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
       </if>
@@ -182,7 +185,7 @@
       select
       <include refid="Base_Column_List" />
       from Raw_Materials_Warehouse
-      where Stock_no = #{Stock_no,jdbcType=VARCHAR}
+      where Stock_no = #{Stock_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Refund_Application WHERE Refund_no = #{Refund_no}
+                SELECT count(*) FROM Refund_Application WHERE Refund_no = #{Refund_no} and flag=0
         </select>
 
     <sql id="Example_Where_Clause">
@@ -91,6 +91,7 @@
     </if>
     <include refid="Base_Column_List" />
     from Refund_Application
+    where flag=0
     <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
     </if>
@@ -104,6 +105,7 @@
     <select id="select_Biggest_Refund_no"  resultType="java.lang.String">
         select Refund_no
         from Refund_Application
+        where flag=0
         order by Refund_no desc
         limit 1
     </select>
@@ -112,7 +114,7 @@
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Refund_ApplicationExample" resultType="java.lang.Integer">
-    select count(*) from Refund_Application
+    select count(*) from Refund_Application where flag=0
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -122,33 +124,34 @@
     select
     <include refid="Base_Column_List" />
     from Refund_Application
-    where Refund_no = #{Refund_no,jdbcType=VARCHAR}
+    where Refund_no = #{Refund_no,jdbcType=VARCHAR} and flag=0
     </select>
 
 
     <select id="selectAll" resultMap="BaseResultMap">
     select *
     from Refund_Application
+    where flag=0
     </select>
 
     <select id="selectByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Refund_Application
-    where Client_no = #{Client_no,jdbcType=VARCHAR}
+    where Client_no = #{Client_no,jdbcType=VARCHAR} and flag=0
     </select>
 
 
     <select id="selectByStaff_no_checker" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Refund_Application
-    where Staff_no_checker = #{Staff_no_checker,jdbcType=VARCHAR}
+    where Staff_no_checker = #{Staff_no_checker,jdbcType=VARCHAR} and flag=0
     </select>
 
 
     <select id="selectByOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Refund_Application
-    where Order_no = #{Order_no,jdbcType=VARCHAR}
+    where Order_no = #{Order_no,jdbcType=VARCHAR} and flag=0
     </select>
 
 

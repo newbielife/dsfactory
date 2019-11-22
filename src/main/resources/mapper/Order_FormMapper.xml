@@ -104,27 +104,28 @@
     <select id="getAllOrder" resultMap="BaseResultMap">
         select *
         from Order_Form
+        where flag=0
         order by Order_no asc
     </select>
 
      <select id="selectByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Form
-        where Client_no = #{Client_no}
+        where Client_no = #{Client_no} and flag=0
         order by Order_no asc
      </select>
 
      <select id="selectByStaff_no" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Form
-        where Staff_no = #{Staff_no}
+        where Staff_no = #{Staff_no} and flag=0
         order by Order_no asc
      </select>
 
      <select id="selectByProgress_Type" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Form
-        where Progress = #{Progress}
+        where Progress = #{Progress} and flag=0
         order by Order_no asc
      </select>
 
@@ -132,12 +133,14 @@
      <select id="orderByDate" resultMap="BaseResultMap">
         select *
         from Order_Form
+        where flag=0
         order by Order_Create_date desc
      </select>
 
      <select id="orderBySum_amount" resultMap="BaseResultMap">
         select *
         from Order_Form
+        where flag=0
         order by Order_sum_amount desc
      </select>
 
@@ -146,13 +149,13 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Form
-        where Order_no = #{Order_no}
+        where Order_no = #{Order_no} and flag=0
     </select>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete from Order_Form
-        where Order_no = #{Order_no,jdbcType=VARCHAR}
+        where Order_no = #{Order_no,jdbcType=VARCHAR} and flag=0
     </delete>
 
 

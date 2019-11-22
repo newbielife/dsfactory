@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Product_Warehouse WHERE Stock_no = #{Stock_no}
+            SELECT count(*) FROM Product_Warehouse WHERE Stock_no = #{Stock_no} and flag=0
     </select>
 
     <sql id="Example_Where_Clause">
@@ -91,6 +91,7 @@
       </if>
       <include refid="Base_Column_List" />
       from Product_Warehouse
+      where flag=0
       <if test="_parameter != null">
           <include refid="Example_Where_Clause" />
       </if>
@@ -103,13 +104,14 @@
     <select id="select_Biggest_Stock_no"  resultType="java.lang.String">
       select Stock_no
       from Product_Warehouse
+      where flag=0
       order by Stock_no desc
       limit 1
     </select>
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Product_WarehouseExample" resultType="java.lang.Integer">
-      select count(*) from Product_Warehouse
+      select count(*) from Product_Warehouse where flag=0
       <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
       </if>
@@ -120,12 +122,13 @@
       select
       <include refid="Base_Column_List" />
       from Product_Warehouse
-      where Stock_no = #{Stock_no,jdbcType=VARCHAR}
+      where Stock_no = #{Stock_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="orderByDate" parameterType="java.lang.String" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
+      where flag=0
       order by Manufacture_date desc
     </select>
 
@@ -134,14 +137,14 @@
     <select id="today_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where to_days(Manufacture_date) = to_days(now())
+      where to_days(Manufacture_date) = to_days(now()) and flag=0
       order by Manufacture_date desc
     </select>
 
     <select id="this_week_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      WHERE YEARWEEK(date_format(Manufacture_date,'%Y-%m-%d')) = YEARWEEK(now())
+      WHERE YEARWEEK(date_format(Manufacture_date,'%Y-%m-%d')) = YEARWEEK(now()) and flag=0
       order by Manufacture_date desc
     </select>
 
@@ -149,7 +152,7 @@
     <select id="this_month_data" resultMap="BaseResultMap">
     select *
     from Product_Warehouse
-    WHERE DATE_FORMAT( Manufacture_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    WHERE DATE_FORMAT( Manufacture_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and flag=0
     order by Manufacture_date desc
     </select>
 
@@ -157,7 +160,7 @@
     <select id="this_season_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where QUARTER(Manufacture_date)=QUARTER(NOW())
+      where QUARTER(Manufacture_date)=QUARTER(NOW()) and flag=0
       order by Manufacture_date desc
     </select>
 
@@ -165,7 +168,7 @@
     <select id="this_year_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where YEAR(Manufacture_date)=YEAR(NOW())
+      where YEAR(Manufacture_date)=YEAR(NOW()) and flag=0
       order by Manufacture_date desc
     </select>
 
@@ -175,13 +178,13 @@
     <select id="selectByProduct_no" parameterType="java.lang.String" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where Product_no = #{Product_no,jdbcType=VARCHAR}
+      where Product_no = #{Product_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectByStaff_no_workshop" parameterType="java.lang.String" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where Staff_no_workshop = #{Staff_no_workshop,jdbcType=VARCHAR}
+      where Staff_no_workshop = #{Staff_no_workshop,jdbcType=VARCHAR} and flag=0
     </select>
 
 

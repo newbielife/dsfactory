@@ -13,7 +13,7 @@
 
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-         SELECT count(*) FROM Client WHERE Client_no = #{Client_no}
+         SELECT count(*) FROM Client WHERE Client_no = #{Client_no} and flag=0
     </select>
 
 
@@ -89,12 +89,14 @@
    <select id="orderBy_Credit" resultMap="BaseResultMap">
         select *
         from Client
+        where  flag=0
         order by Credit desc
    </select>
 
    <select id="orderBy_Client_type" resultMap="BaseResultMap">
       select *
       from Client
+      where  flag=0
       order by Client_type desc
    </select>
 
@@ -102,7 +104,7 @@
     <select id="selectBy_partName_or_partNo" resultMap="BaseResultMap">
         select *
         from Client
-        where Client_no like '%${part1}%' or Client_name like '%${part2}%'
+        where Client_no like '%${part1}%' or Client_name like '%${part2}%'  and flag=0
     </select>
 
 
@@ -113,6 +115,7 @@
     </if>
     <include refid="Base_Column_List" />
     from Client
+    where flag=0
     <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
     </if>
@@ -125,7 +128,7 @@
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.ClientExample" resultType="java.lang.Integer">
-      select count(*) from Client
+      select count(*) from Client where  and flag=0
       <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
       </if>
@@ -135,18 +138,19 @@
     <select id="countBy_Name_and_Password" resultType="java.lang.Integer">
         select count(*)
         from Client
-        where Client_name = #{Client_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR}
+        where Client_name = #{Client_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectBy_Name_and_Password" resultMap="BaseResultMap">
         select *
         from Client
-        where Client_name = #{Client_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR}
+        where Client_name = #{Client_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="select_Biggest_Client_no"  resultType="java.lang.String">
         select Client_no
         from Client
+        where  flag=0
         order by Client_no desc
         limit 1
     </select>
@@ -156,7 +160,7 @@
     select
     <include refid="Base_Column_List" />
     from Client
-    where Client_no = #{Client_no,jdbcType=VARCHAR}
+    where Client_no = #{Client_no,jdbcType=VARCHAR} and flag=0
   </select>
 
 
@@ -166,7 +170,7 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete from Client
-        where Client_no = #{Client_no,jdbcType=VARCHAR}
+        where Client_no = #{Client_no,jdbcType=VARCHAR} and flag=0
     </delete>
 
 

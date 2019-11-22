@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Manufacture_Result WHERE Manufacture_no = #{Manufacture_no}
+                SELECT count(*) FROM Manufacture_Result WHERE Manufacture_no = #{Manufacture_no} and flag=0
         </select>
 
     <sql id="Example_Where_Clause">
@@ -91,6 +91,7 @@
     </if>
     <include refid="Base_Column_List" />
     from Manufacture_Result
+    where flag=0
     <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
     </if>
@@ -101,7 +102,7 @@
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Manufacture_ResultExample" resultType="java.lang.Integer">
-    select count(*) from Manufacture_Result
+    select count(*) from Manufacture_Result where flag=0
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -111,24 +112,25 @@
     select
     <include refid="Base_Column_List" />
     from Manufacture_Result
-    where Manufacture_no = #{Manufacture_no,jdbcType=VARCHAR}
+    where Manufacture_no = #{Manufacture_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
     select *
     from Manufacture_Result
+    where flag=0
     </select>
 
     <select id="selectByOrder_no_details" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Manufacture_Result
-    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
+    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectByStaff_no_manufacture" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Manufacture_Result
-    where Staff_no_manufacture = #{Staff_no_manufacture,jdbcType=VARCHAR}
+    where Staff_no_manufacture = #{Staff_no_manufacture,jdbcType=VARCHAR} and flag=0
     </select>
 
 

@@ -14,11 +14,11 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Export_Record WHERE Export_no = #{Export_no}
+                SELECT count(*) FROM Export_Record WHERE Export_no = #{Export_no} and flag=0
         </select>
 
     <select id="exist_or_not_by_Order_no_details"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Export_Record WHERE Order_no_details = #{Order_no_details}
+            SELECT count(*) FROM Export_Record WHERE Order_no_details = #{Order_no_details} and flag=0
     </select>
 
     <sql id="Example_Where_Clause">
@@ -95,6 +95,7 @@
     </if>
     <include refid="Base_Column_List" />
     from Export_Record
+    where flag=0
     <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
     </if>
@@ -108,6 +109,7 @@
     <select id="select_Biggest_Export_no"  resultType="java.lang.String">
         select Export_no
         from Export_Record
+        where flag=0
         order by Export_no desc
         limit 1
     </select>
@@ -116,7 +118,7 @@
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Export_RecordExample" resultType="java.lang.Integer">
-    select count(*) from Export_Record
+    select count(*) from Export_Record where flag=0
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -126,25 +128,26 @@
     select
     <include refid="Base_Column_List" />
     from Export_Record
-    where Export_no = #{Export_no,jdbcType=VARCHAR}
+    where Export_no = #{Export_no,jdbcType=VARCHAR} and flag=0
     </select>
 
 
     <select id="selectByOrder_no_details" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Export_Record
-    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
+    where Order_no_details = #{Order_no_details,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectByOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Export_Record
-    where Order_no_details like '${Order_no}%'
+    where Order_no_details like '${Order_no}%' and flag=0
     </select>
 
     <select id="getAll_orderByDelivery_date" resultMap="BaseResultMap">
     select *
     from Export_Record
+    where flag=0
     order by Delivery_date desc
     </select>
 
@@ -152,7 +155,7 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from Export_Record
-    where Export_no = #{Export_no,jdbcType=VARCHAR}
+    where Export_no = #{Export_no,jdbcType=VARCHAR} and flag=0
     </delete>
 
 
