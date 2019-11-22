@@ -123,13 +123,20 @@ public class ClientController {
     public Object registerUser(@RequestParam(value = "loginame", required = false) String loginame,
                                @RequestParam(value = "password", required = false) String password,
                                HttpServletRequest request)throws Exception{
-        JSONObject result = ExceptionConstants.standardSuccess();
-        Client ue= new Client();
-        ue.setClient_no(loginame);
-        ue.setPassword(password);
-//        clientService.checkLoginName(ue); //检查用户名和登录名
-//        ue = clientService.registerUser(ue,request);
-        return result;
+        BaseResponseInfo res = new BaseResponseInfo();
+        boolean exist=clientService.checkLoginName(loginame); //检查用户名和登录名
+        if (!exist){
+            int state=clientService.Register_new_Client(loginame,password,password);
+            if(state==6){
+                res.code=200;
+                res.data=loginame;
+            }else{
+                res.code=500;
+            }
+        }else{
+            res.code=500;
+        }
+        return res;
     }
 
     @GetMapping(value = "/getAllClient")
