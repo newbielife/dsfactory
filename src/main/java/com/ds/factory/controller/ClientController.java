@@ -1,13 +1,17 @@
 package com.ds.factory.controller;
 
 
-import com.ds.factory.domain.Client;
-import com.ds.factory.service.ClientService;
+import com.alibaba.fastjson.JSONObject;
+import com.ds.factory.constants.ExceptionConstants;
+
+import com.ds.factory.datasource.entities.Client;
+import com.ds.factory.service.Service.ClientService;
 import com.ds.factory.utils.BaseResponseInfo;
 import com.ds.factory.utils.ExceptionCodeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -16,7 +20,7 @@ import java.util.*;
 @RequestMapping(value = "/user")
 public class ClientController {
 
-    @Autowired
+    @Resource
     private ClientService clientService;
 
 
@@ -113,6 +117,19 @@ public class ClientController {
             res.data = "获取session失败";
         }
         return res;
+    }
+
+    @PostMapping(value = "/registerUser")
+    public Object registerUser(@RequestParam(value = "loginame", required = false) String loginame,
+                               @RequestParam(value = "password", required = false) String password,
+                               HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Client ue= new Client();
+        ue.setClient_no(loginame);
+        ue.setPassword(password);
+//        clientService.checkLoginName(ue); //检查用户名和登录名
+//        ue = clientService.registerUser(ue,request);
+        return result;
     }
 
 }
