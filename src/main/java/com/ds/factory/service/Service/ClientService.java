@@ -7,6 +7,8 @@ import java.util.List;
 
 @Service
 public interface ClientService {
+    boolean checkLoginName(String Client_no);
+
     int validateUser(String username, String password) throws Exception;
 
     int update_Password_By_PrimaryKey(String Client_no, String OldPassword, String NewPassword, String NewPassword_again);

@@ -1,7 +1,9 @@
 package com.ds.factory.datasource.entities;
 
 import java.util.Date;
+import lombok.Data;
 
+@Data
 public class Order_Details {
     private String Order_no_details;//Order_no+"-"+数字编号
     private String Product_no;

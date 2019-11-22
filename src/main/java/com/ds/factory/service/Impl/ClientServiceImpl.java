@@ -24,6 +24,11 @@ public class ClientServiceImpl implements ClientService {
     ClientMapper clientMapper;
 
     @Override
+    public boolean checkLoginName(String Client_no) {
+        return clientMapper.exist_or_not(Client_no)>0;
+    }
+
+    @Override
     public int validateUser(String username, String password) throws Exception {
         try {
             Client example;

@@ -1,6 +1,8 @@
 package com.ds.factory.datasource.entities;
 import java.util.Date;
+import lombok.Data;
 
+@Data
 public class Export_Record {
     private String Export_no;
     private String Staff_no;

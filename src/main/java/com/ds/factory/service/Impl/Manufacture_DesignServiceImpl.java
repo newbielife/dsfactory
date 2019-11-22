@@ -29,12 +29,16 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
     StaffMapper staffMapper;
 
     @Override
-    public int insertManufacture_Design(String Order_no_details,String Staff_no_design,String Workshop,
-                                        String Product_no,String Products_requirement) {
+    public int insertManufacture_Design(String Order_no_details,String Staff_no_design,String Workshop) {
         if(Order_no_details==null||order_detailsMapper.exist_or_not(Order_no_details.trim())==0)
             return 0;
         if(Staff_no_design==null||staffMapper.exist_or_not(Staff_no_design.trim())==0)
             return 0;
+
+        Order_Details ooo=order_detailsMapper.selectByPrimaryKey(Order_no_details);
+        String Product_no=ooo.getProduct_no().trim();
+        String Products_requirement=ooo.getProducts_requirement().trim();
+
         if(Product_no==null||product_criteriaMapper.exist_or_not(Product_no.trim())==0)
             return 0;
         if(Products_requirement==null||Products_requirement.trim().compareTo("")==0)
@@ -85,8 +89,16 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
                 return 0;
             String result = cut_details[i].substring(strStartIndex, strEndIndex).substring("，".length());
 
+
+            int strStartIndex2 = cut_details[i].indexOf("--");
+            int strEndIndex2 = cut_details[i].indexOf("）");
+            if (strStartIndex2 < 0 || strEndIndex2 < 0)
+                return 0;
+            String result2 = cut_details[i].substring(strStartIndex2, strEndIndex2).substring("--".length());
+
             sum+="，"+(requirement*Integer.parseInt(result.trim()));
             sum+="--"+cut_details[i].split("-")[1].trim();
+            sum=sum+result2.trim()+"）";
             if(i!=cut_details.length-1) sum+="；";
         }
         manufacture_design.setRaw_materials_requirement("原料所需："+sum);
@@ -113,14 +125,14 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
         manufacture_design.setDeadline(deadline);
 
 
-        Order_Details ooo=new Order_Details();
-        ooo.setOrder_no_details(Order_no_details);
+        Order_Details ooa=new Order_Details();
+        ooa.setOrder_no_details(Order_no_details);
         Calendar calendar1 = new GregorianCalendar();
         calendar1.setTime(deadline);
         calendar1.add(calendar.DATE,1);
         deadline=calendar1.getTime();
-        ooo.setDelivery_date(deadline);
-        order_detailsMapper.updateByPrimaryKeySelective(ooo);
+        ooa.setDelivery_date(deadline);
+        order_detailsMapper.updateByPrimaryKeySelective(ooa);
 
 
         Manufacture_Result manufacture_result=new Manufacture_Result();
