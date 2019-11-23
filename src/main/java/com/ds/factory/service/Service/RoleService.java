@@ -156,7 +156,7 @@ public class RoleService {
         String [] idArray=ids.split(",");
         int result=0;
         try{
-            result=roleMapperEx.batchDeleteRoleByIds(new Date(),userInfo==null?null:Long.parseLong(userInfo.getStaff_no()),idArray);
+            result=roleMapperEx.batchDeleteRoleByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }

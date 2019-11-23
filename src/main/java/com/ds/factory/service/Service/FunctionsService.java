@@ -192,7 +192,7 @@ public class FunctionsService {
         String [] idArray=ids.split(",");
         int result=0;
         try{
-            result =functionsMapperEx.batchDeleteFunctionsByIds(new Date(),userInfo==null?null:Long.parseLong(userInfo.getStaff_no()),idArray);
+            result =functionsMapperEx.batchDeleteFunctionsByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }

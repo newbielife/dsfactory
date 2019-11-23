@@ -139,7 +139,7 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
         List<Staff> staffs=staffMapper.selectByWorkshop(Workshop);
         String sum_="";
         for(int i=0;i<staffs.size();i++){
-            sum_+=staffs.get(i).getStaff_no().trim();
+            sum_+=staffs.get(i).getLoginame().trim();
             if(i!=staffs.size()-1)sum_+=";";
         }
         manufacture_result.setManufacture_no(biggest);
@@ -177,7 +177,7 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
     public List<Manufacture_Design> selectByStaff_no_manufacture(String Staff_no_manufacture) {
         if(Staff_no_manufacture==null||staffMapper.exist_or_not(Staff_no_manufacture.trim())==0)
             return null;
-        String Workshop=staffMapper.selectByPrimaryKey(Staff_no_manufacture).getWorkshop().trim();
+        String Workshop=staffMapper.selectByPrimaryKey(Staff_no_manufacture).getDepartment().trim();
         if(Workshop==null || Workshop.compareTo("")==0) return null;
         return manufacture_designMapper.selectByWorkshop(Workshop);
     }

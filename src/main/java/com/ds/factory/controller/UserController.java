@@ -1,15 +1,19 @@
 package com.ds.factory.controller;
 
+import com.ds.factory.datasource.entities.Client;
 import com.ds.factory.datasource.entities.Staff;
+import com.ds.factory.service.Service.ClientService;
 import com.ds.factory.service.Service.StaffService;
-import com.ds.factory.utils.BaseResponseInfo;
-import com.ds.factory.utils.ExceptionCodeConstants;
+import com.ds.factory.utils.*;
 import org.springframework.web.bind.annotation.*;
+import com.ds.factory.constants.BusinessConstants;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+
+import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 
 
 @RestController
@@ -18,6 +22,10 @@ public class UserController {
 
     @Resource
     private StaffService staffService;
+
+    @Resource
+    private ClientService clientService;
+
 
 
     private static String message = "成功";
@@ -136,24 +144,31 @@ public class UserController {
     }
 
     @GetMapping(value = "/getAllStaff")
-    public @ResponseBody BaseResponseInfo getAllStaff(HttpServletRequest request)throws Exception {
-        BaseResponseInfo res = new BaseResponseInfo();
-        try {
-            Map<String, Object> data = new HashMap<String, Object>();
-            Object userInfo = request.getSession().getAttribute("user");
-            if(userInfo!=null) {
-                Staff user = (Staff) userInfo;
-                user.setPassword(null);
-                data.put("user", user);
-            }
-            res.code = 200;
-            res.data = data;
-        } catch(Exception e){
-            e.printStackTrace();
-            res.code = 500;
-            res.data = "获取session失败";
+    public String getList(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                          @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                          @RequestParam(value = Constants.SEARCH, required = false) String search,
+                          HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
+        parameterMap.put(Constants.SEARCH, search);
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize != null && pageSize <= 0) {
+            pageSize = 10;
         }
-        return res;
+        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
+        if (StringUtil.isNotEmpty(offset)) {
+            parameterMap.put(Constants.OFFSET, offset);
+        }
+        List<?> list = clientService.getAll_Client();
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        System.out.println(list);
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
     @GetMapping(value = "/logout")

@@ -146,7 +146,7 @@ public class FunctionsController {
                     Object userInfo = request.getSession().getAttribute("user");
                     if(userInfo != null) {
                         Staff user = (Staff) userInfo;
-                        loginName = user.getStaff_no();
+                        loginName = user.getLoginame();
                     }
                     if(("admin").equals(loginName)) {
                         dataList.add(fun);

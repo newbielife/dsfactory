@@ -221,7 +221,7 @@ public class UserBusinessService {
         String [] idArray=ids.split(",");
         int result=0;
         try{
-            result=  userBusinessMapperEx.batchDeleteUserBusinessByIds(new Date(),userInfo==null?null:Long.parseLong(userInfo.getStaff_no()),idArray);
+            result=  userBusinessMapperEx.batchDeleteUserBusinessByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }

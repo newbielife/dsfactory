@@ -3,15 +3,19 @@
 <mapper namespace="com.ds.factory.datasource.mappers.StaffMapper" >
 
    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Staff" >
-            <id column="Staff_no" jdbcType="VARCHAR" property="Staff_no" />
-            <result column="Staff_name" jdbcType="VARCHAR" property="Staff_name" />
-            <result column="Password" jdbcType="VARCHAR" property="Password" />
-            <result column="Department" jdbcType="VARCHAR" property="Department" />
-            <result column="Workshop" jdbcType="VARCHAR" property="Workshop" />
-            <result column="Authority" jdbcType="VARCHAR" property="Authority" />
-            <result column="Busy" jdbcType="BIGINT" property="Busy" />
-            <result column="Position" jdbcType="VARCHAR" property="Position" />
-            <result column="Details" jdbcType="VARCHAR" property="Details" />
+            <id column="id" jdbcType="BIGINT" property="Staff_no" />
+            <result column="username" jdbcType="VARCHAR" property="username" />
+            <result column="loginame" jdbcType="VARCHAR" property="loginame" />
+            <result column="password" jdbcType="VARCHAR" property="password" />
+            <result column="position" jdbcType="VARCHAR" property="position" />
+            <result column="department" jdbcType="VARCHAR" property="department" />
+            <result column="email" jdbcType="BIGINT" property="email" />
+            <result column="phonenum" jdbcType="VARCHAR" property="phonenum" />
+            <result column="ismanager" jdbcType="VARCHAR" property="ismanager" />
+            <result column="isystem" jdbcType="BIGINT" property="isystem" />
+            <result column="status" jdbcType="VARCHAR" property="status" />
+            <result column="description" jdbcType="VARCHAR" property="description" />
+            <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
 
 

@@ -141,7 +141,7 @@ public class LogService {
         Object userInfo = request.getSession().getAttribute("user");
         if(userInfo!=null) {
             Staff user = (Staff) userInfo;
-            return Long.parseLong(user.getStaff_no());
+            return user.getId();
         } else {
             return null;
         }

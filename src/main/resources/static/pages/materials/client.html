@@ -404,7 +404,7 @@
         var type = $.trim($("#searchClient_type").val());
         $.ajax({
             type: "get",
-            url: "/client/list",
+            url: "/user/getAllStaff",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
