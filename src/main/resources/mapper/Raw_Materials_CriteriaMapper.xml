@@ -10,11 +10,11 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_no = #{Material_no}
+                SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_no = #{Material_no} and flag=0
         </select>
 
      <select id="exist_or_notByName"  resultType="java.lang.Integer">
-             SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_name = #{Material_name}
+             SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_name = #{Material_name} and flag=0
      </select>
 
     <sql id="Example_Where_Clause">
@@ -90,6 +90,7 @@
       </if>
       <include refid="Base_Column_List" />
       from Raw_Materials_Criteria
+      where flag=0
       <if test="_parameter != null">
           <include refid="Example_Where_Clause" />
       </if>
@@ -101,13 +102,14 @@
     <select id="selectAll" resultMap="BaseResultMap">
           select *
           from Raw_Materials_Criteria
+          where flag=0
           order by Material_no asc
         </select>
 
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Raw_Materials_CriteriaExample" resultType="java.lang.Integer">
-      select count(*) from Raw_Materials_Criteria
+      select count(*) from Raw_Materials_Criteria where flag=0
       <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
       </if>
@@ -118,18 +120,18 @@
       select
       <include refid="Base_Column_List" />
       from Raw_Materials_Criteria
-      where Material_no = #{Material_no,jdbcType=VARCHAR}
+      where Material_no = #{Material_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectByMaterial_name" parameterType="java.lang.String" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Criteria
-      where Material_name = #{Material_name,jdbcType=VARCHAR}
+      where Material_name = #{Material_name,jdbcType=VARCHAR} and flag=0
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from Raw_Materials_Criteria
-    where Material_no = #{Material_no,jdbcType=VARCHAR}
+    where Material_no = #{Material_no,jdbcType=VARCHAR} and flag=0
     </delete>
 
 

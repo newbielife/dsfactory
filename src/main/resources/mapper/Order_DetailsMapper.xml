@@ -80,7 +80,7 @@
     </sql>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Order_Details WHERE Order_no_details = #{Order_no_details}
+            SELECT count(*) FROM Order_Details WHERE Order_no_details = #{Order_no_details} and flag=0
     </select>
 
     <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Order_DetailsExample" resultMap="BaseResultMap">
@@ -101,13 +101,13 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Details
-        where Order_no_details = #{Order_no_details}
+        where Order_no_details = #{Order_no_details} and flag=0
     </select>
 
     <select id="countLikeOrder_no_Check_zero" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(*)
         from Order_Details
-        where Order_no_details like '${part}%' and Order_Details.`Check` = 0
+        where Order_no_details like '${part}%' and Order_Details.`Check` = 0 and flag=0
     </select>
 
 
@@ -115,7 +115,7 @@
     <select id="selectLikeOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Details
-        where Order_no_details like '${part}%'
+        where Order_no_details like '${part}%' and flag=0
         order by Order_no_details asc
     </select>
 
@@ -123,7 +123,7 @@
     <select id="selectByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Details
-        where Client_no = #{Client_no}
+        where Client_no = #{Client_no} and flag=0
         order by Order_no_details asc
     </select>
 
@@ -145,7 +145,7 @@
     <select id="selectFinished_orderByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Details
-        where Client_no = #{Client_no} and Order_Details.`Check` = 1
+        where Client_no = #{Client_no} and Order_Details.`Check` = 1 and flag=0
         order by Order_no_details asc
     </select>
 
@@ -154,7 +154,7 @@
     <select id="selectUnFinished_orderByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
         select *
         from Order_Details
-        where Client_no = #{Client_no} and Order_Details.`Check` = 0
+        where Client_no = #{Client_no} and Order_Details.`Check` = 0 and flag=0
         order by Order_no_details asc
     </select>
 
@@ -162,7 +162,7 @@
     <select id="selectAll_Finished" resultMap="BaseResultMap">
         select *
         from Order_Details
-        where Order_Details.`Check` = 1
+        where Order_Details.`Check` = 1 and flag=0
         order by Payment_deadline desc
     </select>
 
@@ -171,7 +171,7 @@
     <select id="selectAll_UnFinished" resultMap="BaseResultMap">
         select *
         from Order_Details
-        where Order_Details.`Check` = 0
+        where Order_Details.`Check` = 0 and flag=0
         order by Payment_deadline desc
     </select>
 

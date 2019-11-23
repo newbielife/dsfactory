@@ -17,7 +17,7 @@
 
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Staff WHERE Staff_no = #{Staff_no}
+            SELECT count(*) FROM Staff WHERE Staff_no = #{Staff_no} and flag=0
     </select>
 
     <sql id="Example_Where_Clause">
@@ -95,6 +95,7 @@
         </if>
         <include refid="Base_Column_List" />
         from Staff
+        where flag=0
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />
         </if>
@@ -106,7 +107,7 @@
         <select id="select_Department_orderBy_Busy" resultMap="BaseResultMap">
             select *
             from Staff
-            where Department = #{Department}
+            where Department = #{Department} and flag=0
             order by Busy
         </select>
 
@@ -114,13 +115,14 @@
         <select id="selectBy_partName_or_partNo" resultMap="BaseResultMap">
             select *
             from Staff
-            where Staff_no like '%${part1}%' or Staff_name like '%${part2}%'
+            where Staff_no like '%${part1}%' or Staff_name like '%${part2}%' and flag=0
         </select>
 
 
         <select id="orderBy_Authority" resultMap="BaseResultMap">
             select *
             from Staff
+            where flag=0
             order by Authority desc
         </select>
 
@@ -129,13 +131,13 @@
         <select id="countBy_Name_and_Password" resultType="java.lang.Integer">
             select count(*)
             from Staff
-            where Staff_name = #{Staff_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR}
+            where Staff_name = #{Staff_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR} and flag=0
         </select>
 
         <select id="selectBy_Name_and_Password" resultMap="BaseResultMap">
             select *
             from Staff
-            where Staff_name = #{Staff_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR}
+            where Staff_name = #{Staff_name,jdbcType=VARCHAR} and Password = #{Password,jdbcType=VARCHAR} and flag=0
         </select>
 
 
@@ -145,6 +147,7 @@
         <select id="select_Biggest_Staff_no"  resultType="java.lang.String">
             select Staff_no
             from Staff
+            where flag=0
             order by Staff_no desc
             limit 1
         </select>
@@ -156,13 +159,13 @@
         select
         <include refid="Base_Column_List" />
         from Staff
-        where Staff_no = #{Staff_no,jdbcType=VARCHAR}
+        where Staff_no = #{Staff_no,jdbcType=VARCHAR} and flag=0
       </select>
 
       <select id="selectByWorkshop" parameterType="java.lang.String" resultMap="BaseResultMap">
           select *
           from Staff
-          where Workshop = #{Workshop,jdbcType=VARCHAR}
+          where Workshop = #{Workshop,jdbcType=VARCHAR} and flag=0
         </select>
 
 

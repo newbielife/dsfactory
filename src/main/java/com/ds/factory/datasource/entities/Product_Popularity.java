@@ -1,5 +1,7 @@
 package com.ds.factory.datasource.entities;
+import lombok.Data;
 
+@Data
 public class Product_Popularity {
     private String Product_no;
     private String Product_name;

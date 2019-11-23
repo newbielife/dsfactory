@@ -83,8 +83,10 @@
                          Product_Criteria.Guarantee_period,Product_Criteria.Unit_Price,a.num as Purchase_times
                 from Product_Criteria left join (select Product_no,count(Order_Details.Product_no) as num
                                                     from Order_Details
+                                                    where flag=0
                                                     GROUP BY Order_Details.Product_no) as a
                                                  on(Product_Criteria.Product_no=a.Product_no)
+                where Product_Criteria.flag=0
                 order by a.num desc
     </select>
 </mapper>

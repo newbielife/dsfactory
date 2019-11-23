@@ -13,7 +13,7 @@
 
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-    SELECT count(*) FROM Payment WHERE Payment_no = #{Payment_no}
+    SELECT count(*) FROM Payment WHERE Payment_no = #{Payment_no} and flag=0
     </select>
 
 
@@ -85,7 +85,7 @@
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.PaymentExample" resultType="java.lang.Integer">
-    select count(*) from Payment
+    select count(*) from Payment where flag=0
     <if test="_parameter != null">
     <include refid="Example_Where_Clause" />
     </if>
@@ -95,6 +95,7 @@
     <select id="select_Biggest_Payment_no"  resultType="java.lang.String">
     select Payment_no
     from Payment
+    where flag=0
     order by Payment_no desc
     limit 1
     </select>
@@ -104,31 +105,32 @@
     select
     <include refid="Base_Column_List" />
     from Payment
-    where Payment_no = #{Payment_no,jdbcType=VARCHAR}
+    where Payment_no = #{Payment_no,jdbcType=VARCHAR} and flag=0
     </select>
 
 
     <select id="selectByStaff_no_accountant" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Payment
-    where Staff_no_accountant = #{Staff_no_accountant,jdbcType=VARCHAR}
+    where Staff_no_accountant = #{Staff_no_accountant,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectByOrder_no" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Payment
-    where Order_no = #{Order_no,jdbcType=VARCHAR}
+    where Order_no = #{Order_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="selectByClient_no" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Payment
-    where Client_no = #{Client_no,jdbcType=VARCHAR}
+    where Client_no = #{Client_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="getAll" resultMap="BaseResultMap">
     select *
     from Payment
+    where flag=0
     </select>
 
 

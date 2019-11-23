@@ -24,6 +24,11 @@ public class ClientServiceImpl implements ClientService {
     ClientMapper clientMapper;
 
     @Override
+    public boolean checkLoginName(String Client_no) {
+        return clientMapper.exist_or_not(Client_no)>0;
+    }
+
+    @Override
     public int validateUser(String username, String password) throws Exception {
         try {
             Client example;
@@ -74,11 +79,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public int Register_new_Client(String name, String password, String password_again) {
-        if(password.trim().compareTo("")==0 || password==null ||
-                password_again.trim().compareTo("")==0 || password_again==null) return 1;
-        if(password.compareTo(password_again)!=0) return 2;
-
+    public int Register_new_Client(String name, String password) {
+        if(password.trim().compareTo("")==0 || password==null ) return 1;
         String temp="";
         try {
             temp = Tools.md5Encryp(password);

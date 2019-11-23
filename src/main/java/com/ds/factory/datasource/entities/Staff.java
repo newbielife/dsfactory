@@ -1,6 +1,8 @@
 package com.ds.factory.datasource.entities;
 
+import lombok.Data;
 
+@Data
 public class Staff {
     private String Staff_no;
     private String Staff_name;

@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Expired_Food WHERE Food_no = #{Food_no}
+                SELECT count(*) FROM Expired_Food WHERE Food_no = #{Food_no} and flag=0
         </select>
 
     <sql id="Example_Where_Clause">
@@ -91,6 +91,7 @@
       </if>
       <include refid="Base_Column_List" />
       from Expired_Food
+      where  flag=0
       <if test="_parameter != null">
           <include refid="Example_Where_Clause" />
       </if>
@@ -103,6 +104,7 @@
     <select id="select_Biggest_Food_no"  resultType="java.lang.String">
       select Food_no
       from Expired_Food
+      where  flag=0
       order by Food_no desc
       limit 1
     </select>
@@ -111,7 +113,7 @@
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Expired_FoodExample" resultType="java.lang.Integer">
-      select count(*) from Expired_Food
+      select count(*) from Expired_Food where flag=0
       <if test="_parameter != null">
         <include refid="Example_Where_Clause" />
       </if>
@@ -121,24 +123,27 @@
       select
       <include refid="Base_Column_List" />
       from Expired_Food
-      where Food_no = #{Food_no,jdbcType=VARCHAR}
+      where Food_no = #{Food_no,jdbcType=VARCHAR} and flag=0
     </select>
 
     <select id="orderByExpired_date" resultMap="BaseResultMap">
           select *
           from Expired_Food
+          where  flag=0
           order by Expired_date desc
     </select>
 
     <select id="orderByLoss_num" resultMap="BaseResultMap">
           select *
           from Expired_Food
+          where  flag=0
           order by Loss_num desc
     </select>
 
     <select id="orderByLoss_money" resultMap="BaseResultMap">
           select *
           from Expired_Food
+          where  flag=0
           order by Loss_money desc
     </select>
 
@@ -146,14 +151,14 @@
     <select id="Expired_Raw_materials" resultMap="BaseResultMap">
           select *
           from Expired_Food
-          where Food_type = '原料'
+          where Food_type = '原料' and flag=0
           order by Expired_date desc
     </select>
 
     <select id="Expired_Products" resultMap="BaseResultMap">
           select *
           from Expired_Food
-          where Food_type = '成品'
+          where Food_type = '成品' and flag=0
           order by Expired_date desc
     </select>
 
@@ -166,7 +171,7 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from Expired_Food
-    where Food_no = #{Food_no,jdbcType=VARCHAR}
+    where Food_no = #{Food_no,jdbcType=VARCHAR} and flag=0
     </delete>
 
 

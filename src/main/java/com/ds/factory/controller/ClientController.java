@@ -123,13 +123,41 @@ public class ClientController {
     public Object registerUser(@RequestParam(value = "loginame", required = false) String loginame,
                                @RequestParam(value = "password", required = false) String password,
                                HttpServletRequest request)throws Exception{
-        JSONObject result = ExceptionConstants.standardSuccess();
-        Client ue= new Client();
-        ue.setClient_no(loginame);
-        ue.setPassword(password);
-//        clientService.checkLoginName(ue); //检查用户名和登录名
-//        ue = clientService.registerUser(ue,request);
-        return result;
+        BaseResponseInfo res = new BaseResponseInfo();
+        boolean exist=clientService.checkLoginName(loginame); //检查用户名和登录名
+        if (!exist){
+            int state=clientService.Register_new_Client(loginame,password,password);
+            if(state==6){
+                res.code=200;
+                res.data=loginame;
+            }else{
+                res.code=500;
+            }
+        }else{
+            res.code=500;
+        }
+        return res;
+    }
+
+    @GetMapping(value = "/getAllClient")
+    public @ResponseBody BaseResponseInfo getAllClient(HttpServletRequest request)throws Exception {
+        BaseResponseInfo res = new BaseResponseInfo();
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            Object userInfo = request.getSession().getAttribute("user");
+            if(userInfo!=null) {
+                Client user = (Client) userInfo;
+                user.setPassword(null);
+                data.put("user", user);
+            }
+            res.code = 200;
+            res.data = data;
+        } catch(Exception e){
+            e.printStackTrace();
+            res.code = 500;
+            res.data = "获取session失败";
+        }
+        return res;
     }
 
 }

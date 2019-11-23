@@ -1,5 +1,7 @@
 package com.ds.factory.datasource.entities;
+import lombok.Data;
 
+@Data
 public class Refund_Application {
     private String Refund_no;
     private String Order_no;

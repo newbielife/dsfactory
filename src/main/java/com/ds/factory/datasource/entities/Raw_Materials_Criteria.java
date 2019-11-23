@@ -1,6 +1,8 @@
 package com.ds.factory.datasource.entities;
 
+import lombok.Data;
 
+@Data
 public class Raw_Materials_Criteria {
     private String Material_no;
     private String Material_name;

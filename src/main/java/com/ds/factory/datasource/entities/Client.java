@@ -1,5 +1,8 @@
 package com.ds.factory.datasource.entities;
 
+import lombok.Data;
+
+@Data
 public class Client {
     String Client_no;
     String Client_name;

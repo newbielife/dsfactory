@@ -7,12 +7,14 @@ import java.util.List;
 
 @Service
 public interface ClientService {
+    boolean checkLoginName(String Client_no);
+
     int validateUser(String username, String password) throws Exception;
 
     int update_Password_By_PrimaryKey(String Client_no, String OldPassword, String NewPassword, String NewPassword_again);
     //返回：1（旧密码错误）；2（新密码存在空值）；3（两个新密码冲突）；4（密码未变更）；5（MD5转化失败）；6（修改成功）
 
-    int Register_new_Client(String name, String password, String password_again);
+    int Register_new_Client(String name, String password);
     //返回：1（密码空）；2（两次密码不一致）；3（已经注册的用户名与密码）；4（人员注册过多，超过上限一百万）；5（添加过程失败）；6（注册成功）
 
     Client Client_Log_in(String name, String password);

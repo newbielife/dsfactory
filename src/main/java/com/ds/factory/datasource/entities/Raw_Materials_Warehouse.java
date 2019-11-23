@@ -1,7 +1,9 @@
 package com.ds.factory.datasource.entities;
 
 import java.util.Date;
+import lombok.Data;
 
+@Data
 public class Raw_Materials_Warehouse {
     private String Stock_no;
     private String Material_no;
