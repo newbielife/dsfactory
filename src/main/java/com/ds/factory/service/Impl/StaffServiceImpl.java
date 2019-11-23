@@ -51,6 +51,16 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public int update_Password_By_PrimaryKey(String loginname, String OldPassword, String NewPassword) {
+        return 0;
+    }
+
+    @Override
+    public int Register_new_Staff(String loginname, String password) {
+        return 0;
+    }
+
+    @Override
     public List<Staff> getAll_Staff() throws Exception {
         StaffExample example = new StaffExample();
         List<Staff> list=null;
@@ -108,6 +118,11 @@ public class StaffServiceImpl implements StaffService {
         return staffMapper.insert(s);
     }
 
+    @Override
+    public int insert_Staff_details(Staff staff) {
+        return 0;
+    }
+
 
     @Override
     public int insertSelective(Staff record) {
@@ -131,93 +146,6 @@ public class StaffServiceImpl implements StaffService {
         return staffMapper.updateByPrimaryKeySelective(staff);
     }
 
-    @Override
-    public int update_Password_By_PrimaryKey(String Staff_no,String old, String Password,String P2) {
-        String old_correct=staffMapper.selectByPrimaryKey(Staff_no).getPassword().trim();
-        String old_input_MD5="";
-        try {
-            old_input_MD5 = Tools.md5Encryp(old);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error(">>>>>>>>>>>>>>转化MD5字符串错误 ：" + e.getMessage());
-            return 5;
-        }
-
-        if(old_correct.compareTo(old_input_MD5.trim())!=0)    return 1;
-        if(Password==null||Password.trim().compareTo("")==0 || P2==null|| P2.trim().compareTo("")==0)   return 2;
-        if(Password.trim().compareTo(P2.trim())!=0)    return 3;
-        if(Password.trim().compareTo(old.trim())==0)    return 4;
-        Staff s=new Staff();
-        //因密码用MD5加密，需要对密码进行转化
-        try {
-            Password = Tools.md5Encryp(Password);
-            s.setPassword(Password);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error(">>>>>>>>>>>>>>转化MD5字符串错误 ：" + e.getMessage());
-            return 5;
-        }
-        s.setStaff_no(Staff_no);
-        staffMapper.updateByPrimaryKeySelective(s);
-        return 6;
-    }
-
-    @Override
-    public int Register_new_Staff(String name, String password, String password_again) {
-        if( password==null ||password.trim().compareTo("")==0 ||
-                password_again==null ||password_again.trim().compareTo("")==0 ) return 1;
-        if(password.compareTo(password_again)!=0) return 2;
-
-        String temp="";
-        try {
-            temp = Tools.md5Encryp(password);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error(">>>>>>>>>>>>>>转化MD5字符串错误 ：" + e.getMessage());
-        }
-        if(staffMapper.countBy_Name_and_Password(name,temp)==1) return 3;
-
-        String select_Biggest_Staff_no=staffMapper.select_Biggest_Staff_no();
-        String no="";
-        int no_=Integer.parseInt(select_Biggest_Staff_no);
-        boolean flag=true;
-        while(flag)
-        {
-            no_++;  no=""+no_;
-            System.out.println(no_+"");
-            switch (no.length())
-            {
-                case 1: no="00000"+no;  break;
-                case 2: no="0000"+no;   break;
-                case 3: no="000"+no;    break;
-                case 4: no="00"+no;     break;
-                case 5: no="0"+no;      break;
-                case 6: break;
-            }
-            if(!exist_or_not(no)) flag=false;
-        }
-        if(no.length()>=7)  return 4;
-
-        Staff s=new Staff();
-        s.setStaff_no(no);
-        s.setStaff_name(name);
-        s.setPassword(password);
-        int i=insert_Staff_details(s);
-        if(i==1)    return 6;
-        else        return 5;
-    }
-
-    @Override
-    public Staff Staff_Log_in(String name, String password) {
-        try {
-            password = Tools.md5Encryp(password);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error(">>>>>>>>>>>>>>转化MD5字符串错误 ：" + e.getMessage());
-        }
-        if(staffMapper.countBy_Name_and_Password(name,password)!=1)return null;
-        return staffMapper.selectBy_Name_and_Password(name,password);
-    }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int insertUser(String beanJson, HttpServletRequest request)throws Exception {

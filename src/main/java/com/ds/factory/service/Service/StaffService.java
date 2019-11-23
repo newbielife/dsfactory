@@ -18,9 +18,6 @@ public interface StaffService {
     int Register_new_Staff(String loginname, String password);
     //返回：1（密码空）；2（两次密码不一致）；3（已经注册的用户名与密码）；4（人员注册过多，超过上限一百万）；5（添加过程失败）；6（注册成功）
 
-    Staff Staff_Log_in(String loginname, String password);
-    //返回：null（密码错误，或者用户不存在）;非null（登录成功，返回职工信息Staff类）
-
     List<Staff> getAll_Staff()throws Exception;
     //全员信息
 
