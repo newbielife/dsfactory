@@ -21,7 +21,7 @@ import java.util.Map;
 import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 
 /**
- * @ 大山食品厂ERP
+ * @ 大山食品厂
  */
 @RestController
 @RequestMapping(value = "/userBusiness")

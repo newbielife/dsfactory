@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2019-Now 大山食品厂ERP All rights reserved.
+ * Copyright (c) 2019-Now 大山食品厂 All rights reserved.
  * 
  * 通用公共JavaScript，注意：项目请不要修改公共CSS样式，若需要新增或调整，请在common.js中覆盖
  * @author gyc_lyz_ztm
