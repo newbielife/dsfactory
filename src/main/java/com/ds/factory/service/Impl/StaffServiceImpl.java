@@ -3,20 +3,25 @@ package com.ds.factory.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.dao.Example.StaffExample;
+import com.ds.factory.datasource.entities.Client;
 import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.datasource.mappers.StaffMapper;
 import com.ds.factory.service.Service.StaffService;
+import com.ds.factory.utils.ExceptionCodeConstants;
 import com.ds.factory.utils.JshException;
 import com.ds.factory.utils.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class StaffServiceImpl implements StaffService {
@@ -41,6 +46,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public boolean checkLoginName(String Staff_no) {
+        return staffMapper.exist_or_not(Staff_no)>0;
+    }
+
+    @Override
     public List<Staff> getAll_Staff() throws Exception {
         StaffExample example = new StaffExample();
         List<Staff> list=null;
@@ -50,6 +60,25 @@ public class StaffServiceImpl implements StaffService {
             JshException.readFail(logger, e);
         }
         return list;
+    }
+
+    @Override
+    public int validateUser(String username, String password) throws Exception {
+        try {
+            Staff example;
+            example=staffMapper.selectByPrimaryKey(username);
+            if(example==null){
+                return ExceptionCodeConstants.UserExceptionCode.USER_PASSWORD_ERROR;
+            }
+            else if (!example.getPassword().equals(password)) {
+                return ExceptionCodeConstants.UserExceptionCode.USER_PASSWORD_ERROR;
+            }
+        } catch (Exception e) {
+            logger.error(">>>>>>>>访问验证用户姓名是否存在后台信息异常", e);
+            return ExceptionCodeConstants.UserExceptionCode.USER_ACCESS_EXCEPTION;
+        }
+        return ExceptionCodeConstants.UserExceptionCode.USER_CONDITION_FIT;
+
     }
 
     @Override
@@ -237,6 +266,12 @@ public class StaffServiceImpl implements StaffService {
             JshException.writeFail(logger, e);
         }
         return result;
+    }
+
+    @Override
+    public Staff getCurrentUser()throws Exception{
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        return (Staff)request.getSession().getAttribute("user");
     }
 
 }

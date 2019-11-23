@@ -2,8 +2,12 @@ package com.ds.factory.service.Service;
 
 import com.ds.factory.datasource.entities.Staff;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public interface StaffService {
@@ -19,6 +23,10 @@ public interface StaffService {
 
     List<Staff> getAll_Staff()throws Exception;
     //全员信息
+
+    boolean checkLoginName(String Staff_no);
+
+    int validateUser(String username, String password) throws Exception;
 
     List<Staff> selectBy_partName_or_partNo(String part);
     //模糊查询
@@ -45,4 +53,6 @@ public interface StaffService {
     boolean exist_or_not(String Staff_no);//用主键判断是否存在
 
     Staff selectByPrimaryKey(String Staff_no);//用主键选人
+
+    Staff getCurrentUser()throws Exception;
 }
