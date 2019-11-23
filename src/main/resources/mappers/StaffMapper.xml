@@ -3,7 +3,7 @@
 <mapper namespace="com.ds.factory.datasource.mappers.StaffMapper" >
 
    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Staff" >
-            <id column="id" jdbcType="BIGINT" property="Staff_no" />
+            <id column="id" jdbcType="BIGINT" property="id" />
             <result column="username" jdbcType="VARCHAR" property="username" />
             <result column="loginame" jdbcType="VARCHAR" property="loginame" />
             <result column="password" jdbcType="VARCHAR" property="password" />
@@ -18,11 +18,20 @@
             <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id, username, loginame, password, position, department, email, phonenum, ismanager,
+            isystem, Status, description, remark
+      </sql>
 
-
-    <select id="exist_or_not"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Staff WHERE Staff_no = #{Staff_no} and flag=0
+    <select id="exist_or_not" parameterType="java.lang.String" resultType="java.lang.Integer">
+            SELECT count(*) FROM Staff WHERE loginame = #{loginame,jdbcType=VARCHAR}
     </select>
+
+    <select id="selectByLoginame" parameterType="java.lang.String"  resultMap="BaseResultMap">
+                SELECT *
+                FROM Staff
+                WHERE loginame = #{loginame,jdbcType=VARCHAR}
+        </select>
 
     <sql id="Example_Where_Clause">
         <where>
@@ -86,7 +95,7 @@
       </sql>
 
 
-      <sql id="Base_Column_List">
+      <!--sql id="Base_Column_List">
         Staff_no,   Staff_name, Password,   Department, Workshop,
         Authority,  Busy,       Position,   Details
       </sql>
@@ -372,7 +381,7 @@
             Position = #{Position,jdbcType=VARCHAR},
             Details = #{Details,jdbcType=VARCHAR}
         where Staff_no = #{Staff_no,jdbcType=VARCHAR}
-      </update>
+      </update-->
 
 
 </mapper>

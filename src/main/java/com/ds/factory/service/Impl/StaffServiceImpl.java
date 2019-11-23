@@ -32,7 +32,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Staff selectByPrimaryKey(String userno) {
-        return staffMapper.selectByPrimaryKey(userno);
+        return null;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public boolean checkLoginName(String Staff_no) {
-        return staffMapper.exist_or_not(Staff_no)>0;
+    public boolean checkLoginName(String loginame) {
+        return staffMapper.exist_or_not(loginame)>0;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class StaffServiceImpl implements StaffService {
         StaffExample example = new StaffExample();
         List<Staff> list=null;
         try{
-            list=staffMapper.selectByExample(example);
+            //list=staffMapper.selectByExample(example);
         }catch(Exception e){
             JshException.readFail(logger, e);
         }
@@ -76,9 +76,9 @@ public class StaffServiceImpl implements StaffService {
     public int validateUser(String username, String password) throws Exception {
         try {
             Staff example;
-            example=staffMapper.selectByPrimaryKey(username);
+            example=staffMapper.selectByLoginame(username);
             if(example==null){
-                return ExceptionCodeConstants.UserExceptionCode.USER_PASSWORD_ERROR;
+                return ExceptionCodeConstants.UserExceptionCode.USER_NOT_EXIST;
             }
             else if (!example.getPassword().equals(password)) {
                 return ExceptionCodeConstants.UserExceptionCode.USER_PASSWORD_ERROR;
@@ -94,19 +94,19 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<Staff> selectBy_partName_or_partNo(String part) {
         if(part==null || part.trim().compareTo("")==0)  part="";
-        return staffMapper.selectBy_partName_or_partNo(part,part);
+        return null;//staffMapper.selectBy_partName_or_partNo(part,part);
     }
 
     @Override
     public List<Staff> orderBy_Authority() {
-        return staffMapper.orderBy_Authority();
+        return null;
     }
 
     @Override
     public List<Staff> select_Department_orderBy_Busy(String Department) {
         List<Staff> list=null;
         try{
-            list=staffMapper.select_Department_orderBy_Busy(Department);
+            //list=staffMapper.select_Department_orderBy_Busy(Department);
         }catch(Exception e){
             JshException.readFail(logger, e);
         }
@@ -115,7 +115,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public int insert(Staff s){
-        return staffMapper.insert(s);
+        return 0;
     }
 
     @Override
@@ -126,24 +126,24 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public int insertSelective(Staff record) {
-        return staffMapper.insertSelective(record);
+        return 0;
     }
 
     @Override
     public int deleteByPrimaryKey(String Staff_no){
-        return staffMapper.deleteByPrimaryKey(Staff_no);
+        return 0;
     }
 
     @Override
     public int updateByPrimaryKey(Staff staff){
         //传入实体类Staff，以Staff_no为检索修改，其他数据不得为空null或0
-        return staffMapper.updateByPrimaryKey(staff);
+        return 0;
     }
 
     @Override
     public int updateByPrimaryKeySelective(Staff staff){
         //传入实体类Staff，以Staff_no为检索修改，其他数据可以为空null或0
-        return staffMapper.updateByPrimaryKeySelective(staff);
+        return 0;
     }
 
 
@@ -161,7 +161,7 @@ public class StaffServiceImpl implements StaffService {
         }
         int result=0;
         try{
-            result=staffMapper.insertSelective(staff);
+            //result=staffMapper.insertSelective(staff);
         }catch(Exception e){
             JshException.writeFail(logger, e);
         }

@@ -8,8 +8,29 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface StaffMapper {
+    Staff selectByLoginame(@Param("loginame") String loginame);
+    int exist_or_not(@Param("loginame") String loginame);
+
+
+
+
+
+
+
+
+
+
+
+
+
     List<Staff> selectByWorkshop(@Param("Workshop") String Workshop);
-    int exist_or_not(@Param("Staff_no") String Staff_no);
+
+
+
+
+
+
+
 
     int updateByExampleSelective(@Param("record") Staff record, @Param("example") StaffExample example);//包括主键在内需要修改，但是内容可以为空
     int updateByExample(@Param("record") Staff record, @Param("example") StaffExample example);//连主键也要修改
