@@ -108,34 +108,6 @@ public class StaffServiceImpl implements StaffService {
         return staffMapper.insert(s);
     }
 
-    @Override
-    public int insert_Staff_details(Staff staff){
-        if(staff.getStaff_no().trim().compareTo("")==0 || staff.getStaff_no()==null)
-            return 0;
-        staff.setStaff_no(staff.getStaff_no());
-        staff.setStaff_name(staff.getStaff_name()==null?"<无名氏>":staff.getStaff_name());
-        staff.setPassword(staff.getPassword()==null?"":staff.getPassword());
-        staff.setDepartment(staff.getDepartment()==null?"生产车间":staff.getDepartment());
-        staff.setWorkshop(staff.getWorkshop()==null?"车间A":staff.getWorkshop());
-        staff.setAuthority(staff.getAuthority()==null?"0000000011":staff.getAuthority());
-        staff.setBusy(staff.getBusy()==null?Long.parseLong(0+""):staff.getBusy());
-        staff.setPosition(staff.getPosition()==null?"普通职工":staff.getPosition());
-        staff.setDetails(staff.getDetails()==null?"（该职工无详细资料介绍）":staff.getDetails());
-
-        String password = staff.getPassword();
-        if(password.trim().compareTo("")==0|| password==null)
-            password="123456";
-        //因密码用MD5加密，需要对密码进行转化
-        try {
-            password = Tools.md5Encryp(password);
-            staff.setPassword(password);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error(">>>>>>>>>>>>>>转化MD5字符串错误 ：" + e.getMessage());
-        }
-        staffMapper.insert(staff);
-        return 1;
-    }
 
     @Override
     public int insertSelective(Staff record) {

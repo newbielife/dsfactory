@@ -40,7 +40,7 @@ public class UserController {
             if (userInfo != null) {
                 sessionStaff = (Staff) userInfo;
             }
-            if (sessionStaff != null && username.equalsIgnoreCase(sessionStaff.getStaff_name())) {
+            if (sessionStaff != null && username.equalsIgnoreCase(sessionStaff.getLoginame())) {
                 msgTip = "staff already login";
             }
             //获取用户状态
@@ -68,7 +68,7 @@ public class UserController {
                     try {
                         msgTip = "staff can login";
                         staff=new Staff();
-                        staff.setStaff_no(loginame);
+                        staff.setLoginame(loginame);
                         request.getSession().setAttribute("user", staff);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -122,7 +122,7 @@ public class UserController {
         BaseResponseInfo res = new BaseResponseInfo();
         boolean exist=staffService.checkLoginName(loginame); //检查用户名和登录名
         if (!exist){
-            int state=staffService.Register_new_Staff(loginame,password,password);
+            int state=staffService.Register_new_Staff(loginame,password);
             if(state==6){
                 res.code=200;
                 res.data=loginame;
