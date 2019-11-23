@@ -3,10 +3,15 @@ package com.ds.factory.controller;
 import com.ds.factory.datasource.entities.Client;
 import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.service.Service.ClientService;
+import com.ds.factory.service.Service.LogService;
 import com.ds.factory.service.Service.StaffService;
 import com.ds.factory.utils.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import com.ds.factory.constants.BusinessConstants;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +24,7 @@ import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Resource
     private StaffService staffService;
@@ -26,7 +32,8 @@ public class UserController {
     @Resource
     private ClientService clientService;
 
-
+    @Resource
+    private LogService logService;
 
     private static String message = "成功";
     private static final String HTTP = "http://";
@@ -36,20 +43,22 @@ public class UserController {
     public BaseResponseInfo login(@RequestParam(value = "loginame", required = false) String loginame,
                                   @RequestParam(value = "password", required = false) String password,
                                   HttpServletRequest request)throws Exception {
+        logger.info("============用户登录 login 方法调用开始==============");
         String msgTip = "";
-        Staff staff =null;
+        Staff user=null;
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             String username = loginame.trim();
             password = password.trim();
             //判断用户是否已经登录过，登录过不再处理
-            Object userInfo = request.getSession().getAttribute("staff");
-            Staff sessionStaff = new Staff();
+            Object userInfo = request.getSession().getAttribute("user");
+            Staff sessionUser = new Staff();
             if (userInfo != null) {
-                sessionStaff = (Staff) userInfo;
+                sessionUser = (Staff) userInfo;
             }
-            if (sessionStaff != null && username.equalsIgnoreCase(sessionStaff.getLoginame())) {
-                msgTip = "staff already login";
+            if (sessionUser != null && username.equalsIgnoreCase(sessionUser.getLoginame())) {
+                logger.info("====用户 " + username + "已经登录过, login 方法调用结束====");
+                msgTip = "user already login";
             }
             //获取用户状态
             int userStatus = -1;
@@ -57,6 +66,7 @@ public class UserController {
                 userStatus = staffService.validateUser(username, password);
             } catch (Exception e) {
                 e.printStackTrace();
+                logger.error(">>>>>>>>>>>>>用户  " + username + " 登录 login 方法 访问服务层异常====", e);
                 msgTip = "access service exception";
             }
             switch (userStatus) {
@@ -75,11 +85,15 @@ public class UserController {
                 default:
                     try {
                         msgTip = "staff can login";
-                        staff=new Staff();
-                        staff.setLoginame(loginame);
-                        request.getSession().setAttribute("user", staff);
+                        //验证通过 ，可以登录，放入session，记录登录日志
+                        user = staffService.getStaffByLoginame(username);
+                        request.getSession().setAttribute("user",user);
+                        logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_USER,
+                                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_LOGIN).append(user.getId()).toString(),
+                                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
                     } catch (Exception e) {
                         e.printStackTrace();
+                        logger.error(">>>>>>>>>>>>>>>查询用户名为:" + username + " ，用户信息异常", e);
                     }
                     break;
             }
@@ -89,13 +103,15 @@ public class UserController {
              * 在IE模式下，无法获取到user数据，
              * 在此处明确添加上user信息
              * */
-            if(staff !=null){
-                data.put("user", staff);
+            if(user!=null){
+                data.put("user",user);
             }
             res.code = 200;
             res.data = data;
+            logger.info("===============用户登录 login 方法调用结束===============");
         } catch(Exception e){
             e.printStackTrace();
+            logger.error(e.getMessage());
             res.code = 500;
             res.data = "用户登录失败";
         }

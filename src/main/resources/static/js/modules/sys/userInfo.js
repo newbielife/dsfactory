@@ -9,9 +9,9 @@ $.ajax({
         if(res && res.code === 200) {
             if(res.data.user.loginame) {
                 var user = res.data.user;
-                sessionStorage.setItem("userId", user.loginame);
+                sessionStorage.setItem("userId", user.id);
                 if (user.loginame) {
-                    $(".main-header .user-menu .hidden-xs,.main-sidebar .info p").text(user.loginame);
+                    $(".main-header .user-menu .hidden-xs,.main-sidebar .info p").text(user.username);
                 } else {
                     top.location.href = '/login.html';
                 }

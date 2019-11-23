@@ -53,9 +53,11 @@ function initSelectInfo(lei) {
         }
     }
 }
+
 var id =sessionStorage.getItem("userId");
 initSystemData(id, 'UserRole');
 initSelectInfo(1);
+
 var arr = options.split('][');
 for (var i in arr) {
     initSystemData(arr[i], 'RoleFunctions'); //根据角色找functions
