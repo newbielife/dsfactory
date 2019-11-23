@@ -3,12 +3,12 @@
 <mapper namespace="com.ds.factory.datasource.mappers.ClientMapper" >
 
    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Client" >
-            <id column="Client_no" jdbcType="VARCHAR" property="Client_no" />
-            <result column="Client_name" jdbcType="VARCHAR" property="Client_name" />
-            <result column="Password" jdbcType="VARCHAR" property="Password" />
-            <result column="Client_type" jdbcType="VARCHAR" property="Client_type" />
-            <result column="Credit" jdbcType="BIGINT" property="Credit" />
-            <result column="Details" jdbcType="VARCHAR" property="Details" />
+       <id column="Client_no" jdbcType="VARCHAR" property="Client_no" />
+       <result column="Client_name" jdbcType="VARCHAR" property="Client_name" />
+       <result column="Password" jdbcType="VARCHAR" property="Password" />
+       <result column="Client_type" jdbcType="VARCHAR" property="Client_type" />
+       <result column="Credit" jdbcType="BIGINT" property="Credit" />
+       <result column="Details" jdbcType="VARCHAR" property="Details" />
     </resultMap>
 
 
