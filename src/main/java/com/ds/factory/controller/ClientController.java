@@ -126,7 +126,7 @@ public class ClientController {
         BaseResponseInfo res = new BaseResponseInfo();
         boolean exist=clientService.checkLoginName(loginame); //检查用户名和登录名
         if (!exist){
-            int state=clientService.Register_new_Client(loginame,password,password);
+            int state=clientService.Register_new_Client(loginame,password);
             if(state==6){
                 res.code=200;
                 res.data=loginame;
