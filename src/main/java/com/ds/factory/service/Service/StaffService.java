@@ -11,6 +11,11 @@ import java.util.Objects;
 
 @Service
 public interface StaffService {
+    Staff getStaffByLoginame(String loginame);
+
+
+
+
 
     int update_Password_By_PrimaryKey(String loginname, String OldPassword, String NewPassword);
     //返回：1（旧密码错误）；2（新密码存在空值）；3（两个新密码冲突）；4（密码未变更）；5（MD5转化失败）；6（修改成功）

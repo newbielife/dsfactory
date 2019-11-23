@@ -51,6 +51,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public Staff getStaffByLoginame(String loginame) {
+        return staffMapper.selectByLoginame(loginame);
+    }
+
+    @Override
     public int update_Password_By_PrimaryKey(String loginname, String OldPassword, String NewPassword) {
         return 0;
     }
