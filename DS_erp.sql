@@ -11,7 +11,7 @@
  Target Server Version : 50635
  File Encoding         : 65001
 
- Date: 21/11/2019 22:59:19
+ Date: 23/11/2019 00:03:25
 */
 
 SET NAMES utf8mb4;
@@ -28,6 +28,7 @@ CREATE TABLE `Client` (
   `Client_type` char(10) DEFAULT NULL,
   `Credit` int(255) DEFAULT NULL,
   `Details` char(255) DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Client_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -35,9 +36,11 @@ CREATE TABLE `Client` (
 -- Records of Client
 -- ----------------------------
 BEGIN;
-INSERT INTO `Client` VALUES ('000001', '425', '21', 'VIP10', 35, '2425');
-INSERT INTO `Client` VALUES ('000002', '虚拟用户A', '827ccb0eea8a706c4c34a16891f84e7b', 'VIP01', 20, '（该客户无详细资料介绍）');
-INSERT INTO `Client` VALUES ('000003', '虚拟用户A', 'e10adc3949ba59abbe56e057f20f883e', 'VIP10', 40, '（该客户无详细资料介绍）');
+INSERT INTO `Client` VALUES ('000001', '425', '21', 'VIP10', 35, '2425', 0);
+INSERT INTO `Client` VALUES ('000002', '虚拟用户A', '827ccb0eea8a706c4c34a16891f84e7b', 'VIP01', 20, '（该客户无详细资料介绍）', 0);
+INSERT INTO `Client` VALUES ('000003', '虚拟用户A', 'e10adc3949ba59abbe56e057f20f883e', 'VIP10', 40, '（该客户无详细资料介绍）', 0);
+INSERT INTO `Client` VALUES ('000004', '000004', 'e10adc3949ba59abbe56e057f20f883e', 'VIP01', 0, '（该客户无详细资料介绍）', 0);
+INSERT INTO `Client` VALUES ('000005', '二愣子', '3c6da47dc7ac9313b1ed7f98f91700de', 'VIP01', 0, '（该客户无详细资料介绍）', 0);
 COMMIT;
 
 -- ----------------------------
@@ -58,7 +61,7 @@ CREATE TABLE `DS_functions` (
   `icon` varchar(50) DEFAULT NULL COMMENT '图标',
   `delete_Flag` varchar(1) DEFAULT '0' COMMENT '删除标记，0未删除，1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8 COMMENT='功能模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8 COMMENT='功能模块表';
 
 -- ----------------------------
 -- Records of DS_functions
@@ -111,6 +114,7 @@ INSERT INTO `DS_functions` VALUES (240, '010104', '序列号', '0101', '/pages/m
 INSERT INTO `DS_functions` VALUES (242, '060301', '销售订单', '0603', '/pages/materials/sale_orders_list.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (243, '000108', '机构管理', '0001', '/pages/manage/organization.html', b'1', '0139', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (244, '080112', '库存预警', '0801', '/pages/reports/stock_warning_report.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (255, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0');
 COMMIT;
 
 -- ----------------------------
@@ -129,7 +133,7 @@ CREATE TABLE `DS_log` (
   `tenant_id` bigint(20) DEFAULT NULL COMMENT '租户id',
   PRIMARY KEY (`id`),
   KEY `FKF2696AA13E226853` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6514 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=6519 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of DS_log
@@ -725,6 +729,11 @@ INSERT INTO `DS_log` VALUES (6510, 120, '用户', '127.0.0.1', '2019-11-21 11:25
 INSERT INTO `DS_log` VALUES (6511, 120, '用户', '127.0.0.1', '2019-11-21 11:30:12', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 INSERT INTO `DS_log` VALUES (6512, 120, '用户', '127.0.0.1', '2019-11-21 11:33:20', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 INSERT INTO `DS_log` VALUES (6513, 120, '用户', '127.0.0.1', '2019-11-21 18:33:54', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6514, 120, '用户', '127.0.0.1', '2019-11-22 21:09:07', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6515, 120, '用户', '127.0.0.1', '2019-11-22 21:32:55', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6516, 120, '用户', '127.0.0.1', '2019-11-22 21:35:07', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6517, 120, '用户', '127.0.0.1', '2019-11-22 21:36:48', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6518, 120, '用户', '127.0.0.1', '2019-11-22 21:37:53', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -920,6 +929,7 @@ CREATE TABLE `Expired_Food` (
   `Loss_num` char(20) DEFAULT NULL COMMENT '损失的数目+单位',
   `Loss_money` int(255) DEFAULT NULL,
   `Processing_method` char(255) DEFAULT NULL COMMENT '处理方式（地点或者碾碎之类的）',
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Food_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -927,12 +937,12 @@ CREATE TABLE `Expired_Food` (
 -- Records of Expired_Food
 -- ----------------------------
 BEGIN;
-INSERT INTO `Expired_Food` VALUES ('0000000001', '成品', '巧克力', '2019-10-02 17:28:59', '300--车', 10, NULL);
-INSERT INTO `Expired_Food` VALUES ('0000000002', '成品', '小面包', '2019-11-20 17:29:37', '3000--公斤', 1800000, '焚烧');
-INSERT INTO `Expired_Food` VALUES ('0000000003', '成品', '小面包', '2019-11-20 17:30:41', '3000--公斤', 1800000, '焚烧');
-INSERT INTO `Expired_Food` VALUES ('0000000004', '成品', '小面包', '2019-11-20 17:42:06', '3000--公斤', 1800000, '焚烧');
-INSERT INTO `Expired_Food` VALUES ('0000000005', '成品', '小面包', '2019-11-20 17:43:34', '3000--公斤', 1800000, '焚烧');
-INSERT INTO `Expired_Food` VALUES ('0000000006', '成品', '小面包', '2019-11-20 17:53:31', '3000--公斤', 1800000, '焚烧');
+INSERT INTO `Expired_Food` VALUES ('0000000001', '成品', '巧克力', '2019-10-02 17:28:59', '300--车', 10, NULL, 0);
+INSERT INTO `Expired_Food` VALUES ('0000000002', '成品', '小面包', '2019-11-20 17:29:37', '3000--公斤', 1800000, '焚烧', 0);
+INSERT INTO `Expired_Food` VALUES ('0000000003', '成品', '小面包', '2019-11-20 17:30:41', '3000--公斤', 1800000, '焚烧', 0);
+INSERT INTO `Expired_Food` VALUES ('0000000004', '成品', '小面包', '2019-11-20 17:42:06', '3000--公斤', 1800000, '焚烧', 0);
+INSERT INTO `Expired_Food` VALUES ('0000000005', '成品', '小面包', '2019-11-20 17:43:34', '3000--公斤', 1800000, '焚烧', 0);
+INSERT INTO `Expired_Food` VALUES ('0000000006', '成品', '小面包', '2019-11-20 17:53:31', '3000--公斤', 1800000, '焚烧', 0);
 COMMIT;
 
 -- ----------------------------
@@ -948,6 +958,7 @@ CREATE TABLE `Export_Record` (
   `Delivery_date` datetime DEFAULT NULL,
   `Transport_link` char(255) DEFAULT NULL COMMENT '物流信息',
   `Progress` char(30) DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Export_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -955,20 +966,40 @@ CREATE TABLE `Export_Record` (
 -- Records of Export_Record
 -- ----------------------------
 BEGIN;
-INSERT INTO `Export_Record` VALUES ('0000000001', '000001', '00000008-00', '大山食品厂', 'Java实训集中营', '2019-11-20 20:14:11', '东风快递', '进行中。。。');
-INSERT INTO `Export_Record` VALUES ('0000000002', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:37:22', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000003', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:41:58', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000004', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:46:59', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000005', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:46:35', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000006', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:49:07', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000007', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:55:53', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000008', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 00:19:39', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000009', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 10:03:05', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000010', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:25:51', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000011', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:30:13', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000012', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:33:20', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000013', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 18:33:55', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
-INSERT INTO `Export_Record` VALUES ('0000000014', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 08:58:38', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂');
+INSERT INTO `Export_Record` VALUES ('0000000001', '000001', '00000008-00', '大山食品厂', 'Java实训集中营', '2019-11-20 20:14:11', '东风快递', '进行中。。。', 0);
+INSERT INTO `Export_Record` VALUES ('0000000002', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:37:22', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000003', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:41:58', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000004', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:46:59', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000005', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:46:35', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000006', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:49:07', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000007', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:55:53', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000008', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 00:19:39', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000009', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 10:03:05', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000010', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:25:51', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000011', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:30:13', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000012', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:33:20', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000013', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 18:33:55', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000014', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 08:58:38', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000015', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 09:03:56', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000016', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 00:19:55', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000017', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 00:21:48', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000018', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 00:22:30', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000019', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 00:25:38', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000020', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 00:53:03', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000021', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 00:56:40', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000022', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 01:01:41', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000023', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 01:03:04', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000024', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 01:19:09', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000025', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 21:09:08', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000026', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 21:32:55', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000027', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 21:35:08', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000028', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 21:36:48', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000029', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 21:37:53', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000030', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 09:38:00', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000031', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 09:46:18', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000032', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 09:56:04', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000033', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 09:58:34', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
+INSERT INTO `Export_Record` VALUES ('0000000034', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-22 10:03:03', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', 0);
 COMMIT;
 
 -- ----------------------------
@@ -981,11 +1012,12 @@ CREATE TABLE `Manufacture_Design` (
   `Staff_no_design` char(20) DEFAULT NULL,
   `Product_no` char(20) DEFAULT NULL,
   `Deadline` datetime DEFAULT NULL,
-  `Progress` char(20) DEFAULT NULL,
-  `Workshop` char(20) DEFAULT NULL,
-  `Raw_materials_requirement` char(20) DEFAULT NULL,
-  `Products_requirement` char(20) DEFAULT NULL,
+  `Progress` char(100) DEFAULT NULL,
+  `Workshop` char(50) DEFAULT NULL,
+  `Raw_materials_requirement` char(255) DEFAULT NULL,
+  `Products_requirement` char(255) DEFAULT NULL,
   `Details` char(255) DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Manufacture_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -993,7 +1025,16 @@ CREATE TABLE `Manufacture_Design` (
 -- Records of Manufacture_Design
 -- ----------------------------
 BEGIN;
-INSERT INTO `Manufacture_Design` VALUES ('0000000001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Manufacture_Design` VALUES ('0000000001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000002', NULL, '000002', '0001', '2020-02-22 00:56:40', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000003', NULL, '000002', '0001', '2020-02-22 01:01:42', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000004', NULL, '000002', '0001', '2020-02-22 01:03:04', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000005', NULL, '000002', '0001', '2020-02-22 01:19:09', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000006', NULL, '000002', '0001', '2020-02-22 09:38:00', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000007', NULL, '000002', '0001', '2020-02-22 09:46:18', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000008', NULL, '000002', '0001', '2020-02-22 09:56:04', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000009', NULL, '000002', '0001', '2020-02-22 09:58:34', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000010', NULL, '000002', '0001', '2020-02-22 10:03:04', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', NULL, 0);
 COMMIT;
 
 -- ----------------------------
@@ -1008,6 +1049,7 @@ CREATE TABLE `Manufacture_Result` (
   `Staff_no_manufacture` char(255) DEFAULT NULL,
   `Stock_no` char(20) DEFAULT NULL,
   `Update_date` datetime DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Manufacture_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1015,7 +1057,16 @@ CREATE TABLE `Manufacture_Result` (
 -- Records of Manufacture_Result
 -- ----------------------------
 BEGIN;
-INSERT INTO `Manufacture_Result` VALUES ('0000000001', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Manufacture_Result` VALUES ('0000000001', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000002', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 00:56:40', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000003', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 01:01:42', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000004', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 01:03:04', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000005', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 01:19:09', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000006', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 09:38:00', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000007', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 09:46:18', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000008', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 09:56:04', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000009', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 09:58:34', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000010', '00000011-00', '0001', '000002', '000003;000004', NULL, '2019-11-22 10:03:04', 0);
 COMMIT;
 
 -- ----------------------------
@@ -1030,6 +1081,7 @@ CREATE TABLE `Order_Details` (
   `Delivery_date` datetime DEFAULT NULL COMMENT '预计发货日期',
   `Payment_deadline` datetime DEFAULT NULL COMMENT '尾款截止期限   数字+单位',
   `Check` int(255) DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Order_no_details`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1037,43 +1089,43 @@ CREATE TABLE `Order_Details` (
 -- Records of Order_Details
 -- ----------------------------
 BEGIN;
-INSERT INTO `Order_Details` VALUES ('00000001-01', '0002', '5000--公斤', '000001', '2019-10-12 23:47:38', NULL, 0);
-INSERT INTO `Order_Details` VALUES ('00000002-01', '0002', '2000--箱', '000002', '2019-11-22 08:58:38', '2019-12-21 08:58:38', 1);
-INSERT INTO `Order_Details` VALUES ('00000002-02', '0001', '6000--箱', '000002', '2019-11-19 15:49:11', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000003-00', '0001', '2000--公斤', '000001', '2020-02-19 15:49:11', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000003-01', '0002', '500--车', '000001', '2019-11-24 15:49:11', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000004-00', '0001', '2000--公斤', '000001', '2020-02-19 16:39:35', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000004-01', '0002', '500--车', '000001', '2019-11-24 16:39:35', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000005-00', '0001', '2000--公斤', '000001', '2020-02-19 16:40:46', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000005-01', '0002', '500--车', '000001', '2019-11-24 16:40:46', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000006-00', '0001', '2000--公斤', '000001', '2020-02-19 16:46:03', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000006-01', '0002', '500--车', '000001', '2019-11-24 16:46:03', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000007-00', '0001', '2000--公斤', '000001', '2020-02-19 16:52:26', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000007-01', '0002', '500--车', '000001', '2019-11-24 16:52:26', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000008-00', '0001', '2000--公斤', '000001', '2020-02-19 16:55:16', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000008-01', '0002', '500--车', '000001', '2019-11-21 08:58:38', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000009-00', '0001', '2000--公斤', '000001', '2020-02-19 17:03:06', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000009-01', '0002', '500--车', '000001', '2019-11-24 17:03:06', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000010-00', '0001', '2000--公斤', '000001', '2020-02-19 17:16:09', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000010-01', '0002', '500--车', '000001', '2019-11-24 17:16:09', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000011-00', '0001', '2000--公斤', '000001', '2020-02-19 17:41:53', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000011-01', '0002', '500--车', '000001', '2019-11-24 17:41:53', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000012-00', '0001', '2000--公斤', '000001', '2020-02-19 17:50:45', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000012-01', '0002', '500--车', '000001', '2019-11-24 17:50:45', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000013-00', '0001', '2000--公斤', '000001', '2020-02-19 17:55:22', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000013-01', '0002', '500--车', '000001', '2019-11-24 17:55:22', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000014-00', '0001', '2000--公斤', '000001', '2020-02-19 20:13:10', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000014-01', '0002', '500--车', '000001', '2019-11-24 20:13:10', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000015-00', '0001', '2000--公斤', '000001', '2020-02-19 20:24:41', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000015-01', '0002', '500--车', '000001', '2019-11-24 20:24:41', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000016-00', '0001', '2000--公斤', '000001', '2020-02-19 20:56:23', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000016-01', '0002', '500--车', '000001', '2019-11-24 20:56:23', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000017-00', '0001', '2000--公斤', '000001', '2020-02-19 20:57:44', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000017-01', '0002', '500--车', '000001', '2019-11-24 20:57:44', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000018-00', '0001', '2000--公斤', '000001', '2020-02-19 20:59:36', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000018-01', '0002', '500--车', '000001', '2019-11-24 20:59:36', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000019-00', '0001', '2000--公斤', '000001', '2020-02-19 21:03:42', NULL, 1);
-INSERT INTO `Order_Details` VALUES ('00000019-01', '0002', '500--车', '000001', '2019-11-24 21:03:42', NULL, 1);
+INSERT INTO `Order_Details` VALUES ('00000001-01', '0002', '5000--公斤', '000001', '2019-10-12 23:47:38', NULL, 0, 0);
+INSERT INTO `Order_Details` VALUES ('00000002-01', '0002', '2000--箱', '000002', '2019-11-23 10:03:03', '2019-12-22 10:03:03', 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000002-02', '0001', '6000--箱', '000002', '2019-11-19 15:49:11', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000003-00', '0001', '2000--公斤', '000001', '2020-02-19 15:49:11', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000003-01', '0002', '500--车', '000001', '2019-11-24 15:49:11', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000004-00', '0001', '2000--公斤', '000001', '2020-02-19 16:39:35', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000004-01', '0002', '500--车', '000001', '2019-11-24 16:39:35', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000005-00', '0001', '2000--公斤', '000001', '2020-02-19 16:40:46', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000005-01', '0002', '500--车', '000001', '2019-11-24 16:40:46', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000006-00', '0001', '2000--公斤', '000001', '2020-02-19 16:46:03', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000006-01', '0002', '500--车', '000001', '2019-11-24 16:46:03', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000007-00', '0001', '2000--公斤', '000001', '2020-02-19 16:52:26', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000007-01', '0002', '500--车', '000001', '2019-11-24 16:52:26', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000008-00', '0001', '2000--公斤', '000001', '2020-02-19 16:55:16', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000008-01', '0002', '500--车', '000001', '2019-11-22 10:03:03', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000009-00', '0001', '2000--公斤', '000001', '2020-02-19 17:03:06', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000009-01', '0002', '500--车', '000001', '2019-11-24 17:03:06', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000010-00', '0001', '2000--公斤', '000001', '2020-02-19 17:16:09', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000010-01', '0002', '500--车', '000001', '2019-11-24 17:16:09', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000011-00', '0001', '2000--公斤', '000001', '2020-02-23 10:03:04', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000011-01', '0002', '500--车', '000001', '2019-11-24 17:41:53', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000012-00', '0001', '2000--公斤', '000001', '2020-02-19 17:50:45', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000012-01', '0002', '500--车', '000001', '2019-11-24 17:50:45', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000013-00', '0001', '2000--公斤', '000001', '2020-02-19 17:55:22', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000013-01', '0002', '500--车', '000001', '2019-11-24 17:55:22', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000014-00', '0001', '2000--公斤', '000001', '2020-02-19 20:13:10', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000014-01', '0002', '500--车', '000001', '2019-11-24 20:13:10', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000015-00', '0001', '2000--公斤', '000001', '2020-02-19 20:24:41', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000015-01', '0002', '500--车', '000001', '2019-11-24 20:24:41', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000016-00', '0001', '2000--公斤', '000001', '2020-02-19 20:56:23', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000016-01', '0002', '500--车', '000001', '2019-11-24 20:56:23', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000017-00', '0001', '2000--公斤', '000001', '2020-02-19 20:57:44', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000017-01', '0002', '500--车', '000001', '2019-11-24 20:57:44', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000018-00', '0001', '2000--公斤', '000001', '2020-02-19 20:59:36', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000018-01', '0002', '500--车', '000001', '2019-11-24 20:59:36', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000019-00', '0001', '2000--公斤', '000001', '2020-02-19 21:03:42', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000019-01', '0002', '500--车', '000001', '2019-11-24 21:03:42', NULL, 1, 0);
 COMMIT;
 
 -- ----------------------------
@@ -1089,6 +1141,7 @@ CREATE TABLE `Order_Form` (
   `Progress` char(40) DEFAULT NULL,
   `Liquidated_damages` int(255) DEFAULT NULL COMMENT '违约金',
   `Check` int(255) DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Order_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1096,25 +1149,25 @@ CREATE TABLE `Order_Form` (
 -- Records of Order_Form
 -- ----------------------------
 BEGIN;
-INSERT INTO `Order_Form` VALUES ('00000001', '000001', '000001', '2019-11-16 16:19:12', 900, '进行中。。。', 100, 0);
-INSERT INTO `Order_Form` VALUES ('00000002', '000002', '000003', '2019-11-21 08:58:38', NULL, NULL, NULL, 1);
-INSERT INTO `Order_Form` VALUES ('00000003', '000001', NULL, '2019-11-18 15:49:11', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000004', '000001', NULL, '2019-11-18 16:39:35', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000005', '000001', NULL, '2019-11-18 16:40:46', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000006', '000001', NULL, '2019-11-18 16:46:03', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000007', '000001', NULL, '2019-11-18 16:52:26', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000008', '000001', NULL, '2019-11-18 16:55:16', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000009', '000001', NULL, '2019-11-18 17:03:06', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000010', '000001', NULL, '2019-11-18 17:16:09', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000011', '000001', NULL, '2019-11-18 17:41:53', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000012', '000001', NULL, '2019-11-18 17:50:45', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000013', '000001', NULL, '2019-11-18 17:55:22', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000014', '000001', NULL, '2019-11-18 20:13:10', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000015', '000001', NULL, '2019-11-18 20:24:41', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000016', '000001', NULL, '2019-11-18 20:56:23', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000017', '000001', NULL, '2019-11-18 20:57:44', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000018', '000001', NULL, '2019-11-18 20:59:36', 1450000, '正在生产计划与讨论。。。', 145000, 1);
-INSERT INTO `Order_Form` VALUES ('00000019', '000001', NULL, '2019-11-18 21:03:42', 1450000, '正在生产计划与讨论。。。', 145000, 1);
+INSERT INTO `Order_Form` VALUES ('00000001', '000001', '000001', '2019-11-16 16:19:12', 900, '进行中。。。', 100, 0, 0);
+INSERT INTO `Order_Form` VALUES ('00000002', '000002', '000003', '2019-11-22 10:03:03', NULL, NULL, NULL, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000003', '000001', NULL, '2019-11-18 15:49:11', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000004', '000001', NULL, '2019-11-18 16:39:35', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000005', '000001', NULL, '2019-11-18 16:40:46', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000006', '000001', NULL, '2019-11-18 16:46:03', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000007', '000001', NULL, '2019-11-18 16:52:26', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000008', '000001', NULL, '2019-11-18 16:55:16', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000009', '000001', NULL, '2019-11-18 17:03:06', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000010', '000001', NULL, '2019-11-18 17:16:09', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000011', '000001', NULL, '2019-11-18 17:41:53', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000012', '000001', NULL, '2019-11-18 17:50:45', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000013', '000001', NULL, '2019-11-18 17:55:22', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000014', '000001', NULL, '2019-11-18 20:13:10', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000015', '000001', NULL, '2019-11-18 20:24:41', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000016', '000001', NULL, '2019-11-18 20:56:23', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000017', '000001', NULL, '2019-11-18 20:57:44', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000018', '000001', NULL, '2019-11-18 20:59:36', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000019', '000001', NULL, '2019-11-18 21:03:42', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
 COMMIT;
 
 -- ----------------------------
@@ -1128,6 +1181,7 @@ CREATE TABLE `Payment` (
   `Money` int(255) DEFAULT NULL,
   `Details` char(255) DEFAULT NULL COMMENT '尾款，预约款，贷款，赔款等',
   `Payment_date` datetime DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Payment_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1135,7 +1189,7 @@ CREATE TABLE `Payment` (
 -- Records of Payment
 -- ----------------------------
 BEGIN;
-INSERT INTO `Payment` VALUES ('0000000001', '00000001', '000001', 900, '尾款', '2019-11-21 11:36:11');
+INSERT INTO `Payment` VALUES ('0000000001', '00000001', '000001', 900, '尾款', '2019-11-21 11:36:11', 0);
 COMMIT;
 
 -- ----------------------------
@@ -1150,6 +1204,7 @@ CREATE TABLE `Product_Criteria` (
   `Manufacture_duration` char(20) DEFAULT NULL COMMENT '数字+单位',
   `Guarantee_period` char(20) DEFAULT NULL COMMENT '数字+单位',
   `Unit_Price` int(255) DEFAULT NULL,
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Product_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1157,8 +1212,8 @@ CREATE TABLE `Product_Criteria` (
 -- Records of Product_Criteria
 -- ----------------------------
 BEGIN;
-INSERT INTO `Product_Criteria` VALUES ('0001', '小面包', '面包', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '3--月', '12--月', 600);
-INSERT INTO `Product_Criteria` VALUES ('0002', '巧克力', '糖果', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '5--天', '3--年', 500);
+INSERT INTO `Product_Criteria` VALUES ('0001', '小面包', '面包', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '3--月', '12--月', 600, 0);
+INSERT INTO `Product_Criteria` VALUES ('0002', '巧克力', '糖果', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '5--天', '3--年', 500, 0);
 COMMIT;
 
 -- ----------------------------
@@ -1174,19 +1229,40 @@ CREATE TABLE `Product_Warehouse` (
   `Manufacture_date` datetime DEFAULT NULL,
   `Stock_num` char(20) DEFAULT NULL COMMENT '数字+单位',
   `Details` char(255) DEFAULT NULL,
-  PRIMARY KEY (`Stock_no`)
+  `flag` int(4) DEFAULT '0',
+  PRIMARY KEY (`Stock_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of Product_Warehouse
 -- ----------------------------
 BEGIN;
-INSERT INTO `Product_Warehouse` VALUES ('00000001', '0001', '000002', '000003', '第一仓库', '2019-11-21 10:27:00', '300--千克', NULL);
-INSERT INTO `Product_Warehouse` VALUES ('00000002', '0001', '000002', '000003', '第一仓库', '2019-11-01 10:27:00', '300--千克', NULL);
-INSERT INTO `Product_Warehouse` VALUES ('00000003', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 11:30:13', '500--升', '');
-INSERT INTO `Product_Warehouse` VALUES ('00000004', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 11:33:21', '500--升', '');
-INSERT INTO `Product_Warehouse` VALUES ('00000005', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 18:33:55', '500--升', '');
-INSERT INTO `Product_Warehouse` VALUES ('00000006', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 08:58:38', '500--升', '');
+INSERT INTO `Product_Warehouse` VALUES ('00000001', '0001', '000002', '000003', '第一仓库', '2019-11-21 10:27:00', '300--千克', NULL, 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000002', '0001', '000002', '000003', '第一仓库', '2019-11-01 10:27:00', '300--千克', NULL, 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000003', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 11:30:13', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000004', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 11:33:21', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000005', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 18:33:55', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000006', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 08:58:38', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000007', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 09:03:56', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000008', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 00:19:56', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000009', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 00:21:48', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000010', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 00:22:30', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000011', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 00:25:38', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000012', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 00:53:03', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000013', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 00:56:40', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000014', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 01:01:42', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000015', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 01:03:04', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000016', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 01:19:09', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000017', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 21:09:08', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000018', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 21:32:56', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000019', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 21:35:08', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000020', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 21:36:49', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000021', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 21:37:53', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000022', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 09:38:00', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000023', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 09:46:18', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000024', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 09:56:04', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000025', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 09:58:34', '500--升', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000026', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-22 10:03:04', '500--升', '', 0);
 COMMIT;
 
 -- ----------------------------
@@ -1198,15 +1274,16 @@ CREATE TABLE `Raw_Materials_Criteria` (
   `Material_name` char(100) DEFAULT NULL,
   `Material_type` char(30) DEFAULT NULL,
   `Guarantee_period` char(20) DEFAULT NULL COMMENT '数字+单位',
-  PRIMARY KEY (`Material_no`)
+  `flag` int(4) DEFAULT '0',
+  PRIMARY KEY (`Material_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of Raw_Materials_Criteria
 -- ----------------------------
 BEGIN;
-INSERT INTO `Raw_Materials_Criteria` VALUES ('', NULL, NULL, NULL);
-INSERT INTO `Raw_Materials_Criteria` VALUES ('0001', '面粉', '谷物类', '3--年');
+INSERT INTO `Raw_Materials_Criteria` VALUES ('', NULL, NULL, NULL, 0);
+INSERT INTO `Raw_Materials_Criteria` VALUES ('0001', '面粉', '谷物类', '3--年', 0);
 COMMIT;
 
 -- ----------------------------
@@ -1221,6 +1298,7 @@ CREATE TABLE `Raw_Materials_Warehouse` (
   `Product_date` datetime DEFAULT NULL,
   `Stock_num` char(20) DEFAULT NULL COMMENT '数字+单位',
   `Details` char(255) DEFAULT NULL COMMENT 's',
+  `flag` int(4) DEFAULT '0',
   PRIMARY KEY (`Stock_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1228,10 +1306,30 @@ CREATE TABLE `Raw_Materials_Warehouse` (
 -- Records of Raw_Materials_Warehouse
 -- ----------------------------
 BEGIN;
-INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000001', '0002', '000001', '巨魔蘸酱', '2019-11-09 11:32:46', NULL, NULL);
-INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000002', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 11:33:21', '500--升', '');
-INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000003', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 18:33:55', '500--升', '');
-INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000004', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 08:58:38', '500--升', '');
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000001', '0002', '000001', '巨魔蘸酱', '2019-11-09 11:32:46', NULL, NULL, 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000002', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 11:33:21', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000003', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 18:33:55', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000004', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 08:58:38', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000005', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 09:03:56', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000006', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 00:19:56', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000007', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 00:21:48', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000008', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 00:22:30', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000009', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 00:25:38', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000010', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 00:53:03', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000011', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 00:56:40', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000012', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 01:01:42', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000013', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 01:03:04', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000014', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 01:19:09', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000015', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 21:09:08', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000016', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 21:32:56', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000017', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 21:35:08', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000018', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 21:36:49', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000019', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 21:37:53', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000020', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 09:38:00', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000021', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 09:46:18', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000022', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 09:56:04', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000023', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 09:58:34', '500--升', '', 0);
+INSERT INTO `Raw_Materials_Warehouse` VALUES ('00000024', '0001', '', '大山食品厂----10086号厂房', '2019-11-22 10:03:04', '500--升', '', 0);
 COMMIT;
 
 -- ----------------------------
@@ -1247,14 +1345,15 @@ CREATE TABLE `Refund_Application` (
   `Progress` char(20) DEFAULT NULL,
   `Permission` int(255) DEFAULT NULL,
   `Refund_Payment` int(255) DEFAULT NULL,
-  PRIMARY KEY (`Refund_no`)
+  `flag` int(4) DEFAULT '0',
+  PRIMARY KEY (`Refund_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of Refund_Application
 -- ----------------------------
 BEGIN;
-INSERT INTO `Refund_Application` VALUES ('00000001', '00000001', '000003', '产品质量问题', '000002', '提交成功', 0, 0);
+INSERT INTO `Refund_Application` VALUES ('00000001', '00000001', '000003', '产品质量问题', '000002', '提交成功', 0, 0, 0);
 COMMIT;
 
 -- ----------------------------
@@ -1271,378 +1370,18 @@ CREATE TABLE `Staff` (
   `Busy` int(255) DEFAULT NULL,
   `Position` char(20) DEFAULT NULL,
   `Details` char(255) DEFAULT NULL,
-  PRIMARY KEY (`Staff_no`)
+  `flag` int(4) DEFAULT '0',
+  PRIMARY KEY (`Staff_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of Staff
 -- ----------------------------
 BEGIN;
-INSERT INTO `Staff` VALUES ('000001', '11111', '827ccb0eea8a706c4c34a16891f84e7b', '销售', NULL, '0101110110101001110101', 20, '5', NULL);
-INSERT INTO `Staff` VALUES ('000002', '1234', '827ccb0eea8a706c4c34a16891f84e7b', '销售', NULL, '0101110110101001110101', 13, NULL, NULL);
-INSERT INTO `Staff` VALUES ('000003', '12345', '827ccb0eea8a706c4c34a16891f84e7b', '生产车间', '车间A', '0101110110101001110101', 0, '普通职工', '');
-INSERT INTO `Staff` VALUES ('000004', 'TCP/IP', 'ba7bc92fcd57e337ebb9e74308c811f', '生产车间', '车间A', '0101110110101001110101', 0, '普通职工', '');
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Client
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Client`;
-CREATE TABLE `Z_Client` (
-  `Client_no` char(20) DEFAULT NULL,
-  `Client_name` char(30) DEFAULT NULL,
-  `Password` char(50) DEFAULT NULL,
-  `Client_type` char(10) DEFAULT NULL,
-  `Credit` int(255) DEFAULT NULL,
-  `Details` char(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Client
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Client` VALUES ('1213', '425', '21', '242', 352, '2425');
-INSERT INTO `Z_Client` VALUES ('000002', '虚拟用户A', '827ccb0eea8a706c4c34a16891f84e7b', 'VIP01', 20, '（该客户无详细资料介绍）');
-INSERT INTO `Z_Client` VALUES ('000001', '425', '21', 'VIP10', 35, '2425');
-INSERT INTO `Z_Client` VALUES ('000003', '虚拟用户A', 'e10adc3949ba59abbe56e057f20f883e', 'VIP10', 40, '（该客户无详细资料介绍）');
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Expired_Food
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Expired_Food`;
-CREATE TABLE `Z_Expired_Food` (
-  `Food_no` char(20) DEFAULT NULL COMMENT '就是原料库或成品库的Stock_no',
-  `Food_type` char(8) DEFAULT NULL COMMENT '原料还是成品',
-  `Food_name` char(100) DEFAULT NULL,
-  `Expired_date` datetime DEFAULT NULL COMMENT '过期时间',
-  `Loss_num` char(20) DEFAULT NULL COMMENT '损失的数目+单位',
-  `Loss_money` int(255) DEFAULT NULL,
-  `Processing_method` char(255) DEFAULT NULL COMMENT '处理方式（地点或者碾碎之类的）'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for Z_Export_Record
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Export_Record`;
-CREATE TABLE `Z_Export_Record` (
-  `Export_no` char(50) DEFAULT NULL,
-  `Staff_no` char(20) DEFAULT NULL COMMENT '发货负责人',
-  `Order_no_details` char(255) DEFAULT NULL COMMENT '货物，运输量',
-  `Source_place` char(255) DEFAULT NULL,
-  `Target_place` char(255) DEFAULT NULL,
-  `Delivery_date` datetime DEFAULT NULL,
-  `Transport_link` char(255) DEFAULT NULL COMMENT '物流信息',
-  `Progress` char(30) DEFAULT NULL,
-  `Evaluation` char(255) DEFAULT NULL COMMENT '评价'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Export_Record
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Export_Record` VALUES ('00000001', '000002', '00000008-00', '大山食品厂', 'Java实训集中营', '2019-11-20 20:14:11', '东风快递', '进行中。。。', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000001', '000001', '00000008-00', '大山食品厂', 'Java实训集中营', '2019-11-20 20:14:11', '东风快递', '进行中。。。', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000002', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:37:22', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000003', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:41:58', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000004', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 20:46:59', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000005', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:46:35', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000006', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:49:07', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000007', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-20 23:55:53', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000008', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 00:19:39', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000009', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 10:03:05', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000010', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:25:51', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000011', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:30:13', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000012', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 11:33:20', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000013', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 18:33:55', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-INSERT INTO `Z_Export_Record` VALUES ('0000000014', NULL, '00000008-01', '大山食品厂', '山大威海学生宿舍7号楼', '2019-11-21 08:58:38', '窝窝头，一块钱四个，嘿嘿！', '开始配送，当前位置：大山食品厂', NULL);
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Manufacture_Design
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Manufacture_Design`;
-CREATE TABLE `Z_Manufacture_Design` (
-  `Manufacture_no` char(40) DEFAULT NULL,
-  `Staff_no_design` char(20) DEFAULT NULL,
-  `Deadline` datetime DEFAULT NULL,
-  `Progress` char(20) DEFAULT NULL,
-  `Raw_materials_requirement` char(20) DEFAULT NULL,
-  `Workshop` char(20) DEFAULT NULL,
-  `Product_no` char(20) DEFAULT NULL,
-  `Products_requirement` char(20) DEFAULT NULL,
-  `Details` char(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for Z_Manufacture_Result
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Manufacture_Result`;
-CREATE TABLE `Z_Manufacture_Result` (
-  `Manufacture_no` char(40) DEFAULT NULL,
-  `Staff_no_manufacture` char(255) DEFAULT NULL,
-  `Staff_no_design` char(20) DEFAULT NULL,
-  `Product_no` char(20) DEFAULT NULL,
-  `Product_num` char(20) DEFAULT NULL COMMENT '数字+单位'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for Z_Order_Details
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Order_Details`;
-CREATE TABLE `Z_Order_Details` (
-  `Order_no_details` char(50) DEFAULT NULL,
-  `Product_no` char(20) DEFAULT NULL,
-  `Products_requirement` char(20) DEFAULT NULL,
-  `Client_no` char(20) DEFAULT NULL,
-  `Delivery_date` datetime DEFAULT NULL COMMENT '预计发货日期',
-  `Payment_deadline` datetime DEFAULT NULL COMMENT '尾款截止期限   数字+单位'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Order_Details
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Order_Details` VALUES ('wfwf', 'efw', 'efe', 'f231', '2019-11-12 16:21:38', '2020-02-08 16:21:44');
-INSERT INTO `Z_Order_Details` VALUES ('00000003-00', '0001', '2000--公斤', '000001', '2020-02-19 15:49:11', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000003-01', '0002', '500--车', '000001', '2019-11-24 15:49:11', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000002-02', '0001', '6000--箱', '000002', '2019-11-19 15:49:11', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000001-01', '0002', '5000--公斤', '000001', '2019-10-12 23:47:38', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000004-00', '0001', '2000--公斤', '000001', '2020-02-19 16:39:35', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000004-01', '0002', '500--车', '000001', '2019-11-24 16:39:35', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000005-00', '0001', '2000--公斤', '000001', '2020-02-19 16:40:46', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000005-01', '0002', '500--车', '000001', '2019-11-24 16:40:46', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000006-00', '0001', '2000--公斤', '000001', '2020-02-19 16:46:03', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000006-01', '0002', '500--车', '000001', '2019-11-24 16:46:03', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000007-00', '0001', '2000--公斤', '000001', '2020-02-19 16:52:26', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000007-01', '0002', '500--车', '000001', '2019-11-24 16:52:26', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000008-00', '0001', '2000--公斤', '000001', '2020-02-19 16:55:16', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000009-00', '0001', '2000--公斤', '000001', '2020-02-19 17:03:06', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000009-01', '0002', '500--车', '000001', '2019-11-24 17:03:06', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000010-00', '0001', '2000--公斤', '000001', '2020-02-19 17:16:09', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000010-01', '0002', '500--车', '000001', '2019-11-24 17:16:09', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000011-00', '0001', '2000--公斤', '000001', '2020-02-19 17:41:53', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000011-01', '0002', '500--车', '000001', '2019-11-24 17:41:53', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000012-00', '0001', '2000--公斤', '000001', '2020-02-19 17:50:45', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000012-01', '0002', '500--车', '000001', '2019-11-24 17:50:45', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000013-00', '0001', '2000--公斤', '000001', '2020-02-19 17:55:22', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000013-01', '0002', '500--车', '000001', '2019-11-24 17:55:22', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000014-00', '0001', '2000--公斤', '000001', '2020-02-19 20:13:10', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000014-01', '0002', '500--车', '000001', '2019-11-24 20:13:10', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000015-00', '0001', '2000--公斤', '000001', '2020-02-19 20:24:41', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000015-01', '0002', '500--车', '000001', '2019-11-24 20:24:41', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000016-00', '0001', '2000--公斤', '000001', '2020-02-19 20:56:23', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000016-01', '0002', '500--车', '000001', '2019-11-24 20:56:23', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000017-00', '0001', '2000--公斤', '000001', '2020-02-19 20:57:44', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000017-01', '0002', '500--车', '000001', '2019-11-24 20:57:44', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000018-00', '0001', '2000--公斤', '000001', '2020-02-19 20:59:36', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000018-01', '0002', '500--车', '000001', '2019-11-24 20:59:36', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000019-00', '0001', '2000--公斤', '000001', '2020-02-19 21:03:42', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000019-01', '0002', '500--车', '000001', '2019-11-24 21:03:42', NULL);
-INSERT INTO `Z_Order_Details` VALUES ('00000002-01', '0002', '2000--箱', '000002', '2019-11-22 08:58:38', '2019-12-21 08:58:38');
-INSERT INTO `Z_Order_Details` VALUES ('00000008-01', '0002', '500--车', '000001', '2019-11-21 08:58:38', NULL);
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Order_Form
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Order_Form`;
-CREATE TABLE `Z_Order_Form` (
-  `Order_no` char(40) DEFAULT NULL,
-  `Client_no` char(20) DEFAULT NULL,
-  `Staff_no` char(20) DEFAULT NULL,
-  `Order_Create_date` datetime DEFAULT NULL,
-  `Order_sum_amount` int(255) DEFAULT NULL,
-  `Progress` char(40) DEFAULT NULL,
-  `Liquidated_damages` int(255) DEFAULT NULL COMMENT '违约金'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Order_Form
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Order_Form` VALUES ('000002', '000001', '000003', '2019-11-16 19:56:27', NULL, NULL, NULL);
-INSERT INTO `Z_Order_Form` VALUES ('00000001', '000001', '000001', '2019-11-16 16:19:12', 900, '进行中。。。', 100);
-INSERT INTO `Z_Order_Form` VALUES ('231', '', '', NULL, 100, '', 90);
-INSERT INTO `Z_Order_Form` VALUES ('00000003', '000001', NULL, '2019-11-18 15:49:11', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000004', '000001', NULL, '2019-11-18 16:39:35', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000005', '000001', NULL, '2019-11-18 16:40:46', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000006', '000001', NULL, '2019-11-18 16:46:03', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000007', '000001', NULL, '2019-11-18 16:52:26', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000008', '000001', NULL, '2019-11-18 16:55:16', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000009', '000001', NULL, '2019-11-18 17:03:06', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000010', '000001', NULL, '2019-11-18 17:16:09', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000011', '000001', NULL, '2019-11-18 17:41:53', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000012', '000001', NULL, '2019-11-18 17:50:45', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000013', '000001', NULL, '2019-11-18 17:55:22', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000014', '000001', NULL, '2019-11-18 20:13:10', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000015', '000001', NULL, '2019-11-18 20:24:41', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000016', '000001', NULL, '2019-11-18 20:56:23', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000017', '000001', NULL, '2019-11-18 20:57:44', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000018', '000001', NULL, '2019-11-18 20:59:36', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000019', '000001', NULL, '2019-11-18 21:03:42', 1450000, '正在生产计划与讨论。。。', 145000);
-INSERT INTO `Z_Order_Form` VALUES ('00000002', '000002', '000003', '2019-11-21 08:58:38', NULL, NULL, NULL);
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Payment
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Payment`;
-CREATE TABLE `Z_Payment` (
-  `Payment_no` char(50) DEFAULT NULL,
-  `Order_no` char(40) DEFAULT NULL,
-  `Staff_no_accountant` char(20) DEFAULT NULL,
-  `Money` int(255) DEFAULT NULL,
-  `Details` char(255) DEFAULT NULL COMMENT '尾款，预约款，贷款，赔款等'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Payment
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Payment` VALUES ('0000000001', '00000001', '000001', 900, '尾款');
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Product_Criteria
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Product_Criteria`;
-CREATE TABLE `Z_Product_Criteria` (
-  `Product_no` char(20) DEFAULT NULL,
-  `Product_name` char(50) DEFAULT NULL,
-  `Product_type` char(20) DEFAULT NULL,
-  `Ingredient_List` char(255) DEFAULT NULL,
-  `Guarantee_period` char(20) DEFAULT NULL COMMENT '数字+单位'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Product_Criteria
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Product_Criteria` VALUES ('0001', '小面包', '面包', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '12--月');
-INSERT INTO `Z_Product_Criteria` VALUES ('0002', '巧克力', '糖果', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '3--年');
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Product_Warehouse
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Product_Warehouse`;
-CREATE TABLE `Z_Product_Warehouse` (
-  `Stock_no` char(40) DEFAULT NULL,
-  `Product_no` char(20) DEFAULT NULL,
-  `Staff_no_storage` char(20) DEFAULT NULL COMMENT '成品负责人编号',
-  `Manufacture_date` datetime DEFAULT NULL,
-  `Guarantee_period` char(20) DEFAULT NULL COMMENT '数字+单位',
-  `Stock_num` char(20) DEFAULT NULL COMMENT '数字+单位',
-  `Staff_no_workshop` char(20) DEFAULT NULL COMMENT '车间负责人编号',
-  `Storage_address` char(255) DEFAULT NULL,
-  `Details` char(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Product_Warehouse
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Product_Warehouse` VALUES ('00000001', '0001', '000002', '2019-11-21 10:27:00', NULL, '300--千克', '000003', '第一仓库', NULL);
-INSERT INTO `Z_Product_Warehouse` VALUES ('00000002', '0001', '000002', '2019-11-01 10:27:00', NULL, '300--千克', '000003', '第一仓库', NULL);
-INSERT INTO `Z_Product_Warehouse` VALUES ('00000003', '0001', '', '2019-11-21 11:30:13', NULL, '500--升', '', '大山食品厂----7625254号厂房', '');
-INSERT INTO `Z_Product_Warehouse` VALUES ('00000004', '0001', '', '2019-11-21 11:33:21', NULL, '500--升', '', '大山食品厂----7625254号厂房', '');
-INSERT INTO `Z_Product_Warehouse` VALUES ('00000005', '0001', '', '2019-11-21 18:33:55', NULL, '500--升', '', '大山食品厂----7625254号厂房', '');
-INSERT INTO `Z_Product_Warehouse` VALUES ('00000006', '0001', '', '2019-11-21 08:58:38', NULL, '500--升', '', '大山食品厂----7625254号厂房', '');
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Raw_Materials_Criteria
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Raw_Materials_Criteria`;
-CREATE TABLE `Z_Raw_Materials_Criteria` (
-  `Material_no` char(40) DEFAULT NULL,
-  `Material_name` char(100) DEFAULT NULL,
-  `Material_type` char(30) DEFAULT NULL,
-  `Guarantee_period` char(20) DEFAULT NULL COMMENT '数字+单位'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for Z_Raw_Materials_Warehouse
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Raw_Materials_Warehouse`;
-CREATE TABLE `Z_Raw_Materials_Warehouse` (
-  `Stock_no` char(40) NOT NULL,
-  `Material_no` char(20) DEFAULT NULL,
-  `Staff_no_storage` char(20) DEFAULT NULL,
-  `Storage_address` char(255) DEFAULT NULL,
-  `Product_date` datetime DEFAULT NULL,
-  `Stock_num` char(20) DEFAULT NULL COMMENT '数字+单位',
-  `Details` char(255) DEFAULT NULL COMMENT 's',
-  PRIMARY KEY (`Stock_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Raw_Materials_Warehouse
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Raw_Materials_Warehouse` VALUES ('00000001', '0002', '000001', '巨魔蘸酱', '2019-11-09 11:32:46', NULL, NULL);
-INSERT INTO `Z_Raw_Materials_Warehouse` VALUES ('00000002', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 11:33:21', '500--升', '');
-INSERT INTO `Z_Raw_Materials_Warehouse` VALUES ('00000003', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 18:33:55', '500--升', '');
-INSERT INTO `Z_Raw_Materials_Warehouse` VALUES ('00000004', '0001', '', '大山食品厂----10086号厂房', '2019-11-21 08:58:38', '500--升', '');
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Refund_Application
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Refund_Application`;
-CREATE TABLE `Z_Refund_Application` (
-  `Refund_no` char(40) DEFAULT NULL,
-  `Order_no` char(40) DEFAULT NULL,
-  `Client_no` char(20) DEFAULT NULL,
-  `Reason` char(255) DEFAULT NULL COMMENT '不合格成品+详情',
-  `Staff_no_checker` char(20) DEFAULT NULL,
-  `Progress` char(20) DEFAULT NULL,
-  `Permission` int(255) DEFAULT NULL,
-  `Refund_Payment` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Refund_Application
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Refund_Application` VALUES ('00000001', '00000001', '000003', '产品质量问题', '000002', '提交成功', 0, 0);
-COMMIT;
-
--- ----------------------------
--- Table structure for Z_Staff
--- ----------------------------
-DROP TABLE IF EXISTS `Z_Staff`;
-CREATE TABLE `Z_Staff` (
-  `Staff_no` char(20) DEFAULT NULL,
-  `Staff_name` char(30) DEFAULT NULL,
-  `Password` char(50) DEFAULT NULL,
-  `Department` char(20) DEFAULT NULL,
-  `Workshop` char(40) DEFAULT NULL,
-  `Authority` char(255) DEFAULT NULL,
-  `Busy` int(255) DEFAULT NULL,
-  `Position` char(20) DEFAULT NULL,
-  `Details` char(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of Z_Staff
--- ----------------------------
-BEGIN;
-INSERT INTO `Z_Staff` VALUES ('11111', '11111', '12345', '销售', NULL, NULL, 20, '5', NULL);
-INSERT INTO `Z_Staff` VALUES ('12', 'wfwqf', 'wwqe', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `Z_Staff` VALUES ('12345', '12345', '12345', '销售', NULL, NULL, 13, NULL, NULL);
-INSERT INTO `Z_Staff` VALUES ('fdfs', 'dgf', 'r3', '35245', 'scs342', '3423', 5, '0', 'trege');
-INSERT INTO `Z_Staff` VALUES ('zzz', '123456', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `Z_Staff` VALUES ('zzz1', '123456', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `Z_Staff` VALUES ('987654321', '<无名氏>', 'e10adc3949ba59abbe56e057f20f883e', '生产车间', '车间A', '8', 0, '普通职工', '');
-INSERT INTO `Z_Staff` VALUES ('00001', '11111', '12345', '销售', NULL, NULL, 20, '5', NULL);
-INSERT INTO `Z_Staff` VALUES ('00002', '12345', '12345', '销售', NULL, NULL, 13, NULL, NULL);
-INSERT INTO `Z_Staff` VALUES ('00003', '<无名氏>', 'e10adc3949ba59abbe56e057f20f883e', '生产车间', '车间A', '8', 0, '普通职工', '');
-INSERT INTO `Z_Staff` VALUES ('000001', '11111', '827ccb0eea8a706c4c34a16891f84e7b', '销售', NULL, '0101110110101001110101', 20, '5', NULL);
-INSERT INTO `Z_Staff` VALUES ('000002', '1234', '827ccb0eea8a706c4c34a16891f84e7b', '销售', NULL, '0101110110101001110101', 13, NULL, NULL);
-INSERT INTO `Z_Staff` VALUES ('000003', '12345', '827ccb0eea8a706c4c34a16891f84e7b', '生产车间', '车间A', '0101110110101001110101', 0, '普通职工', '');
-INSERT INTO `Z_Staff` VALUES ('000004', 'TCP/IP', 'ba7bc92fcd57e337ebb9e74308c811f', '生产车间', '车间A', '0101110110101001110101', 0, '普通职工', '');
+INSERT INTO `Staff` VALUES ('000001', '11111', '827ccb0eea8a706c4c34a16891f84e7b', '销售', NULL, '0101110110101001110101', 20, '5', NULL, 0);
+INSERT INTO `Staff` VALUES ('000002', '1234', '827ccb0eea8a706c4c34a16891f84e7b', '销售', NULL, '0101110110101001110101', 13, NULL, NULL, 0);
+INSERT INTO `Staff` VALUES ('000003', '12345', '827ccb0eea8a706c4c34a16891f84e7b', '生产车间', '车间A', '0101110110101001110101', 0, '普通职工', '', 0);
+INSERT INTO `Staff` VALUES ('000004', 'TCP/IP', 'ba7bc92fcd57e337ebb9e74308c811f', '生产车间', '车间A', '0101110110101001110101', 0, '普通职工', '', 0);
 COMMIT;
 
 -- ----------------------------
@@ -1650,275 +1389,5 @@ COMMIT;
 -- ----------------------------
 DROP VIEW IF EXISTS `popularity_products`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `popularity_products` AS select `order_details`.`Product_no` AS `Product_no`,count(`order_details`.`Product_no`) AS `count(Order_Details.Product_no)` from `order_details` group by `order_details`.`Product_no` order by count(`order_details`.`Product_no`) desc;
-
--- ----------------------------
--- Triggers structure for table Client
--- ----------------------------
-DROP TRIGGER IF EXISTS `client_trigger_insert`;
-delimiter ;;
-CREATE TRIGGER `client_trigger_insert` AFTER INSERT ON `Client` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Client(Client_no,Client_name,Client_type,Credit,Details,password) 
-	VALUES (New.Client_no,new.Client_name,new.Client_type,new.Credit,new.Details,new.password);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Client
--- ----------------------------
-DROP TRIGGER IF EXISTS `client_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `client_trigger_update` AFTER UPDATE ON `Client` FOR EACH ROW begin 
-DELETE from Z_Client where Z_Client.Client_no = new.Client_no;
-INSERT 
-	INTO Z_Client(Client_no,Client_name,Client_type,Credit,Details,password) 
-	VALUES (New.Client_no,new.Client_name,new.Client_type,new.Credit,new.Details,new.password);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Export_Record
--- ----------------------------
-DROP TRIGGER IF EXISTS `Export_Record_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Export_Record_trigger_add` AFTER INSERT ON `Export_Record` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Export_Record(Export_no,Staff_no,Order_no_details,Source_place,Target_place,Delivery_date,Transport_link,Progress) 
-	VALUES (New.Export_no,new.Staff_no,new.Order_no_details,new.Source_place,new.Target_place,new.Delivery_date,new.Transport_link,new.Progress);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Export_Record
--- ----------------------------
-DROP TRIGGER IF EXISTS `Export_Record_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Export_Record_trigger_update` AFTER UPDATE ON `Export_Record` FOR EACH ROW begin 
-DELETE from Z_Export_Record where Z_Export_Record.Export_no = new.Export_no;
-	INSERT 
-	INTO Z_Export_Record(Export_no,Staff_no,Order_no_details,Source_place,Target_place,Delivery_date,Transport_link,Progress) 
-	VALUES (New.Export_no,new.Staff_no,new.Order_no_details,new.Source_place,new.Target_place,new.Delivery_date,new.Transport_link,new.Progress);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Order_Details
--- ----------------------------
-DROP TRIGGER IF EXISTS `Order_Details_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Order_Details_trigger_add` AFTER INSERT ON `Order_Details` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Order_Details(Order_no_details,Product_no,Products_requirement,Client_no,Delivery_date,payment_deadline) 
-	VALUES (New.Order_no_details,new.Product_no,new.Products_requirement,new.Client_no,new.Delivery_date,new.payment_deadline);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Order_Details
--- ----------------------------
-DROP TRIGGER IF EXISTS `Order_Details_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Order_Details_trigger_update` AFTER UPDATE ON `Order_Details` FOR EACH ROW begin 
-DELETE from Z_Order_Details where Z_Order_Details.Order_no_details = new.Order_no_details;
-	INSERT 
-	INTO Z_Order_Details(Order_no_details,Product_no,Products_requirement,Client_no,Delivery_date,payment_deadline) 
-	VALUES (New.Order_no_details,new.Product_no,new.Products_requirement,new.Client_no,new.Delivery_date,new.payment_deadline);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Order_Form
--- ----------------------------
-DROP TRIGGER IF EXISTS `Order_Form_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Order_Form_trigger_add` AFTER INSERT ON `Order_Form` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Order_Form(Order_no,Client_no,Staff_no,Order_create_date,Order_sum_amount,Progress,Liquidated_damages) 
-	VALUES (New.Order_no,new.Client_no,new.Staff_no,new.Order_create_date,new.Order_sum_amount,new.Progress,new.Liquidated_damages);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Order_Form
--- ----------------------------
-DROP TRIGGER IF EXISTS `Order_Form_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Order_Form_trigger_update` AFTER UPDATE ON `Order_Form` FOR EACH ROW begin 
-DELETE from Z_Order_Form where Z_Order_Form.Order_no = new.Order_no;
-	INSERT 
-	INTO Z_Order_Form(Order_no,Client_no,Staff_no,Order_create_date,Order_sum_amount,Progress,Liquidated_damages) 
-	VALUES (New.Order_no,new.Client_no,new.Staff_no,new.Order_create_date,new.Order_sum_amount,new.Progress,new.Liquidated_damages);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Payment
--- ----------------------------
-DROP TRIGGER IF EXISTS `Payment_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Payment_trigger_add` AFTER INSERT ON `Payment` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Payment(Payment_no,Order_no,Staff_no_accountant,Money,Details) 
-	VALUES (New.Payment_no,new.Order_no,new.Staff_no_accountant,new.Money,new.Details);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Payment
--- ----------------------------
-DROP TRIGGER IF EXISTS `Payment_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Payment_trigger_update` AFTER UPDATE ON `Payment` FOR EACH ROW begin 
-DELETE from Z_Payment where Z_Payment.Payment_no = new.Payment_no;
-	INSERT 
-	INTO Z_Payment(Payment_no,Order_no,Staff_no_accountant,Money,Details) 
-	VALUES (New.Payment_no,new.Order_no,new.Staff_no_accountant,new.Money,new.Details);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Product_Criteria
--- ----------------------------
-DROP TRIGGER IF EXISTS `Product_Criteria_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Product_Criteria_trigger_add` AFTER INSERT ON `Product_Criteria` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Product_Criteria(Product_no,Product_name,Product_type,ingredient_list,Guarantee_period) 
-	VALUES (New.Product_no,new.Product_name,new.Product_type,new.ingredient_list,new.Guarantee_period);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Product_Criteria
--- ----------------------------
-DROP TRIGGER IF EXISTS `Product_Criteria_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Product_Criteria_trigger_update` AFTER UPDATE ON `Product_Criteria` FOR EACH ROW begin 
-DELETE from Z_Product_Criteria where Z_Product_Criteria.Product_no = new.Product_no;
-	INSERT 
-	INTO Z_Product_Criteria(Product_no,Product_name,Product_type,ingredient_list,Guarantee_period) 
-	VALUES (New.Product_no,new.Product_name,new.Product_type,new.ingredient_list,new.Guarantee_period);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Product_Warehouse
--- ----------------------------
-DROP TRIGGER IF EXISTS `Product_Warehouse_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Product_Warehouse_trigger_add` AFTER INSERT ON `Product_Warehouse` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Product_Warehouse(Storage_address,Stock_no,Product_no,Staff_no_storage,Manufacture_date,stock_num,staff_no_workshop,details) 
-	VALUES (new.Storage_address,New.Stock_no,new.Product_no,new.Staff_no_storage,new.Manufacture_date,new.stock_num,new.staff_no_workshop,new.details);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Product_Warehouse
--- ----------------------------
-DROP TRIGGER IF EXISTS `Product_Warehouse_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Product_Warehouse_trigger_update` AFTER UPDATE ON `Product_Warehouse` FOR EACH ROW begin 
-DELETE from Z_Product_Warehouse where Z_Product_Warehouse.Stock_no = new.Stock_no;
-	INSERT 
-	INTO Z_Product_Warehouse(Storage_address,Stock_no,Product_no,Staff_no_storage,Manufacture_date,stock_num,staff_no_workshop,details) 
-	VALUES (new.Storage_address,New.Stock_no,new.Product_no,new.Staff_no_storage,new.Manufacture_date,new.stock_num,new.staff_no_workshop,new.details);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Raw_Materials_Warehouse
--- ----------------------------
-DROP TRIGGER IF EXISTS `Raw_Materials_Warehouse_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Raw_Materials_Warehouse_trigger_add` AFTER INSERT ON `Raw_Materials_Warehouse` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Raw_Materials_Warehouse(Stock_no,Material_no,Storage_address,Product_date,Staff_no_storage,details,Stock_num) 
-	VALUES (New.Stock_no,new.Material_no,new.Storage_address,new.Product_date,new.Staff_no_storage,new.details,new.Stock_num);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Raw_Materials_Warehouse
--- ----------------------------
-DROP TRIGGER IF EXISTS `Raw_Materials_Warehouse_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Raw_Materials_Warehouse_trigger_update` AFTER UPDATE ON `Raw_Materials_Warehouse` FOR EACH ROW begin 
-DELETE from Z_Raw_Materials_Warehouse where Z_Raw_Materials_Warehouse.Stock_no = new.Stock_no;
-	INSERT 
-	INTO Z_Raw_Materials_Warehouse(Stock_no,Material_no,Storage_address,Product_date,Staff_no_storage,details,Stock_num) 
-	VALUES (New.Stock_no,new.Material_no,new.Storage_address,new.Product_date,new.Staff_no_storage,new.details,new.Stock_num);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Refund_Application
--- ----------------------------
-DROP TRIGGER IF EXISTS `Refund_Application_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Refund_Application_trigger_add` AFTER INSERT ON `Refund_Application` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Refund_Application(Refund_no,Order_no,Client_no,Reason,Staff_no_checker,Progress,Permission,Refund_payment) 
-	VALUES (New.Refund_no,new.Order_no,new.Client_no,new.Reason,new.Staff_no_checker,new.Progress,new.Permission,new.Refund_payment);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Refund_Application
--- ----------------------------
-DROP TRIGGER IF EXISTS `Refund_Application_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Refund_Application_trigger_update` AFTER UPDATE ON `Refund_Application` FOR EACH ROW begin 
-DELETE from Z_Refund_Application where Z_Refund_Application.Refund_no = new.Refund_no;
-	INSERT 
-	INTO Z_Refund_Application(Refund_no,Order_no,Client_no,Reason,Staff_no_checker,Progress,Permission,Refund_payment) 
-	VALUES (New.Refund_no,new.Order_no,new.Client_no,new.Reason,new.Staff_no_checker,new.Progress,new.Permission,new.Refund_payment);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Staff
--- ----------------------------
-DROP TRIGGER IF EXISTS `Staff_trigger_add`;
-delimiter ;;
-CREATE TRIGGER `Staff_trigger_add` AFTER INSERT ON `Staff` FOR EACH ROW begin 
-	INSERT 
-	INTO Z_Staff(Staff_no,Staff_name,Department,Workshop,authority,password,details,Busy,Position) 
-	VALUES (New.Staff_no,new.Staff_name,new.Department,new.Workshop,new.authority,new.password,new.details,new.Busy,new.Position);
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table Staff
--- ----------------------------
-DROP TRIGGER IF EXISTS `Staff_trigger_update`;
-delimiter ;;
-CREATE TRIGGER `Staff_trigger_update` AFTER UPDATE ON `Staff` FOR EACH ROW begin 
-DELETE from Z_Staff where Z_Staff.Staff_no = new.Staff_no;
-	INSERT 
-	INTO Z_Staff(Staff_no,Staff_name,Department,Workshop,authority,password,details,Busy,Position) 
-	VALUES (New.Staff_no,new.Staff_name,new.Department,new.Workshop,new.authority,new.password,new.details,new.Busy,new.Position);
-end
-;;
-delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;
