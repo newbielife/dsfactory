@@ -7,11 +7,11 @@ $.ajax({
     async: false,
     success: function (res) {
         if(res && res.code === 200) {
-            if(res.data.user.client_no) {
+            if(res.data.user.staff_no) {
                 var user = res.data.user;
-                sessionStorage.setItem("userId", user.client_no);
-                if (user.client_no) {
-                    $(".main-header .user-menu .hidden-xs,.main-sidebar .info p").text(user.client_no);
+                sessionStorage.setItem("userId", user.staff_no);
+                if (user.staff_no) {
+                    $(".main-header .user-menu .hidden-xs,.main-sidebar .info p").text(user.staff_no);
                 } else {
                     top.location.href = '/login.html';
                 }

@@ -84,13 +84,13 @@ function loginFun() {
                 if(res) {
                     var loginInfoTip = res.data.msgTip;
                     //用户名不存在，清空输入框并定位到用户名输入框
-                    if (loginInfoTip.indexOf("client is not exist") != -1) {
+                    if (loginInfoTip.indexOf("staff is not exist") != -1) {
                         $("#username").val("").focus();
                         $("#password").val("");
                         alert("用户名不存在");
                         return;
                     }
-                    else if (loginInfoTip.indexOf("client password error") != -1) {
+                    else if (loginInfoTip.indexOf("staff password error") != -1) {
                         alert("用户密码错误");
                         return;
                     }
@@ -99,8 +99,7 @@ function loginFun() {
                         return;
                     }
                     //跳转到用户管理界面
-                    else if (loginInfoTip.indexOf("client can login") != -1 || loginInfoTip == "client already login") {
-                        alert("密码正确");
+                    else if (loginInfoTip.indexOf("staff can login") != -1 || loginInfoTip == "staff already login") {
                         $.ajax({
                             type: "get",
                             url: "/user/getUserSession",
@@ -108,9 +107,8 @@ function loginFun() {
                             success: function (res) {
                                 if(res && res.code === 200) {
                                     if(res.data.user) {
-                                        //alert(res.code + " " +res.data.user.client_no);
                                         var user = res.data.user;
-                                        sessionStorage.setItem("userId", user.client_no);
+                                        sessionStorage.setItem("userId", user.staff_no);
                                         top.location.href = "/index.html";
                                     }
                                 }
