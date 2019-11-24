@@ -154,8 +154,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> selectBy_partName_or_partNo(String part) {
-        return clientMapper.selectBy_partName_or_partNo(part,part);
+    public List<Client> selectBy_partName_and_Type(String part,String type) {
+        return clientMapper.selectBy_partName_and_Type(part,type);
     }
 
     @Override

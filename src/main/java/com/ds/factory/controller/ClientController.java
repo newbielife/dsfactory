@@ -45,6 +45,12 @@ public class ClientController {
                           HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = ParamUtils.requestToMap(request);
         parameterMap.put(Constants.SEARCH, search);
+        //System.out.println(search);
+        JSONObject obj= JSON.parseObject(search);
+
+        String name=obj.getString("name")==null?"":obj.getString("name").trim();
+        String type=obj.getString("type")==null?"":obj.getString("type").trim();
+        System.out.println(type);
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         if (pageSize != null && pageSize <= 0) {
@@ -54,7 +60,7 @@ public class ClientController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        List<?> list = clientService.getAll_Client();
+        List<?> list = clientService.selectBy_partName_and_Type(name,type);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
