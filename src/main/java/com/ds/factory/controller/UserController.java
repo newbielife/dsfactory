@@ -175,7 +175,7 @@ public class UserController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        List<?> list = clientService.getAll_Client();
+        List<?> list = staffService.getAll_Staff();
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());

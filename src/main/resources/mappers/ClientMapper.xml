@@ -169,8 +169,9 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete from Client
-        where Client_no = #{Client_no,jdbcType=VARCHAR} and flag=0
+        update Client
+        set flag=1
+        where Client_no = #{Client_no,jdbcType=VARCHAR}
     </delete>
 
 

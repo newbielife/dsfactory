@@ -29,10 +29,10 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
     StaffMapper staffMapper;
 
     @Override
-    public int insertManufacture_Design(String Order_no_details,String Staff_no_design,String Workshop) {
+    public int insertManufacture_Design(String Order_no_details,String loginame,String Department) {
         if(Order_no_details==null||order_detailsMapper.exist_or_not(Order_no_details.trim())==0)
             return 0;
-        if(Staff_no_design==null||staffMapper.exist_or_not(Staff_no_design.trim())==0)
+        if(loginame==null||staffMapper.exist_or_not(loginame.trim())==0)
             return 0;
 
         Order_Details ooo=order_detailsMapper.selectByPrimaryKey(Order_no_details);
@@ -45,8 +45,8 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
             return 0;
         Manufacture_Design manufacture_design=new Manufacture_Design();
         manufacture_design.setProduct_no(Product_no.trim());
-        manufacture_design.setStaff_no_design(Staff_no_design.trim());
-        manufacture_design.setWorkshop(Workshop);
+        manufacture_design.setStaff_no_design(loginame.trim());
+        manufacture_design.setWorkshop(Department);
         manufacture_design.setProducts_requirement(Products_requirement);
         int biggest_num=Integer.parseInt(manufacture_designMapper.select_Biggest_Manufacture_no());
         String biggest="";
@@ -136,16 +136,16 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
 
 
         Manufacture_Result manufacture_result=new Manufacture_Result();
-        List<Staff> staffs=staffMapper.selectByWorkshop(Workshop);
+        List<Staff> staffs=staffMapper.selectByDepartment(Department);
         String sum_="";
-        for(int i=0;i<staffs.size();i++){
+        for(int i=0;i<staffs.size()&&staffs!=null;i++){
             sum_+=staffs.get(i).getLoginame().trim();
             if(i!=staffs.size()-1)sum_+=";";
         }
         manufacture_result.setManufacture_no(biggest);
         manufacture_result.setOrder_no_details(Order_no_details);
         manufacture_result.setProduct_no(Product_no);
-        manufacture_result.setStaff_no_design(Staff_no_design);
+        manufacture_result.setStaff_no_design(loginame);
         manufacture_result.setStaff_no_manufacture(sum_);
         manufacture_result.setUpdate_date(new Date());
         manufacture_resultMapper.deleteByPrimaryKey(biggest);

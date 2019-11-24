@@ -1,6 +1,7 @@
 package com.ds.factory.service.Service;
 
 import com.ds.factory.datasource.entities.Client;
+import com.ds.factory.exception.BusinessParamCheckingException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface ClientService {
     int update_Password_By_PrimaryKey(String Client_no, String OldPassword, String NewPassword, String NewPassword_again);
     //返回：1（旧密码错误）；2（新密码存在空值）；3（两个新密码冲突）；4（密码未变更）；5（MD5转化失败）；6（修改成功）
 
-    int Register_new_Client(String name, String password);
+    int Register_new_Client(String name, String password) throws BusinessParamCheckingException;
     //返回：1（密码空）；2（两次密码不一致）；3（已经注册的用户名与密码）；4（人员注册过多，超过上限一百万）；5（添加过程失败）；6（注册成功）
 
     Client Client_Log_in(String name, String password);
@@ -36,7 +37,7 @@ public interface ClientService {
     int deleteByPrimaryKey(String client_no);//用主键删除
 
     int insert(Client client);//Client任何数据都不可以null
-    int insert_Client_details(Client client);//Client部分内容可以null，加入表内为默认补全数据，eg.Password设置为"123456"
+    int insert_Client_details(Client client) throws BusinessParamCheckingException;//Client部分内容可以null，加入表内为默认补全数据，eg.Password设置为"123456"
     int insertSelective(Client record);//Client部分内容可以null，加入表内就是null
 
 

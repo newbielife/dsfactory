@@ -11,19 +11,7 @@ public interface StaffMapper {
     Staff selectByLoginame(@Param("loginame") String loginame);
     int exist_or_not(@Param("loginame") String loginame);
 
-
-
-
-
-
-
-
-
-
-
-
-
-    List<Staff> selectByWorkshop(@Param("Workshop") String Workshop);
+    List<Staff> selectByDepartment(@Param("Workshop") String Workshop);
 
 
 
@@ -36,10 +24,10 @@ public interface StaffMapper {
     int updateByExample(@Param("record") Staff record, @Param("example") StaffExample example);//连主键也要修改
 
     int countByExample(StaffExample example);
-    int countBy_Name_and_Password(@Param("Staff_name") String name, @Param("Password") String password);
+    //int countBy_Name_and_Password(@Param("Staff_name") String name, @Param("Password") String password);
 
     int deleteByExample(StaffExample example);
-    int deleteByPrimaryKey(String Staff_no);
+    int deleteByPrimaryKey(String id);
 
     int insert(Staff record);//不可以为空的Staff插入
     int insertSelective(Staff record);//部分插入内容，除了主键以外可以为空
@@ -47,13 +35,7 @@ public interface StaffMapper {
     int updateByPrimaryKeySelective(Staff record);//部分内容可以空
     int updateByPrimaryKey(Staff record);//整体Staff不得为空
 
-    List<Staff> select_Department_orderBy_Busy(@Param("Department") String Department);
     List<Staff> selectByExample(StaffExample example);
-    List<Staff> selectBy_partName_or_partNo(@Param("part1") String part1, @Param("part2") String part2);
-    List<Staff> orderBy_Authority();
-
-    Staff selectByPrimaryKey(String Staff_no);
-    Staff selectBy_Name_and_Password(@Param("Staff_name") String name, @Param("Password") String password);
-
-    String select_Biggest_Staff_no();
+    Staff selectByPrimaryKey(String id);
+    Long select_Biggest_Id();
 }

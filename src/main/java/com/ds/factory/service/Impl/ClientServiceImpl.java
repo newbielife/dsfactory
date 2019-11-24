@@ -1,9 +1,11 @@
 package com.ds.factory.service.Impl;
 
 
+import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.dao.Example.ClientExample;
 import com.ds.factory.datasource.entities.Client;
 import com.ds.factory.datasource.mappers.ClientMapper;
+import com.ds.factory.exception.BusinessParamCheckingException;
 import com.ds.factory.service.Service.ClientService;
 import com.ds.factory.utils.ExceptionCodeConstants;
 import com.ds.factory.utils.JshException;
@@ -79,7 +81,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public int Register_new_Client(String name, String password) {
+    public int Register_new_Client(String name, String password) throws BusinessParamCheckingException {
         if(password.trim().compareTo("")==0 || password==null ) return 1;
         String temp="";
         try {
@@ -110,7 +112,11 @@ public class ClientServiceImpl implements ClientService {
             }
             if(!exist_or_not(no)) flag=false;
         }
-        if(no.length()>=7)  return 4;
+        if(no.length()>=7)  {
+            throw new BusinessParamCheckingException(ExceptionConstants.USER_OVER_LIMIT_FAILED_CODE,
+                    ExceptionConstants.USER_OVER_LIMIT_FAILED_MSG);
+        }
+
 
         Client s=new Client();
         s.setClient_no(no);
@@ -164,11 +170,17 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public int updateByPrimaryKey(Client client) {
+        if(client==null || client.getClient_no()==null
+                ||client.getClient_no().trim().compareTo("")==0)
+            return 0;
         return clientMapper.updateByPrimaryKey(client);
     }
 
     @Override
     public int updateByPrimaryKeySelective(Client client) {
+        if(client==null || client.getClient_no()==null
+            ||client.getClient_no().trim().compareTo("")==0)
+            return 0;
         return clientMapper.updateByPrimaryKeySelective(client);
     }
 
@@ -183,17 +195,37 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public int insert_Client_details(Client client) {
-        if(client.getClient_no().trim().compareTo("")==0 || client.getClient_name()==null)
-            return 0;
-        client.setClient_no(client.getClient_no());
+    public int insert_Client_details(Client client) throws BusinessParamCheckingException {
+        String no="";
+        String select_Biggest_Client_no=clientMapper.select_Biggest_Client_no();
+        int no_=Integer.parseInt(select_Biggest_Client_no);
+        boolean flag=true;
+        while(flag)
+        {
+            no_++;  no=""+no_;
+            switch (no.length())
+            {
+                case 1: no="00000"+no;  break;
+                case 2: no="0000"+no;   break;
+                case 3: no="000"+no;    break;
+                case 4: no="00"+no;     break;
+                case 5: no="0"+no;      break;
+                case 6: break;
+            }
+            if(!exist_or_not(no)) flag=false;
+        }
+        if(no.length()>=7)  {
+            throw new BusinessParamCheckingException(ExceptionConstants.USER_OVER_LIMIT_FAILED_CODE,
+                    ExceptionConstants.USER_OVER_LIMIT_FAILED_MSG);
+        }
+        client.setClient_no(no);
         client.setClient_name(client.getClient_name()==null?"<无名氏>":client.getClient_name());
         client.setClient_type(client.getClient_type()==null?"VIP01":client.getClient_type());
         client.setCredit(client.getCredit()==null?Long.parseLong("0"):client.getCredit());
         client.setDetails(client.getDetails()==null?"（该客户无详细资料介绍）":client.getDetails());
 
         String password = client.getPassword();
-        if(password.trim().compareTo("")==0|| password==null)
+        if( password==null||password.trim().compareTo("")==0)
             password="123456";
         //因密码用MD5加密，需要对密码进行转化
         try {

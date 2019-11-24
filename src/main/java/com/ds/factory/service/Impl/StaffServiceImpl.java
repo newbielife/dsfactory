@@ -1,17 +1,20 @@
 package com.ds.factory.service.Impl;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.dao.Example.StaffExample;
 import com.ds.factory.datasource.entities.Client;
 import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.datasource.mappers.StaffMapper;
 import com.ds.factory.service.Service.StaffService;
+import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.ExceptionCodeConstants;
 import com.ds.factory.utils.JshException;
 import com.ds.factory.utils.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -26,18 +29,26 @@ import java.util.Objects;
 @Service
 public class StaffServiceImpl implements StaffService {
 
+
+    @Value("10")
+    private Integer manageRoleId;
+
+
     private Logger logger = LoggerFactory.getLogger(StaffService.class);
     @Resource
     StaffMapper staffMapper;
+    @Resource
+    UserBusinessService userBusinessService;
+
 
     @Override
     public Staff selectByPrimaryKey(String userno) {
-        return null;
+        return staffMapper.selectByPrimaryKey(userno);
     }
 
     @Override
-    public boolean exist_or_not(String Staff_no){
-        return staffMapper.exist_or_not(Staff_no)>0;
+    public boolean exist_or_not(String id){
+        return staffMapper.exist_or_not(id)>0;
     }
 
     @Override
@@ -61,8 +72,28 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public int Register_new_Staff(String loginname, String password) {
-        return 0;
+    public int Register_new_Staff(String username, String password) throws Exception {
+        Long biggest=staffMapper.select_Biggest_Id();
+        Long x=Long.parseLong((Integer.parseInt(biggest+"")+1)+"");
+        Staff staff=new Staff();
+        staff.setId(x);
+        staff.setPassword(password);
+        staff.setUsername(username);
+        staff.setLoginame(username);
+        staff.setIsmanager(Byte.parseByte("0"));
+        staff.setIsystem(Byte.parseByte("0"));
+        staff.setStatus(Byte.parseByte("0"));
+
+
+        JSONObject ubObj = new JSONObject();
+        ubObj.put("type", "UserRole");
+        ubObj.put("keyid", staff.getId());
+        JSONArray ubArr = new JSONArray();
+        ubArr.add(manageRoleId);
+        ubObj.put("value", ubArr.toString());
+        userBusinessService.insertUserBusiness(ubObj.toString(), ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
+        return staffMapper.insertSelective(staff);
     }
 
     @Override
@@ -97,39 +128,6 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<Staff> selectBy_partName_or_partNo(String part) {
-        if(part==null || part.trim().compareTo("")==0)  part="";
-        return null;//staffMapper.selectBy_partName_or_partNo(part,part);
-    }
-
-    @Override
-    public List<Staff> orderBy_Authority() {
-        return null;
-    }
-
-    @Override
-    public List<Staff> select_Department_orderBy_Busy(String Department) {
-        List<Staff> list=null;
-        try{
-            //list=staffMapper.select_Department_orderBy_Busy(Department);
-        }catch(Exception e){
-            JshException.readFail(logger, e);
-        }
-        return list;
-    }
-
-    @Override
-    public int insert(Staff s){
-        return 0;
-    }
-
-    @Override
-    public int insert_Staff_details(Staff staff) {
-        return 0;
-    }
-
-
-    @Override
     public int insertSelective(Staff record) {
         return 0;
     }
@@ -140,15 +138,10 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public int updateByPrimaryKey(Staff staff){
-        //传入实体类Staff，以Staff_no为检索修改，其他数据不得为空null或0
-        return 0;
-    }
-
-    @Override
     public int updateByPrimaryKeySelective(Staff staff){
-        //传入实体类Staff，以Staff_no为检索修改，其他数据可以为空null或0
-        return 0;
+        if(staff==null || staff.getId()==null || (staff.getId()+"").trim().compareTo("")==0)
+            return 0;
+        return staffMapper.updateByPrimaryKeySelective(staff);
     }
 
 
