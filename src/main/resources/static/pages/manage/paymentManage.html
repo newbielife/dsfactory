@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>客户管理</title>
+    <title>支付管理</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,38 +16,33 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="客户信息" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="支付管理" iconCls="icon-list">
     <table id="searchTable">
         <tr>
-            <td>姓名:</td>
+            <td>支付编号:</td>
             <td>
-                <input name="searchclient_name" id="searchclient_name"style="width:70px;"/>
+                <input name="searchPayment_no" id="searchPayment_no"style="width:70px;"/>
             </td>
-            <td>类型：</td>
+            <td>订单编号：</td>
             <td>
-                <select name="searchclient_type" id="searchclient_type"style="width:70px;">
-                    <option value="">全部</option>
-                    <option value="VIP10">VIP10</option>
-                    <option value="VIP09">VIP09</option>
-                    <option value="VIP08">VIP08</option>
-                    <option value="VIP07">VIP07</option>
-                    <option value="VIP06">VIP06</option>
-                    <option value="VIP05">VIP05</option>
-                    <option value="VIP04">VIP04</option>
-                    <option value="VIP03">VIP03</option>
-                    <option value="VIP02">VIP02</option>
-                    <option value="VIP02">VIP01</option>
-                </select>
+                <input name="searchOrder_no" id="searchOrder_no"style="width:70px;"/>
             </td>
-            <!--                能否判断范围？？-->
-            <!--                <td>信誉度：</td>-->
-            <!--                <td>-->
-            <!--                    <select name="searchclient_type" id="searchclient_type"style="width:70px;">-->
-            <!--                        <option value="">全部</option>-->
-            <!--                        <option value>=30>VIP10</option>-->
-            <!--                        <option value<30>VIP01</option>-->
-            <!--                    </select>-->
-            <!--                </td>-->
+            <td>员工编号：</td>
+            <td>
+                <input name="searchStaff_no_accountant" id="searchStaff_no_accountant"style="width:70px;"/>
+            </td>
+            <td>金额：</td>
+            <td>
+                <input name="searchMoney" id="searchMoney"style="width:70px;"/>
+            </td>
+            <td>备注：</td>
+            <td>
+                <input name="searchDetails" id="searchDetails"style="width:70px;"/>
+            </td>
+            <td>支付时间：</td>
+            <td>
+                <input name="searchPayment_date" id="searchPayment_date"style="width:70px;"/>
+            </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -59,65 +54,50 @@
     </table>
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
-<div id="clientDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
+
+<div id="paymentDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
-    <form id="clientFM" method="post" novalidate>
+    <form id="paymentFM" method="post" novalidate>
         <table>
+<!--            <tr>-->
+<!--                <td>支付编号：</td>-->
+<!--                <td style="padding:5px">-->
+<!--                    <input name="Payment_no"class="easyui-validatebox"-->
+<!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
+<!--                </td>-->
+<!--            </tr>-->
             <tr>
-                <td>姓名：</td>
+                <td>订单编号：</td>
                 <td style="padding:5px">
-                    <input name="Client_name"class="easyui-validatebox"
+                    <input name="Order_no"class="easyui-validatebox"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>类型：</td>
-                <td>
-                    <select name="Client_type" id="Client_type"style="width:70px;">
-                        <option value="VIP10">VIP10</option>
-                        <option value="VIP09">VIP09</option>
-                        <option value="VIP08">VIP08</option>
-                        <option value="VIP07">VIP07</option>
-                        <option value="VIP06">VIP06</option>
-                        <option value="VIP05">VIP05</option>
-                        <option value="VIP04">VIP04</option>
-                        <option value="VIP03">VIP03</option>
-                        <option value="VIP02">VIP02</option>
-                        <option value="VIP02">VIP01</option>
-                    </select>
+                <td>员工编号：</td>
+                <td style="padding:5px">
+                    <input name="Staff_no_accountant"class="easyui-validatebox"
+                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>信誉度：</td>
-                <td>
-                    <select name="Credit" id="Credit"style="width:70px;">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                        <option value="30">30</option>
-                        <option value="35">35</option>
-                        <option value="40">40</option>
-                        <option value="45">45</option>
-                        <option value="50">50</option>
-                        <option value="55">55</option>
-                        <option value="60">60</option>
-                        <option value="65">65</option>
-                        <option value="70">70</option>
-                        <option value="75">75</option>
-                        <option value="80">80</option>
-                        <option value="85">85</option>
-                        <option value="90">90</option>
-                        <option value="95">95</option>
-                        <option value="100">100</option>
-                    </select>
+                <td>金额：</td>
+                <td style="padding:5px">
+                    <input name="Money"class="easyui-validatebox"
+                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>客户信息：</td>
+                <td>备注：</td>
                 <td style="padding:5px">
                     <input name="Details"class="easyui-validatebox"
+                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                </td>
+            </tr>
+            <tr>
+                <td>支付日期：</td>
+                <td style="padding:5px">
+                    <input name="Payment_date"class="easyui-validatebox"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -125,9 +105,9 @@
     </form>
 </div>
 <div id="dlg-buttons">
-    <a href="javascript:void(0)" id="saveClient" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a href="javascript:void(0)" id="cancelClient" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#ClientDlg').dialog('close')">取消</a>
+    <a href="javascript:void(0)" id="savePayment" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+    <a href="javascript:void(0)" id="cancelPayment" class="easyui-linkbutton" iconCls="icon-cancel"
+       onclick="javascript:$('#PaymentDlg').dialog('close')">取消</a>
 </div>
 <script type="text/javascript">
     //初始化界面
@@ -139,7 +119,7 @@
 
     //防止表单提交重复
     function initForm() {
-        $('#ClientFM').form({
+        $('#PaymentFM').form({
             onSubmit: function () {
                 return false;
             }
@@ -148,59 +128,50 @@
     //初始化表格数据
     function initTableData() {
         $('#tableData').datagrid({
-            //title:'客户列表',
-            //iconCls:'icon-save',
-            //width:700,
             height: heightInfo,
             nowrap: false,
             rownumbers: false,
-            //动画效果
             animate: false,
-            //选中单行
             singleSelect: true,
             collapsible: false,
             selectOnCheck: false,
-            //fitColumns:true,
-            //单击行是否选中
-            //checkOnSelect : false,
             pagination: true,
-            //交替出现背景
             striped: true,
-            //loadFilter: pagerFilter,
             pageSize: initPageSize,
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '账号', field: 'client_no', width: 180},
-                {title: '姓名', field: 'client_name', width: 180},
-                {title: '类型', field: 'client_type', width: 180},
-                {title: '信誉度', field: 'credit', width: 180},
-                {title: '客户简介', field: 'details', width: 180},
+                {title: '支付编号', field: 'Payment_no', width: 180},
+                {title: '订单编号', field: 'Order_no', width: 180},
+                {title: '员工编号', field: 'Staff_no_accountant', width: 180},
+                {title: '金额', field: 'Money', width: 180},
+                {title: '备注', field: 'Details', width: 180},
+                {title: '订单日期', field: 'Payment_date', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.id+'AaBb'+rec.client_no + 'AaBb' + rec.client_name + 'AaBb' + rec.client_type + 'AaBb' + rec.credit+ 'AaBb' + rec.details;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editClient(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editClient(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteClient(' + rec.client_no + ');"/>&nbsp;<a onclick="deleteClient(' + rec.client_no + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
+                        var rowInfo = rec.Payment_no + 'AaBb' + rec.Order_no + 'AaBb' + rec.Staff_no_accountant + 'AaBb' + rec.Money+ 'AaBb' + rec.Details+ 'AaBb' + rec.Payment_date;
+                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editPayment(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editPayment(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
+                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deletePayment(' + rec.id + ');"/>&nbsp;<a onclick="deletePayment(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
             ]],
             toolbar: [
                 {
-                    id: 'addClient',
+                    id: 'addPayment',
                     text: '增加',
                     iconCls: 'icon-add',
                     handler: function () {
-                        addClient();
+                        addPayment();
                     }
                 },
                 {
-                    id: 'deleteClient',
+                    id: 'deletePayment',
                     text: '删除',
                     iconCls: 'icon-remove',
                     handler: function () {
-                        batDeleteClient();
+                        batDeletePayment();
                     }
                 }
             ],
@@ -210,7 +181,7 @@
             }
         });
         dgResize();
-        showClientDetails(1, initPageSize);
+        showPaymentDetails(1, initPageSize);
     }
     //初始化键盘enter事件
     $(document).keydown(function (event) {
@@ -220,11 +191,11 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "client_type" || obj.id == "client_name")) {
-            $("#saveClient").click();
+        if (k == "13" && (obj.id == "payment_type" || obj.id == "payment_name")) {
+            $("#savePayment").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchclient_type")) {
+        if (k == "13" && (obj.id == "searchOrder_no")) {
             $("#searchBtn").click();
         }
     });
@@ -242,7 +213,7 @@
                         pageNumber: pageNum,
                         pageSize: pageSize
                     });
-                    showClientDetails(pageNum, pageSize);
+                    showPaymentDetails(pageNum, pageSize);
                 }
             });
         }
@@ -250,16 +221,16 @@
             $.messager.alert('异常处理提示', "分页信息异常 :  " + e.name + ": " + e.message, 'error');
         }
     }
-    //删除客户信息
-    // function deleteClient(clientID) {
-    //     $.messager.confirm('删除确认', '确定要删除此客户信息吗？', function (r) {
+    //删除支付信息
+    // function deletePayment(PaymentID) {
+    //     $.messager.confirm('删除确认', '确定要删除此支付信息吗？', function (r) {
     //         if (r) {
     //             $.ajax({
     //                 type: "post",
-    //                 url: "/client/batchDeleteClientByIds",
+    //                 url: "/payment/batchDeletePaymentByIds",
     //                 dataType: "json",
     //                 data: ({
-    //                     ids: clientID
+    //                     ids: paymentID
     //                 }),
     //                 success: function (res) {
     //                     if(res && res.code == 200) {
@@ -267,20 +238,20 @@
     //                     } else {
     //                         if(res && res.code == 601){
     //                             var jsondata={};
-    //                             jsondata.ids=clientID;
+    //                             jsondata.ids=paymentID;
     //                             jsondata.deleteType='2';
     //                             var type='single';
-    //                             batDeleteClientForceConfirm(res,"/client/batchDeleteClientByIds",jsondata,type);
+    //                             batDeletePaymentForceConfirm(res,"/payment/batchDeletePaymentByIds",jsondata,type);
     //                         }else if(res && res.code == 600){
     //                             $.messager.alert('删除提示', res.msg, 'error');
     //                         }else{
-    //                             $.messager.alert('删除提示', '删除客户信息失败，请稍后再试！', 'error');
+    //                             $.messager.alert('删除提示', '删除支付信息失败，请稍后再试！', 'error');
     //                         }
     //                     }
     //                 },
     //                 //此处添加错误处理
     //                 error: function () {
-    //                     $.messager.alert('删除提示', '删除客户信息异常，请稍后再试！', 'error');
+    //                     $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
     //                     return;
     //                 }
     //             });
@@ -288,27 +259,27 @@
     //     });
     // }
 
-    //批量删除客户
-    function batDeleteClient() {
+    //批量删除支付
+    function batDeletePayment() {
         var row = $('#tableData').datagrid('getChecked');
         if (row.length == 0) {
             $.messager.alert('删除提示', '没有记录被选中！', 'info');
             return;
         }
         if (row.length > 0) {
-            $.messager.confirm('删除确认', '确定要删除选中的' + row.length + '条客户信息吗？', function (r) {
+            $.messager.confirm('删除确认', '确定要删除选中的' + row.length + '条支付信息吗？', function (r) {
                 if (r) {
                     var ids = "";
                     for (var i = 0; i < row.length; i++) {
                         if (i == row.length - 1) {
-                            ids += row[i].client_no;
+                            ids += row[i].payment_no;
                             break;
                         }
-                        ids += row[i].client_no + ",";
+                        ids += row[i].payment_no + ",";
                     }
                     $.ajax({
                         type: "post",
-                        url: "/client/batchDeleteClientByIds",
+                        url: "/payment/batchDeletePaymentByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -324,17 +295,17 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeleteClientForceConfirm(res,"/client/batchDeleteClientByIds",jsondata,type);
+                                    batDeletePaymentForceConfirm(res,"/payment/batchDeletePaymentByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{
-                                    $.messager.alert('删除提示', '删除客户信息失败，请稍后再试！', 'error');
+                                    $.messager.alert('删除提示', '删除支付信息失败，请稍后再试！', 'error');
                                 }
                             }
                         },
                         //此处添加错误处理
                         error: function () {
-                            $.messager.alert('删除提示', '删除客户信息异常，请稍后再试！', 'error');
+                            $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
                             return;
                         }
                     });
@@ -345,7 +316,7 @@
     /**
      * 确认强制删除
      * */
-    function batDeleteClientForceConfirm(res,url,jsondata,type) {
+    function batDeletePaymentForceConfirm(res,url,jsondata,type) {
         $.messager.confirm('删除确认', res.msg, function (r) {
             if (r) {
                 $.ajax({
@@ -362,12 +333,12 @@
                         }else if(res && res.code == 600){
                             $.messager.alert('删除提示', res.msg, 'error');
                         }else {
-                            $.messager.alert('删除提示', '删除客户信息异常，请稍后再试！', 'error');
+                            $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
                         }
                     },
                     //此处添加错误处理
                     error: function () {
-                        $.messager.alert('删除提示', '删除客户信息异常，请稍后再试！', 'error');
+                        $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
                         return;
                     }
                 });
@@ -377,24 +348,24 @@
 
     //增加
     var url;
-    var clientID = 0;
+    var paymentID = 0;
     //保存编辑前的名称
-    var oldClient = "";
+    var oldPayment = "";
 
-    function addClient() {
-        $('#clientFM').form('clear');
-        $('#clientDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加客户信息');
+    function addPayment() {
+        $('#paymentFM').form('clear');
+        $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
         $(".window-mask").css({width: webW, height: webH});
-        $("#Client_name").val("").focus();
+        $("#Payment_no").val("").focus();
 
-        oldClient = "";
-        clientID = 0;
-        url = '/client/add';
+        oldPayment = "";
+        paymentID = 0;
+        url = '/payment/add';
     }
     //保存信息
-    $("#saveClient").off("click").on("click", function () {
-        if (!$("#Client_type").val()) {
-            $.messager.alert('提示', '请选择类型！', 'warning');
+    $("#savePayment").off("click").on("click", function () {
+        if (!$("#Payment_no").val()) {
+            $.messager.alert('提示', '请输入编号！', 'warning');
             return;
         }
         $.ajax({
@@ -403,44 +374,46 @@
             dataType: "json",
             async: false,
             data: ({
-                info: JSON.stringify($("#clientFM").serializeObject())
+                info: JSON.stringify($("#paymentFM").serializeObject())
             }),
             success: function(res) {
                 if(res && res.code === 200) {
-                    $('#clientDlg').dialog('close');
+                    $('#paymentDlg').dialog('close');
                     //加载完以后重新初始化
                     var opts = $("#tableData").datagrid('options');
-                    showClientDetails(opts.pageNumber, opts.pageSize);
+                    showPaymentDetails(opts.pageNumber, opts.pageSize);
                 }
             },
             //此处添加错误处理
             error: function () {
-                $.messager.alert('提示', '保存客户信息异常，请稍后再试！', 'error');
+                $.messager.alert('提示', '保存支付信息异常，请稍后再试！', 'error');
                 return;
             }
         });
     });
 
     //编辑信息
-    function editClient(clientTotalInfo) {
-        var clientInfo = clientTotalInfo.split("AaBb");
+    function editPayment(paymentTotalInfo) {
+        var paymentInfo = paymentTotalInfo.split("AaBb");
 
-        $("#Client_name").val(clientInfo[2]);
-        $("#Client_type").val(clientInfo[3]);
-        $("#Credit").val(clientInfo[4]);
-        $("#Details").val(clientInfo[5]);
+        $("#Payment_no").val(paymentInfo[1]);
+        $("#Order_no").val(paymentInfo[2]);
+        $("#Staff_no_accountant").val(paymentInfo[3]);
+        $("#Money").val(paymentInfo[4]);
+        $("#Details").val(paymentInfo[5]);
+        $("#Payment_date").val(paymentInfo[6]);
 
-        $('#clientDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑客户信息');
+        $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑支付信息');
         $(".window-mask").css({width: webW, height: webH});
-        clientID = clientInfo[1];
+        paymentID = paymentInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(clientInfo[2]);
-        url = '/client/update?id=' + clientInfo[1];
+        $("#Name").val("").focus().val(paymentInfo[1]);
+        url = '/payment/update?id=' + paymentInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {
-            showClientDetails(1, initPageSize);
+            showPaymentDetails(1, initPageSize);
             var opts = $("#tableData").datagrid('options');
             var pager = $("#tableData").datagrid('getPager');
             opts.pageNumber = 1;
@@ -452,12 +425,12 @@
         }
     });
 
-    function showClientDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchclient_name").val());
-        var type = $.trim($("#searchclient_type").val());
+    function showPaymentDetails(pageNo, pageSize) {
+        var name = $.trim($("#searchPayment_no").val());
+        var type = $.trim($("#searchOrder_no").val());
         $.ajax({
             type: "get",
-            url: "/client/getAllStaff",
+            url: "/payment/getAllStaff",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
@@ -485,8 +458,11 @@
     //重置按钮
     $("#searchResetBtn").unbind().bind({
         click: function () {
-            $("#searchclient_name").val("");
-            $("#searchclient_type").val("");
+            $("#searchPayment_no").val("");
+            $("#searchOrder_no").val("");
+            $("#searchMoney").val("")
+            $("#searchDetails").val("");
+            $("#searchPayment_date").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
