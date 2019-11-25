@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>出口食物管理</title>
+    <title>订单详情管理</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,40 +16,36 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="出口食物管理" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="订单详情管理" iconCls="icon-list">
     <table id="searchTable">
         <tr>
-            <td>出口编号：</td>
-            <td>
-                <input name="searchExport_no" id="searchExport_no"style="width:70px;"/>
-            </td>
-            <td>工作人员编号：</td>
-            <td>
-                <input name="searchStaff_no" id="searchStaff_no"style="width:70px;"/>
-            </td>
             <td>详细订单编号：</td>
             <td>
                 <input name="searchOrder_no_details" id="searchOrder_no_details"style="width:70px;"/>
             </td>
-            <td>生产地：</td>
+            <td>产品编号：</td>
             <td>
-                <input name="searchSource_place" id="searchSource_place"style="width:70px;"/>
+                <input name="searchProduct_no" id="searchProduct_no"style="width:70px;"/>
             </td>
-            <td>目的地：</td>
+            <td>产品需求：</td>
             <td>
-                <input name="searchTarget_place" id="searchTarget_place"style="width:70px;"/>
+                <input name="searchProducts_requirement" id="searchProducts_requirement"style="width:70px;"/>
+            </td>
+            <td>客户编号：</td>
+            <td>
+                <input name="searchClient_no" id="searchClient_no"style="width:70px;"/>
             </td>
             <td>运输日期：</td>
             <td>
-                <input name="searchDelicvery_date" id="searchDelicvery_date"style="width:70px;"/>
+                <input name="searchDelivery_date" id="searchDelivery_date"style="width:70px;"/>
             </td>
-            <td>运输连接：</td>
+            <td>支付截止日期：</td>
             <td>
-                <input name="searchTransport_link" id="searchTransport_link"style="width:70px;"/>
+                <input name="searchPayment_deadline" id="searchPayment_deadline"style="width:70px;"/>
             </td>
-            <td>当前进程：</td>
+            <td>审查：</td>
             <td>
-                <input name="searchProgress" id="searchProgress"style="width:70px;"/>
+                <input name="searchCheck" id="searchCheck"style="width:70px;"/>
             </td>
 
             <td>&nbsp;</td>
@@ -64,11 +60,6 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-<div id="dlg-buttons">
-    <a href="javascript:void(0)" id="saveExport_record" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a href="javascript:void(0)" id="cancelExport_record" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#Export_recordDlg').dialog('close')">取消</a>
-</div>
 <script type="text/javascript">
     //初始化界面
     $(function () {
@@ -101,40 +92,21 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '食物编号', field: 'Export_no', width: 180},
-                {title: '食物类型', field: 'Staff_no', width: 180},
-                {title: '食物名称', field: 'Order_no_details', width: 180},
-                {title: '过期日期', field: 'Source_place', width: 180},
-                {title: '损失数量', field: 'Target_place', width: 180},
-                {title: '订单日期', field: 'Delicvery_date', width: 180},
-                {title: '处理方法', field: 'Transport_link', width: 180},
-                {title: '当前进程', field: 'Progress', width: 180},
+                {title: '详细订单编号', field: 'Order_no_details', width: 180},
+                {title: '产品编号', field: 'Product_no', width: 180},
+                {title: '产品需求', field: 'Products_requirement', width: 180},
+                {title: '客户编号', field: 'Client_no', width: 180},
+                {title: '运输日期', field: 'Delivery_date', width: 180},
+                {title: '支付截止日期', field: 'Payment_deadline', width: 180},
+                {title: '审查', field: 'Check', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Export_no + 'AaBb' + rec.Staff_no + 'AaBb' + rec.Order_no_details + 'AaBb' + rec.Source_place+ 'AaBb' + rec.Target_place+ 'AaBb' + rec.Delicvery_date+ 'AaBb' + rec.Transport_link+ 'AaBb' + rec.Progress;
+                        var rowInfo = rec.Order_no_details + 'AaBb' + rec.Product_no + 'AaBb' + rec.Products_requirement + 'AaBb' + rec.Client_no+ 'AaBb' + rec.Delivery_date+ 'AaBb' + rec.Payment_deadline+ 'AaBb' + rec.Check;
                         return str;
                     }
                 }
             ]],
-            toolbar: [
-                {
-                    id: 'addExport_record',
-                    text: '增加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        addExport_record();
-                    }
-                },
-                {
-                    id: 'deleteExport_record',
-                    text: '删除',
-                    iconCls: 'icon-remove',
-                    handler: function () {
-                        batDeleteExport_record();
-                    }
-                }
-            ],
             onLoadError: function () {
                 $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
                 return;
@@ -155,7 +127,7 @@
             $("#saveExport_record").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchStaff_no")) {
+        if (k == "13" && (obj.id == "searchProduct_no")) {
             $("#searchBtn").click();
         }
     });
@@ -197,8 +169,8 @@
     });
 
     function showExport_recordDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchExport_no").val());
-        var type = $.trim($("#searchStaff_no").val());
+        var name = $.trim($("#searchOrder_no_details").val());
+        var type = $.trim($("#searchProduct_no").val());
         $.ajax({
             type: "get",
             url: "/export_record/getAllStaff",
@@ -229,14 +201,13 @@
     //重置按钮
     $("#searchResetBtn").unbind().bind({
         click: function () {
-            $("#searchExport_no").val("");
-            $("#searchStaff_no").val("");
             $("#searchOrder_no_details").val("");
-            $("#searchSource_place").val("")
-            $("#searchTarget_place").val("");
-            $("#searchDelicvery_date").val("");
-            $("#searchTransport_link").val("");
-            $("#searchProgress").val("");
+            $("#searchProduct_no").val("");
+            $("#searchProducts_requirement").val("");
+            $("#searchClient_no").val("")
+            $("#searchDelivery_date").val("");
+            $("#searchPayment_deadline").val("");
+            $("#searchCheck").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
