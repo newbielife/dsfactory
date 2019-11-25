@@ -43,6 +43,11 @@ public class ClientController {
                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                           @RequestParam(value = Constants.SEARCH, required = false) String search,
                           HttpServletRequest request)throws Exception {
+        //Object userInfo = request.getSession().getAttribute("user");
+
+        //System.out.println(userInfo);
+
+
         Map<String, String> parameterMap = ParamUtils.requestToMap(request);
         parameterMap.put(Constants.SEARCH, search);
         //System.out.println(search);

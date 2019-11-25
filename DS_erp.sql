@@ -1389,6 +1389,8 @@ CREATE TABLE `Staff` (
   `username` varchar(255) NOT NULL COMMENT '用户姓名--例如张三',
   `loginame` varchar(255) DEFAULT NULL COMMENT '登录用户名--可能为空',
   `password` varchar(50) DEFAULT NULL COMMENT '登陆密码',
+
+
   `position` varchar(200) DEFAULT NULL COMMENT '职位',
   `department` varchar(255) DEFAULT NULL COMMENT '所属部门',
   `email` varchar(100) DEFAULT NULL COMMENT '电子邮箱',

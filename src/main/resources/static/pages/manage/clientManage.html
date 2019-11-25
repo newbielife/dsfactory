@@ -171,6 +171,7 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
+                {title: '账号', field: 'client_no', width: 180},
                 {title: '姓名', field: 'client_name', width: 180},
                 {title: '类型', field: 'client_type', width: 180},
                 {title: '信誉度', field: 'credit', width: 180},
@@ -178,9 +179,9 @@
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.client_no + 'AaBb' + rec.client_name + 'AaBb' + rec.client_type + 'AaBb' + rec.credit+ 'AaBb' + rec.details;
+                        var rowInfo = rec.id+'AaBb'+rec.client_no + 'AaBb' + rec.client_name + 'AaBb' + rec.client_type + 'AaBb' + rec.credit+ 'AaBb' + rec.details;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editClient(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editClient(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteClient(' + rec.id + ');"/>&nbsp;<a onclick="deleteClient(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
+                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteClient(' + rec.client_no + ');"/>&nbsp;<a onclick="deleteClient(' + rec.client_no + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
@@ -250,7 +251,7 @@
         }
     }
     //删除客户信息
-    function deleteClient(ClientID) {
+    function deleteClient(clientID) {
         $.messager.confirm('删除确认', '确定要删除此客户信息吗？', function (r) {
             if (r) {
                 $.ajax({
@@ -424,16 +425,17 @@
     function editClient(clientTotalInfo) {
         var clientInfo = clientTotalInfo.split("AaBb");
 
-        $("#Client_name").val(clientInfo[1]);
-        $("#Client_type").val(clientInfo[2]);
-        $("#Details").val(clientInfo[3]);
+        $("#Client_name").val(clientInfo[2]);
+        $("#Client_type").val(clientInfo[3]);
+        $("#Credit").val(clientInfo[4]);
+        $("#Details").val(clientInfo[5]);
 
         $('#clientDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑客户信息');
         $(".window-mask").css({width: webW, height: webH});
-        clientID = clientInfo[0];
+        clientID = clientInfo[1];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(clientInfo[1]);
-        url = '/client/update?id=' + clientInfo[0];
+        $("#Name").val("").focus().val(clientInfo[2]);
+        url = '/client/update?id=' + clientInfo[1];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
