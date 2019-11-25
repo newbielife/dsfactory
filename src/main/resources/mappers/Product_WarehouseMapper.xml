@@ -104,7 +104,6 @@
     <select id="select_Biggest_Stock_no"  resultType="java.lang.String">
       select Stock_no
       from Product_Warehouse
-      where flag=0
       order by Stock_no desc
       limit 1
     </select>

@@ -95,7 +95,6 @@
     <select id="select_Biggest_Payment_no"  resultType="java.lang.String">
     select Payment_no
     from Payment
-    where flag=0
     order by Payment_no desc
     limit 1
     </select>

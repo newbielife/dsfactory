@@ -109,7 +109,6 @@
     <select id="select_Biggest_Export_no"  resultType="java.lang.String">
         select Export_no
         from Export_Record
-        where flag=0
         order by Export_no desc
         limit 1
     </select>

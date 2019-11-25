@@ -107,7 +107,6 @@
     <select id="select_Biggest_Manufacture_no"  resultType="java.lang.String">
         select Manufacture_no
         from Manufacture_Design
-        where flag=0
         order by Manufacture_no desc
         limit 1
     </select>

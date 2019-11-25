@@ -150,7 +150,6 @@
     <select id="select_Biggest_Client_no"  resultType="java.lang.String">
         select Client_no
         from Client
-        where  flag=0
         order by Client_no desc
         limit 1
     </select>
