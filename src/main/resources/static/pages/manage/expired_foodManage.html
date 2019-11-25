@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>支付管理</title>
+    <title>过期食物管理</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,32 +16,36 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="支付管理" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="过期食物管理" iconCls="icon-list">
     <table id="searchTable">
         <tr>
-            <td>支付编号：</td>
+            <td>食物编号：</td>
             <td>
-                <input name="searchPayment_no" id="searchPayment_no"style="width:70px;"/>
+                <input name="searchFood_no" id="searchFood_no"style="width:70px;"/>
             </td>
-            <td>订单编号：</td>
+            <td>食物类型：</td>
             <td>
-                <input name="searchOrder_no" id="searchOrder_no"style="width:70px;"/>
+                <input name="searchFood_type" id="searchFood_type"style="width:70px;"/>
             </td>
-            <td>员工编号：</td>
+            <td>食物名称：</td>
             <td>
-                <input name="searchStaff_no_accountant" id="searchStaff_no_accountant"style="width:70px;"/>
+                <input name="searchFood_name" id="searchFood_name"style="width:70px;"/>
             </td>
-            <td>金额：</td>
+            <td>过期日期：</td>
             <td>
-                <input name="searchMoney" id="searchMoney"style="width:70px;"/>
+                <input name="searchExpired_date" id="searchExpired_date"style="width:70px;"/>
             </td>
-            <td>备注：</td>
+            <td>损失数量：</td>
             <td>
-                <input name="searchDetails" id="searchDetails"style="width:70px;"/>
+                <input name="searchLoss_num" id="searchLoss_num"style="width:70px;"/>
             </td>
-            <td>支付日期：</td>
+            <td>损失金额：</td>
             <td>
-                <input name="searchPayment_date" id="searchPayment_date"style="width:70px;"/>
+                <input name="searchLoss_money" id="searchLoss_money"style="width:70px;"/>
+            </td>
+            <td>处理方法：</td>
+            <td>
+                <input name="searchProcessing_method" id="searchProcessing_method"style="width:70px;"/>
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -55,49 +59,56 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-<div id="paymentDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
+<div id="expired_foodDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
-    <form id="paymentFM" method="post" novalidate>
+    <form id="expired_foodFM" method="post" novalidate>
         <table>
-<!--            <tr>-->
-<!--                <td>支付编号：</td>-->
-<!--                <td style="padding:5px">-->
-<!--                    <input name="Payment_no"class="easyui-validatebox"-->
-<!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-<!--                </td>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td>食物编号：</td>-->
+            <!--                <td style="padding:5px">-->
+            <!--                    <input name="Food_no"class="easyui-validatebox"-->
+            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
+            <!--                </td>-->
+            <!--            </tr>-->
             <tr>
-                <td>订单编号：</td>
+                <td>食物类型：</td>
                 <td style="padding:5px">
-                    <input name="Order_no"class="easyui-validatebox"
+                    <input name="Food_type"class="easyui-validatebox"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>员工编号：</td>
+                <td>食物名称：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_accountant"class="easyui-validatebox"
+                    <input name="Food_name"class="easyui-validatebox"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>金额：</td>
+                <td>过期日期：</td>
                 <td style="padding:5px">
-                    <input name="Money"class="easyui-validatebox"
+                    <input name="Expired_date"class="easyui-validatebox"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>备注：</td>
+                <td>损失数量：</td>
                 <td style="padding:5px">
-                    <input name="Details"class="easyui-validatebox"
+                    <input name="Loss_num"class="easyui-validatebox"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>支付日期：</td>
+                <td>损失金额：</td>
                 <td style="padding:5px">
-                    <input name="Payment_date"class="easyui-validatebox"
+                    <input name="Loss_money"class="easyui-validatebox"
+                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                </td>
+            </tr>
+            <tr>
+                <td>处理方法：</td>
+                <td style="padding:5px">
+                    <input name="Processing_method"class="easyui-validatebox"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -105,9 +116,9 @@
     </form>
 </div>
 <div id="dlg-buttons">
-    <a href="javascript:void(0)" id="savePayment" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a href="javascript:void(0)" id="cancelPayment" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#PaymentDlg').dialog('close')">取消</a>
+    <a href="javascript:void(0)" id="saveExpired_food" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+    <a href="javascript:void(0)" id="cancelExpired_food" class="easyui-linkbutton" iconCls="icon-cancel"
+       onclick="javascript:$('#Expired_foodDlg').dialog('close')">取消</a>
 </div>
 <script type="text/javascript">
     //初始化界面
@@ -119,7 +130,7 @@
 
     //防止表单提交重复
     function initForm() {
-        $('#PaymentFM').form({
+        $('#Expired_foodFM').form({
             onSubmit: function () {
                 return false;
             }
@@ -141,37 +152,38 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '支付编号', field: 'Payment_no', width: 180},
-                {title: '订单编号', field: 'Order_no', width: 180},
-                {title: '员工编号', field: 'Staff_no_accountant', width: 180},
-                {title: '金额', field: 'Money', width: 180},
-                {title: '备注', field: 'Details', width: 180},
-                {title: '支付日期', field: 'Payment_date', width: 180},
+                {title: '食物编号', field: 'Food_no', width: 180},
+                {title: '食物类型', field: 'Food_type', width: 180},
+                {title: '食物名称', field: 'Food_name', width: 180},
+                {title: '过期日期', field: 'Expired_date', width: 180},
+                {title: '损失数量', field: 'Loss_num', width: 180},
+                {title: '订单日期', field: 'Loss_money', width: 180},
+                {title: '处理方法', field: 'Processing_method', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Payment_no + 'AaBb' + rec.Order_no + 'AaBb' + rec.Staff_no_accountant + 'AaBb' + rec.Money+ 'AaBb' + rec.Details+ 'AaBb' + rec.Payment_date;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editPayment(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editPayment(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deletePayment(' + rec.id + ');"/>&nbsp;<a onclick="deletePayment(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
+                        var rowInfo = rec.Food_no + 'AaBb' + rec.Food_type + 'AaBb' + rec.Food_name + 'AaBb' + rec.Expired_date+ 'AaBb' + rec.Loss_num+ 'AaBb' + rec.Loss_money+ 'AaBb' + rec.Processing_method;
+                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editExpired_food(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editExpired_food(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
+                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteExpired_food(' + rec.id + ');"/>&nbsp;<a onclick="deleteExpired_food(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
             ]],
             toolbar: [
                 {
-                    id: 'addPayment',
+                    id: 'addExpired_food',
                     text: '增加',
                     iconCls: 'icon-add',
                     handler: function () {
-                        addPayment();
+                        addExpired_food();
                     }
                 },
                 {
-                    id: 'deletePayment',
+                    id: 'deleteExpired_food',
                     text: '删除',
                     iconCls: 'icon-remove',
                     handler: function () {
-                        batDeletePayment();
+                        batDeleteExpired_food();
                     }
                 }
             ],
@@ -181,7 +193,7 @@
             }
         });
         dgResize();
-        showPaymentDetails(1, initPageSize);
+        showExpired_foodDetails(1, initPageSize);
     }
     //初始化键盘enter事件
     $(document).keydown(function (event) {
@@ -191,11 +203,11 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "payment_type" || obj.id == "payment_name")) {
-            $("#savePayment").click();
+        if (k == "13" && (obj.id == "expired_food_type" || obj.id == "expired_food_name")) {
+            $("#saveExpired_food").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchOrder_no")) {
+        if (k == "13" && (obj.id == "searchFood_type")) {
             $("#searchBtn").click();
         }
     });
@@ -213,7 +225,7 @@
                         pageNumber: pageNum,
                         pageSize: pageSize
                     });
-                    showPaymentDetails(pageNum, pageSize);
+                    showExpired_foodDetails(pageNum, pageSize);
                 }
             });
         }
@@ -222,15 +234,15 @@
         }
     }
     //删除支付信息
-    // function deletePayment(PaymentID) {
+    // function deleteExpired_food(Expired_foodID) {
     //     $.messager.confirm('删除确认', '确定要删除此支付信息吗？', function (r) {
     //         if (r) {
     //             $.ajax({
     //                 type: "post",
-    //                 url: "/payment/batchDeletePaymentByIds",
+    //                 url: "/expired_food/batchDeleteExpired_foodByIds",
     //                 dataType: "json",
     //                 data: ({
-    //                     ids: paymentID
+    //                     ids: expired_foodID
     //                 }),
     //                 success: function (res) {
     //                     if(res && res.code == 200) {
@@ -238,10 +250,10 @@
     //                     } else {
     //                         if(res && res.code == 601){
     //                             var jsondata={};
-    //                             jsondata.ids=paymentID;
+    //                             jsondata.ids=expired_foodID;
     //                             jsondata.deleteType='2';
     //                             var type='single';
-    //                             batDeletePaymentForceConfirm(res,"/payment/batchDeletePaymentByIds",jsondata,type);
+    //                             batDeleteExpired_foodForceConfirm(res,"/expired_food/batchDeleteExpired_foodByIds",jsondata,type);
     //                         }else if(res && res.code == 600){
     //                             $.messager.alert('删除提示', res.msg, 'error');
     //                         }else{
@@ -260,7 +272,7 @@
     // }
 
     //批量删除支付
-    function batDeletePayment() {
+    function batDeleteExpired_food() {
         var row = $('#tableData').datagrid('getChecked');
         if (row.length == 0) {
             $.messager.alert('删除提示', '没有记录被选中！', 'info');
@@ -272,14 +284,14 @@
                     var ids = "";
                     for (var i = 0; i < row.length; i++) {
                         if (i == row.length - 1) {
-                            ids += row[i].payment_no;
+                            ids += row[i].expired_food_no;
                             break;
                         }
-                        ids += row[i].payment_no + ",";
+                        ids += row[i].expired_food_no + ",";
                     }
                     $.ajax({
                         type: "post",
-                        url: "/payment/batchDeletePaymentByIds",
+                        url: "/expired_food/batchDeleteExpired_foodByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -295,7 +307,7 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeletePaymentForceConfirm(res,"/payment/batchDeletePaymentByIds",jsondata,type);
+                                    batDeleteExpired_foodForceConfirm(res,"/expired_food/batchDeleteExpired_foodByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{
@@ -316,7 +328,7 @@
     /**
      * 确认强制删除
      * */
-    function batDeletePaymentForceConfirm(res,url,jsondata,type) {
+    function batDeleteExpired_foodForceConfirm(res,url,jsondata,type) {
         $.messager.confirm('删除确认', res.msg, function (r) {
             if (r) {
                 $.ajax({
@@ -348,23 +360,23 @@
 
     //增加
     var url;
-    var paymentID = 0;
+    var expired_foodID = 0;
     //保存编辑前的名称
-    var oldPayment = "";
+    var oldExpired_food = "";
 
-    function addPayment() {
-        $('#paymentFM').form('clear');
-        $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
+    function addExpired_food() {
+        $('#expired_foodFM').form('clear');
+        $('#expired_foodDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
         $(".window-mask").css({width: webW, height: webH});
-        $("#Payment_no").val("").focus();
+        $("#Food_no").val("").focus();
 
-        oldPayment = "";
-        paymentID = 0;
-        url = '/payment/add';
+        oldExpired_food = "";
+        expired_foodID = 0;
+        url = '/expired_food/add';
     }
     //保存信息
-    $("#savePayment").off("click").on("click", function () {
-        if (!$("#Payment_no").val()) {
+    $("#saveExpired_food").off("click").on("click", function () {
+        if (!$("#Food_no").val()) {
             $.messager.alert('提示', '请输入编号！', 'warning');
             return;
         }
@@ -374,14 +386,14 @@
             dataType: "json",
             async: false,
             data: ({
-                info: JSON.stringify($("#paymentFM").serializeObject())
+                info: JSON.stringify($("#expired_foodFM").serializeObject())
             }),
             success: function(res) {
                 if(res && res.code === 200) {
-                    $('#paymentDlg').dialog('close');
+                    $('#expired_foodDlg').dialog('close');
                     //加载完以后重新初始化
                     var opts = $("#tableData").datagrid('options');
-                    showPaymentDetails(opts.pageNumber, opts.pageSize);
+                    showExpired_foodDetails(opts.pageNumber, opts.pageSize);
                 }
             },
             //此处添加错误处理
@@ -393,27 +405,27 @@
     });
 
     //编辑信息
-    function editPayment(paymentTotalInfo) {
-        var paymentInfo = paymentTotalInfo.split("AaBb");
+    function editExpired_food(expired_foodTotalInfo) {
+        var expired_foodInfo = expired_foodTotalInfo.split("AaBb");
 
-        $("#Payment_no").val(paymentInfo[1]);
-        $("#Order_no").val(paymentInfo[2]);
-        $("#Staff_no_accountant").val(paymentInfo[3]);
-        $("#Money").val(paymentInfo[4]);
-        $("#Details").val(paymentInfo[5]);
-        $("#Payment_date").val(paymentInfo[6]);
+        $("#Food_no").val(expired_foodInfo[1]);
+        $("#Food_type").val(expired_foodInfo[2]);
+        $("#Food_name").val(expired_foodInfo[3]);
+        $("#Expired_date").val(expired_foodInfo[4]);
+        $("#Loss_num").val(expired_foodInfo[5]);
+        $("#Loss_money").val(expired_foodInfo[6]);
 
-        $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑支付信息');
+        $('#expired_foodDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑支付信息');
         $(".window-mask").css({width: webW, height: webH});
-        paymentID = paymentInfo[0];
+        expired_foodID = expired_foodInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(paymentInfo[1]);
-        url = '/payment/update?id=' + paymentInfo[0];
+        $("#Name").val("").focus().val(expired_foodInfo[1]);
+        url = '/expired_food/update?id=' + expired_foodInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {
-            showPaymentDetails(1, initPageSize);
+            showExpired_foodDetails(1, initPageSize);
             var opts = $("#tableData").datagrid('options');
             var pager = $("#tableData").datagrid('getPager');
             opts.pageNumber = 1;
@@ -425,12 +437,12 @@
         }
     });
 
-    function showPaymentDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchPayment_no").val());
-        var type = $.trim($("#searchOrder_no").val());
+    function showExpired_foodDetails(pageNo, pageSize) {
+        var name = $.trim($("#searchFood_no").val());
+        var type = $.trim($("#searchFood_type").val());
         $.ajax({
             type: "get",
-            url: "/payment/getAllStaff",
+            url: "/expired_food/getAllStaff",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
@@ -458,18 +470,18 @@
     //重置按钮
     $("#searchResetBtn").unbind().bind({
         click: function () {
-            $("#searchPayment_no").val("");
-            $("#searchOrder_no").val("");
-            $("#searchStaff_no_accountant").val("");
-            $("#searchMoney").val("")
-            $("#searchDetails").val("");
-            $("#searchPayment_date").val("");
+            $("#searchFood_no").val("");
+            $("#searchFood_type").val("");
+            $("#searchFood_name").val("");
+            $("#searchExpired_date").val("")
+            $("#searchLoss_num").val("");
+            $("#searchLoss_money").val("");
+            $("#searchProcessing_method").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
     });
-
-
+    
 </script>
 </body>
 </html>
