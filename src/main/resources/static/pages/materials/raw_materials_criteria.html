@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>生产计划信息</title>
+    <title>原料标准目录</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,30 +16,21 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="生产计划信息" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="原料标准目录" iconCls="icon-list">
     <table id="searchTable">
         <tr>
-            <td>计划编号：</td>
+            <td>原料编号：</td>
             <td>
-                <input name="searchManufacture_no" id="searchManufacture_no"style="width:70px;"/>
+                <input name="searchMaterial_no" id="searchMaterial_no"style="width:70px;"/>
             </td>
-            <td>详细订单信息：</td>
+            <td>原料名：</td>
             <td>
-                <input name="searchOrder_no_details" id="searchOrder_no_details"style="width:70px;"/>
+                <input name="searchMaterial_name" id="searchMaterial_name"style="width:70px;"/>
             </td>
-            <td>负责人编号：</td>
+            <td>原料分类：</td>
             <td>
-                <input name="searchStaff_no_design" id="searchStaff_no_design"style="width:70px;"/>
+                <input name="searchMaterial_type" id="searchMaterial_type"style="width:70px;"/>
             </td>
-            <td>产品编号：</td>
-            <td>
-                <input name="searchProduct_no" id="searchProduct_no"style="width:70px;"/>
-            </td>
-            <td>车间：</td>
-            <td>
-                <input name="searchWorkshop" id="searchWorkshop"style="width:70px;"/>
-            </td>
-
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -52,63 +43,35 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-<div id="manufacture_designDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
+<div id="Raw_Materials_CriteriaDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
-    <form id="manufacture_designFM" method="post" novalidate>
+    <form id="Raw_Materials_CriteriaFM" method="post" novalidate>
         <table>
-            <!--            <tr>-->
-            <!--                <td>制造编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Manufacture_no"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>支付编号：</td>-->
+<!--                <td style="padding:5px">-->
+<!--                    <input name="Material_no"class="easyui-validatebox"-->
+<!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
+<!--                </td>-->
+<!--            </tr>-->
             <tr>
-                <td>详细订单编号：</td>
+                <td>原料名：</td>
                 <td style="padding:5px">
-                    <input name="Order_no_details"class="easyui-validatebox"
+                    <input name="Material_name"class="easyui-validatebox"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>生产计划负责人编号：</td>
+                <td>原料分类：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_design"class="easyui-validatebox"
+                    <input name="Material_type"class="easyui-validatebox"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>产品编号：</td>
+                <td>保质期：</td>
                 <td style="padding:5px">
-                    <input name="Product_no"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>当前进程：</td>
-                <td style="padding:5px">
-                    <input name="Progress"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>车间：</td>
-                <td style="padding:5px">
-                    <input name="Workshop"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>产品需求：</td>
-                <td>
-                    <input name="Products_requirement"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>备注：</td>
-                <td>
-                    <input name="Details"class="easyui-validatebox"
+                    <input name="Guarantee_period"class="easyui-validatebox"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -116,9 +79,9 @@
     </form>
 </div>
 <div id="dlg-buttons">
-    <a href="javascript:void(0)" id="saveManufacture_design" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a href="javascript:void(0)" id="cancelManufacture_design" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#Manufacture_designDlg').dialog('close')">取消</a>
+    <a href="javascript:void(0)" id="saveRaw_Materials_Criteria" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+    <a href="javascript:void(0)" id="cancelRaw_Materials_Criteria" class="easyui-linkbutton" iconCls="icon-cancel"
+       onclick="javascript:$('#Raw_Materials_CriteriaDlg').dialog('close')">取消</a>
 </div>
 <script type="text/javascript">
     //初始化界面
@@ -130,7 +93,7 @@
 
     //防止表单提交重复
     function initForm() {
-        $('#Manufacture_designFM').form({
+        $('#Raw_Materials_CriteriaFM').form({
             onSubmit: function () {
                 return false;
             }
@@ -145,29 +108,23 @@
             animate: false,
             singleSelect: true,
             collapsible: false,
-            selectOnRaw_materials_requirement: false,
+            selectOnCheck: false,
             pagination: true,
             striped: true,
             pageSize: initPageSize,
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '制造编号', field: 'manufacture_no', width: 100},
-                {title: '详细订单信息', field: 'order_no_details', width: 100},
-                {title: '职工计划编号', field: 'staff_no_design', width: 100},
-                {title: '产品编号', field: 'product_no', width: 80},
-                {title: '截止日期', field: 'deadline', width: 100},
-                {title: '当前进程', field: 'progress', width: 60},
-                {title: '车间', field: 'workshop', width: 80},
-                {title: '原材料需求', field: 'raw_materials_requirement', width: 180},
-                {title: '产品需求', field: 'products_requirement', width: 80},
-                {title: '备注', field: 'details', width: 180},
+                {title: '原料编号', field: 'Material_no', width: 180},
+                {title: '原料名', field: 'Material_name', width: 180},
+                {title: '原料分类', field: 'Material_type', width: 180},
+                {title: '保质期', field: 'Guarantee_period', width: 180},
                 {
                     formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.manufacture_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.staff_no_design + 'AaBb' + rec.product_no+ 'AaBb' + rec.deadline+ 'AaBb' + rec.progress+ 'AaBb' + rec.workshop+ 'AaBb' + rec.raw_materials_requirement+ 'AaBb' + rec.products_requirement+ 'AaBb' + rec.details;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editManufacture_design(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editManufacture_design(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteManufacture_design(' + rec.id + ');"/>&nbsp;<a onclick="deleteManufacture_design(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
+                        var rowInfo = rec.material_no + 'AaBb' + rec.material_name + 'AaBb' + rec.material_type + 'AaBb' + rec.guarantee_period;
+                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editRaw_Materials_Criteria(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editRaw_Materials_Criteria(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
+                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteRaw_Materials_Criteria(' + rec.id + ');"/>&nbsp;<a onclick="deleteRaw_Materials_Criteria(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
@@ -178,7 +135,7 @@
             }
         });
         dgResize();
-        showManufacture_designDetails(1, initPageSize);
+        showRaw_Materials_CriteriaDetails(1, initPageSize);
     }
     //初始化键盘enter事件
     $(document).keydown(function (event) {
@@ -188,11 +145,11 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "manufacture_design_type" || obj.id == "manufacture_design_name")) {
-            $("#saveManufacture_design").click();
+        if (k == "13" && (obj.id == "Raw_Materials_Criteria_type" || obj.id == "Raw_Materials_Criteria_name")) {
+            $("#saveRaw_Materials_Criteria").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchOrder_no_details")) {
+        if (k == "13" && (obj.id == "searchMaterial_name")) {
             $("#searchBtn").click();
         }
     });
@@ -210,7 +167,7 @@
                         pageNumber: pageNum,
                         pageSize: pageSize
                     });
-                    showManufacture_designDetails(pageNum, pageSize);
+                    showRaw_Materials_CriteriaDetails(pageNum, pageSize);
                 }
             });
         }
@@ -222,7 +179,7 @@
     //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {
-            showManufacture_designDetails(1, initPageSize);
+            showRaw_Materials_CriteriaDetails(1, initPageSize);
             var opts = $("#tableData").datagrid('options');
             var pager = $("#tableData").datagrid('getPager');
             opts.pageNumber = 1;
@@ -234,15 +191,17 @@
         }
     });
 
-    function showManufacture_designDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchManufacture_no").val());
-        var type = $.trim($("#searchOrder_no_details").val());
+    function showRaw_Materials_CriteriaDetails(pageNo, pageSize) {
+        var no = $.trim($("#searchMaterial_no").val());
+        var name = $.trim($("#searchMaterial_name").val());
+        var type = $.trim($("#searchMaterial_type").val());
         $.ajax({
             type: "get",
-            url: "/manufacture_design/getAllStaff",
+            url: "/Raw_Materials_Criteria/getAllStaff",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
+                    no: no,
                     name: name,
                     type: type
                 }),
@@ -267,16 +226,15 @@
     //重置按钮
     $("#searchResetBtn").unbind().bind({
         click: function () {
-            $("#searchManufacture_no").val("");
-            $("#searchOrder_no_details").val("");
-            $("#searchStaff_no_design").val("");
-            $("#searchProduct_no").val("");
-            $("#searchWorkshop").val("");
-
+            $("#searchMaterial_no").val("");
+            $("#searchMaterial_name").val("");
+            $("#searchMaterial_type").val("");
+            $("#searchGuarantee_period").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
     });
+
 
 </script>
 </body>
