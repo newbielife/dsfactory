@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Refund_Application WHERE Refund_no = #{Refund_no} and flag=0
+                SELECT count(*) FROM Refund_Application WHERE Refund_no = #{Refund_no}
         </select>
 
     <sql id="Example_Where_Clause">
@@ -157,8 +157,9 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Refund_Application
-    where Product_no = #{Product_no,jdbcType=VARCHAR}
+    update Refund_Application
+    set flag=1
+    where Refund_no = #{Refund_no,jdbcType=VARCHAR}
     </delete>
 
 

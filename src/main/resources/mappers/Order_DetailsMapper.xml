@@ -177,7 +177,8 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Order_Details
+    update Order_Details
+    set flag=1
     where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
     </delete>
 

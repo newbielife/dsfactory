@@ -13,7 +13,7 @@
 
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-    SELECT count(*) FROM Payment WHERE Payment_no = #{Payment_no} and flag=0
+    SELECT count(*) FROM Payment WHERE Payment_no = #{Payment_no}
     </select>
 
 
@@ -138,7 +138,8 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Payment
+    update Payment
+    set flag=1
     where Payment_no = #{Payment_no,jdbcType=VARCHAR}
     </delete>
 
