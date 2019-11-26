@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>制造结果管理</title>
+    <title>生产进度查询</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <link rel="shortcut icon" href="/images/dslogo.ico" type="image/x-icon"/>
     <script type="text/javascript" src="/js/jquery-1.8.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/js/easyui-1.3.5/themes/default/easyui.zcss"/>
+    <link rel="stylesheet" type="text/css" href="/js/easyui-1.3.5/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="/js/easyui-1.3.5/themes/icon.css"/>
     <link type="text/css" rel="stylesheet" href="/css/common.css"/>
     <script type="text/javascript" src="/js/easyui-1.3.5/jquery.easyui.min.js"></script>
@@ -16,14 +16,14 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="制造结果管理" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="生产进度查询" iconCls="icon-list">
     <table id="searchTable">
         <tr>
-            <td>制造编号：</td>
+            <td>计划编号：</td>
             <td>
                 <input name="searchManufacture_no" id="searchManufacture_no"style="width:70px;"/>
             </td>
-            <td>详细订单信息：</td>
+            <td>订单详情编号：</td>
             <td>
                 <input name="searchOrder_no_details" id="searchOrder_no_details"style="width:70px;"/>
             </td>
@@ -31,21 +31,13 @@
             <td>
                 <input name="searchProduct_no" id="searchProduct_no"style="width:70px;"/>
             </td>
-            <td>职工设计编号：</td>
+            <td>职工编号：</td>
             <td>
-                <input name="searchStaff_no_design" id="searchStaff_no_design"style="width:70px;"/>
-            </td>
-            <td>职工制造编号：</td>
-            <td>
-                <input name="searchStaff_no_manufacture" id="searchStaff_no_manufacture"style="width:70px;"/>
-            </td>
-            <td>Stock_no：</td>
-            <td>
-                <input name="searchStock_no" id="searchStock_no"style="width:70px;"/>
+                <input name="searchStaff_no" id="searchStaff_no"style="width:70px;"/>
             </td>
             <td>更新日期：</td>
             <td>
-                <input name="searchUpdate_date" id="searchUpdate_date"style="width:70px;"/>
+                <input name="searchUpdate_date" id="searchUpdate_date" class="easyui-datetimebox" style="width:70px;"/>
             </td>
 
             <td>&nbsp;</td>
@@ -92,13 +84,13 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '制造编号', field: 'manufacture_no', width: 180},
-                {title: '详细订单信息', field: 'order_no_details', width: 180},
-                {title: '产品编号', field: 'product_no', width: 180},
-                {title: '职工设计编号', field: 'staff_no_design', width: 180},
-                {title: '职工制造编号', field: 'staff_no_manufacture', width: 180},
-                {title: 'Stock_no', field: 'stock_no', width: 180},
-                {title: '更新日期', field: 'update_date', width: 180},
+                {title: '制造编号', field: 'manufacture_no', width: 100},
+                {title: '详细订单信息', field: 'order_no_details', width: 100},
+                {title: '产品编号', field: 'product_no', width: 80},
+                {title: '计划负责人编号', field: 'staff_no_design', width: 100},
+                {title: '车间人员编号', field: 'staff_no_manufacture', width: 100},
+                {title: '库存编号', field: 'stock_no', width: 100},
+                {title: '更新日期', field: 'update_date', width: 120},
                 {
                     formatter: function (value, rec) {
                         var str = '';
@@ -153,6 +145,8 @@
             $.messager.alert('异常处理提示', "分页信息异常 :  " + e.name + ": " + e.message, 'error');
         }
     }
+
+
     //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {
@@ -169,16 +163,22 @@
     });
 
     function showManufacture_resultDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchManufacture_no").val());
-        var type = $.trim($("#searchOrder_no_details").val());
+        var manufacture_no = $.trim($("#searchManufacture_no").val());
+        var order_no_details = $.trim($("#searchOrder_no_details").val());
+        var product_no = $.trim($("#searchProduct_no").val());
+        var staff_no = $.trim($("#searchStaff_no").val());
+        var date = $.trim($("#searchUpdate_date").val());
         $.ajax({
             type: "get",
             url: "/manufacture_result/getAllStaff",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
-                    name: name,
-                    type: type
+                    manufacture_no: manufacture_no,
+                    order_no_details: order_no_details,
+                    product_no: product_no,
+                    staff_no: staff_no,
+                    date: date
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize
@@ -204,9 +204,7 @@
             $("#searchManufacture_no").val("");
             $("#searchOrder_no_details").val("");
             $("#searchProduct_no").val("");
-            $("#searchStaff_no_design").val("")
-            $("#searchStaff_no_manufacture").val("");
-            $("#searchStock_no").val("");
+            $("#searchStaff_no").val("");
             $("#searchUpdate_date").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
