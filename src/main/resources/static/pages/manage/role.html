@@ -383,7 +383,7 @@
         var searchName = $.trim($("#searchName").val());
         $.ajax({
             type: "get",
-            url: "/role/list",
+            url: "/role/getAllRole",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
