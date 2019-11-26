@@ -101,18 +101,18 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '食物编号', field: 'Export_no', width: 180},
-                {title: '食物类型', field: 'Staff_no', width: 180},
-                {title: '食物名称', field: 'Order_no_details', width: 180},
-                {title: '过期日期', field: 'Source_place', width: 180},
-                {title: '损失数量', field: 'Target_place', width: 180},
-                {title: '订单日期', field: 'Delicvery_date', width: 180},
-                {title: '处理方法', field: 'Transport_link', width: 180},
-                {title: '当前进程', field: 'Progress', width: 180},
+                {title: '食物编号', field: 'export_no', width: 180},
+                {title: '食物类型', field: 'staff_no', width: 180},
+                {title: '食物名称', field: 'order_no_details', width: 180},
+                {title: '过期日期', field: 'source_place', width: 180},
+                {title: '损失数量', field: 'target_place', width: 180},
+                {title: '订单日期', field: 'delicvery_date', width: 180},
+                {title: '处理方法', field: 'transport_link', width: 180},
+                {title: '当前进程', field: 'progress', width: 180},
                 {
-                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
+                     formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Export_no + 'AaBb' + rec.Staff_no + 'AaBb' + rec.Order_no_details + 'AaBb' + rec.Source_place+ 'AaBb' + rec.Target_place+ 'AaBb' + rec.Delicvery_date+ 'AaBb' + rec.Transport_link+ 'AaBb' + rec.Progress;
+                        var rowInfo = rec.export_no + 'AaBb' + rec.staff_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.source_place+ 'AaBb' + rec.target_place+ 'AaBb' + rec.delicvery_date+ 'AaBb' + rec.transport_link+ 'AaBb' + rec.progress;
                         return str;
                     }
                 }

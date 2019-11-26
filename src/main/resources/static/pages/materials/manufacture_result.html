@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <link rel="shortcut icon" href="/images/dslogo.ico" type="image/x-icon"/>
     <script type="text/javascript" src="/js/jquery-1.8.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/js/easyui-1.3.5/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/easyui-1.3.5/themes/default/easyui.zcss"/>
     <link rel="stylesheet" type="text/css" href="/js/easyui-1.3.5/themes/icon.css"/>
     <link type="text/css" rel="stylesheet" href="/css/common.css"/>
     <script type="text/javascript" src="/js/easyui-1.3.5/jquery.easyui.min.js"></script>
@@ -92,17 +92,17 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '制造编号', field: 'Manufacture_no', width: 180},
-                {title: '详细订单信息', field: 'Order_no_details', width: 180},
-                {title: '产品编号', field: 'Product_no', width: 180},
-                {title: '职工设计编号', field: 'Staff_no_design', width: 180},
-                {title: '职工制造编号', field: 'Staff_no_manufacture', width: 180},
-                {title: 'Stock_no', field: 'Stock_no', width: 180},
-                {title: '更新日期', field: 'Update_date', width: 180},
+                {title: '制造编号', field: 'manufacture_no', width: 180},
+                {title: '详细订单信息', field: 'order_no_details', width: 180},
+                {title: '产品编号', field: 'product_no', width: 180},
+                {title: '职工设计编号', field: 'staff_no_design', width: 180},
+                {title: '职工制造编号', field: 'staff_no_manufacture', width: 180},
+                {title: 'Stock_no', field: 'stock_no', width: 180},
+                {title: '更新日期', field: 'update_date', width: 180},
                 {
-                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
+                    formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Manufacture_no + 'AaBb' + rec.Order_no_details + 'AaBb' + rec.Product_no + 'AaBb' + rec.Staff_no_design+ 'AaBb' + rec.Staff_no_manufacture+ 'AaBb' + rec.Stock_no+ 'AaBb' + rec.Update_date;
+                        var rowInfo = rec.manufacture_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.product_no + 'AaBb' + rec.staff_no_design+ 'AaBb' + rec.staff_no_manufacture+ 'AaBb' + rec.stock_no+ 'AaBb' + rec.update_date;
                         return str;
                     }
                 }

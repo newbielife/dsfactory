@@ -164,18 +164,18 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '订单编号', field: 'Order_no', width: 180},
-                {title: '客户编号', field: 'Client_no', width: 180},
-                {title: '工作人员编号', field: 'Staff_no', width: 180},
-                {title: '订单创建日期', field: 'Order_Create_date', width: 180},
-                {title: '订单总量', field: 'Order_sum_amount', width: 180},
-                {title: '当前进程', field: 'Progress', width: 180},
-                {title: '违约金', field: 'Liquidated_damages', width: 180},
-                {title: '审查', field: 'Check', width: 180},
+                {title: '订单编号', field: 'order_no', width: 180},
+                {title: '客户编号', field: 'client_no', width: 180},
+                {title: '工作人员编号', field: 'staff_no', width: 180},
+                {title: '订单创建日期', field: 'order_Create_date', width: 180},
+                {title: '订单总量', field: 'order_sum_amount', width: 180},
+                {title: '当前进程', field: 'progress', width: 180},
+                {title: '违约金', field: 'liquidated_damages', width: 180},
+                {title: '审查', field: 'check', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Order_no + 'AaBb' + rec.Client_no + 'AaBb' + rec.Staff_no + 'AaBb' + rec.Order_Create_date+ 'AaBb' + rec.Order_sum_amount+ 'AaBb' + rec.Progress+ 'AaBb' + rec.Liquidated_damages+ 'AaBb' + rec.Check;
+                        var rowInfo = rec.order_no + 'AaBb' + rec.client_no + 'AaBb' + rec.staff_no + 'AaBb' + rec.order_Create_date+ 'AaBb' + rec.order_sum_amount+ 'AaBb' + rec.progress+ 'AaBb' + rec.liquidated_damages+ 'AaBb' + rec.check;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editOrder_form(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editOrder_form(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
                         // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteOrder_form(' + rec.id + ');"/>&nbsp;<a onclick="deleteOrder_form(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;

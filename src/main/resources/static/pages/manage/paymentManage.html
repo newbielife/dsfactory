@@ -141,16 +141,16 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '支付编号', field: 'Payment_no', width: 180},
-                {title: '订单编号', field: 'Order_no', width: 180},
-                {title: '员工编号', field: 'Staff_no_accountant', width: 180},
-                {title: '金额', field: 'Money', width: 180},
-                {title: '备注', field: 'Details', width: 180},
-                {title: '支付日期', field: 'Payment_date', width: 180},
+                {title: '支付编号', field: 'payment_no', width: 180},
+                {title: '订单编号', field: 'order_no', width: 180},
+                {title: '员工编号', field: 'staff_no_accountant', width: 180},
+                {title: '金额', field: 'money', width: 180},
+                {title: '备注', field: 'details', width: 180},
+                {title: '支付日期', field: 'payment_date', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Payment_no + 'AaBb' + rec.Order_no + 'AaBb' + rec.Staff_no_accountant + 'AaBb' + rec.Money+ 'AaBb' + rec.Details+ 'AaBb' + rec.Payment_date;
+                        var rowInfo = rec.payment_no + 'AaBb' + rec.order_no + 'AaBb' + rec.staff_no_accountant + 'AaBb' + rec.money+ 'AaBb' + rec.details+ 'AaBb' + rec.payment_date;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editPayment(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editPayment(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
                         // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deletePayment(' + rec.id + ');"/>&nbsp;<a onclick="deletePayment(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;

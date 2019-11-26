@@ -153,17 +153,17 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '详细订单编号', field: 'Order_no_details', width: 180},
-                {title: '产品编号', field: 'Product_no', width: 180},
-                {title: '产品需求', field: 'Products_requirement', width: 180},
-                {title: '客户编号', field: 'Client_no', width: 180},
-                {title: '运输日期', field: 'Delivery_date', width: 180},
-                {title: '支付截止日期', field: 'Payment_deadline', width: 180},
+                {title: '详细订单编号', field: 'order_no_details', width: 180},
+                {title: '产品编号', field: 'product_no', width: 180},
+                {title: '产品需求', field: 'products_requirement', width: 180},
+                {title: '客户编号', field: 'client_no', width: 180},
+                {title: '运输日期', field: 'delivery_date', width: 180},
+                {title: '支付截止日期', field: 'payment_deadline', width: 180},
                 {title: '审查', field: 'Check', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Order_no_details + 'AaBb' + rec.Product_no + 'AaBb' + rec.Products_requirement + 'AaBb' + rec.Client_no+ 'AaBb' + rec.Delivery_date+ 'AaBb' + rec.Payment_deadline+ 'AaBb' + rec.Check;
+                        var rowInfo = rec.order_no_details + 'AaBb' + rec.product_no + 'AaBb' + rec.products_requirement + 'AaBb' + rec.client_no+ 'AaBb' + rec.delivery_date+ 'AaBb' + rec.payment_deadline+ 'AaBb' + rec.check;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editOrder_details(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editOrder_details(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
                         // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteOrder_details(' + rec.id + ');"/>&nbsp;<a onclick="deleteOrder_details(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;

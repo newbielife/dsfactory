@@ -186,20 +186,20 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '制造编号', field: 'Manufacture_no', width: 180},
-                {title: '详细订单信息', field: 'Order_no_details', width: 180},
-                {title: '职工计划编号', field: 'Staff_no_design', width: 180},
-                {title: '产品编号', field: 'Product_no', width: 180},
-                {title: '截止日期', field: 'Deadline', width: 180},
-                {title: '当前进程', field: 'Progress', width: 180},
-                {title: '车间', field: 'Workshop', width: 180},
-                {title: '原材料需求', field: 'Raw_materials_requirement', width: 180},
-                {title: '产品需求', field: 'Products_requirement', width: 180},
-                {title: '备注', field: 'Details', width: 180},
+                {title: '制造编号', field: 'manufacture_no', width: 180},
+                {title: '详细订单信息', field: 'order_no_details', width: 180},
+                {title: '职工计划编号', field: 'staff_no_design', width: 180},
+                {title: '产品编号', field: 'product_no', width: 180},
+                {title: '截止日期', field: 'deadline', width: 180},
+                {title: '当前进程', field: 'progress', width: 180},
+                {title: '车间', field: 'workshop', width: 180},
+                {title: '原材料需求', field: 'raw_materials_requirement', width: 180},
+                {title: '产品需求', field: 'products_requirement', width: 180},
+                {title: '备注', field: 'details', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.Manufacture_no + 'AaBb' + rec.Order_no_details + 'AaBb' + rec.Staff_no_design + 'AaBb' + rec.Product_no+ 'AaBb' + rec.Deadline+ 'AaBb' + rec.Progress+ 'AaBb' + rec.Workshop+ 'AaBb' + rec.Raw_materials_requirement+ 'AaBb' + rec.Products_requirement+ 'AaBb' + rec.Details;
+                        var rowInfo = rec.manufacture_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.staff_no_design + 'AaBb' + rec.product_no+ 'AaBb' + rec.deadline+ 'AaBb' + rec.progress+ 'AaBb' + rec.workshop+ 'AaBb' + rec.raw_materials_requirement+ 'AaBb' + rec.products_requirement+ 'AaBb' + rec.details;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editManufacture_design(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editManufacture_design(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
                         // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteManufacture_design(' + rec.id + ');"/>&nbsp;<a onclick="deleteManufacture_design(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
