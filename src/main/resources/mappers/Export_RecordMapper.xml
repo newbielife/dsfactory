@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Export_Record WHERE Export_no = #{Export_no} and flag=0
+                SELECT count(*) FROM Export_Record WHERE Export_no = #{Export_no}
         </select>
 
     <select id="exist_or_not_by_Order_no_details"  resultType="java.lang.Integer">
@@ -153,8 +153,9 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Export_Record
-    where Export_no = #{Export_no,jdbcType=VARCHAR} and flag=0
+    update Export_Record
+    set flag=1
+    where Export_no = #{Export_no,jdbcType=VARCHAR}
     </delete>
 
 

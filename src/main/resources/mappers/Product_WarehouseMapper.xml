@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Product_Warehouse WHERE Stock_no = #{Stock_no} and flag=0
+            SELECT count(*) FROM Product_Warehouse WHERE Stock_no = #{Stock_no}
     </select>
 
     <sql id="Example_Where_Clause">
@@ -190,8 +190,9 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Product_Warehouse
-    where Product_no = #{Product_no,jdbcType=VARCHAR}
+    update Product_Warehouse
+    set flag=1
+    where Stock_no = #{Stock_no,jdbcType=VARCHAR}
     </delete>
 
 

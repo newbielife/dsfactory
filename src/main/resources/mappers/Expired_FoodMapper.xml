@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-                SELECT count(*) FROM Expired_Food WHERE Food_no = #{Food_no} and flag=0
+                SELECT count(*) FROM Expired_Food WHERE Food_no = #{Food_no}
         </select>
 
     <sql id="Example_Where_Clause">
@@ -169,8 +169,9 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Expired_Food
-    where Food_no = #{Food_no,jdbcType=VARCHAR} and flag=0
+    update Expired_Food
+    set flag=1
+    where Food_no = #{Food_no,jdbcType=VARCHAR}
     </delete>
 
 

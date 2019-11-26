@@ -16,7 +16,7 @@
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-        SELECT count(*) FROM Manufacture_Design WHERE Manufacture_no = #{Manufacture_no} and flag=0
+        SELECT count(*) FROM Manufacture_Design WHERE Manufacture_no = #{Manufacture_no}
     </select>
 
     <sql id="Example_Where_Clause">
@@ -165,7 +165,8 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Manufacture_Design
+    update Manufacture_Design
+    set flag=1
     where Manufacture_no = #{Manufacture_no,jdbcType=VARCHAR}
     </delete>
 
