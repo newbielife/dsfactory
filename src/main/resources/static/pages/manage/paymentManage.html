@@ -430,7 +430,7 @@
         var type = $.trim($("#searchOrder_no").val());
         $.ajax({
             type: "get",
-            url: "/payment/getAllStaff",
+            url: "/payment/getAllPayment",
             dataType: "json",
             data: ({
                 search: JSON.stringify({

@@ -30,9 +30,6 @@ public class UserController {
     private StaffService staffService;
 
     @Resource
-    private ClientService clientService;
-
-    @Resource
     private LogService logService;
 
     private static String message = "成功";
