@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ds.factory.datasource.mappers.Product_CriteriaMapper" >
 
-   <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Product_Criteria" >
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Product_Criteria" >
             <id column="Product_no" jdbcType="VARCHAR" property="Product_no" />
             <result column="Product_name" jdbcType="VARCHAR" property="Product_name" />
             <result column="Product_type" jdbcType="VARCHAR" property="Product_type" />
@@ -14,14 +14,14 @@
 
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
-            SELECT count(*) FROM Product_Criteria WHERE Product_no = #{Product_no} and flag=0
+            SELECT count(*) FROM Product_Criteria WHERE Product_no = #{Product_no}
     </select>
 
     <select id="exist_or_notByName"  resultType="java.lang.Integer">
-                 SELECT count(*) FROM Product_Criteria WHERE Product_name = #{Product_name} and flag=0
+                 SELECT count(*) FROM Product_Criteria WHERE Product_name = #{Product_name}
          </select>
 
-<sql id="Example_Where_Clause">
+    <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -49,10 +49,10 @@
         </if>
       </foreach>
     </where>
-  </sql>
+    </sql>
 
 
-  <sql id="Update_By_Example_Where_Clause">
+    <sql id="Update_By_Example_Where_Clause">
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -80,16 +80,16 @@
         </if>
       </foreach>
     </where>
-  </sql>
+    </sql>
 
 
-  <sql id="Base_Column_List">
+    <sql id="Base_Column_List">
     Product_no,         Product_name,               Product_type,
     Ingredient_List,    Manufacture_duration,       Guarantee_period,       Unit_Price
-  </sql>
+    </sql>
 
 
-  <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Product_CriteriaExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Product_CriteriaExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -103,15 +103,15 @@
     <if test="orderByClause != null">
         order by ${orderByClause}
     </if>
-  </select>
+    </select>
 
 
-<select id="selectAll" resultMap="BaseResultMap">
-          select *
-          from Product_Criteria
-          where flag=0
-          order by Product_no asc
-        </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+      select *
+      from Product_Criteria
+      where flag=0
+      order by Product_no asc
+    </select>
 
 
 
@@ -153,7 +153,8 @@
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from Product_Criteria
+    update Product_Criteria
+    set flag=1
     where Product_no = #{Product_no,jdbcType=VARCHAR}
   </delete>
 
