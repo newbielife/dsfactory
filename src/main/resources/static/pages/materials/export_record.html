@@ -100,8 +100,6 @@
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.export_no + 'AaBb' + rec.staff_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.source_place+ 'AaBb' + rec.target_place+ 'AaBb' + rec.delivery_date+ 'AaBb' + rec.transport_link+ 'AaBb' + rec.progress;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editExport_record(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editExport_record(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteExport_record(' + rec.id + ');"/>&nbsp;<a onclick="deleteExport_record(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
