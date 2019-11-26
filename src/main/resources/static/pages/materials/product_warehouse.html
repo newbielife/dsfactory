@@ -59,7 +59,6 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-
 <script type="text/javascript">
     //初始化界面
     $(function () {
@@ -101,33 +100,13 @@
                 {title: '车间负责人编号', field: 'Staff_no_workshop', width: 120},
                 {title: '存货详情', field: 'Details', width: 180},
                 {
-                    title: '操作', field: 'op', align: "center", width: 60, formatter: function (value, rec) {
+                    formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.stock_no + 'AaBb' + rec.product_no + 'AaBb' + rec.staff_no_storage + 'AaBb' + rec.manufacture_date+ 'AaBb' + rec.stock_num+ 'AaBb' + rec.storage_address+ 'AaBb' + rec.staff_no_workshop+ 'AaBb' + rec.details;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editProduct_Warehouse(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editProduct_Warehouse(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        // str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteProduct_Warehouse(' + rec.id + ');"/>&nbsp;<a onclick="deleteProduct_Warehouse(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
             ]],
-            toolbar: [
-                {
-                    id: 'addProduct_Warehouse',
-                    text: '增加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        addProduct_Warehouse();
-                    }
-                },
-                {
-                    id: 'deleteProduct_Warehouse',
-                    text: '删除',
-                    iconCls: 'icon-remove',
-                    handler: function () {
-                        batDeleteProduct_Warehouse();
-                    }
-                }
-            ],
             onLoadError: function () {
                 $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
                 return;
@@ -231,12 +210,9 @@
         click: function () {
             $("#searchStock_no").val("");
             $("#searchProduct_no").val("");
-            $("#searchStaff_no_storage").val("");
+            $("#searchStaff_no").val("");
             $("#searchManufacture_date").val("");
-            $("#searchStock_num").val("");
             $("#searchStorage_address").val("");
-            $("#searchStaff_no_workshop").val("");
-            $("#Details").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

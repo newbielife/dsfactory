@@ -141,7 +141,7 @@
                 {title: '支付截止日期', field: 'payment_deadline', width: 100},
                 {title: '审查', field: 'Check', width: 50},
                 {
-                    title: '操作', field: 'op', align: "center", width: 50, formatter: function (value, rec) {
+                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.order_no_details + 'AaBb' + rec.product_no + 'AaBb' + rec.products_requirement + 'AaBb' + rec.client_no+ 'AaBb' + rec.delivery_date+ 'AaBb' + rec.payment_deadline+ 'AaBb' + rec.check;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editOrder_details(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editOrder_details(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';

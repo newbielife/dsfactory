@@ -97,7 +97,7 @@
                 {title: '运输链接', field: 'transport_link', width: 180},
                 {title: '当前进程', field: 'progress', width: 80},
                 {
-                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
+                    formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.export_no + 'AaBb' + rec.staff_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.source_place+ 'AaBb' + rec.target_place+ 'AaBb' + rec.delivery_date+ 'AaBb' + rec.transport_link+ 'AaBb' + rec.progress;
                         return str;

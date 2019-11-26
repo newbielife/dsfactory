@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>原料库存信息</title>
+    <title>原料仓库查询</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,7 +16,7 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="原料库存信息" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="原料仓库查询" iconCls="icon-list">
     <table id="searchTable">
         <tr>
             <td>库存编号：</td>
@@ -97,16 +97,14 @@
                 {title: '库存编号', field: 'Stock_no', width: 100},
                 {title: '原料编号', field: 'Material_no', width: 100},
                 {title: '库存量', field: 'Stock_num', width: 60},
-                {title: '存放地址', field: 'Storage_address', width: 100},
-                {title: '原料生产时间', field: 'Product_date', width: 140},
+                {title: '存放地址', field: 'Storage_address', width: 140},
+                {title: '原料生产时间', field: 'Product_date', width: 100},
                 {title: '仓库负责人编号', field: 'Staff_no_storage', width: 100},
                 {title: '详情', field: 'Details', width: 200},
                 {
                     formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.stock_no + 'AaBb' + rec.material_no + 'AaBb' + rec.stock_num + 'AaBb' + rec.storage_address+ 'AaBb' + rec.product_date+ 'AaBb' + rec.staff_no_storage+ 'AaBb' + rec.details;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editRaw_Materials_Warehouse(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editRaw_Materials_Warehouse(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        //str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteRaw_Materials_Warehouse(' + rec.id + ');"/>&nbsp;<a onclick="deleteRaw_Materials_Warehouse(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
@@ -157,6 +155,8 @@
             $.messager.alert('异常处理提示', "分页信息异常 :  " + e.name + ": " + e.message, 'error');
         }
     }
+
+
     //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {

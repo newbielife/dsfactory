@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>退货申请</title>
+    <title>支付表单</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,34 +16,25 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="退货申请" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="支付表单" iconCls="icon-list">
     <table id="searchTable">
         <tr>
-            <td>库存编号：</td>
+            <td>支付编号：</td>
             <td>
-                <input name="searchRefund_no" id="searchRefund_no"style="width:70px;"/>
+                <input name="searchPayment_no" id="searchPayment_no"style="width:70px;"/>
             </td>
-            <td>成品编号：</td>
+            <td>订单编号：</td>
             <td>
                 <input name="searchOrder_no" id="searchOrder_no"style="width:70px;"/>
             </td>
-            <td>客户编号：</td>
+            <td>员工编号：</td>
             <td>
-                <input name="searchClient_no" id="searchClient_no"style="width:70px;"/>
+                <input name="searchStaff_no_accountant" id="searchStaff_no_accountant"style="width:70px;"/>
             </td>
-            <td>负责人编号：</td>
+            <td>支付日期：</td>
             <td>
-                <input name="searchStaff_no" id="searchStaff_no"style="width:70px;"/>
+                <input name="searchPayment_date" id="searchPayment_date" class="easyui-datetimebox" style="width:70px;"/>
             </td>
-            <td>申诉结果：</td>
-            <td>
-                <select name="searchPermission" id="searchPermission"style="width:70px;">
-                    <option value="">全部</option>
-                    <option value="审核通过">审核通过</option>
-                    <option value="正在审核">正在审核</option>
-                </select>
-            </td>
-
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -56,6 +47,7 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
+
 <script type="text/javascript">
     //初始化界面
     $(function () {
@@ -66,7 +58,7 @@
 
     //防止表单提交重复
     function initForm() {
-        $('#Refund_ApplicationFM').form({
+        $('#PaymentFM').form({
             onSubmit: function () {
                 return false;
             }
@@ -81,36 +73,52 @@
             animate: false,
             singleSelect: true,
             collapsible: false,
-            selectOnRefund_Payment: false,
+            selectOnCheck: false,
             pagination: true,
             striped: true,
             pageSize: initPageSize,
             pageList: initPageNum,
             columns: [[
-                {field: 'id', width: 35, align: "center", Refund_Paymentbox: true},
-                {title: '申诉编号', field: 'Refund_no', width: 100},
-                {title: '订单编号', field: 'Order_no', width: 100},
-                {title: '客户编号', field: 'Client_no', width: 100},
-                {title: '申诉原因', field: 'Reason', width: 180},
-                {title: '审核人编号', field: 'Staff_no_checker', width: 100},
-                {title: '审核进度', field: 'Progress', width: 180},
-                {title: '结果', field: 'Permission', width: 40},
-                {title: '退款金额', field: 'Refund_Payment', width: 80},
+                {field: 'id', width: 35, align: "center", checkbox: true},
+                {title: '支付编号', field: 'payment_no', width: 100},
+                {title: '订单编号', field: 'order_no', width: 100},
+                {title: '员工编号', field: 'staff_no_accountant', width: 100},
+                {title: '金额', field: 'money', width: 80},
+                {title: '备注', field: 'details', width: 180},
+                {title: '支付日期', field: 'payment_date', width: 100},
                 {
                     formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.refund_no + 'AaBb' + rec.order_no + 'AaBb' + rec.client_no + 'AaBb' + rec.reason+ 'AaBb' + rec.staff_no_checker+ 'AaBb' + rec.progress+ 'AaBb' + rec.permission+ 'AaBb' + rec.refund_payment;
+                        var rowInfo = rec.payment_no + 'AaBb' + rec.order_no + 'AaBb' + rec.staff_no_accountant + 'AaBb' + rec.money+ 'AaBb' + rec.details+ 'AaBb' + rec.payment_date;
                         return str;
                     }
                 }
             ]],
+            toolbar: [
+                {
+                    id: 'addPayment',
+                    text: '增加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        addPayment();
+                    }
+                },
+                {
+                    id: 'deletePayment',
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: function () {
+                        batDeletePayment();
+                    }
+                }
+            ],
             onLoadError: function () {
                 $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
                 return;
             }
         });
         dgResize();
-        showRefund_ApplicationRefund_Payment(1, initPageSize);
+        showPaymentDetails(1, initPageSize);
     }
     //初始化键盘enter事件
     $(document).keydown(function (event) {
@@ -120,8 +128,8 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "Refund_Application_type" || obj.id == "Refund_Application_name")) {
-            $("#saveRefund_Application").click();
+        if (k == "13" && (obj.id == "payment_type" || obj.id == "payment_name")) {
+            $("#savePayment").click();
         }
         //搜索按钮添加快捷键
         if (k == "13" && (obj.id == "searchOrder_no")) {
@@ -142,7 +150,7 @@
                         pageNumber: pageNum,
                         pageSize: pageSize
                     });
-                    showRefund_ApplicationRefund_Payment(pageNum, pageSize);
+                    showPaymentDetails(pageNum, pageSize);
                 }
             });
         }
@@ -154,7 +162,7 @@
     //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {
-            showRefund_ApplicationRefund_Payment(1, initPageSize);
+            showPaymentDetails(1, initPageSize);
             var opts = $("#tableData").datagrid('options');
             var pager = $("#tableData").datagrid('getPager');
             opts.pageNumber = 1;
@@ -166,23 +174,21 @@
         }
     });
 
-    function showRefund_ApplicationRefund_Payment(pageNo, pageSize) {
-        var refund_no = $.trim($("#searchRefund_no").val());
+    function showPaymentDetails(pageNo, pageSize) {
+        var payment_no = $.trim($("#searchPayment_no").val());
         var order_no = $.trim($("#searchOrder_no").val());
-        var client_no = $.trim($("#searchClient_no").val());
-        var staff_no = $.trim($("#searchStaff_no").val());
-        var permission = $.trim($("#searchPermission").val());
+        var staff_no = $.trim($("#searchStaff_no_accountant").val());
+        var date = $.trim($("#searchPayment_date").val());
         $.ajax({
             type: "get",
-            url: "/Refund_Application/getAllStaff",
+            url: "/payment/getAllPayment",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
-                    refund_no: refund_no,
+                    payment_no: payment_no,
                     order_no: order_no,
-                    client_no: client_no,
                     staff_no: staff_no,
-                    permission: permission
+                    date: date
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize
@@ -205,15 +211,15 @@
     //重置按钮
     $("#searchResetBtn").unbind().bind({
         click: function () {
-            $("#searchRefund_no").val("");
+            $("#searchPayment_no").val("");
             $("#searchOrder_no").val("");
-            $("#searchClient_no").val("");
-            $("#searchStaff_no").val("");
-            $("#searchPermission").val("");
+            $("#searchStaff_no_accountant").val("");
+            $("#searchPayment_date").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
     });
+
 
 </script>
 </body>

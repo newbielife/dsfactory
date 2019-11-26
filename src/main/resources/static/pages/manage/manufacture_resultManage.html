@@ -146,7 +146,7 @@
                 {title: '库存编号', field: 'stock_no', width: 100},
                 {title: '更新日期', field: 'update_date', width: 120},
                 {
-                    title: '操作', field: 'op', align: "center", width: 50, formatter: function (value, rec) {
+                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.manufacture_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.product_no + 'AaBb' + rec.staff_no_design+ 'AaBb' + rec.staff_no_manufacture+ 'AaBb' + rec.stock_no+ 'AaBb' + rec.update_date;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editManufacture_result(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editManufacture_result(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';

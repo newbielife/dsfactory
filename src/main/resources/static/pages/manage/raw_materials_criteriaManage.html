@@ -193,43 +193,6 @@
             $.messager.alert('异常处理提示', "分页信息异常 :  " + e.name + ": " + e.message, 'error');
         }
     }
-    //删除支付信息
-    // function deleteRaw_Materials_Criteria(Raw_Materials_CriteriaID) {
-    //     $.messager.confirm('删除确认', '确定要删除此支付信息吗？', function (r) {
-    //         if (r) {
-    //             $.ajax({
-    //                 type: "post",
-    //                 url: "/Raw_Materials_Criteria/batchDeleteRaw_Materials_CriteriaByIds",
-    //                 dataType: "json",
-    //                 data: ({
-    //                     ids: Raw_Materials_CriteriaID
-    //                 }),
-    //                 success: function (res) {
-    //                     if(res && res.code == 200) {
-    //                         $("#searchBtn").click();
-    //                     } else {
-    //                         if(res && res.code == 601){
-    //                             var jsondata={};
-    //                             jsondata.ids=Raw_Materials_CriteriaID;
-    //                             jsondata.deleteType='2';
-    //                             var type='single';
-    //                             batDeleteRaw_Materials_CriteriaForceConfirm(res,"/Raw_Materials_Criteria/batchDeleteRaw_Materials_CriteriaByIds",jsondata,type);
-    //                         }else if(res && res.code == 600){
-    //                             $.messager.alert('删除提示', res.msg, 'error');
-    //                         }else{
-    //                             $.messager.alert('删除提示', '删除支付信息失败，请稍后再试！', 'error');
-    //                         }
-    //                     }
-    //                 },
-    //                 //此处添加错误处理
-    //                 error: function () {
-    //                     $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
-    //                     return;
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
 
     //批量删除支付
     function batDeleteRaw_Materials_Criteria() {
@@ -244,10 +207,10 @@
                     var ids = "";
                     for (var i = 0; i < row.length; i++) {
                         if (i == row.length - 1) {
-                            ids += row[i].Material_no;
+                            ids += row[i].material_no;
                             break;
                         }
-                        ids += row[i].Material_no + ",";
+                        ids += row[i].material_no + ",";
                     }
                     $.ajax({
                         type: "post",
@@ -336,7 +299,7 @@
     }
     //保存信息
     $("#saveRaw_Materials_Criteria").off("click").on("click", function () {
-        if (!$("#Material_no").val()) {
+        if (!$("#Material_name").val()) {
             $.messager.alert('提示', '请输入编号！', 'warning');
             return;
         }
@@ -368,16 +331,15 @@
     function editRaw_Materials_Criteria(Raw_Materials_CriteriaTotalInfo) {
         var Raw_Materials_CriteriaInfo = Raw_Materials_CriteriaTotalInfo.split("AaBb");
 
-        $("#Material_no").val(Raw_Materials_CriteriaInfo[1]);
         $("#Material_name").val(Raw_Materials_CriteriaInfo[2]);
         $("#Material_type").val(Raw_Materials_CriteriaInfo[3]);
         $("#Guarantee_period").val(Raw_Materials_CriteriaInfo[4]);
 
         $('#Raw_Materials_CriteriaDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑原料标准');
         $(".window-mask").css({width: webW, height: webH});
-        Raw_Materials_CriteriaID = Raw_Materials_CriteriaInfo[0];
+        Raw_Materials_CriteriaID = Raw_Materials_CriteriaInfo[1];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(Raw_Materials_CriteriaInfo[1]);
+        $("#Name").val("").focus().val(Raw_Materials_CriteriaInfo[2]);
         url = '/Raw_Materials_Criteria/update?id=' + Raw_Materials_CriteriaInfo[1];
     }
     //搜索处理
@@ -433,7 +395,6 @@
             $("#searchMaterial_no").val("");
             $("#searchMaterial_name").val("");
             $("#searchMaterial_type").val("");
-            $("#searchGuarantee_period").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

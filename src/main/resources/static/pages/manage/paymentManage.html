@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>支付管理</title>
+    <title>支付表单</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,7 +16,7 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="支付管理" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="支付表单" iconCls="icon-list">
     <table id="searchTable">
         <tr>
             <td>支付编号：</td>
@@ -31,17 +31,9 @@
             <td>
                 <input name="searchStaff_no_accountant" id="searchStaff_no_accountant"style="width:70px;"/>
             </td>
-            <td>金额：</td>
-            <td>
-                <input name="searchMoney" id="searchMoney"style="width:70px;"/>
-            </td>
-            <td>备注：</td>
-            <td>
-                <input name="searchDetails" id="searchDetails"style="width:70px;"/>
-            </td>
             <td>支付日期：</td>
             <td>
-                <input name="searchPayment_date" id="searchPayment_date"style="width:70px;"/>
+                <input name="searchPayment_date" id="searchPayment_date" class="easyui-datetimebox" style="width:70px;"/>
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -94,13 +86,6 @@
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
-            <tr>
-                <td>支付日期：</td>
-                <td style="padding:5px">
-                    <input name="Payment_date"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
         </table>
     </form>
 </div>
@@ -141,12 +126,12 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '支付编号', field: 'payment_no', width: 180},
-                {title: '订单编号', field: 'order_no', width: 180},
-                {title: '员工编号', field: 'staff_no_accountant', width: 180},
-                {title: '金额', field: 'money', width: 180},
+                {title: '支付编号', field: 'payment_no', width: 100},
+                {title: '订单编号', field: 'order_no', width: 100},
+                {title: '员工编号', field: 'staff_no_accountant', width: 100},
+                {title: '金额', field: 'money', width: 80},
                 {title: '备注', field: 'details', width: 180},
-                {title: '支付日期', field: 'payment_date', width: 180},
+                {title: '支付日期', field: 'payment_date', width: 100},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
@@ -221,43 +206,7 @@
             $.messager.alert('异常处理提示', "分页信息异常 :  " + e.name + ": " + e.message, 'error');
         }
     }
-    //删除支付信息
-    // function deletePayment(PaymentID) {
-    //     $.messager.confirm('删除确认', '确定要删除此支付信息吗？', function (r) {
-    //         if (r) {
-    //             $.ajax({
-    //                 type: "post",
-    //                 url: "/payment/batchDeletePaymentByIds",
-    //                 dataType: "json",
-    //                 data: ({
-    //                     ids: paymentID
-    //                 }),
-    //                 success: function (res) {
-    //                     if(res && res.code == 200) {
-    //                         $("#searchBtn").click();
-    //                     } else {
-    //                         if(res && res.code == 601){
-    //                             var jsondata={};
-    //                             jsondata.ids=paymentID;
-    //                             jsondata.deleteType='2';
-    //                             var type='single';
-    //                             batDeletePaymentForceConfirm(res,"/payment/batchDeletePaymentByIds",jsondata,type);
-    //                         }else if(res && res.code == 600){
-    //                             $.messager.alert('删除提示', res.msg, 'error');
-    //                         }else{
-    //                             $.messager.alert('删除提示', '删除支付信息失败，请稍后再试！', 'error');
-    //                         }
-    //                     }
-    //                 },
-    //                 //此处添加错误处理
-    //                 error: function () {
-    //                     $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
-    //                     return;
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
+
 
     //批量删除支付
     function batDeletePayment() {
@@ -364,7 +313,7 @@
     }
     //保存信息
     $("#savePayment").off("click").on("click", function () {
-        if (!$("#Payment_no").val()) {
+        if (!$("#Order_no").val()) {
             $.messager.alert('提示', '请输入编号！', 'warning');
             return;
         }
@@ -396,19 +345,17 @@
     function editPayment(paymentTotalInfo) {
         var paymentInfo = paymentTotalInfo.split("AaBb");
 
-        $("#Payment_no").val(paymentInfo[1]);
         $("#Order_no").val(paymentInfo[2]);
         $("#Staff_no_accountant").val(paymentInfo[3]);
         $("#Money").val(paymentInfo[4]);
         $("#Details").val(paymentInfo[5]);
-        $("#Payment_date").val(paymentInfo[6]);
 
         $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑支付信息');
         $(".window-mask").css({width: webW, height: webH});
-        paymentID = paymentInfo[0];
+        paymentID = paymentInfo[1];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(paymentInfo[1]);
-        url = '/payment/update?id=' + paymentInfo[0];
+        $("#Name").val("").focus().val(paymentInfo[2]);
+        url = '/payment/update?id=' + paymentInfo[1];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
@@ -426,16 +373,20 @@
     });
 
     function showPaymentDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchPayment_no").val());
-        var type = $.trim($("#searchOrder_no").val());
+        var payment_no = $.trim($("#searchPayment_no").val());
+        var order_no = $.trim($("#searchOrder_no").val());
+        var staff_no = $.trim($("#searchStaff_no_accountant").val());
+        var date = $.trim($("#searchPayment_date").val());
         $.ajax({
             type: "get",
             url: "/payment/getAllPayment",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
-                    name: name,
-                    type: type
+                    payment_no: payment_no,
+                    order_no: order_no,
+                    staff_no: staff_no,
+                    date: date
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize
@@ -461,8 +412,6 @@
             $("#searchPayment_no").val("");
             $("#searchOrder_no").val("");
             $("#searchStaff_no_accountant").val("");
-            $("#searchMoney").val("")
-            $("#searchDetails").val("");
             $("#searchPayment_date").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();

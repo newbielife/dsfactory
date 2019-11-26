@@ -32,6 +32,7 @@
                 <input name="searchProduct_type" id="searchProduct_type"style="width:70px;"/>
             </td>
 
+
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -84,15 +85,31 @@
                 {title: '保质期', field: 'Guarantee_period', width: 100},
                 {title: '单价', field: 'Unit_Price', width: 80},
                 {
-                     formatter: function (value, rec) {
+                    formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.product_no + 'AaBb' + rec.product_name + 'AaBb' + rec.product_type + 'AaBb' + rec.ingredient_list+ 'AaBb' + rec.manufacture_duration+ 'AaBb' + rec.guarantee_period+ 'AaBb' + rec.unit_price;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editProduct_criteria(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editProduct_criteria(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                         //str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteProduct_criteria(' + rec.id + ');"/>&nbsp;<a onclick="deleteProduct_criteria(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }
             ]],
+            toolbar: [
+                {
+                    id: 'addProduct_criteria',
+                    text: '增加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        addProduct_criteria();
+                    }
+                },
+                {
+                    id: 'deleteProduct_criteria',
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: function () {
+                        batDeleteProduct_criteria();
+                    }
+                }
+            ],
             onLoadError: function () {
                 $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
                 return;
@@ -140,6 +157,7 @@
         }
     }
 
+
     //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {
@@ -156,7 +174,7 @@
     });
 
     function showProduct_criteriaDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchProduct_no").val());
+        var no = $.trim($("#searchProduct_no").val());
         var name = $.trim($("#searchProduct_name").val());
         var type = $.trim($("#searchProduct_type").val());
         $.ajax({
@@ -193,10 +211,6 @@
             $("#searchProduct_no").val("");
             $("#searchProduct_name").val("");
             $("#searchProduct_type").val("");
-            $("#searchIngredient_List").val("")
-            $("#searchManufacture_duration").val("");
-            $("#searchGuarantee_period").val("");
-            $("#searchUnit_Price").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
