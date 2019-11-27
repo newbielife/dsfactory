@@ -152,14 +152,14 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", Refund_Paymentbox: true},
-                {title: '申诉编号', field: 'Refund_no', width: 100},
-                {title: '订单编号', field: 'Order_no', width: 100},
-                {title: '客户编号', field: 'Client_no', width: 100},
-                {title: '申诉原因', field: 'Reason', width: 180},
-                {title: '审核人编号', field: 'Staff_no_checker', width: 100},
-                {title: '审核进度', field: 'Progress', width: 180},
-                {title: '结果', field: 'Permission', width: 40},
-                {title: '退款金额', field: 'Refund_Payment', width: 80},
+                {title: '申诉编号', field: 'refund_no', width: 100},
+                {title: '订单编号', field: 'order_no', width: 100},
+                {title: '客户编号', field: 'client_no', width: 100},
+                {title: '申诉原因', field: 'reason', width: 180},
+                {title: '审核人编号', field: 'staff_no_checker', width: 100},
+                {title: '审核进度', field: 'progress', width: 180},
+                {title: '结果', field: 'permission', width: 40},
+                {title: '退款金额', field: 'refund_Payment', width: 80},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
@@ -411,7 +411,7 @@
         var permission = $.trim($("#searchPermission").val());
         $.ajax({
             type: "get",
-            url: "/Refund_Application/getAllStaff",
+            url: "/order/getAllRefund",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
