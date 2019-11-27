@@ -169,7 +169,7 @@
         var check = $.trim($("#searchCheck").val());
         $.ajax({
             type: "get",
-            url: "/order_form/getAllStaff",
+            url: "/order/getAllOrder",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
