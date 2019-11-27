@@ -3,6 +3,7 @@ package com.ds.factory.controller;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.service.Service.Manufacture_DesignService;
 import com.ds.factory.service.Service.Product_WarehouseService;
+import com.ds.factory.service.Service.Raw_Materials_CriteriaService;
 import com.ds.factory.service.Service.Raw_Materials_WarehouseService;
 import com.ds.factory.utils.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,11 @@ public class ProduceController {
     @Resource
     Manufacture_DesignService manufacture_designService;
 
+    @Resource
+    Raw_Materials_CriteriaService raw_materials_criteriaService;
+
     @GetMapping(value = "/getAllmanufacture")
-    public String getAllProductWarehouseList(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+    public String getAllmanufacture(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                              @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                                              @RequestParam(value = Constants.SEARCH, required = false) String search,
                                              HttpServletRequest request)throws Exception {
@@ -52,6 +56,35 @@ public class ProduceController {
         System.out.println("************************s"+list.get(0));
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
+
+    @GetMapping(value = "/getAllrawmaterialscriteria")
+    public String getAllRawMaterialsCriteria(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                    @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                    @RequestParam(value = Constants.SEARCH, required = false) String search,
+                                    HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
+        parameterMap.put(Constants.SEARCH, search);
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize != null && pageSize <= 0) {
+            pageSize = 10;
+        }
+        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
+        if (StringUtil.isNotEmpty(offset)) {
+            parameterMap.put(Constants.OFFSET, offset);
+        }
+        List<?> list = raw_materials_criteriaService.getAll();
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        System.out.println("************************s"+list.get(0));
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
 
 
 }

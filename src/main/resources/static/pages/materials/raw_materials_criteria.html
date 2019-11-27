@@ -115,10 +115,10 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '原料编号', field: 'Material_no', width: 180},
-                {title: '原料名', field: 'Material_name', width: 180},
-                {title: '原料分类', field: 'Material_type', width: 180},
-                {title: '保质期', field: 'Guarantee_period', width: 180},
+                {title: '原料编号', field: 'material_no', width: 180},
+                {title: '原料名', field: 'material_name', width: 180},
+                {title: '原料分类', field: 'material_type', width: 180},
+                {title: '保质期', field: 'guarantee_period', width: 180},
                 {
                     formatter: function (value, rec) {
                         var str = '';
@@ -195,7 +195,7 @@
         var type = $.trim($("#searchMaterial_type").val());
         $.ajax({
             type: "get",
-            url: "/Raw_Materials_Criteria/getAllStaff",
+            url: "/manufacturedesign/getAllrawmaterialscriteria",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
