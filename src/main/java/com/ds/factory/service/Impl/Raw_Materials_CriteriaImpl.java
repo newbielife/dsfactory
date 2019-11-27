@@ -14,6 +14,11 @@ public class Raw_Materials_CriteriaImpl implements Raw_Materials_CriteriaService
     Raw_Materials_CriteriaMapper raw_materials_criteriaMapper;
 
     @Override
+    public List<Raw_Materials_Criteria> selectByConstraint(String Material_no, String Material_name, String Material_type) {
+        return raw_materials_criteriaMapper.selectByConstraint(Material_no.trim(),Material_name.trim(),Material_type.trim());
+    }
+
+    @Override
     public List<Raw_Materials_Criteria> getAll() {
         return raw_materials_criteriaMapper.selectAll();
     }

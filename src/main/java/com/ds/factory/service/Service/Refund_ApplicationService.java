@@ -7,6 +7,10 @@ import java.util.List;
 
 @Service
 public interface Refund_ApplicationService {
+
+    List<Refund_Application> selectByConstraint(String Refund_no,String Order_no,
+                       String Client_no,String Staff_no_checker,String Check);
+
     int insertPayment(String Order_no, String Client_no, String Reason);
     int updateByPrimaryKey(Refund_Application payment);
     List<Refund_Application> selectByClient_no(String Client_no);

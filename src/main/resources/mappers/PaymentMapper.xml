@@ -108,6 +108,16 @@
     </select>
 
 
+    <select id="selectByConstraint" resultMap="BaseResultMap">
+          select *
+          from Payment
+          where  flag=0 and to_days(Payment_date) = to_days(#{Payment_date,jdbcType=TIMESTAMP})
+                and Order_no like '%${Order_no}%' and Staff_no_accountant like '%${Staff_no_accountant}%'
+                and Payment_no like '%${Payment_no}%'
+          order by Payment_date desc
+    </select>
+
+
     <select id="selectByStaff_no_accountant" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Payment

@@ -2,6 +2,7 @@ package com.ds.factory.datasource.mappers;
 
 import com.ds.factory.dao.Example.Order_FormExample;
 import com.ds.factory.datasource.entities.Order_Form;
+import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,6 +10,12 @@ import java.util.List;
 
 public interface Order_FormMapper {
 
+    List<Order_Form> selectByConstraint_disabled(@Param("Order_no") String Order_no,
+                                         @Param("Client_no") String Client_no, @Param("Staff_no") String Staff_no);
+    List<Order_Form> selectByConstraint_enabled(@Param("Order_no") String Order_no,
+                                                @Param("Client_no") String Client_no, @Param("Staff_no") String Staff_no);
+    List<Order_Form> selectByConstraint_all(@Param("Order_no") String Order_no,
+                                            @Param("Client_no") String Client_no, @Param("Staff_no") String Staff_no);
 
     List<Order_Form> getAllOrder();
     List<Order_Form> selectByClient_no(@Param("Client_no") String Client_no);

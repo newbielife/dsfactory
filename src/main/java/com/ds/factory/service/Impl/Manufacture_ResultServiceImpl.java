@@ -6,12 +6,19 @@ import com.ds.factory.service.Service.Manufacture_ResultService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class Manufacture_ResultServiceImpl  implements Manufacture_ResultService {
     @Resource
     Manufacture_ResultMapper manufacture_resultMapper;
+
+    @Override
+    public List<Manufacture_Result> selectByConstraint(Date Update_date, String Manufacture_no, String Product_no, String Staff_no_manufacture, String Order_no_details) {
+        return manufacture_resultMapper.selectByConstraint(Update_date,Manufacture_no.trim(),
+                Product_no.trim(),Staff_no_manufacture.trim(),Order_no_details.trim());
+    }
 
     @Override
     public List<Manufacture_Result> selectByStaff_no_manufacture(String Staff_no_manufacture) {

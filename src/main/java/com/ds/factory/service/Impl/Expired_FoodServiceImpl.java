@@ -25,6 +25,12 @@ public class Expired_FoodServiceImpl implements Expired_FoodService {
     Raw_Materials_CriteriaMapper raw_materials_criteriaMapper;
 
     @Override
+    public List<Expired_Food> selectByConstraint(String Food_no, String Food_type, String Food_name, Date Expired_date) {
+        if(Food_type==null) Food_type="";
+        return expired_foodMapper.selectByConstraint(Food_no.trim(),Food_type.trim(),Food_name.trim(),Expired_date);
+    }
+
+    @Override
     public List<Expired_Food> orderByExpired_date() {
         return expired_foodMapper.orderByExpired_date();
     }

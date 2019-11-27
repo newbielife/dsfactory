@@ -35,6 +35,23 @@ public class Order_DetailsServiceImpl implements Order_DetailsService {
     Product_PopularityMapper product_popularityMapper;
 
     @Override
+    public List<Order_Details> selectByConstraint(String Order_no_details, String Client_no, String Product_no,String Check) {
+        if(Check==null||Check.trim().compareTo("全部")==0||Check.trim().compareTo("")==0)
+            return order_detailsMapper.selectByConstraint_all(Order_no_details.trim(),Client_no.trim(),Product_no.trim());
+        else if(Check.trim().compareTo("已完成")==0)
+            return order_detailsMapper.selectByConstraint_enabled(Order_no_details.trim(),Client_no.trim(),Product_no.trim());
+        else if(Check.trim().compareTo("正在进行")==0)
+            return order_detailsMapper.selectByConstraint_disabled(Order_no_details.trim(),Client_no.trim(),Product_no.trim());
+        else
+            return null;
+    }
+
+    @Override
+    public List<Product_Popularity> selectByConstraint(String Product_no, String Product_name, String Product_type) {
+        return product_popularityMapper.selectByConstraint(Product_no.trim(),Product_name.trim(),Product_type.trim());
+    }
+
+    @Override
     public int deleteByOrder_no(String Order_no) {
         return 0;
     }

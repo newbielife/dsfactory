@@ -4,10 +4,16 @@ package com.ds.factory.service.Service;
 import com.ds.factory.datasource.entities.Expired_Food;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public interface Expired_FoodService {
+
+    List<Expired_Food> selectByConstraint(String Food_no,       String Food_type,
+                                          String Food_name,     Date Expired_date);
+
+
     List<Expired_Food> orderByExpired_date();
     List<Expired_Food> orderByLoss_money();
     List<Expired_Food> orderByLoss_num();

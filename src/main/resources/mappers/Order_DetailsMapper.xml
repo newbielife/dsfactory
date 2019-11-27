@@ -79,6 +79,32 @@
     Client_no,          Delivery_date,      Payment_deadline,           Check
     </sql>
 
+
+    <select id="selectByConstraint_disabled" resultMap="BaseResultMap">
+          select *
+          from Order_Details
+          where  flag=0 and Order_no_details like '%${Order_no_details}%' and Product_no like '%${Product_no}%'
+                and Client_no like '%${Client_no}%' and  Order_Details.`Check` = 0
+    </select>
+
+    <select id="selectByConstraint_enabled" resultMap="BaseResultMap">
+          select *
+          from Order_Details
+          where  flag=0 and Order_no_details like '%${Order_no_details}%' and Product_no like '%${Product_no}%'
+                and Client_no like '%${Client_no}%' and  Order_Details.`Check` = 1
+    </select>
+
+    <select id="selectByConstraint_all" resultMap="BaseResultMap">
+          select *
+          from Order_Details
+          where  flag=0 and Order_no_details like '%${Order_no_details}%' and Product_no like '%${Product_no}%'
+                and Client_no like '%${Client_no}%'
+    </select>
+
+
+
+
+
     <select id="exist_or_not"  resultType="java.lang.Integer">
             SELECT count(*) FROM Order_Details WHERE Order_no_details = #{Order_no_details} and flag=0
     </select>

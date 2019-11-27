@@ -27,6 +27,11 @@ public class PaymentServiceImpl implements PaymentService {
     Order_DetailsMapper order_detailsMapper;
 
     @Override
+    public List<Payment> selectByConstraint(Date Payment_date, String Order_no, String Staff_no_accountant, String Payment_no) {
+        return paymentMapper.selectByConstraint(Payment_date,Order_no.trim(),Staff_no_accountant.trim(),Payment_no.trim());
+    }
+
+    @Override
     public boolean Pay_in_Full(String Order_no) {
         if(Order_no==null || Order_no.trim().compareTo("")==0
                 ||order_formMapper.exist_or_not(Order_no.trim())==0)

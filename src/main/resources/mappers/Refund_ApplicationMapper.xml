@@ -127,6 +127,37 @@
     </select>
 
 
+
+    <select id="selectByConstraint_disabled" resultMap="BaseResultMap">
+          select *
+          from Refund_Application
+          where  flag=0 and Refund_no like '%${Refund_no}%' and Order_no like '%${Order_no}%'
+                and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
+                and  Permission=0
+    </select>
+
+    <select id="selectByConstraint_enabled" resultMap="BaseResultMap">
+        select *
+        from Refund_Application
+        where  flag=0 and Refund_no like '%${Refund_no}%' and Order_no like '%${Order_no}%'
+          and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
+          and  Permission=1
+    </select>
+
+    <select id="selectByConstraint_all" resultMap="BaseResultMap">
+        select *
+        from Refund_Application
+        where  flag=0 and Refund_no like '%${Refund_no}%' and Order_no like '%${Order_no}%'
+              and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
+    </select>
+
+
+
+
+
+
+
+
     <select id="selectAll" resultMap="BaseResultMap">
     select *
     from Refund_Application

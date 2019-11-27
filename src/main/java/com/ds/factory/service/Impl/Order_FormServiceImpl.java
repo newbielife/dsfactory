@@ -79,6 +79,18 @@ public class Order_FormServiceImpl implements Order_FormService {
     }
 
     @Override
+    public List<Order_Form> selectByConstraint(String Order_no, String Client_no, String Staff_no,String Check) {
+        if(Check==null||Check.trim().compareTo("全部")==0||Check.trim().compareTo("")==0)
+            return order_formMapper.selectByConstraint_all(Order_no.trim(),Client_no.trim(),Staff_no.trim());
+        else if(Check.trim().compareTo("已完成")==0)
+            return order_formMapper.selectByConstraint_enabled(Order_no.trim(),Client_no.trim(),Staff_no.trim());
+        else if(Check.trim().compareTo("正在进行")==0)
+            return order_formMapper.selectByConstraint_disabled(Order_no.trim(),Client_no.trim(),Staff_no.trim());
+        else
+            return null;
+    }
+
+    @Override
     public int Add_new_Order_with_Details(List<Product_Purchase_Details> Purchase, String Client_no) {
         int biggest_num=Integer.parseInt(order_formMapper.select_Biggest_Order_no());
         String biggest="";

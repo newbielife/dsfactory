@@ -7,6 +7,11 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface Manufacture_DesignMapper {
+
+    List<Manufacture_Design> selectByConstraint(@Param("Manufacture_no") String Manufacture_no,
+            @Param("Staff_no_design") String Staff_no_design,@Param("Order_no_details") String Order_no_details,
+            @Param("Product_no") String Product_no,@Param("Workshop") String Workshop);
+
     List<Manufacture_Design> selectAll();
     List<Manufacture_Design> selectByStaff_no_Design(@Param("Staff_no_Design") String Staff_no_Design);
     List<Manufacture_Design> selectByWorkshop(@Param("Workshop") String Workshop);

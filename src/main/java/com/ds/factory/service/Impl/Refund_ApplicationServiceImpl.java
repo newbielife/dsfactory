@@ -18,6 +18,18 @@ public class Refund_ApplicationServiceImpl implements Refund_ApplicationService 
     Order_FormMapper order_formMapper;
 
     @Override
+    public List<Refund_Application> selectByConstraint(String Refund_no, String Order_no, String Client_no, String Staff_no_checker, String Check) {
+        if(Check==null||Check.trim().compareTo("全部")==0||Check.trim().compareTo("")==0)
+            return refund_applicationMapper.selectByConstraint_all(Refund_no.trim(),Order_no.trim(),Client_no.trim(),Staff_no_checker.trim());
+        else if(Check.trim().compareTo("审核通过")==0)
+            return refund_applicationMapper.selectByConstraint_enabled(Refund_no.trim(),Order_no.trim(),Client_no.trim(),Staff_no_checker.trim());
+        else if(Check.trim().compareTo("正在审核")==0)
+            return refund_applicationMapper.selectByConstraint_disabled(Refund_no.trim(),Order_no.trim(),Client_no.trim(),Staff_no_checker.trim());
+        else
+            return null;
+    }
+
+    @Override
     public int insertPayment(String Order_no,String Client_no,String Reason) {
         if(Order_no==null || Order_no.trim().compareTo("")==0
             ||order_formMapper.exist_or_not(Order_no.trim())==0)

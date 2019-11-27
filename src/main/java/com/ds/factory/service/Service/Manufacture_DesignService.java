@@ -7,6 +7,11 @@ import java.util.List;
 
 @Service
 public interface Manufacture_DesignService {
+    List<Manufacture_Design> selectByConstraint(String Manufacture_no,String Staff_no_design,
+                             String Order_no_details,String Product_no,String Workshop);
+
+
+
     int insertManufacture_Design(String Order_no_details, String loginame, String Department);
     int deleteByPrimaryKey(String Manufacture_no);
     int update(Manufacture_Design manufacture_design);

@@ -135,6 +135,16 @@
 
 
 
+    <select id="selectByConstraint" resultMap="BaseResultMap">
+          select *
+          from Manufacture_Result
+          where  flag=0 and to_days(Update_date) = to_days(#{Update_date,jdbcType=TIMESTAMP})
+                and Manufacture_no like '%${Manufacture_no}%' and Order_no_details like '%${Order_no_details}%'
+                and Product_no like '%${Product_no}%' and Staff_no_manufacture like '%${Staff_no_manufacture}%'
+    </select>
+
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
    update Manufacture_Result
    set flag=1

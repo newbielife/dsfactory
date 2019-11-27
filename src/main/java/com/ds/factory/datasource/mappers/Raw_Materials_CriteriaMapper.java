@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface Raw_Materials_CriteriaMapper {
 
+    List<Raw_Materials_Criteria> selectByConstraint(@Param("Material_no")String Material_no,@Param("Material_name")String Material_name,@Param("Material_type")String Material_type);
+
     int exist_or_not(@Param("Material_no") String Material_no);
     int exist_or_notByName(@Param("Material_name") String Material_name);
     String select_Biggest_Material_no();

@@ -7,6 +7,16 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface Refund_ApplicationMapper {
+
+    List<Refund_Application> selectByConstraint_disabled(@Param("Refund_no") String Refund_no,@Param("Order_no") String Order_no,
+                            @Param("Client_no") String Client_no,@Param("Staff_no_checker") String Staff_no_checker);
+    List<Refund_Application> selectByConstraint_enabled(@Param("Refund_no") String Refund_no,@Param("Order_no") String Order_no,
+                                                         @Param("Client_no") String Client_no,@Param("Staff_no_checker") String Staff_no_checker);
+    List<Refund_Application> selectByConstraint_all(@Param("Refund_no") String Refund_no,@Param("Order_no") String Order_no,
+                                                         @Param("Client_no") String Client_no,@Param("Staff_no_checker") String Staff_no_checker);
+
+
+
     List<Refund_Application> selectByClient_no(@Param("Client_no") String Client_no);
     List<Refund_Application> selectByStaff_no_checker(@Param("Staff_no_checker") String Staff_no_checker);
     List<Refund_Application> selectByOrder_no(@Param("Order_no") String Order_no);

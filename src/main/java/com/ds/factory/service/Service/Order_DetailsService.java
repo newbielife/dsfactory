@@ -9,6 +9,14 @@ import java.util.List;
 
 @Service
 public interface Order_DetailsService {
+
+    List<Order_Details> selectByConstraint(String Order_no_details, String Client_no,String Product_no,String Check);
+    List<Product_Popularity> selectByConstraint(String Product_no,String Product_name,String Product_type);
+
+
+
+
+
     int deleteByOrder_no(String Order_no);
 
     List<Product_Popularity> orderByPopularity();

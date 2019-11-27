@@ -4,9 +4,15 @@ import com.ds.factory.dao.Example.Expired_FoodExample;
 import com.ds.factory.datasource.entities.Expired_Food;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface Expired_FoodMapper {
+
+    List<Expired_Food> selectByConstraint(@Param("Food_no") String Food_no,
+                                          @Param("Food_type") String Food_type,@Param("Food_name") String Food_name,
+                                          @Param("Expired_date") Date Expired_date);
+
 
     List<Expired_Food> orderByExpired_date();
     List<Expired_Food> orderByLoss_num();

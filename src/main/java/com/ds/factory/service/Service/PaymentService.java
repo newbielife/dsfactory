@@ -3,10 +3,14 @@ package com.ds.factory.service.Service;
 import com.ds.factory.datasource.entities.Payment;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public interface PaymentService {
+    List<Payment> selectByConstraint(Date Payment_date, String Order_no, String Staff_no_accountant, String Payment_no);
+
+
     boolean Pay_in_Full(String Order_no);
     int insertPayment(String Order_no, Long Money, String Details);
     int updateByPrimaryKey(Payment payment);

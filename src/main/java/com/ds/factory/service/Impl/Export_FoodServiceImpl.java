@@ -22,6 +22,12 @@ public class Export_FoodServiceImpl implements Export_RecordService {
     Order_DetailsMapper order_detailsMapper;
 
     @Override
+    public List<Export_Record> selectByConstraint(Date Delivery_date, String Export_no, String Staff_no, String Order_no_details, String Target_place, String Source_place) {
+        return export_recordMapper.selectByConstraint(Delivery_date,Export_no.trim(),Staff_no.trim(),
+                                                Order_no_details.trim(),Target_place.trim(),Source_place.trim());
+    }
+
+    @Override
     public int insertExport_Record(Export_Record export_record) {
         System.out.println(export_record);
         if(export_record.getOrder_no_details()==null

@@ -33,11 +33,11 @@
             </td>
             <td>职工编号：</td>
             <td>
-                <input name="searchStaff_no" id="searchStaff_no"style="width:70px;"/>
+                <input name="searchStaff_no_manufacture" id="searchStaff_no_manufacture"style="width:70px;"/>
             </td>
             <td>更新日期：</td>
             <td>
-                <input name="searchUpdate_date" id="searchUpdate_date" class="easyui-datetimebox" style="width:70px;"/>
+                <input name="searchUpdate_date" id="searchUpdate_date" class="easyui-datetimebox" style="width:150px;"/>
             </td>
 
             <td>&nbsp;</td>
@@ -366,7 +366,7 @@
         var manufacture_no = $.trim($("#searchManufacture_no").val());
         var order_no_details = $.trim($("#searchOrder_no_details").val());
         var product_no = $.trim($("#searchProduct_no").val());
-        var staff_no = $.trim($("#searchStaff_no").val());
+        var staff_no = $.trim($("#searchStaff_no_manufacture").val());
         var date = $.trim($("#searchUpdate_date").val());
         $.ajax({
             type: "get",
@@ -404,7 +404,7 @@
             $("#searchManufacture_no").val("");
             $("#searchOrder_no_details").val("");
             $("#searchProduct_no").val("");
-            $("#searchStaff_no").val("");
+            $("#searchStaff_no_manufacture").val("");
             $("#searchUpdate_date").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();

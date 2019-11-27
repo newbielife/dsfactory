@@ -9,6 +9,8 @@ import java.util.List;
 @Service
 public interface Order_FormService {
 
+    List<Order_Form> selectByConstraint(String Order_no,String Client_no, String Staff_no,String Check);
+
     int Add_new_Order_with_Details(List<Product_Purchase_Details> Purchase, String Client_no);
     //requirement严格写："数字"+"--"+"单位"（两个英文连接符）
 

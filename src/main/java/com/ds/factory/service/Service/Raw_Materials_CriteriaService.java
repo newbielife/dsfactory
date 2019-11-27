@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface  Raw_Materials_CriteriaService {
-
+    List<Raw_Materials_Criteria> selectByConstraint(String Material_no,String Material_name,String Material_type);
     List<Raw_Materials_Criteria> getAll();
     Raw_Materials_Criteria selectByMaterial_no(String Material_no);
 

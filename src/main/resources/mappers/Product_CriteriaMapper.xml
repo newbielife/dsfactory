@@ -89,6 +89,14 @@
     </sql>
 
 
+    <select id="selectByConstraint" resultMap="BaseResultMap">
+          select *
+          from Product_Criteria
+          where  flag=0  and Payment_no like '%${Payment_no}%'
+                and Product_name like '%${Product_name}%'  and Product_type like '%${Product_type}%'
+    </select>
+
+
     <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Product_CriteriaExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

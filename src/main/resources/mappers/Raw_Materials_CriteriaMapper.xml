@@ -83,6 +83,16 @@
         Material_no,        Material_name,      Material_type,      Guarantee_period
     </sql>
 
+
+    <select id="selectByConstraint" resultMap="BaseResultMap">
+          select *
+          from Raw_Materials_Criteria
+          where  flag=0  and Material_no like '%${Material_no}%'
+                and Material_name like '%${Material_name}%'  and Material_type like '%${Material_type}%'
+    </select>
+
+
+
     <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Raw_Materials_CriteriaExample" resultMap="BaseResultMap">
       select
       <if test="distinct">

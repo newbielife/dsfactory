@@ -5,9 +5,13 @@ import com.ds.factory.dao.Example.PaymentExample;
 import com.ds.factory.datasource.entities.Payment;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PaymentMapper {
+    List<Payment> selectByConstraint(@Param("Payment_date") Date Payment_date, @Param("Order_no") String Order_no,
+                                     @Param("Staff_no_accountant") String Staff_no_accountant, @Param("Payment_no") String Payment_no);
+
     List<Payment> selectByStaff_no_accountant(@Param("Staff_no_accountant") String Staff_no_accountant);
     List<Payment> selectByOrder_no(@Param("Staff_no_accountant") String Staff_no_accountant);
     List<Payment> selectByClient_no(@Param("Staff_no_accountant") String Staff_no_accountant);
