@@ -33,14 +33,7 @@
             </td>
             <td>过期日期：</td>
             <td>
-                <select name="searchExpired_date" id="searchExpired_date"style="width:70px;">
-                    <option value="">全部</option>
-                    <option value="本日">本日</option>
-                    <option value="本周">本周</option>
-                    <option value="本月">本月</option>
-                    <option value="本季">本季</option>
-                    <option value="今年">今年</option>
-                </select>
+                <input name="searchExpired_date" id="searchExpired_date" class="easyui-datetimebox" style="width:150px;"/>
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -58,39 +51,32 @@
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
     <form id="expired_foodFM" method="post" novalidate>
         <table>
-            <!--            <tr>-->
-            <!--                <td>食物编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Food_no"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
             <tr>
                 <td>食物类型：</td>
                 <td style="padding:5px">
-                    <input name="Food_type"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
+                    <input name="Food_type"class="easyui-validatebox" id="Food_type"
+                           data-options="required:true,validType:'length[2,10]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>食物名称：</td>
                 <td style="padding:5px">
-                    <input name="Food_name"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
+                    <input name="Food_name"class="easyui-validatebox" id="Food_name"
+                           data-options="required:true,validType:'length[2,50]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>损失数量：</td>
                 <td style="padding:5px">
-                    <input name="Loss_num"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Loss_num"class="easyui-validatebox" id="Loss_num"
+                           data-options="required:false,validType:'length[0,20]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>损失金额：</td>
                 <td style="padding:5px">
-                    <input name="Loss_money"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Loss_money"class="easyui-validatebox" id="Loss_money"
+                           data-options="required:false,validType:'length[0,10]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
@@ -359,18 +345,17 @@
     function editExpired_food(expired_foodTotalInfo) {
         var expired_foodInfo = expired_foodTotalInfo.split("AaBb");
 
-        $("#Food_no").val(expired_foodInfo[1]);
-        $("#Food_type").val(expired_foodInfo[2]);
-        $("#Food_name").val(expired_foodInfo[3]);
-        $("#Loss_num").val(expired_foodInfo[5]);
-        $("#Loss_money").val(expired_foodInfo[6]);
+        $("#Food_type").val(expired_foodInfo[1]);
+        $("#Food_name").val(expired_foodInfo[2]);
+        $("#Loss_num").val(expired_foodInfo[4]);
+        $("#Loss_money").val(expired_foodInfo[5]);
 
         $('#expired_foodDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑过期食品信息');
         $(".window-mask").css({width: webW, height: webH});
-        expired_foodID = expired_foodInfo[1];
+        expired_foodID = expired_foodInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(expired_foodInfo[2]);
-        url = '/expired_food/update?id=' + expired_foodInfo[1];
+        $("#Name").val("").focus().val(expired_foodInfo[1]);
+        url = '/expired_food/update?id=' + expired_foodInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

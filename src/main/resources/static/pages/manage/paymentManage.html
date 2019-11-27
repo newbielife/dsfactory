@@ -33,7 +33,7 @@
             </td>
             <td>支付日期：</td>
             <td>
-                <input name="searchPayment_date" id="searchPayment_date" class="easyui-datetimebox" style="width:70px;"/>
+                <input name="searchPayment_date" id="searchPayment_date" class="easyui-datetimebox" style="width:150px;"/>
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -51,39 +51,32 @@
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
     <form id="paymentFM" method="post" novalidate>
         <table>
-<!--            <tr>-->
-<!--                <td>支付编号：</td>-->
-<!--                <td style="padding:5px">-->
-<!--                    <input name="Payment_no"class="easyui-validatebox"-->
-<!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-<!--                </td>-->
-<!--            </tr>-->
             <tr>
                 <td>订单编号：</td>
                 <td style="padding:5px">
-                    <input name="Order_no"class="easyui-validatebox"
+                    <input name="Order_no"class="easyui-validatebox" id="Order_no"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>员工编号：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_accountant"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
+                    <input name="Staff_no_accountant"class="easyui-validatebox" id="Staff_no_accountant"
+                           data-options="required:false,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>金额：</td>
                 <td style="padding:5px">
-                    <input name="Money"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Money"class="easyui-validatebox" id="Money"
+                           data-options="required:false,validType:'length[0,10]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>备注：</td>
                 <td style="padding:5px">
-                    <input name="Details"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Details"class="easyui-validatebox" id="Details"
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
         </table>
@@ -345,17 +338,17 @@
     function editPayment(paymentTotalInfo) {
         var paymentInfo = paymentTotalInfo.split("AaBb");
 
-        $("#Order_no").val(paymentInfo[2]);
-        $("#Staff_no_accountant").val(paymentInfo[3]);
-        $("#Money").val(paymentInfo[4]);
-        $("#Details").val(paymentInfo[5]);
+        $("#Order_no").val(paymentInfo[1]);
+        $("#Staff_no_accountant").val(paymentInfo[2]);
+        $("#Money").val(paymentInfo[3]);
+        $("#Details").val(paymentInfo[4]);
 
         $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑支付信息');
         $(".window-mask").css({width: webW, height: webH});
-        paymentID = paymentInfo[1];
+        paymentID = paymentInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(paymentInfo[2]);
-        url = '/payment/update?id=' + paymentInfo[1];
+        $("#Name").val("").focus().val(paymentInfo[1]);
+        url = '/payment/update?id=' + paymentInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
