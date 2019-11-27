@@ -60,13 +60,6 @@
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
     <form id="export_recordFM" method="post" novalidate>
         <table>
-            <!--            <tr>-->
-            <!--                <td>食物编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Export_no"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
             <tr>
                 <td>工作人员编号：</td>
                 <td style="padding:5px">
@@ -85,27 +78,28 @@
                 <td>运输源地址：</td>
                 <td style="padding:5px">
                     <input name="Source_place"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>运输目标地址：</td>
                 <td style="padding:5px">
                     <input name="Target_place"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>运输链接：</td>
                 <td style="padding:5px">
                     <input name="Transport_link"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>处理方法：</td>
-                <td>
-                    <input name="searchProgress" id="searchProgress"style="width:70px;"/>
+                <td style="padding:5px">
+                    <input name="Progress"class="easyui-validatebox"
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
         </table>

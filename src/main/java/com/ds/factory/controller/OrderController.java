@@ -71,7 +71,7 @@ public class OrderController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        List<?> list = order_detailsService.orderByPopularity();
+        List<?> list = order_detailsService.selectByOrder_no("");
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
