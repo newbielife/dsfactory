@@ -143,8 +143,8 @@ public class UserController {
         BaseResponseInfo res = new BaseResponseInfo();
         boolean exist=staffService.checkLoginName(loginame); //检查用户名和登录名
         if (!exist){
-            int state=staffService.Register_new_Staff(loginame,password);
-            if(state==6){
+            int state=staffService.Register_new_Staff(loginame,Tools.md5Encryp(password));
+            if(state==1){
                 res.code=200;
                 res.data=loginame;
             }else{

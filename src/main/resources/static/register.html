@@ -150,7 +150,7 @@
                                 alert("注册成功，请进行登录！");
                                 location.href = "login.html";
                             } else {
-                                alert(res.msg);
+                                alert("注册失败  代码"+res.code);
                                 verifyCode.refresh(); //刷新
                             }
                         },
