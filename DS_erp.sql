@@ -11,7 +11,7 @@
  Target Server Version : 50635
  File Encoding         : 65001
 
- Date: 24/11/2019 12:16:00
+ Date: 27/11/2019 11:00:50
 */
 
 SET NAMES utf8mb4;
@@ -43,6 +43,7 @@ INSERT INTO `Client` VALUES ('000004', '000004', 'e10adc3949ba59abbe56e057f20f88
 INSERT INTO `Client` VALUES ('000005', '二愣子', '3c6da47dc7ac9313b1ed7f98f91700de', 'VIP01', 0, '（该客户无详细资料介绍）', 0);
 INSERT INTO `Client` VALUES ('000006', 'ZERAORA', 'e10adc3949ba59abbe56e057f20f883e', 'VIP08', 50, '十万伏特', 0);
 INSERT INTO `Client` VALUES ('000007', '卡噗-鸣鸣', 'e10adc3949ba59abbe56e057f20f883e', 'VIP03', 25, '电气场地', 0);
+INSERT INTO `Client` VALUES ('000008', 'gyc', 'e10adc3949ba59abbe56e057f20f883e', 'VIP10', 100, '二傻子', 0);
 COMMIT;
 
 -- ----------------------------
@@ -63,7 +64,7 @@ CREATE TABLE `DS_functions` (
   `icon` varchar(50) DEFAULT NULL COMMENT '图标',
   `delete_Flag` varchar(1) DEFAULT '0' COMMENT '删除标记，0未删除，1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8 COMMENT='功能模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=258 DEFAULT CHARSET=utf8 COMMENT='功能模块表';
 
 -- ----------------------------
 -- Records of DS_functions
@@ -73,50 +74,46 @@ INSERT INTO `DS_functions` VALUES (1, '0001', '系统管理', '0', '', b'1', '09
 INSERT INTO `DS_functions` VALUES (13, '000102', '角色管理', '0001', '/pages/manage/role.html', b'0', '0130', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (14, '000103', '用户管理', '0001', '/pages/manage/user.html', b'0', '0140', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (15, '000104', '日志管理', '0001', '/pages/manage/log.html', b'0', '0160', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (16, '000105', '功能管理', '0001', '/pages/manage/functions.html', b'0', '0135', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (16, '000105', '部门管理', '0001', '/pages/manage/functions.html', b'0', '0135', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (21, '0101', '商品管理', '0', '', b'0', '0620', b'1', '电脑版', NULL, 'icon-social-dropbox', '0');
-INSERT INTO `DS_functions` VALUES (22, '010101', '商品类别', '0101', '/pages/materials/materialcategory.html', b'0', '0230', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (22, '010101', '商品类别', '0101', '/pages/materials/product_popularity.html', b'0', '0230', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (23, '010102', '商品信息', '0101', '/pages/materials/material.html', b'0', '0240', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (24, '0102', '基本资料', '0', '', b'0', '0750', b'1', '电脑版', NULL, 'icon-grid', '0');
-INSERT INTO `DS_functions` VALUES (26, '010202', '仓库信息', '0102', '/pages/manage/depot.html', b'0', '0270', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (31, '010206', '经手人管理', '0102', '/pages/materials/person.html', b'0', '0284', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (26, '010202', '客户管理', '0102', '/pages/manage/clientManage.html', b'0', '0270', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (31, '010206', '成品标准管理', '0102', '/pages/manage/product_criteriaManage.html', b'0', '0284', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (32, '0502', '采购管理', '0', '', b'0', '0230', b'1', '电脑版', '', 'icon-loop', '0');
-INSERT INTO `DS_functions` VALUES (33, '050201', '采购入库', '0502', '/pages/materials/purchase_in_list.html', b'0', '0340', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (33, '050201', '原料标准查询', '0502', '/pages/materials/raw_materials_criteria.html', b'0', '0340', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (34, '050202', '原料购买', '0502', '/pages/manage/raw_materials_warehouseManage.html', b'0', '0340', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (36, '050203', '配方查询', '0502', '/pages/materials/product_criteria.html', b'0', '0340', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (38, '0603', '销售管理', '0', '', b'0', '0290', b'1', '电脑版', '', 'icon-briefcase', '0');
-INSERT INTO `DS_functions` VALUES (41, '060303', '销售出库', '0603', '/pages/materials/sale_out_list.html', b'0', '0394', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (41, '060303', '运输状态查询', '0603', '/pages/materials/export_record.html', b'0', '0394', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (44, '0704', '财务管理', '0', '', b'0', '0450', b'1', '电脑版', '', 'icon-map', '0');
-INSERT INTO `DS_functions` VALUES (59, '040106', '库存状况', '0401', '/pages/reports/in_out_stock_report.html', b'0', '0600', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (194, '010204', '收支项目', '0102', '/pages/manage/inOutItem.html', b'0', '0282', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (195, '010205', '结算账户', '0102', '/pages/manage/account.html', b'0', '0283', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (59, '040106', '成品库存管理', '0401', '/pages/manage/product_warehouseManage.html', b'0', '0600', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (60, '040107', '生产进度查询', '0401', '/pages/materials/manufacture_result.html', b'0', '0600', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (195, '010205', '原料标准管理', '0102', '/pages/manage/raw_materials_criteriaManage.html', b'0', '0283', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (198, '0301', '生产车间管理', '0', '', b'0', '0570', b'1', '电脑版', NULL, 'icon-pie-chart', '0');
-INSERT INTO `DS_functions` VALUES (200, '060305', '销售退货', '0603', '/pages/materials/sale_back_list.html', b'0', '0396', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (201, '080103', '食品入库', '0801', '/pages/materials/other_in_list.html', b'0', '0803', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (202, '080105', '食品出库', '0801', '/pages/materials/other_out_list.html', b'0', '0805', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (204, '070404', '收款单', '0704', '/pages/financial/money_in.html', b'0', '0475', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (206, '070406', '退款单', '0704', '/pages/financial/giro.html', b'0', '0490', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (207, '070412', '结算账户', '0704', '/pages/reports/account_report.html', b'0', '0610', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (209, '060304', '销售统计', '0603', '/pages/reports/sale_out_report.html', b'0', '0630', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (210, '040102', '生产计划制定', '0401', '/pages/materials/retail_out_list.html', b'0', '0405', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (211, '040104', '生产计划查询', '0401', '/pages/materials/retail_back_list.html', b'0', '0407', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (200, '060305', '销售退货', '0603', '/pages/manage/refund_applicationManage.html', b'0', '0396', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (201, '040103', '生产计划制定', '0401', '/pages/manage/manufacture_designManage.html', b'0', '0403', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (202, '080105', '食品入库', '0801', '/pages/manage/product_warehouseManage.html', b'0', '0805', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (204, '070404', '总订单查阅', '0704', '/pages/materials/order_form.html', b'0', '0475', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (206, '070406', '退款单', '0704', '/pages/materials/refund_application.html', b'0', '0490', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (207, '070412', '收款单', '0704', '/pages/materials/payment.html', b'0', '0610', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (209, '060304', '订单细节设置', '0603', '/pages/manage/order_detailsManage.html', b'0', '0630', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (210, '040102', '订单详情查询', '0401', '/pages/materials/order_details.html', b'0', '0405', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (211, '040104', '原料库存管理', '0401', '/pages/manage/raw_materials_warehouseManage.html', b'0', '0407', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (217, '01020102', '客户信息', '0102', '/pages/materials/client.html', b'0', '0262', b'1', '电脑版', '1,2', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (218, '01020103', '会员信息', '0102', '/pages/manage/member.html', b'0', '0263', b'1', '电脑版', '1,2', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (219, '000107', '资产管理', '0001', '/pages/asset/asset.html', b'0', '0170', b'0', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (220, '010103', '计量单位', '0101', '/pages/manage/unit.html', b'0', '0245', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (225, '0401', '生产计划管理', '0', '', b'0', '0101', b'1', '电脑版', '', 'icon-present', '0');
-INSERT INTO `DS_functions` VALUES (226, '030106', '入库明细', '0301', '/pages/reports/in_detail.html', b'0', '0640', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (227, '030107', '出库明细', '0301', '/pages/reports/out_detail.html', b'0', '0645', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (228, '030108', '入库汇总', '0301', '/pages/reports/in_material_count.html', b'0', '0650', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (229, '030109', '出库汇总', '0301', '/pages/reports/out_material_count.html', b'0', '0655', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (232, '080109', '食品配料单', '0801', '/pages/materials/assemble_list.html', b'0', '0809', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (234, '000105', '系统配置', '0001', '/pages/manage/systemConfig.html', b'0', '0165', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (235, '070408', '客户对账', '0704', '/pages/reports/customer_account.html', b'0', '0410', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (236, '000106', '商品属性', '0001', '/pages/materials/materialProperty.html', b'0', '0168', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (227, '030107', '生产进度更新', '0301', '/pages/manage/manufacture_resultManage.html', b'0', '0645', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (228, '030108', '生产计划查询', '0301', '/pages/materials/manufacture_design.html', b'0', '0650', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (232, '080109', '食品出库', '0801', '/pages/manage/export_recordManage.html', b'0', '0809', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (235, '070408', '退款申请', '0704', '/pages/manage/refund_applicationManage.html', b'0', '0410', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (239, '0801', '仓库管理', '0', '', b'0', '0420', b'1', '电脑版', '', 'icon-layers', '0');
-INSERT INTO `DS_functions` VALUES (240, '010104', '序列号', '0101', '/pages/manage/serialNumber.html', b'0', '0246', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (242, '060301', '销售订单', '0603', '/pages/materials/sale_orders_list.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (243, '000108', '机构管理', '0001', '/pages/manage/organization.html', b'1', '0139', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (244, '080112', '库存预警', '0801', '/pages/reports/stock_warning_report.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (255, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0');
+INSERT INTO `DS_functions` VALUES (240, '010104', '配方管理', '0101', '/pages/manage/product_criteriaManage.html', b'0', '0246', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (242, '060301', '销售订单', '0603', '/pages/manage/order_formManage.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (244, '080112', '原料入库', '0801', '/pages/manage/raw_materials_warehouseManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (245, '080113', '过期食品详情', '0801', '/pages/materials/expired_food.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (246, '080114', '过期食品处理', '0801', '/pages/manage/expired_foodManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
 COMMIT;
 
 -- ----------------------------
@@ -135,7 +132,7 @@ CREATE TABLE `DS_log` (
   `tenant_id` bigint(20) DEFAULT NULL COMMENT '租户id',
   PRIMARY KEY (`id`),
   KEY `FKF2696AA13E226853` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6559 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=6584 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of DS_log
@@ -776,6 +773,31 @@ INSERT INTO `DS_log` VALUES (6555, 120, '用户', '127.0.0.1', '2019-11-24 04:01
 INSERT INTO `DS_log` VALUES (6556, 120, '用户', '127.0.0.1', '2019-11-24 04:03:24', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 INSERT INTO `DS_log` VALUES (6557, 120, '用户', '127.0.0.1', '2019-11-24 04:08:31', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 INSERT INTO `DS_log` VALUES (6558, 120, '用户', '127.0.0.1', '2019-11-24 04:11:34', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6559, 120, '用户', '127.0.0.1', '2019-11-25 02:41:39', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6560, 120, '用户', '127.0.0.1', '2019-11-25 02:41:59', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6561, 120, '用户', '127.0.0.1', '2019-11-25 02:44:35', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6562, 120, '用户', '127.0.0.1', '2019-11-26 01:08:34', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6563, 120, '用户', '127.0.0.1', '2019-11-26 01:17:46', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6564, 120, '用户', '127.0.0.1', '2019-11-26 01:26:37', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6565, 120, '用户', '127.0.0.1', '2019-11-26 01:28:13', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6566, 120, '用户', '127.0.0.1', '2019-11-26 01:30:07', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6567, 120, '用户', '127.0.0.1', '2019-11-26 01:34:15', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6568, 120, '用户', '127.0.0.1', '2019-11-26 01:35:16', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6569, 120, '用户', '127.0.0.1', '2019-11-26 01:42:50', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6570, 120, '用户', '127.0.0.1', '2019-11-26 07:13:37', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6571, 120, '用户', '127.0.0.1', '2019-11-26 07:40:56', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6572, 120, '用户', '127.0.0.1', '2019-11-26 09:57:14', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6573, 120, '用户', '127.0.0.1', '2019-11-26 10:06:23', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6574, 120, '用户', '127.0.0.1', '2019-11-27 00:26:40', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6575, 120, '用户', '127.0.0.1', '2019-11-27 00:31:39', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6576, 120, '用户', '127.0.0.1', '2019-11-27 01:42:17', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6577, 120, '用户', '127.0.0.1', '2019-11-27 02:02:55', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6578, 120, '用户', '127.0.0.1', '2019-11-27 02:09:12', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6579, 120, '用户', '127.0.0.1', '2019-11-27 02:33:11', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6580, 120, '用户', '127.0.0.1', '2019-11-27 02:55:28', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6581, 120, '用户', '127.0.0.1', '2019-11-27 02:56:56', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6582, 120, '用户', '127.0.0.1', '2019-11-27 02:58:55', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6583, 120, '用户', '127.0.0.1', '2019-11-27 02:59:23', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -819,7 +841,7 @@ CREATE TABLE `DS_tenant` (
   `bills_num_limit` int(11) DEFAULT NULL COMMENT '单据数量限制',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COMMENT='租户';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='租户';
 
 -- ----------------------------
 -- Records of DS_tenant
@@ -854,7 +876,7 @@ CREATE TABLE `DS_userbusiness` (
 -- Records of DS_userbusiness
 -- ----------------------------
 BEGIN;
-INSERT INTO `DS_userbusiness` VALUES (5, 'RoleFunctions', '4', '[245][13][12][16][243][14][15][234][236][22][23][220][240][25][217][218][26][194][195][31][59][207][208][209][226][227][228][229][235][237][244][210][211][241][33][199][242][41][200][201][202][40][232][233][197][203][204][205][206][212][246]', '[{\"funId\":\"25\",\"btnStr\":\"1\"},{\"funId\":\"217\",\"btnStr\":\"1\"},{\"funId\":\"218\",\"btnStr\":\"1\"},{\"funId\":\"241\",\"btnStr\":\"3\"},{\"funId\":\"242\",\"btnStr\":\"3\"}]', '0');
+INSERT INTO `DS_userbusiness` VALUES (5, 'RoleFunctions', '4', '[1][13][14][15][16][21][22][23][24][25][26][31][32][33][34][36][38][41][44][59][60][195][198][200][201][202][204][206][207][209][210][211][217][220][225][226][227][228][229][232][235][239][240][242][244][245][246]', '[{\"funId\":\"25\",\"btnStr\":\"1\"},{\"funId\":\"217\",\"btnStr\":\"1\"},{\"funId\":\"218\",\"btnStr\":\"1\"},{\"funId\":\"241\",\"btnStr\":\"3\"},{\"funId\":\"242\",\"btnStr\":\"3\"}]', '0');
 INSERT INTO `DS_userbusiness` VALUES (6, 'RoleFunctions', '5', '[22][23][25][26][194][195][31][33][200][201][41][199][202]', NULL, '0');
 INSERT INTO `DS_userbusiness` VALUES (7, 'RoleFunctions', '6', '[22][23][220][240][25][217][218][26][194][195][31][59][207][208][209][226][227][228][229][235][237][210][211][241][33][199][242][41][200][201][202][40][232][233][197][203][204][205][206][212]', '[{\"funId\":\"33\",\"btnStr\":\"4\"}]', '0');
 INSERT INTO `DS_userbusiness` VALUES (9, 'RoleFunctions', '7', '[168][13][12][16][14][15][189][18][19][132]', NULL, '0');
@@ -1389,8 +1411,6 @@ CREATE TABLE `Staff` (
   `username` varchar(255) NOT NULL COMMENT '用户姓名--例如张三',
   `loginame` varchar(255) DEFAULT NULL COMMENT '登录用户名--可能为空',
   `password` varchar(50) DEFAULT NULL COMMENT '登陆密码',
-
-
   `position` varchar(200) DEFAULT NULL COMMENT '职位',
   `department` varchar(255) DEFAULT NULL COMMENT '所属部门',
   `email` varchar(100) DEFAULT NULL COMMENT '电子邮箱',
@@ -1426,7 +1446,7 @@ INSERT INTO `Staff` VALUES (96, 'lili', 'lili', 'e10adc3949ba59abbe56e057f20f883
 INSERT INTO `Staff` VALUES (113, 'yuyu123', 'yuyu123', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, 0);
 INSERT INTO `Staff` VALUES (115, 'laoba123', 'laoba123', 'e10adc3949ba59abbe56e057f20f883e', '33333', NULL, '', '', 1, 0, 0, '', NULL, 0);
 INSERT INTO `Staff` VALUES (116, 'gggg123', 'gggg123', 'e10adc3949ba59abbe56e057f20f883e', '', NULL, '', '', 1, 0, 1, '', NULL, 0);
-INSERT INTO `Staff` VALUES (120, '管理员', 'admin', '3c6da47dc7ac9313b1ed7f98f91700de', NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, 0);
+INSERT INTO `Staff` VALUES (120, '管理员', 'admin', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, 0);
 INSERT INTO `Staff` VALUES (121, 'hhhh', 'hhhh', 'e10adc3949ba59abbe56e057f20f883e', '', NULL, '', '', 1, 0, 0, '', NULL, 0);
 INSERT INTO `Staff` VALUES (122, 'admin1', 'admin1', 'e10adc3949ba59abbe56e057f20f883e', '', NULL, '', '', 1, 0, 1, '', NULL, 0);
 INSERT INTO `Staff` VALUES (123, 'caoyuli', 'caoyuli', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, 0);
