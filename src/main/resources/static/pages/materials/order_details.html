@@ -167,7 +167,7 @@
         var check = $.trim($("#searchCheck").val());
         $.ajax({
             type: "get",
-            url: "/order_details/getAllStaff",
+            url: "/order/getAllOrderDetail",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
