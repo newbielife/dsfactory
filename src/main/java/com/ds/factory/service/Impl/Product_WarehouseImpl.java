@@ -23,29 +23,23 @@ public class Product_WarehouseImpl implements Product_WarehouseService {
     @Resource
     StaffMapper staffMapper;
 
-    @Override
-    public List<Product_Warehouse> today_data() {
-        return product_warehouseMapper.today_data();
-    }
 
     @Override
-    public List<Product_Warehouse> this_week_data() {
-        return product_warehouseMapper.this_week_data();
-    }
-
-    @Override
-    public List<Product_Warehouse> this_month_data() {
-        return product_warehouseMapper.this_month_data();
-    }
-
-    @Override
-    public List<Product_Warehouse> this_season_data() {
-        return product_warehouseMapper.this_season_data();
-    }
-
-    @Override
-    public List<Product_Warehouse> this_year_data() {
-        return product_warehouseMapper.this_year_data();
+    public List<Product_Warehouse> selectByConstraint(String Stock_no, String Product_no, String Staff_no_storage, String Type) {
+        if(Type==null||Type.trim().compareTo("全部")==0||Type.trim().compareTo("")==0)
+            return product_warehouseMapper.all_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+        else if(Type.trim().compareTo("本日")==0)
+            return product_warehouseMapper.today_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+        else if(Type.trim().compareTo("本周")==0)
+            return product_warehouseMapper.this_week_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+        else if(Type.trim().compareTo("本月")==0)
+            return product_warehouseMapper.this_month_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+        else if(Type.trim().compareTo("本季")==0)
+            return product_warehouseMapper.this_season_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+        else if(Type.trim().compareTo("今年")==0)
+            return product_warehouseMapper.this_year_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+        else
+            return null;
     }
 
     @Override

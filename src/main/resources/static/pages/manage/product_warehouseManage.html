@@ -27,9 +27,9 @@
             <td>
                 <input name="searchProduct_no" id="searchProduct_no"style="width:70px;"/>
             </td>
-            <td>成品库/车间负责人编号：</td>
+            <td>成品库负责人编号：</td>
             <td>
-                <input name="searchStaff_no" id="searchStaff_no"style="width:70px;"/>
+                <input name="searchStaff_no_storage" id="searchStaff_no_storage"style="width:70px;"/>
             </td>
             <td>生产日期：</td>
             <td>
@@ -398,7 +398,7 @@
     function showProduct_WarehouseDetails(pageNo, pageSize) {
         var stock_no = $.trim($("#searchStock_no").val());
         var product_no = $.trim($("#searchProduct_no").val());
-        var staff_no = $.trim($("#searchStaff_no").val());
+        var staff_no = $.trim($("#searchStaff_no_storage").val());
         var manufacture_date = $.trim($("#searchManufacture_date").val());
         var storage_address = $.trim($("#searchStorage_address").val());
         $.ajax({
@@ -436,7 +436,7 @@
         click: function () {
             $("#searchStock_no").val("");
             $("#searchProduct_no").val("");
-            $("#searchStaff_no").val("");
+            $("#searchStaff_no_storage").val("");
             $("#searchManufacture_date").val("");
             $("#searchStorage_address").val("");
             //加载完以后重新初始化

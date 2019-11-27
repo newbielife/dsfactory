@@ -33,7 +33,7 @@
             </td>
             <td>负责人编号：</td>
             <td>
-                <input name="searchStaff_no" id="searchStaff_no"style="width:70px;"/>
+                <input name="searchStaff_no_checker" id="searchStaff_no_checker"style="width:70px;"/>
             </td>
             <td>申诉结果：</td>
             <td>
@@ -170,7 +170,7 @@
         var refund_no = $.trim($("#searchRefund_no").val());
         var order_no = $.trim($("#searchOrder_no").val());
         var client_no = $.trim($("#searchClient_no").val());
-        var staff_no = $.trim($("#searchStaff_no").val());
+        var staff_no = $.trim($("#searchStaff_no_checker").val());
         var permission = $.trim($("#searchPermission").val());
         $.ajax({
             type: "get",
@@ -208,7 +208,7 @@
             $("#searchRefund_no").val("");
             $("#searchOrder_no").val("");
             $("#searchClient_no").val("");
-            $("#searchStaff_no").val("");
+            $("#searchStaff_no_checker").val("");
             $("#searchPermission").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();

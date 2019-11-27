@@ -52,7 +52,7 @@ public class PaymentController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        System.out.println("************************s"+list.get(0));
+        //System.out.println("************************s"+list.get(0));
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 

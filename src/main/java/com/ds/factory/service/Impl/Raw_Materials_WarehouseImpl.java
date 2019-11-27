@@ -23,29 +23,23 @@ public class Raw_Materials_WarehouseImpl implements Raw_Materials_WarehouseServi
     @Resource
     StaffMapper staffMapper;
 
-    @Override
-    public List<Raw_Materials_Warehouse> today_data() {
-        return rawMaterialsWarehouseMapper.today_data();
-    }
 
     @Override
-    public List<Raw_Materials_Warehouse> this_week_data() {
-        return rawMaterialsWarehouseMapper.this_week_data();
-    }
-
-    @Override
-    public List<Raw_Materials_Warehouse> this_month_data() {
-        return rawMaterialsWarehouseMapper.this_month_data();
-    }
-
-    @Override
-    public List<Raw_Materials_Warehouse> this_season_data() {
-        return rawMaterialsWarehouseMapper.this_season_data();
-    }
-
-    @Override
-    public List<Raw_Materials_Warehouse> this_year_data() {
-        return rawMaterialsWarehouseMapper.this_year_data();
+    public List<Raw_Materials_Warehouse> selectByConstraint(String Stock_no, String Material_no, String Storage_address, String Type) {
+        if(Type==null||Type.trim().compareTo("全部")==0||Type.trim().compareTo("")==0)
+            return rawMaterialsWarehouseMapper.all_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+        else if(Type.trim().compareTo("本日")==0)
+            return rawMaterialsWarehouseMapper.today_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+        else if(Type.trim().compareTo("本周")==0)
+            return rawMaterialsWarehouseMapper.this_week_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+        else if(Type.trim().compareTo("本月")==0)
+            return rawMaterialsWarehouseMapper.this_month_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+        else if(Type.trim().compareTo("本季")==0)
+            return rawMaterialsWarehouseMapper.this_season_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+        else if(Type.trim().compareTo("今年")==0)
+            return rawMaterialsWarehouseMapper.this_year_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+        else
+            return null;
     }
 
     @Override

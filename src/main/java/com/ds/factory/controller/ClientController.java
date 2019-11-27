@@ -55,7 +55,7 @@ public class ClientController {
 
         String name=obj.getString("name")==null?"":obj.getString("name").trim();
         String type=obj.getString("type")==null?"":obj.getString("type").trim();
-        System.out.println(type);
+        //System.out.println(type);
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         if (pageSize != null && pageSize <= 0) {

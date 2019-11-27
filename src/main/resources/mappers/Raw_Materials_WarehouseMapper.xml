@@ -110,43 +110,76 @@
     </select>
 
 
-    <select id="today_data" resultMap="BaseResultMap">
+
+
+
+
+    <select id="all_data" resultMap="BaseResultMap">
       select *
       from Raw_Materials_Warehouse
+      where  flag=0  and Stock_no like '%${Stock_no}%' and Material_no like '%${Material_no}%'
+            and Storage_address like '%${Storage_address}%'
+      order by Product_date desc
+    </select>
+
+
+
+    <select id="today_data" resultMap="BaseResultMap">
+      select *
+      from Product_Warehouse
       where to_days(Product_date) = to_days(now()) and flag=0
+            and Stock_no like '%${Stock_no}%' and Material_no like '%${Material_no}%'
+            and Storage_address like '%${Storage_address}%'
       order by Product_date desc
     </select>
 
     <select id="this_week_data" resultMap="BaseResultMap">
       select *
-      from Raw_Materials_Warehouse
+      from Product_Warehouse
       WHERE YEARWEEK(date_format(Product_date,'%Y-%m-%d')) = YEARWEEK(now()) and flag=0
-      order by Product_date desc
+            and Stock_no like '%${Stock_no}%' and Material_no like '%${Material_no}%'
+                        and Storage_address like '%${Storage_address}%'
+                  order by Product_date desc
     </select>
 
 
     <select id="this_month_data" resultMap="BaseResultMap">
     select *
-    from Raw_Materials_Warehouse
+    from Product_Warehouse
     WHERE DATE_FORMAT( Product_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and flag=0
-    order by Product_date desc
+          and Stock_no like '%${Stock_no}%' and Material_no like '%${Material_no}%'
+                      and Storage_address like '%${Storage_address}%'
+                order by Product_date desc
     </select>
 
 
     <select id="this_season_data" resultMap="BaseResultMap">
       select *
-      from Raw_Materials_Warehouse
+      from Product_Warehouse
       where QUARTER(Product_date)=QUARTER(NOW()) and flag=0
-      order by Product_date desc
+            and Stock_no like '%${Stock_no}%' and Material_no like '%${Material_no}%'
+                        and Storage_address like '%${Storage_address}%'
+                  order by Product_date desc
     </select>
 
 
     <select id="this_year_data" resultMap="BaseResultMap">
       select *
-      from Raw_Materials_Warehouse
+      from Product_Warehouse
       where YEAR(Product_date)=YEAR(NOW()) and flag=0
-      order by Product_date desc
+            and Stock_no like '%${Stock_no}%' and Material_no like '%${Material_no}%'
+                        and Storage_address like '%${Storage_address}%'
+                  order by Product_date desc
     </select>
+
+
+
+
+
+
+
+
+
 
 
     <select id="orderByDate" resultMap="BaseResultMap">
