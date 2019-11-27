@@ -174,7 +174,7 @@
         var permission = $.trim($("#searchPermission").val());
         $.ajax({
             type: "get",
-            url: "/Refund_Application/getAllStaff",
+            url: "/order/getAllRefund",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
