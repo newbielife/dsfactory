@@ -33,7 +33,7 @@
             </td>
             <td>审查：</td>
             <td>
-                <select name="searchCheck" id="searchCheck"style="width:70px;">
+                <select name="searchCheck" id="searchCheck"style="width:100px;">
                     <option value="">全部</option>
                     <option value="已完成">已完成</option>
                     <option value="正在进行">正在进行</option>
@@ -56,31 +56,24 @@
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
     <form id="order_detailsFM" method="post" novalidate>
         <table>
-            <!--            <tr>-->
-            <!--                <td>详细订单编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Order_no_details"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
             <tr>
                 <td>产品编号：</td>
                 <td style="padding:5px">
-                    <input name="Product_no"class="easyui-validatebox"
+                    <input name="Product_no"class="easyui-validatebox" id="Product_no"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>产品需求：</td>
                 <td style="padding:5px">
-                    <input name="Products_requirement"class="easyui-validatebox"
+                    <input name="Products_requirement"class="easyui-validatebox" id="Products_requirement"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>客户编号：</td>
                 <td style="padding:5px">
-                    <input name="Client_no"class="easyui-validatebox"
+                    <input name="Client_no"class="easyui-validatebox" id="Client_no"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -352,17 +345,17 @@
     function editOrder_details(order_detailsTotalInfo) {
         var order_detailsInfo = order_detailsTotalInfo.split("AaBb");
 
-        $("#Product_no").val(order_detailsInfo[2]);
-        $("#Products_requirement").val(order_detailsInfo[3]);
-        $("#Client_no").val(order_detailsInfo[4]);
-        $("#Check").val(order_detailsInfo[7]);
+        $("#Product_no").val(order_detailsInfo[1]);
+        $("#Products_requirement").val(order_detailsInfo[2]);
+        $("#Client_no").val(order_detailsInfo[3]);
+        $("#Check").val(order_detailsInfo[6]);
 
         $('#order_detailsDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑订单详细信息');
         $(".window-mask").css({width: webW, height: webH});
-        order_detailsID = order_detailsInfo[1];
+        order_detailsID = order_detailsInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(order_detailsInfo[2]);
-        url = '/order_details/update?id=' + order_detailsInfo[1];
+        $("#Name").val("").focus().val(order_detailsInfo[1]);
+        url = '/order_details/update?id=' + order_detailsInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

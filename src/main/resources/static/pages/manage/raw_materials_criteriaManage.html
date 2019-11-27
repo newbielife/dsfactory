@@ -47,31 +47,24 @@
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
     <form id="Raw_Materials_CriteriaFM" method="post" novalidate>
         <table>
-<!--            <tr>-->
-<!--                <td>支付编号：</td>-->
-<!--                <td style="padding:5px">-->
-<!--                    <input name="Material_no"class="easyui-validatebox"-->
-<!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-<!--                </td>-->
-<!--            </tr>-->
             <tr>
                 <td>原料名：</td>
                 <td style="padding:5px">
-                    <input name="Material_name"class="easyui-validatebox"
+                    <input name="Material_name"class="easyui-validatebox" id="Material_name"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>原料分类：</td>
                 <td style="padding:5px">
-                    <input name="Material_type"class="easyui-validatebox"
+                    <input name="Material_type"class="easyui-validatebox" id="Material_type"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>保质期：</td>
                 <td style="padding:5px">
-                    <input name="Guarantee_period"class="easyui-validatebox"
+                    <input name="Guarantee_period"class="easyui-validatebox" id="Guarantee_period"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -115,10 +108,10 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '原料编号', field: 'Material_no', width: 180},
-                {title: '原料名', field: 'Material_name', width: 180},
-                {title: '原料分类', field: 'Material_type', width: 180},
-                {title: '保质期', field: 'Guarantee_period', width: 180},
+                {title: '原料编号', field: 'material_no', width: 180},
+                {title: '原料名', field: 'material_name', width: 180},
+                {title: '原料分类', field: 'material_type', width: 180},
+                {title: '保质期', field: 'guarantee_period', width: 180},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
@@ -331,16 +324,16 @@
     function editRaw_Materials_Criteria(Raw_Materials_CriteriaTotalInfo) {
         var Raw_Materials_CriteriaInfo = Raw_Materials_CriteriaTotalInfo.split("AaBb");
 
-        $("#Material_name").val(Raw_Materials_CriteriaInfo[2]);
-        $("#Material_type").val(Raw_Materials_CriteriaInfo[3]);
-        $("#Guarantee_period").val(Raw_Materials_CriteriaInfo[4]);
+        $("#Material_name").val(Raw_Materials_CriteriaInfo[1]);
+        $("#Material_type").val(Raw_Materials_CriteriaInfo[2]);
+        $("#Guarantee_period").val(Raw_Materials_CriteriaInfo[3]);
 
         $('#Raw_Materials_CriteriaDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑原料标准');
         $(".window-mask").css({width: webW, height: webH});
-        Raw_Materials_CriteriaID = Raw_Materials_CriteriaInfo[1];
+        Raw_Materials_CriteriaID = Raw_Materials_CriteriaInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(Raw_Materials_CriteriaInfo[2]);
-        url = '/Raw_Materials_Criteria/update?id=' + Raw_Materials_CriteriaInfo[1];
+        url = '/Raw_Materials_Criteria/update?id=' + Raw_Materials_CriteriaInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
@@ -363,7 +356,7 @@
         var type = $.trim($("#searchMaterial_type").val());
         $.ajax({
             type: "get",
-            url: "/Raw_Materials_Criteria/getAllStaff",
+            url: "/manufacturedesign/getAllrawmaterialscriteria",
             dataType: "json",
             data: ({
                 search: JSON.stringify({

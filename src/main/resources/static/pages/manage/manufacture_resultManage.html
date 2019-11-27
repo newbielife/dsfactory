@@ -56,46 +56,39 @@
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
     <form id="manufacture_resultFM" method="post" novalidate>
         <table>
-            <!--            <tr>-->
-            <!--                <td>制造编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Manufacture_no"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
             <tr>
                 <td>详细订单信息：</td>
                 <td style="padding:5px">
-                    <input name="Order_no_details"class="easyui-validatebox"
+                    <input name="Order_no_details"class="easyui-validatebox" id="Order_no_details"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>产品编号：</td>
                 <td style="padding:5px">
-                    <input name="Product_no"class="easyui-validatebox"
+                    <input name="Product_no"class="easyui-validatebox" id="Product_no"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>职工设计编号：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_design"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Staff_no_design"class="easyui-validatebox" id="Staff_no_design"
+                           data-options="required:false,validType:'length[0,20]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>职工制造编号：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_manufacture"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Staff_no_manufacture"class="easyui-validatebox" id="Staff_no_manufacture"
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>库存编号：</td>
                 <td style="padding:5px">
-                    <input name="Stock_no"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Stock_no"class="easyui-validatebox" id="Stock_no"
+                           data-options="required:false,validType:'length[0,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
         </table>
@@ -341,18 +334,18 @@
     function editManufacture_result(manufacture_resultTotalInfo) {
         var manufacture_resultInfo = manufacture_resultTotalInfo.split("AaBb");
 
-        $("#Order_no_details").val(manufacture_resultInfo[2]);
-        $("#Product_no").val(manufacture_resultInfo[3]);
-        $("#Staff_no_design").val(manufacture_resultInfo[4]);
-        $("#Staff_no_manufacture").val(manufacture_resultInfo[5]);
-        $("#Stock_no").val(manufacture_resultInfo[6]);
+        $("#Order_no_details").val(manufacture_resultInfo[1]);
+        $("#Product_no").val(manufacture_resultInfo[2]);
+        $("#Staff_no_design").val(manufacture_resultInfo[3]);
+        $("#Staff_no_manufacture").val(manufacture_resultInfo[4]);
+        $("#Stock_no").val(manufacture_resultInfo[5]);
 
         $('#manufacture_resultDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑支付信息');
         $(".window-mask").css({width: webW, height: webH});
-        manufacture_resultID = manufacture_resultInfo[1];
+        manufacture_resultID = manufacture_resultInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(manufacture_resultInfo[2]);
-        url = '/manufacture_result/update?id=' + manufacture_resultInfo[1];
+        $("#Name").val("").focus().val(manufacture_resultInfo[1]);
+        url = '/manufacture_result/update?id=' + manufacture_resultInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

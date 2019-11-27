@@ -43,46 +43,6 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-<div id="Raw_Materials_CriteriaDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
-     closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
-    <form id="Raw_Materials_CriteriaFM" method="post" novalidate>
-        <table>
-            <!--            <tr>-->
-            <!--                <td>支付编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Material_no"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
-            <tr>
-                <td>原料名：</td>
-                <td style="padding:5px">
-                    <input name="Material_name"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>原料分类：</td>
-                <td style="padding:5px">
-                    <input name="Material_type"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>保质期：</td>
-                <td style="padding:5px">
-                    <input name="Guarantee_period"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-<div id="dlg-buttons">
-    <a href="javascript:void(0)" id="saveRaw_Materials_Criteria" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a href="javascript:void(0)" id="cancelRaw_Materials_Criteria" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#Raw_Materials_CriteriaDlg').dialog('close')">取消</a>
-</div>
 <script type="text/javascript">
     //初始化界面
     $(function () {

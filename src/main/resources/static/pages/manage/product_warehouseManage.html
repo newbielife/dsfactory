@@ -63,54 +63,47 @@
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
     <form id="Product_WarehouseFM" method="post" novalidate>
         <table>
-            <!--            <tr>-->
-            <!--                <td>订单编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Stock_no"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
             <tr>
                 <td>成品编号：</td>
                 <td style="padding:5px">
-                    <input name="Product_no"class="easyui-validatebox"
+                    <input name="Product_no"class="easyui-validatebox" id="Product_no"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>成品库负责人编号：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_storage"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
+                    <input name="Staff_no_storage"class="easyui-validatebox" id="Product_no"
+                           data-options="required:false,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
 
             <tr>
                 <td>存货总量：</td>
                 <td style="padding:5px">
-                    <input name="Stock_num"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Stock_num"class="easyui-validatebox" id="Stock_num"
+                           data-options="required:true,validType:'length[0,20]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>存货地点：</td>
                 <td style="padding:5px">
-                    <input name="Storage_address"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Storage_address"class="easyui-validatebox" id="Storage_address"
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>车间负责人编号：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_workshop"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Staff_no_workshop"class="easyui-validatebox" id="Staff_no_workshop"
+                           data-options="required:false,validType:'length[0,20]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
                 <td>存货详情：</td>
                 <td style="padding:5px">
-                    <input name="Details"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <input name="Details"class="easyui-validatebox" id="Details"
+                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
         </table>
@@ -152,7 +145,7 @@
             pageSize: initPageSize,
             pageList: initPageNum,
             columns: [[
-                {field: 'id', width: 35, align: "center", Detailsbox: true},
+                {field: 'id', width: 35, align: "center", checkbox: true},
                 {title: '成品库存编号', field: 'Stock_no', width: 100},
                 {title: '成品编号', field: 'Product_no', width: 80},
                 {title: '成品库负责人编号', field: 'Staff_no_storage', width: 120},
@@ -373,19 +366,19 @@
     function editProduct_Warehouse(Product_WarehouseTotalInfo) {
         var Product_WarehouseInfo = Product_WarehouseTotalInfo.split("AaBb");
 
-        $("#Product_no").val(Product_WarehouseInfo[2]);
-        $("#Staff_no_storage").val(Product_WarehouseInfo[3]);
-        $("#Stock_num").val(Product_WarehouseInfo[5]);
-        $("#Storage_address").val(Product_WarehouseInfo[6]);
-        $("#Staff_no_workshop").val(Product_WarehouseInfo[7]);
-        $("#Details").val(Product_WarehouseInfo[8]);
+        $("#Product_no").val(Product_WarehouseInfo[1]);
+        $("#Staff_no_storage").val(Product_WarehouseInfo[2]);
+        $("#Stock_num").val(Product_WarehouseInfo[4]);
+        $("#Storage_address").val(Product_WarehouseInfo[5]);
+        $("#Staff_no_workshop").val(Product_WarehouseInfo[6]);
+        $("#Details").val(Product_WarehouseInfo[7]);
 
         $('#Product_WarehouseDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑成品库存信息');
         $(".window-mask").css({width: webW, height: webH});
-        Product_WarehouseID = Product_WarehouseInfo[1];
+        Product_WarehouseID = Product_WarehouseInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
-        $("#Name").val("").focus().val(Product_WarehouseInfo[2]);
-        url = '/Product_Warehouse/update?id=' + Product_WarehouseInfo[1];
+        $("#Name").val("").focus().val(Product_WarehouseInfo[1]);
+        url = '/Product_Warehouse/update?id=' + Product_WarehouseInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
