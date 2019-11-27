@@ -107,7 +107,7 @@ public class OrderController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        List<?> list = export_recordService.selectByOrder_no("");
+        List<?> list = export_recordService.getAll_orderByDelivery_date();
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -135,7 +135,7 @@ public class OrderController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        List<?> list = refund_applicationService.selectByOrder_no("");
+        List<?> list = refund_applicationService.getAll();
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
