@@ -155,13 +155,13 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '库存编号', field: 'Stock_no', width: 100},
-                {title: '原料编号', field: 'Material_no', width: 100},
-                {title: '库存量', field: 'Stock_num', width: 60},
-                {title: '存放地址', field: 'Storage_address', width: 140},
-                {title: '原料生产时间', field: 'Product_date', width: 100},
-                {title: '仓库负责人编号', field: 'Staff_no_storage', width: 100},
-                {title: '详情', field: 'Details', width: 200},
+                {title: '库存编号', field: 'stock_no', width: 100},
+                {title: '原料编号', field: 'material_no', width: 100},
+                {title: '库存量', field: 'stock_num', width: 60},
+                {title: '存放地址', field: 'storage_address', width: 140},
+                {title: '原料生产时间', field: 'product_date', width: 100},
+                {title: '仓库负责人编号', field: 'staff_no_storage', width: 100},
+                {title: '详情', field: 'details', width: 200},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
@@ -411,7 +411,7 @@
         var staff_no_storage = $.trim($("#searchStaff_no_storage").val());
         $.ajax({
             type: "get",
-            url: "/Raw_Materials_Warehouse/getAllStaff",
+            url: "/warehouse/getAllMaterialsWarehouse",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
