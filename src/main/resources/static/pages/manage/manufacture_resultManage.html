@@ -155,24 +155,6 @@
                     }
                 }
             ]],
-            toolbar: [
-                {
-                    id: 'addManufacture_result',
-                    text: '增加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        addManufacture_result();
-                    }
-                },
-                {
-                    id: 'deleteManufacture_result',
-                    text: '删除',
-                    iconCls: 'icon-remove',
-                    handler: function () {
-                        batDeleteManufacture_result();
-                    }
-                }
-            ],
             onLoadError: function () {
                 $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
                 return;
