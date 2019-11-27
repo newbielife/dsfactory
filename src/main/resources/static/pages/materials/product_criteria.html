@@ -77,13 +77,13 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '产品编号', field: 'Product_no', width: 180},
-                {title: '产品名', field: 'Product_name', width: 140},
-                {title: '产品分类', field: 'Product_type', width: 120},
-                {title: '配料表', field: 'Ingredient_List', width: 300},
-                {title: '生产周期', field: 'Manufacture_duration', width: 100},
-                {title: '保质期', field: 'Guarantee_period', width: 100},
-                {title: '单价', field: 'Unit_Price', width: 80},
+                {title: '产品编号', field: 'product_no', width: 180},
+                {title: '产品名', field: 'product_name', width: 140},
+                {title: '产品分类', field: 'product_type', width: 120},
+                {title: '配料表', field: 'ingredient_List', width: 300},
+                {title: '生产周期', field: 'manufacture_duration', width: 100},
+                {title: '保质期', field: 'guarantee_period', width: 100},
+                {title: '单价', field: 'unit_Price', width: 80},
                 {
                     formatter: function (value, rec) {
                         var str = '';
@@ -161,7 +161,7 @@
         var type = $.trim($("#searchProduct_type").val());
         $.ajax({
             type: "get",
-            url: "/Product_criteria/getAllStaff",
+            url: "/manufacturedesign/getAllProductCriteria",
             dataType: "json",
             data: ({
                 search: JSON.stringify({

@@ -30,6 +30,9 @@ public class ProduceController {
     @Resource
     Manufacture_ResultService manufacture_resultService;
 
+    @Resource
+    Product_CriteriaService product_criteriaService;
+
     @GetMapping(value = "/getAllmanufacture")
     public String getAllmanufacture(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                              @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
@@ -103,6 +106,34 @@ public class ProduceController {
             parameterMap.put(Constants.OFFSET, offset);
         }
         List<?> list = manufacture_resultService.getAll();
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        System.out.println("************************s"+list.get(0));
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+    @GetMapping(value = "/getAllProductCriteria")
+    public String getAllProductCriteria(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                           @RequestParam(value = Constants.SEARCH, required = false) String search,
+                                           HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
+        parameterMap.put(Constants.SEARCH, search);
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize != null && pageSize <= 0) {
+            pageSize = 10;
+        }
+        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
+        if (StringUtil.isNotEmpty(offset)) {
+            parameterMap.put(Constants.OFFSET, offset);
+        }
+        List<?> list = product_criteriaService.getAll();
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
