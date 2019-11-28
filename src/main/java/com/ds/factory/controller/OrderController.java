@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.datasource.entities.Order_Details;
+import com.ds.factory.datasource.entities.Order_Form;
 import com.ds.factory.service.Service.Export_RecordService;
 import com.ds.factory.service.Service.Order_DetailsService;
 import com.ds.factory.service.Service.Order_FormService;
@@ -42,18 +43,29 @@ public class OrderController {
                                              @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                                              @RequestParam(value = Constants.SEARCH, required = false) String search,
                                              HttpServletRequest request)throws Exception {
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-        parameterMap.put(Constants.SEARCH, search);
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String order_no=parameterMap.get("order_no");
+        String client_no=parameterMap.get("client_no");
+        String staff_no=parameterMap.get("staff_no");
+        String check=parameterMap.get("check");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        if (pageSize != null && pageSize <= 0) {
-            pageSize = 10;
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
-        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-        if (StringUtil.isNotEmpty(offset)) {
-            parameterMap.put(Constants.OFFSET, offset);
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
-        List<?> list = order_formService.orderByDate();
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Order_Form> list = order_formService.selectByConstraint(order_no,client_no,staff_no,check);
+        //获取分页查询后的数据
+        PageInfo<Order_Form> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -61,7 +73,7 @@ public class OrderController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
