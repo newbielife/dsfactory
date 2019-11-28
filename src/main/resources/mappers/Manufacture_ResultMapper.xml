@@ -143,6 +143,16 @@
                 and Product_no like '%${Product_no}%' and Staff_no_manufacture like '%${Staff_no_manufacture}%'
     </select>
 
+    <select id="selectByConstraint_no_date" resultMap="BaseResultMap">
+          select *
+          from Manufacture_Result
+          where  flag=0
+                and Manufacture_no like '%${Manufacture_no}%' and Order_no_details like '%${Order_no_details}%'
+                and Product_no like '%${Product_no}%' and Staff_no_manufacture like '%${Staff_no_manufacture}%'
+    </select>
+
+
+
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

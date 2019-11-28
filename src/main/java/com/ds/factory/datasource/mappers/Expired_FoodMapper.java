@@ -13,6 +13,9 @@ public interface Expired_FoodMapper {
                                           @Param("Food_type") String Food_type,@Param("Food_name") String Food_name,
                                           @Param("Expired_date") Date Expired_date);
 
+    List<Expired_Food> selectByConstraint_no_date(@Param("Food_no") String Food_no,
+                                          @Param("Food_type") String Food_type,@Param("Food_name") String Food_name);
+
 
     List<Expired_Food> orderByExpired_date();
     List<Expired_Food> orderByLoss_num();

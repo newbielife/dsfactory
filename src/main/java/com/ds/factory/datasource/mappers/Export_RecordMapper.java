@@ -13,6 +13,10 @@ public interface Export_RecordMapper {
                                            @Param("Staff_no") String Staff_no, @Param("Order_no_details") String Order_no_details,
                                             @Param("Target_place") String Target_place, @Param("Source_place") String Source_place);
 
+    List<Export_Record> selectByConstraint_no_date(@Param("Export_no") String Export_no,
+                                           @Param("Staff_no") String Staff_no, @Param("Order_no_details") String Order_no_details,
+                                           @Param("Target_place") String Target_place, @Param("Source_place") String Source_place);
+
     int exist_or_not(@Param("Export_no") String Export_no);
     int exist_or_not_by_Order_no_details(@Param("Order_no_details") String Order_no_details);
     String select_Biggest_Export_no();

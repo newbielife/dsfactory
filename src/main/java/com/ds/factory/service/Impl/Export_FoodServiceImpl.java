@@ -23,6 +23,9 @@ public class Export_FoodServiceImpl implements Export_RecordService {
 
     @Override
     public List<Export_Record> selectByConstraint(Date Delivery_date, String Export_no, String Staff_no, String Order_no_details, String Target_place, String Source_place) {
+        if(Delivery_date==null)
+            return export_recordMapper.selectByConstraint_no_date(Export_no.trim(),Staff_no.trim(),
+                    Order_no_details.trim(),Target_place.trim(),Source_place.trim());
         return export_recordMapper.selectByConstraint(Delivery_date,Export_no.trim(),Staff_no.trim(),
                                                 Order_no_details.trim(),Target_place.trim(),Source_place.trim());
     }

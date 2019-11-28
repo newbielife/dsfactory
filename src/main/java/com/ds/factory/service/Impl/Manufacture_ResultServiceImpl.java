@@ -16,6 +16,9 @@ public class Manufacture_ResultServiceImpl  implements Manufacture_ResultService
 
     @Override
     public List<Manufacture_Result> selectByConstraint(Date Update_date, String Manufacture_no, String Product_no, String Staff_no_manufacture, String Order_no_details) {
+        if(Update_date==null)
+            return manufacture_resultMapper.selectByConstraint_no_date(Manufacture_no.trim(),
+                    Product_no.trim(),Staff_no_manufacture.trim(),Order_no_details.trim());
         return manufacture_resultMapper.selectByConstraint(Update_date,Manufacture_no.trim(),
                 Product_no.trim(),Staff_no_manufacture.trim(),Order_no_details.trim());
     }

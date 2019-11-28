@@ -124,6 +124,16 @@
     </select>
 
 
+    <select id="selectByConstraint_no_date" resultMap="BaseResultMap">
+          select *
+          from Export_Record
+          where  flag=0
+                and Export_no like '%${Export_no}%' and Staff_no like '%${Staff_no}%' and Order_no_details like '%${Order_no_details}%'
+                and Target_place like '%${Target_place}%' and Source_place like '%${Source_place}%'
+          order by Delivery_date desc
+    </select>
+
+
 
 
     <select id="countByExample" parameterType="com.ds.factory.dao.Example.Export_RecordExample" resultType="java.lang.Integer">

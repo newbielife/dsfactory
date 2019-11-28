@@ -133,6 +133,14 @@
           order by Expired_date desc
     </select>
 
+    <select id="selectByConstraint_no_date" resultMap="BaseResultMap">
+      select *
+      from Expired_Food
+      where  flag=0
+            and Food_name like '%${Food_name}%' and Food_type like '%${Food_type}%' and Food_no like '%${Food_no}%'
+      order by Expired_date desc
+</select>
+
 
 
 
