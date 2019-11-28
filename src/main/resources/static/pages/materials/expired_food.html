@@ -165,7 +165,7 @@
         var no = $.trim($("#searchFood_no").val());
         var type = $.trim($("#searchFood_type").val());
         var name = $.trim($("#searchFood_name").val());
-        var date = $.trim($("#searchExpired_date").val());
+        var date = $.trim($("#searchExpired_date").datebox("getValue"));
         $.ajax({
             type: "get",
             url: "/expired_food/getAllStaff",
@@ -201,7 +201,7 @@
             $("#searchFood_no").val("");
             $("#searchFood_type").val("");
             $("#searchFood_name").val("");
-            $("#searchExpired_date").val("");
+            $("#searchExpired_date").datebox("clear");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

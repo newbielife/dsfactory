@@ -160,7 +160,7 @@
         var payment_no = $.trim($("#searchPayment_no").val());
         var order_no = $.trim($("#searchOrder_no").val());
         var staff_no = $.trim($("#searchStaff_no_accountant").val());
-        var date = $.trim($("#searchPayment_date").val());
+        var date = $.trim($("#searchPayment_date").datebox("getValue"));
         $.ajax({
             type: "get",
             url: "/payment/getAllPayment",
@@ -196,7 +196,7 @@
             $("#searchPayment_no").val("");
             $("#searchOrder_no").val("");
             $("#searchStaff_no_accountant").val("");
-            $("#searchPayment_date").val("");
+            $("#searchPayment_date").datebox("clear");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

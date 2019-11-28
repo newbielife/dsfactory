@@ -394,16 +394,24 @@
     });
 
     function showExport_recordDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchExport_no").val());
-        var type = $.trim($("#searchStaff_no").val());
+        var export_no = $.trim($("#searchExport_no").val());
+        var staff_no = $.trim($("#searchStaff_no").val());
+        var order_no_details = $.trim($("#searchOrder_no_details").val());
+        var source_place = $.trim($("#searchSource_place").val());
+        var target_place = $.trim($("#searchTarget_place").val());
+        var delivery_date = $.trim($("#searchDelivery_date").datebox("getValue"));
         $.ajax({
             type: "get",
             url: "/export_record/getAllStaff",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
-                    name: name,
-                    type: type
+                    export_no: export_no,
+                    staff_no: staff_no,
+                    order_no_details: order_no_details,
+                    source_place: source_place,
+                    target_place: target_place,
+                    delivery_date: delivery_date
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize
@@ -431,7 +439,7 @@
             $("#searchOrder_no_details").val("");
             $("#searchSource_place").val("");
             $("#searchTarget_place").val("");
-            $("#searchDelivery_date").val("");
+            $("#searchDelivery_date").datebox("clear");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

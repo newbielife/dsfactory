@@ -51,75 +51,6 @@
     </table>
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
-
-<div id="manufacture_designDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
-     closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" cloable="true">
-    <form id="manufacture_designFM" method="post" novalidate>
-        <table>
-            <!--            <tr>-->
-            <!--                <td>制造编号：</td>-->
-            <!--                <td style="padding:5px">-->
-            <!--                    <input name="Manufacture_no"class="easyui-validatebox"-->
-            <!--                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>-->
-            <!--                </td>-->
-            <!--            </tr>-->
-            <tr>
-                <td>详细订单编号：</td>
-                <td style="padding:5px">
-                    <input name="Order_no_details"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>生产计划负责人编号：</td>
-                <td style="padding:5px">
-                    <input name="Staff_no_design"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>产品编号：</td>
-                <td style="padding:5px">
-                    <input name="Product_no"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>当前进程：</td>
-                <td style="padding:5px">
-                    <input name="Progress"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>车间：</td>
-                <td style="padding:5px">
-                    <input name="Workshop"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>产品需求：</td>
-                <td>
-                    <input name="Products_requirement"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>备注：</td>
-                <td>
-                    <input name="Details"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-<div id="dlg-buttons">
-    <a href="javascript:void(0)" id="saveManufacture_design" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a href="javascript:void(0)" id="cancelManufacture_design" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#Manufacture_designDlg').dialog('close')">取消</a>
-</div>
 <script type="text/javascript">
     //初始化界面
     $(function () {
@@ -233,16 +164,22 @@
     });
 
     function showManufacture_designDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchManufacture_no").val());
-        var type = $.trim($("#searchOrder_no_details").val());
+        var manufacture_no = $.trim($("#searchManufacture_no").val());
+        var order_no_details = $.trim($("#searchOrder_no_details").val());
+        var staff_no_design = $.trim($("#searchStaff_no_design").val());
+        var product_no = $.trim($("#searchProduct_no").val());
+        var workshop = $.trim($("#searchWorkshop").val());
         $.ajax({
             type: "get",
             url: "/manufacturedesign/getAllmanufacture",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
-                    name: name,
-                    type: type
+                    manufacture_no: manufacture_no,
+                    order_no_details: order_no_details,
+                    staff_no_design: staff_no_design,
+                    product_no: product_no,
+                    workshop: workshop
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize

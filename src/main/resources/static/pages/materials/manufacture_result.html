@@ -167,7 +167,7 @@
         var order_no_details = $.trim($("#searchOrder_no_details").val());
         var product_no = $.trim($("#searchProduct_no").val());
         var staff_no = $.trim($("#searchStaff_no_manufacture").val());
-        var date = $.trim($("#searchUpdate_date").val());
+        var date = $.trim($("#searchUpdate_date").datebox("getValue"));
         $.ajax({
             type: "get",
             url: "/manufacturedesign/getAllmanufacture_result",
@@ -205,7 +205,7 @@
             $("#searchOrder_no_details").val("");
             $("#searchProduct_no").val("");
             $("#searchStaff_no_manufacture").val("");
-            $("#searchUpdate_date").val("");
+            $("#searchUpdate_date").datebox("clear");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

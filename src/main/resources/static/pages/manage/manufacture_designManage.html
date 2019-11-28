@@ -398,16 +398,22 @@
     });
 
     function showManufacture_designDetails(pageNo, pageSize) {
-        var name = $.trim($("#searchManufacture_no").val());
-        var type = $.trim($("#searchOrder_no_details").val());
+        var manufacture_no = $.trim($("#searchManufacture_no").val());
+        var order_no_details = $.trim($("#searchOrder_no_details").val());
+        var staff_no_design = $.trim($("#searchStaff_no_design").val());
+        var product_no = $.trim($("#searchProduct_no").val());
+        var workshop = $.trim($("#searchWorkshop").val());
         $.ajax({
             type: "get",
             url: "/manufacturedesign/getAllmanufacture",
             dataType: "json",
             data: ({
                 search: JSON.stringify({
-                    name: name,
-                    type: type
+                    manufacture_no: manufacture_no,
+                    order_no_details: order_no_details,
+                    staff_no_design: staff_no_design,
+                    product_no: product_no,
+                    workshop: workshop
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize
