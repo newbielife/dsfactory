@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.datasource.entities.Manufacture_Design;
+import com.ds.factory.datasource.entities.Product_Warehouse;
 import com.ds.factory.datasource.entities.Raw_Materials_Warehouse;
 import com.ds.factory.service.Service.Export_RecordService;
 import com.ds.factory.service.Service.Product_WarehouseService;
@@ -38,18 +39,30 @@ public class WarehouseController {
                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                           @RequestParam(value = Constants.SEARCH, required = false) String search,
                           HttpServletRequest request)throws Exception {
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-        parameterMap.put(Constants.SEARCH, search);
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String stock_no=parameterMap.get("stock_no");
+        String product_no=parameterMap.get("product_no");
+        String staff_no=parameterMap.get("staff_no");
+        String manufacture_date=parameterMap.get("manufacture_date");
+        String storage_address=parameterMap.get("storage_address");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        if (pageSize != null && pageSize <= 0) {
-            pageSize = 10;
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
-        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-        if (StringUtil.isNotEmpty(offset)) {
-            parameterMap.put(Constants.OFFSET, offset);
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
-        List<?> list = product_warehouseService.orderByDate();
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Product_Warehouse> list = product_warehouseService.selectByConstraint(stock_no,product_no,staff_no,manufacture_date);
+        //获取分页查询后的数据
+        PageInfo<Product_Warehouse> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -57,7 +70,7 @@ public class WarehouseController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        //System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
