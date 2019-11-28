@@ -40,7 +40,7 @@ public class PaymentController {
         String payment_no=obj.getString("payment_no")==null?"":obj.getString("payment_no").trim();
         String order_no=obj.getString("order_no")==null?"":obj.getString("order_no").trim();
         String staff_no=obj.getString("staff_no")==null?"":obj.getString("staff_no").trim();
-        Date date=obj.getDate("date")==null?null:obj.getDate("date");
+        Date date=obj.getDate("date")==null||(obj.getDate("date")+"").compareTo("")==0?null:obj.getDate("date");
 
 
         PageQueryInfo queryInfo = new PageQueryInfo();
