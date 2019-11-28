@@ -149,6 +149,7 @@
     $("#searchBtn").unbind().bind({
         click: function () {
             showOrder_detailsDetails(1, initPageSize);
+            var name = $.trim($("#searchName").val());
             var opts = $("#tableData").datagrid('options');
             var pager = $("#tableData").datagrid('getPager');
             opts.pageNumber = 1;
