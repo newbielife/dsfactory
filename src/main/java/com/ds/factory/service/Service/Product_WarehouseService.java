@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface Product_WarehouseService {
-    List<Product_Warehouse> selectByConstraint(String Stock_no, String Product_no,String Staff_no_storage,String Type);
+    List<Product_Warehouse> selectByConstraint(String Stock_no, String Product_no,String Staff_no_storage,String Storage_address,String Type);
 
 
     List<Product_Warehouse> orderByDate();

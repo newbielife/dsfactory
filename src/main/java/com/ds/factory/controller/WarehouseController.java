@@ -60,7 +60,7 @@ public class WarehouseController {
             currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
         PageHelper.startPage(currentPage,pageSize,true);
-        List<Product_Warehouse> list = product_warehouseService.selectByConstraint(stock_no,product_no,staff_no,manufacture_date);
+        List<Product_Warehouse> list = product_warehouseService.selectByConstraint(stock_no,product_no,staff_no,storage_address,manufacture_date);
         //获取分页查询后的数据
         PageInfo<Product_Warehouse> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -93,6 +93,7 @@ public class WarehouseController {
         String staff_no_storage=parameterMap.get("staff_no_storage");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
+
         if (pageSize == null || pageSize <= 0) {
             pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
@@ -100,7 +101,7 @@ public class WarehouseController {
             currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
         PageHelper.startPage(currentPage,pageSize,true);
-        List<Raw_Materials_Warehouse> list = raw_materials_warehouseService.selectByConstraint(no,material_no,storage_address,product_date);
+        List<Raw_Materials_Warehouse> list = raw_materials_warehouseService.selectByConstraint(no,material_no,storage_address,staff_no_storage,product_date);
         //获取分页查询后的数据
         PageInfo<Raw_Materials_Warehouse> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
