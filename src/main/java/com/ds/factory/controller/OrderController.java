@@ -68,33 +68,7 @@ public class OrderController {
     @GetMapping(value = "/getAllOrderDetail")
     public String getAllOrderDetail(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                              @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                             @RequestParam(value = Constants.SEARCH, required = false) String search,
-                                             HttpServletRequest request)throws Exception {
-//        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-//        parameterMap.put(Constants.SEARCH, search);
-//        String no=parameterMap.get("no");
-//        String client_no=parameterMap.get("client_no");
-//        String product_no=parameterMap.get("product_no");
-//        String check=parameterMap.get("check");
-//        PageQueryInfo queryInfo = new PageQueryInfo();
-//        Map<String, Object> objectMap = new HashMap<String, Object>();
-//        if (pageSize != null && pageSize <= 0) {
-//            pageSize = 10;
-//        }
-//        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-//        if (StringUtil.isNotEmpty(offset)) {
-//            parameterMap.put(Constants.OFFSET, offset);
-//        }
-//        List<?> list = order_detailsService.selectByConstraint(no,client_no,product_no,check);
-//        objectMap.put("page", queryInfo);
-//        if (list == null) {
-//            queryInfo.setRows(new ArrayList<Object>());
-//            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
-//            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
-//        }
-//        queryInfo.setRows(list);
-//        System.out.println("************************s"+list.get(0));
-//        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+                                             @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
