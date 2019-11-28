@@ -92,7 +92,7 @@
     <select id="selectByConstraint" resultMap="BaseResultMap">
           select *
           from Product_Criteria
-          where  flag=0  and Payment_no like '%${Payment_no}%'
+          where  flag=0  and Product_no like '%${Product_no}%'
                 and Product_name like '%${Product_name}%'  and Product_type like '%${Product_type}%'
     </select>
 
