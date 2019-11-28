@@ -1,5 +1,7 @@
 package com.ds.factory.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.service.Service.PaymentService;
 import com.ds.factory.service.Service.UserBusinessService;
@@ -11,10 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 
@@ -35,6 +34,15 @@ public class PaymentController {
                           HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = ParamUtils.requestToMap(request);
         parameterMap.put(Constants.SEARCH, search);
+
+        JSONObject obj= JSON.parseObject(search);
+
+        String payment_no=obj.getString("payment_no")==null?"":obj.getString("payment_no").trim();
+        String order_no=obj.getString("order_no")==null?"":obj.getString("order_no").trim();
+        String staff_no=obj.getString("staff_no")==null?"":obj.getString("staff_no").trim();
+        Date date=obj.getDate("date")==null?null:obj.getDate("date");
+
+
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         if (pageSize != null && pageSize <= 0) {
@@ -44,7 +52,8 @@ public class PaymentController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        List<?> list = paymentService.getAll();
+        //List<?> list = paymentService.getAll();
+        List<?> list = paymentService.selectByConstraint(date,order_no,staff_no,payment_no);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());

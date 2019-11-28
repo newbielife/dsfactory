@@ -28,6 +28,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> selectByConstraint(Date Payment_date, String Order_no, String Staff_no_accountant, String Payment_no) {
+        if(Payment_date==null)
+            return paymentMapper.selectByConstraint_no_date(Order_no.trim(),Staff_no_accountant.trim(),Payment_no.trim());
         return paymentMapper.selectByConstraint(Payment_date,Order_no.trim(),Staff_no_accountant.trim(),Payment_no.trim());
     }
 

@@ -118,6 +118,17 @@
     </select>
 
 
+
+    <select id="selectByConstraint_no_date" resultMap="BaseResultMap">
+              select *
+              from Payment
+              where  flag=0
+                    and Order_no like '%${Order_no}%' and Staff_no_accountant like '%${Staff_no_accountant}%'
+                    and Payment_no like '%${Payment_no}%'
+              order by Payment_date desc
+        </select>
+
+
     <select id="selectByStaff_no_accountant" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from Payment
