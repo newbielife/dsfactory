@@ -2,11 +2,17 @@ package com.ds.factory.controller;
 
 //仓库管理
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
+import com.ds.factory.datasource.entities.Manufacture_Design;
+import com.ds.factory.datasource.entities.Raw_Materials_Warehouse;
 import com.ds.factory.service.Service.Export_RecordService;
 import com.ds.factory.service.Service.Product_WarehouseService;
 import com.ds.factory.service.Service.Raw_Materials_WarehouseService;
 import com.ds.factory.utils.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 
@@ -63,18 +66,30 @@ public class WarehouseController {
                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                           @RequestParam(value = Constants.SEARCH, required = false) String search,
                           HttpServletRequest request)throws Exception {
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-        parameterMap.put(Constants.SEARCH, search);
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String no=parameterMap.get("no");
+        String material_no=parameterMap.get("material_no");
+        String storage_address=parameterMap.get("storage_address");
+        String product_date=parameterMap.get("product_date");
+        String staff_no_storage=parameterMap.get("staff_no_storage");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        if (pageSize != null && pageSize <= 0) {
-            pageSize = 10;
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
-        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-        if (StringUtil.isNotEmpty(offset)) {
-            parameterMap.put(Constants.OFFSET, offset);
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
-        List<?> list = raw_materials_warehouseService.orderByDate();
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Raw_Materials_Warehouse> list = raw_materials_warehouseService.selectByConstraint(no,material_no,storage_address,product_date);
+        //获取分页查询后的数据
+        PageInfo<Raw_Materials_Warehouse> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -82,7 +97,7 @@ public class WarehouseController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
