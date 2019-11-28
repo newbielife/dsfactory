@@ -30,10 +30,10 @@ public interface Product_WarehouseMapper {
     List<Product_Warehouse> selectByProduct_no(@Param("Product_no") String Product_no);
     List<Product_Warehouse> selectByStaff_no_workshop(@Param("Staff_no_workshop") String Staff_no_workshop);
 
-    List<Product_Warehouse> all_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage);
-    List<Product_Warehouse> today_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage);
-    List<Product_Warehouse> this_week_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage);
-    List<Product_Warehouse> this_month_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage);
-    List<Product_Warehouse> this_season_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage);
-    List<Product_Warehouse> this_year_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage);
+    List<Product_Warehouse> all_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage,@Param("Storage_address") String Storage_address);
+    List<Product_Warehouse> today_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage,@Param("Storage_address") String Storage_address);
+    List<Product_Warehouse> this_week_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage,@Param("Storage_address") String Storage_address);
+    List<Product_Warehouse> this_month_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage,@Param("Storage_address") String Storage_address);
+    List<Product_Warehouse> this_season_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage,@Param("Storage_address") String Storage_address);
+    List<Product_Warehouse> this_year_data(@Param("Stock_no") String Stock_no, @Param("Product_no") String Product_no,@Param("Staff_no_storage") String Staff_no_storage,@Param("Storage_address") String Storage_address);
 }

@@ -137,7 +137,7 @@
       select *
       from Product_Warehouse
       where  flag=0  and Stock_no like '%${Stock_no}%' and Product_no like '%${Product_no}%'
-            and Staff_no_storage like '%${Staff_no_storage}%'
+            and Staff_no_storage like '%${Staff_no_storage}%'  and Storage_address like '%${Storage_address}%'
       order by Manufacture_date desc
     </select>
 
@@ -146,7 +146,7 @@
     <select id="today_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where to_days(Manufacture_date) = to_days(now()) and flag=0
+      where to_days(Manufacture_date) = to_days(now()) and flag=0   and Storage_address like '%${Storage_address}%'
             and Stock_no like '%${Stock_no}%' and Product_no like '%${Product_no}%' and Staff_no_storage like '%${Staff_no_storage}%'
       order by Manufacture_date desc
     </select>
@@ -154,7 +154,7 @@
     <select id="this_week_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      WHERE YEARWEEK(date_format(Manufacture_date,'%Y-%m-%d')) = YEARWEEK(now()) and flag=0
+      WHERE YEARWEEK(date_format(Manufacture_date,'%Y-%m-%d')) = YEARWEEK(now()) and flag=0   and Storage_address like '%${Storage_address}%'
             and Stock_no like '%${Stock_no}%' and Product_no like '%${Product_no}%' and Staff_no_storage like '%${Staff_no_storage}%'
       order by Manufacture_date desc
     </select>
@@ -163,7 +163,7 @@
     <select id="this_month_data" resultMap="BaseResultMap">
     select *
     from Product_Warehouse
-    WHERE DATE_FORMAT( Manufacture_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and flag=0
+    WHERE DATE_FORMAT( Manufacture_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and flag=0   and Storage_address like '%${Storage_address}%'
           and Stock_no like '%${Stock_no}%' and Product_no like '%${Product_no}%' and Staff_no_storage like '%${Staff_no_storage}%'
     order by Manufacture_date desc
     </select>
@@ -172,7 +172,7 @@
     <select id="this_season_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where QUARTER(Manufacture_date)=QUARTER(NOW()) and flag=0
+      where QUARTER(Manufacture_date)=QUARTER(NOW()) and flag=0   and Storage_address like '%${Storage_address}%'
             and Stock_no like '%${Stock_no}%' and Product_no like '%${Product_no}%' and Staff_no_storage like '%${Staff_no_storage}%'
       order by Manufacture_date desc
     </select>
@@ -181,7 +181,7 @@
     <select id="this_year_data" resultMap="BaseResultMap">
       select *
       from Product_Warehouse
-      where YEAR(Manufacture_date)=YEAR(NOW()) and flag=0
+      where YEAR(Manufacture_date)=YEAR(NOW()) and flag=0   and Storage_address like '%${Storage_address}%'
             and Stock_no like '%${Stock_no}%' and Product_no like '%${Product_no}%' and Staff_no_storage like '%${Staff_no_storage}%'
       order by Manufacture_date desc
     </select>

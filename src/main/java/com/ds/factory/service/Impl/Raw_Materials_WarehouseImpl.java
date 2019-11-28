@@ -25,19 +25,19 @@ public class Raw_Materials_WarehouseImpl implements Raw_Materials_WarehouseServi
 
 
     @Override
-    public List<Raw_Materials_Warehouse> selectByConstraint(String Stock_no, String Material_no, String Storage_address, String Type) {
+    public List<Raw_Materials_Warehouse> selectByConstraint(String Stock_no, String Material_no, String Storage_address,String Staff_no_storage, String Type) {
         if(Type==null||Type.trim().compareTo("全部")==0||Type.trim().compareTo("")==0)
-            return rawMaterialsWarehouseMapper.all_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+            return rawMaterialsWarehouseMapper.all_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本日")==0)
-            return rawMaterialsWarehouseMapper.today_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+            return rawMaterialsWarehouseMapper.today_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本周")==0)
-            return rawMaterialsWarehouseMapper.this_week_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+            return rawMaterialsWarehouseMapper.this_week_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本月")==0)
-            return rawMaterialsWarehouseMapper.this_month_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+            return rawMaterialsWarehouseMapper.this_month_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本季")==0)
-            return rawMaterialsWarehouseMapper.this_season_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+            return rawMaterialsWarehouseMapper.this_season_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("今年")==0)
-            return rawMaterialsWarehouseMapper.this_year_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim());
+            return rawMaterialsWarehouseMapper.this_year_data(Stock_no.trim(),Material_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else
             return null;
     }

@@ -25,19 +25,19 @@ public class Product_WarehouseImpl implements Product_WarehouseService {
 
 
     @Override
-    public List<Product_Warehouse> selectByConstraint(String Stock_no, String Product_no, String Staff_no_storage, String Type) {
+    public List<Product_Warehouse> selectByConstraint(String Stock_no, String Product_no, String Staff_no_storage,String Storage_address, String Type) {
         if(Type==null||Type.trim().compareTo("全部")==0||Type.trim().compareTo("")==0)
-            return product_warehouseMapper.all_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+            return product_warehouseMapper.all_data(Stock_no.trim(),Product_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本日")==0)
-            return product_warehouseMapper.today_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+            return product_warehouseMapper.today_data(Stock_no.trim(),Product_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本周")==0)
-            return product_warehouseMapper.this_week_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+            return product_warehouseMapper.this_week_data(Stock_no.trim(),Product_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本月")==0)
-            return product_warehouseMapper.this_month_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+            return product_warehouseMapper.this_month_data(Stock_no.trim(),Product_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("本季")==0)
-            return product_warehouseMapper.this_season_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+            return product_warehouseMapper.this_season_data(Stock_no.trim(),Product_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else if(Type.trim().compareTo("今年")==0)
-            return product_warehouseMapper.this_year_data(Stock_no.trim(),Product_no.trim(),Staff_no_storage.trim());
+            return product_warehouseMapper.this_year_data(Stock_no.trim(),Product_no.trim(),Storage_address.trim(),Staff_no_storage.trim());
         else
             return null;
     }

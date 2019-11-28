@@ -31,10 +31,10 @@ public interface Raw_Materials_WarehouseMapper {
     List<Raw_Materials_Warehouse> selectByStaff_no_storage(@Param("Staff_no_storage") String Staff_no_storage);
 
 
-    List<Raw_Materials_Warehouse> all_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address);
-    List<Raw_Materials_Warehouse> today_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address);
-    List<Raw_Materials_Warehouse> this_week_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address);
-    List<Raw_Materials_Warehouse> this_month_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address);
-    List<Raw_Materials_Warehouse> this_season_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address);
-    List<Raw_Materials_Warehouse> this_year_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address);
+    List<Raw_Materials_Warehouse> all_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address,@Param("Staff_no_storage") String Staff_no_storage);
+    List<Raw_Materials_Warehouse> today_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address,@Param("Staff_no_storage") String Staff_no_storage);
+    List<Raw_Materials_Warehouse> this_week_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address,@Param("Staff_no_storage") String Staff_no_storage);
+    List<Raw_Materials_Warehouse> this_month_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address,@Param("Staff_no_storage") String Staff_no_storage);
+    List<Raw_Materials_Warehouse> this_season_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address,@Param("Staff_no_storage") String Staff_no_storage);
+    List<Raw_Materials_Warehouse> this_year_data(@Param("Stock_no") String Stock_no,@Param("Material_no") String Material_no,@Param("Storage_address") String Storage_address,@Param("Staff_no_storage") String Staff_no_storage);
 }
