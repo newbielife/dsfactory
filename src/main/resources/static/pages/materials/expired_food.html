@@ -168,7 +168,7 @@
         var date = $.trim($("#searchExpired_date").datebox("getValue"));
         $.ajax({
             type: "get",
-            url: "/expired_food/getAllStaff",
+            url: "/warehouse/getAllExpired",
             dataType: "json",
             data: ({
                 search: JSON.stringify({

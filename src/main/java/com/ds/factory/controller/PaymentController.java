@@ -3,9 +3,13 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
+import com.ds.factory.datasource.entities.Manufacture_Result;
+import com.ds.factory.datasource.entities.Payment;
 import com.ds.factory.service.Service.PaymentService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,8 +56,10 @@ public class PaymentController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        //List<?> list = paymentService.getAll();
-        List<?> list = paymentService.selectByConstraint(date,order_no,staff_no,payment_no);
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Payment> list = paymentService.selectByConstraint(date,order_no,staff_no,payment_no);
+        //获取分页查询后的数据
+        PageInfo<Payment> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -61,7 +67,7 @@ public class PaymentController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        //System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 

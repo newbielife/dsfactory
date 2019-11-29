@@ -5,9 +5,11 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
+import com.ds.factory.datasource.entities.Expired_Food;
 import com.ds.factory.datasource.entities.Manufacture_Design;
 import com.ds.factory.datasource.entities.Product_Warehouse;
 import com.ds.factory.datasource.entities.Raw_Materials_Warehouse;
+import com.ds.factory.service.Service.Expired_FoodService;
 import com.ds.factory.service.Service.Export_RecordService;
 import com.ds.factory.service.Service.Product_WarehouseService;
 import com.ds.factory.service.Service.Raw_Materials_WarehouseService;
@@ -32,7 +34,7 @@ public class WarehouseController {
     Product_WarehouseService product_warehouseService;
 
     @Resource
-    Export_RecordService export_recordService;
+    Expired_FoodService expired_foodService;
 
     @Resource
     Raw_Materials_WarehouseService raw_materials_warehouseService;
@@ -118,23 +120,35 @@ public class WarehouseController {
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
-    @GetMapping(value = "/getAllExportRecord")
-    public String getAllExportRecord(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
-                                     @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                     @RequestParam(value = Constants.SEARCH, required = false) String search,
-                                     HttpServletRequest request)throws Exception {
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-        parameterMap.put(Constants.SEARCH, search);
+    @GetMapping(value = "/getAllExpired")
+    public String getAllExpiredList(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                      @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                      @RequestParam(value = Constants.SEARCH, required = false) String search,
+                                      HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String no=parameterMap.get("no");
+        String name=parameterMap.get("name");
+        Date date=obj.getDate("date")==null||(obj.getDate("date")+"").compareTo("")==0?null:obj.getDate("date");
+        String type=parameterMap.get("type");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        if (pageSize != null && pageSize <= 0) {
-            pageSize = 10;
+
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
-        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-        if (StringUtil.isNotEmpty(offset)) {
-            parameterMap.put(Constants.OFFSET, offset);
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
-        List<?> list = export_recordService.getAll_orderByDelivery_date();
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Expired_Food> list = expired_foodService.selectByConstraint(no,type,name,date);
+        //获取分页查询后的数据
+        PageInfo<Expired_Food> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -142,7 +156,7 @@ public class WarehouseController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
