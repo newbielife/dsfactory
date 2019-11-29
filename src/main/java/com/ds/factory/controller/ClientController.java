@@ -3,12 +3,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.Client;
+import com.ds.factory.datasource.entities.Product_Warehouse;
 import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.exception.BusinessParamCheckingException;
 import com.ds.factory.service.Service.ClientService;
 import com.ds.factory.service.Service.LogService;
 import com.ds.factory.service.Service.StaffService;
 import com.ds.factory.utils.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +68,9 @@ public class ClientController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
-        List<?> list = clientService.selectBy_partName_and_Type(name,type);
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Client> list = clientService.selectBy_partName_and_Type(name,type);
+        PageInfo<Client> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -73,7 +78,7 @@ public class ClientController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        //System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
