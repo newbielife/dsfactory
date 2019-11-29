@@ -3,8 +3,10 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
+import com.ds.factory.datasource.entities.Export_Record;
 import com.ds.factory.datasource.entities.Order_Details;
 import com.ds.factory.datasource.entities.Order_Form;
+import com.ds.factory.datasource.entities.Refund_Application;
 import com.ds.factory.service.Service.Export_RecordService;
 import com.ds.factory.service.Service.Order_DetailsService;
 import com.ds.factory.service.Service.Order_FormService;
@@ -120,18 +122,31 @@ public class OrderController {
                                     @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                                     @RequestParam(value = Constants.SEARCH, required = false) String search,
                                     HttpServletRequest request)throws Exception {
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-        parameterMap.put(Constants.SEARCH, search);
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String export_no=parameterMap.get("export_no");
+        String staff_no=parameterMap.get("staff_no");
+        String order_no_details=parameterMap.get("order_no_details");
+        String source_place=parameterMap.get("source_place");
+        String target_place=parameterMap.get("target_place");
+        Date delivery_date=obj.getDate("delivery_date")==null||(obj.getDate("delivery_date")+"").compareTo("")==0?null:obj.getDate("delivery_date");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        if (pageSize != null && pageSize <= 0) {
-            pageSize = 10;
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
-        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-        if (StringUtil.isNotEmpty(offset)) {
-            parameterMap.put(Constants.OFFSET, offset);
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
-        List<?> list = export_recordService.getAll_orderByDelivery_date();
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Export_Record> list = export_recordService.selectByConstraint(delivery_date,export_no,staff_no,order_no_details,target_place,source_place);
+        //获取分页查询后的数据
+        PageInfo<Export_Record> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -139,7 +154,7 @@ public class OrderController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
@@ -148,18 +163,31 @@ public class OrderController {
                                      @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                                      @RequestParam(value = Constants.SEARCH, required = false) String search,
                                      HttpServletRequest request)throws Exception {
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-        parameterMap.put(Constants.SEARCH, search);
+        //List<?> list = refund_applicationService.getAll();
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String refund_no=parameterMap.get("refund_no");
+        String order_no=parameterMap.get("order_no");
+        String client_no=parameterMap.get("client_no");
+        String staff_no=parameterMap.get("staff_no");
+        String permission=parameterMap.get("permission");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        if (pageSize != null && pageSize <= 0) {
-            pageSize = 10;
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
-        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-        if (StringUtil.isNotEmpty(offset)) {
-            parameterMap.put(Constants.OFFSET, offset);
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
-        List<?> list = refund_applicationService.getAll();
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Refund_Application> list = refund_applicationService.selectByConstraint(refund_no,order_no,client_no,staff_no,permission);
+        //获取分页查询后的数据
+        PageInfo<Refund_Application> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -167,7 +195,7 @@ public class OrderController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 

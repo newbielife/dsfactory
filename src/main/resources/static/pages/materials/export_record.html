@@ -175,7 +175,7 @@
         var delivery_date = $.trim($("#searchDelivery_date").datebox("getValue"));
         $.ajax({
             type: "get",
-            url: "/export_record/getAllStaff",
+            url: "/order/getAllExportRecord",
             dataType: "json",
             data: ({
                 search: JSON.stringify({

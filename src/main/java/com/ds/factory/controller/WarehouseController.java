@@ -32,6 +32,9 @@ public class WarehouseController {
     Product_WarehouseService product_warehouseService;
 
     @Resource
+    Export_RecordService export_recordService;
+
+    @Resource
     Raw_Materials_WarehouseService raw_materials_warehouseService;
 
     @GetMapping(value = "/getAllProductWarehouse")
@@ -115,6 +118,33 @@ public class WarehouseController {
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
+    @GetMapping(value = "/getAllExportRecord")
+    public String getAllExportRecord(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                     @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                     @RequestParam(value = Constants.SEARCH, required = false) String search,
+                                     HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
+        parameterMap.put(Constants.SEARCH, search);
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize != null && pageSize <= 0) {
+            pageSize = 10;
+        }
+        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
+        if (StringUtil.isNotEmpty(offset)) {
+            parameterMap.put(Constants.OFFSET, offset);
+        }
+        List<?> list = export_recordService.getAll_orderByDelivery_date();
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        System.out.println("************************s"+list.get(0));
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
 
 
 
