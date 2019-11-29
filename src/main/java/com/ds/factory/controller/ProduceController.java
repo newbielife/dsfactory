@@ -250,6 +250,11 @@ public class ProduceController {
         List<Product_Purchase_Details> list=new ArrayList<Product_Purchase_Details>();
         for(int i=0;i<id.length;i++)
         {
+            if(id[i]==null||count[i]==null||unit[i]==null||
+                id[i].trim().compareTo("")==0||id[i].trim().length()!=4||
+                count[i].trim().compareTo("")==0||count[i].trim().compareTo("0")==0||unit[i].trim().compareTo("")==0)
+                continue;
+
             Product_Purchase_Details product_purchase_details=new Product_Purchase_Details();
             product_purchase_details.setProduct_no(id[i]);
             product_purchase_details.setProduct_requirements(count[i].trim()+"--"+unit[i].trim());

@@ -29,7 +29,25 @@
             </td>
             <td>产品分类：</td>
             <td>
-                <input name="searchProduct_type" id="searchProduct_type"style="width:70px;"/>
+                <select name="searchProduct_type" id="searchProduct_type"style="width:280px;">
+                    <option value="">全部</option>
+                    <option value="乳与乳制品">乳与乳制品</option>
+                    <option value="冷冻饮品">冷冻饮品</option>
+                    <option value="饮料类">饮料类</option>
+                    <option value="酒类">酒类</option>
+                    <option value="脂肪、油和乳化脂肪制品">脂肪、油和乳化脂肪制品</option>
+                    <option value="水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类">水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类</option>
+                    <option value="可可制品、巧克力和巧克力制品、以及糖果">可可制品、巧克力和巧克力制品、以及糖果</option>
+                    <option value="粮食和粮食制品">粮食和粮食制品</option>
+                    <option value="焙烤食品">焙烤食品</option>
+                    <option value="蛋及蛋制品">蛋及蛋制品</option>
+                    <option value="肉及肉制品">肉及肉制品</option>
+                    <option value="水产品及其制品">水产品及其制品</option>
+                    <option value="甜味料">甜味料</option>
+                    <option value="调味品">调味品</option>
+                    <option value="特殊营养食品">特殊营养食品</option>
+                    <option value="其他类">其他类</option>
+                </select>
             </td>
 
 
@@ -77,13 +95,13 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '产品编号', field: 'product_no', width: 180},
+                {title: '产品编号', field: 'product_no', width: 60},
                 {title: '产品名', field: 'product_name', width: 140},
-                {title: '产品分类', field: 'product_type', width: 120},
+                {title: '产品分类', field: 'product_type', width: 280},
                 {title: '配料表', field: 'ingredient_List', width: 300},
-                {title: '生产周期', field: 'manufacture_duration', width: 100},
-                {title: '保质期', field: 'guarantee_period', width: 100},
-                {title: '单价', field: 'unit_Price', width: 80},
+                {title: '生产周期', field: 'manufacture_duration', width: 80},
+                {title: '保质期', field: 'guarantee_period', width: 80},
+                {title: '单价', field: 'unit_Price', width: 40},
                 {
                     formatter: function (value, rec) {
                         var str = '';
