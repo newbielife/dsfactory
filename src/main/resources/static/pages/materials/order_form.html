@@ -31,7 +31,7 @@
             <td>
                 <input name="searchStaff_no" id="searchStaff_no"style="width:70px;"/>
             </td>
-            <td>审查：</td>
+            <td>订单状态：</td>
             <td>
                 <select name="searchCheck" id="searchCheck"style="width:100px;">
                     <option value="">全部</option>
@@ -88,10 +88,20 @@
                 {title: '客户编号', field: 'client_no', width: 100},
                 {title: '会计编号', field: 'staff_no', width: 100},
                 {title: '订单创建日期', field: 'order_Create_date', width: 120},
-                {title: '订单总量', field: 'order_sum_amount', width: 80},
+                {title: '订单总金额（元）', field: 'order_sum_amount', width: 120},
                 {title: '当前进程', field: 'progress', width: 200},
-                {title: '违约金', field: 'liquidated_damages', width: 60},
-                {title: '审查', field: 'check', width: 50},
+                {title: '违约金（元）', field: 'liquidated_damages', width: 100},
+                {title: '订单状态', field: 'check', width: 70 , formatter:function (value, rec) {
+                        var str = '';
+                        if(rec.check==0)
+                            str += '<font color="#00FF00" >已付清</font>&nbsp;&nbsp;';
+                        else if(rec.check==1)
+                            str += '<font color="#FF0000" >未付清</font>&nbsp;&nbsp;';
+                        else
+                            str += '<font color="#0000FF" >未知错误</font>&nbsp;&nbsp;';
+                        return str;
+                    }
+                },
                 {
                     formatter: function (value, rec) {
                         var str = '';

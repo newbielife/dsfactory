@@ -105,7 +105,7 @@
           select *
           from Order_Form
           where  flag=0 and Order_no like '%${Order_no}%' and Client_no like '%${Client_no}%'
-                and Staff_no like '%${Staff_no}%' and  Order_Form.`Check` = 0
+                and Staff_no like '%${Staff_no}%' and  Order_Form.`Check` = 1
           order by Order_Create_date desc
     </select>
 
@@ -113,7 +113,7 @@
         select *
         from Order_Form
         where  flag=0 and Order_no like '%${Order_no}%' and Client_no like '%${Client_no}%'
-              and Staff_no like '%${Staff_no}%' and  Order_Form.`Check` = 1
+              and Staff_no like '%${Staff_no}%' and  Order_Form.`Check` = 0
         order by Order_Create_date desc
     </select>
 
