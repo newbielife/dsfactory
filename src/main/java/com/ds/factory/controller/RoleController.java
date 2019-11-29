@@ -1,24 +1,25 @@
 package com.ds.factory.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
+import com.ds.factory.datasource.entities.Product_Warehouse;
 import com.ds.factory.datasource.entities.Role;
 import com.ds.factory.exception.BusinessRunTimeException;
 import com.ds.factory.service.Service.RoleService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 
@@ -94,18 +95,26 @@ public class RoleController {
                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                           @RequestParam(value = Constants.SEARCH, required = false) String search,
                           HttpServletRequest request)throws Exception {
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
-        parameterMap.put(Constants.SEARCH, search);
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String searchName=parameterMap.get("searchName");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        if (pageSize != null && pageSize <= 0) {
-            pageSize = 10;
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
         }
-        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
-        if (StringUtil.isNotEmpty(offset)) {
-            parameterMap.put(Constants.OFFSET, offset);
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
-        List<?> list = roleService.getRole();
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Role> list = roleService.getRole();
+        //获取分页查询后的数据
+        PageInfo<Role> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -113,7 +122,7 @@ public class RoleController {
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
         queryInfo.setRows(list);
-        //System.out.println("************************s"+list.get(0));
+        queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
