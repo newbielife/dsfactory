@@ -329,6 +329,7 @@
     var oldProduct_Warehouse = "";
 
     function addProduct_Warehouse() {
+        $("#Product_no").attr("disabled",false);
         $('#Product_WarehouseFM').form('clear');
         $('#Product_WarehouseDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
         $(".window-mask").css({width: webW, height: webH});
@@ -370,6 +371,7 @@
 
     //编辑信息
     function editProduct_Warehouse(Product_WarehouseTotalInfo) {
+        $("#Product_no").attr("disabled",true);
         var Product_WarehouseInfo = Product_WarehouseTotalInfo.split("AaBb");
 
         $("#Product_no").val(Product_WarehouseInfo[1]);

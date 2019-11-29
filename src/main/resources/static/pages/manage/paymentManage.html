@@ -295,6 +295,7 @@
     var oldPayment = "";
 
     function addPayment() {
+        $("#Order_no").attr("disabled",false);
         $('#paymentFM').form('clear');
         $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
         $(".window-mask").css({width: webW, height: webH});
@@ -336,6 +337,7 @@
 
     //编辑信息
     function editPayment(paymentTotalInfo) {
+        $("#Order_no").attr("disabled",true);
         var paymentInfo = paymentTotalInfo.split("AaBb");
 
         $("#Order_no").val(paymentInfo[1]);

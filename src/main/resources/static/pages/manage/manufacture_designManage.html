@@ -324,6 +324,9 @@
     var oldManufacture_design = "";
 
     function addManufacture_design() {
+        $("#Order_no_details").attr("disabled",false);
+        $("#Product_no").attr("disabled",false);
+        $("#Products_requirement").attr("disabled",false);
         $('#manufacture_designFM').form('clear');
         $('#manufacture_designDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
         $(".window-mask").css({width: webW, height: webH});
@@ -365,6 +368,10 @@
 
     //编辑信息
     function editManufacture_design(manufacture_designTotalInfo) {
+        $("#Order_no_details").attr("disabled",true);
+        $("#Product_no").attr("disabled",true);
+        $("#Products_requirement").attr("disabled",true);
+
         var manufacture_designInfo = manufacture_designTotalInfo.split("AaBb");
 
         $("#Order_no_details").val(manufacture_designInfo[1]);

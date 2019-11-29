@@ -281,6 +281,8 @@
     var oldRaw_Materials_Criteria = "";
 
     function addRaw_Materials_Criteria() {
+        $("#Material_name").attr("disabled",false);
+        $("#Material_type").attr("disabled",false);
         $('#Raw_Materials_CriteriaFM').form('clear');
         $('#Raw_Materials_CriteriaDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
         $(".window-mask").css({width: webW, height: webH});
@@ -322,6 +324,8 @@
 
     //编辑信息
     function editRaw_Materials_Criteria(Raw_Materials_CriteriaTotalInfo) {
+        $("#Material_name").attr("disabled",true);
+        $("#Material_type").attr("disabled",true);
         var Raw_Materials_CriteriaInfo = Raw_Materials_CriteriaTotalInfo.split("AaBb");
 
         $("#Material_name").val(Raw_Materials_CriteriaInfo[1]);

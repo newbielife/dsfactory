@@ -123,7 +123,7 @@ public class Order_FormServiceImpl implements Order_FormService {
         order.setOrder_Create_date(d);
         order.setStaff_no("");
         order.setClient_no(Client_no);
-        order.setProgress("正在生产计划与讨论。。。");
+        order.setProgress("当前未有支付记录");
         order.setCheck(Long.parseLong("1"));
         int sum_money=this.sum_amount(Purchase,biggest,Client_no);
         order.setOrder_sum_amount(Long.parseLong(""+sum_money));

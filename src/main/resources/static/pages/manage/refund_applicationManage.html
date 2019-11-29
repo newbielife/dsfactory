@@ -109,7 +109,7 @@
                 <td>退款金额：</td>
                 <td style="padding:5px">
                     <input name="Refund_Payment"class="easyui-validatebox"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                           data-options="required:true,validType:'length[0,20]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
         </table>
@@ -330,6 +330,8 @@
     var oldRefund_Application = "";
 
     function addRefund_Application() {
+        $("#Order_no").attr("disabled",false);
+        $("#Client_no").attr("disabled",false);
         $('#Refund_ApplicationFM').form('clear');
         $('#Refund_ApplicationDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
         $(".window-mask").css({width: webW, height: webH});
@@ -371,6 +373,8 @@
 
     //编辑信息
     function editRefund_Application(Refund_ApplicationTotalInfo) {
+        $("#Order_no").attr("disabled",true);
+        $("#Client_no").attr("disabled",true);
         var Refund_ApplicationInfo = Refund_ApplicationTotalInfo.split("AaBb");
 
         $("#Order_no").val(Refund_ApplicationInfo[1]);

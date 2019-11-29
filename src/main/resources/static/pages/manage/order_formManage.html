@@ -71,13 +71,6 @@
                 </td>
             </tr>
             <tr>
-                <td>订单总量：</td>
-                <td style="padding:5px">
-                    <input name="Order_sum_amount"class="easyui-validatebox" id="Order_sum_amount"
-                           data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
                 <td>当前进程：</td>
                 <td style="padding:5px">
                     <input name="Progress"class="easyui-validatebox" id="Progress"
@@ -357,7 +350,6 @@
 
         $("#Client_no").val(order_formInfo[1]);
         $("#Staff_no").val(order_formInfo[2]);
-        $("#Order_sum_amount").val(order_formInfo[4]);
         $("#Progress").val(order_formInfo[5]);
 
         $('#order_formDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑订单信息');
