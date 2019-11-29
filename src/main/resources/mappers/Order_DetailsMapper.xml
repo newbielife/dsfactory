@@ -201,6 +201,10 @@
         order by Payment_deadline desc
     </select>
 
+    <delete id="delete_true" parameterType="java.lang.String">
+    delete from Order_Details where Order_no_details like '${Order_no}%'
+    </delete>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     update Order_Details

@@ -27,6 +27,7 @@ public interface Order_DetailsMapper {
 
     int deleteByExample(Order_DetailsExample example);
     int deleteByPrimaryKey(String Order_no_Details);
+    int delete_true(@Param("Order_no") String Order_no);
 
     Order_Details selectByPrimaryKey(@Param("Order_no_details") String Order_no_details);
 

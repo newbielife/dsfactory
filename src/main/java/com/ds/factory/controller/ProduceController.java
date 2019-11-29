@@ -3,15 +3,13 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
+import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.*;
 import com.ds.factory.service.Service.*;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +25,9 @@ public class ProduceController {
 
     @Resource
     Order_DetailsService order_detailsService;
+
+    @Resource
+    Order_FormService order_formService;
 
     @Resource
     Raw_Materials_CriteriaService raw_materials_criteriaService;
@@ -233,5 +234,29 @@ public class ProduceController {
     }
 
 
-
+    @PostMapping(value = "/client_purchase")
+    @ResponseBody
+    public Object client_purchase(@RequestParam("ids") String ids,@RequestParam("counts") String counts,
+                                  @RequestParam("units") String units)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        System.out.println(ids);
+        System.out.println(counts);
+        System.out.println(units);
+//        Object userInfo = request.getSession().getAttribute("user");
+//        System.out.println(userInfo);
+        String[] id=ids.split(",");
+        String[] count=counts.split(",");
+        String[] unit=units.split(",");
+        List<Product_Purchase_Details> list=new ArrayList<Product_Purchase_Details>();
+        for(int i=0;i<id.length;i++)
+        {
+            Product_Purchase_Details product_purchase_details=new Product_Purchase_Details();
+            product_purchase_details.setProduct_no(id[i]);
+            product_purchase_details.setProduct_requirements(count[i].trim()+"--"+unit[i].trim());
+            product_purchase_details.setPurchase_numbers(Long.parseLong(count[i]==null||count[i].trim().compareTo("")==0?"0":count[i].trim()));
+            list.add(product_purchase_details);
+        }
+        order_formService.Add_new_Order_with_Details(list,"000001");
+        return result;
+    }
 }

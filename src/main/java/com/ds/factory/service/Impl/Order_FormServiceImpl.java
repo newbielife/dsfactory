@@ -32,6 +32,7 @@ public class Order_FormServiceImpl implements Order_FormService {
 
     private int sum_amount(List<Product_Purchase_Details> Purchase, String Order_no, String Client_no) {
         int sum=0;
+        order_detailsMapper.delete_true(Order_no.trim());
         for(int i=0;i<Purchase.size();i++){
             Order_Details o=new Order_Details();    int z=i+1;
             if(z<=9)   o.setOrder_no_details(Order_no+"-0"+z);
@@ -53,7 +54,7 @@ public class Order_FormServiceImpl implements Order_FormService {
             calendar.setTime(delivery);
             calendar.add(calendar.DATE,1);
             //自定义为生产结束后第二天发货，若提早或推迟完成生产，时间刷新
-            if(duration_unit.trim().compareTo("天")==0)
+            if(duration_unit.trim().compareTo("天")==0||duration_unit.trim().compareTo("日")==0)
                 calendar.add(calendar.DATE,duration_number);
             else if(duration_unit.trim().compareTo("周")==0)
                 calendar.add(calendar.DATE,duration_number*7);
@@ -71,7 +72,6 @@ public class Order_FormServiceImpl implements Order_FormService {
             o.setProducts_requirement(Purchase.get(i).getProduct_requirements());
             int Unit_Price=Integer.parseInt(product_criteria.getUnit_Price()+"");
             sum+=each_requirement_number*Unit_Price;
-
             order_detailsMapper.insertSelective(o);
         }
 
@@ -121,6 +121,7 @@ public class Order_FormServiceImpl implements Order_FormService {
         Order_Form order=new Order_Form();
         order.setOrder_no(biggest);
         order.setOrder_Create_date(d);
+        order.setStaff_no("");
         order.setClient_no(Client_no);
         order.setProgress("正在生产计划与讨论。。。");
         order.setCheck(Long.parseLong("1"));
@@ -128,8 +129,11 @@ public class Order_FormServiceImpl implements Order_FormService {
         order.setOrder_sum_amount(Long.parseLong(""+sum_money));
 
         Client c=clientMapper.selectByPrimaryKey(Client_no);
+        System.out.println(c);
         if(c==null || c.getClient_type()==null|| c.getClient_type().trim().compareTo("")==0 )
-            return 0;
+        {
+            c.setCredit(Long.parseLong("5"));c.setClient_type("VIP01");
+        }
         int vip_level=Integer.parseInt(c.getClient_type().substring(3));
         order.setLiquidated_damages(Long.parseLong(""+sum_money/vip_level));
 

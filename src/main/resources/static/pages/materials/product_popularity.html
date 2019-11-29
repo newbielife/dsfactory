@@ -77,13 +77,131 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '产品编号', field: 'product_no', width: 180},
-                {title: '产品名', field: 'product_name', width: 140},
-                {title: '产品分类', field: 'product_type', width: 120},
-                {title: '生产周期', field: 'manufacture_duration', width: 100},
+                {title: '产品编号', field: 'product_no', width: 80},
+                {title: '产品名', field: 'product_name', width: 100},
+                {title: '产品分类', field: 'product_type', width: 240},
                 {title: '保质期', field: 'guarantee_period', width: 100},
                 {title: '单价', field: 'unit_Price', width: 80},
                 {title: '销量', field: 'purchase_times', width: 80},
+                {
+                    title: '购买量', field: 'count', align: "center", width: 100, formatter: function (value, rec,index) {
+                        var str = '';
+                        str += '<input type="number" name="count'+rec.product_no+'" id="count'+rec.product_no+'" style="width:70px;"/>&nbsp;&nbsp;&nbsp;';
+                        return str;
+                    }
+                },
+                {
+                    title: '购买单位', field: 'unit', align: "center", width: 120, formatter: function (value, rec,index) {
+                        var str = '';
+
+                        if(rec.product_type=="乳与乳制品" || rec.product_type=="冷冻饮品" || rec.product_type=="饮料类"||rec.product_type=="酒类"){
+                            str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
+                                '<option value="公升">默认单位(L)</option>'+
+                                '<option value="公升">公升(L)</option>'+
+                                '<option value="毫升">毫升(ml)</option>'+
+                                '<option value="箱">箱(trunk)</option>'+
+                                '<option value="罐">罐(tin)</option>'+
+                                '<option value="磅">磅(pound)</option>'+
+                                '<option value="盒">盒(case)</option>'+
+                                '<option value="瓶">瓶(bot)</option>'+
+                                '</select>&nbsp;&nbsp;&nbsp;';
+                        }
+                        else if(rec.product_type=="脂肪、油和乳化脂肪制品") {
+                            str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
+                                '<option value="公斤">默认单位(Kg)</option>'+
+                                '<option value="吨">吨(ton)</option>'+
+                                '<option value="公斤">公斤(Kg)</option>'+
+                                '<option value="克">公克(g)</option>'+
+                                '<option value="公升">公升(L)</option>'+
+                                '<option value="毫升">毫升(ml)</option>'+
+                                '<option value="车">车(cl.)</option>'+
+                                '<option value="包">包(pkt.)</option>'+
+                                '<option value="箱">箱(trunk)</option>'+
+                                '<option value="磅">磅(pound)</option>'+
+                                '<option value="盒">盒(case)</option>'+
+                                '<option value="瓶">瓶(bot)</option>'+
+                                '</select>&nbsp;&nbsp;&nbsp;';
+                        }
+                        else if(rec.product_type=="水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类"||rec.product_type=="可可制品、巧克力和巧克力制品、以及糖果") {
+                            str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
+                                '<option value="公斤">默认单位(Kg)</option>'+
+                                '<option value="吨">吨(ton)</option>'+
+                                '<option value="公斤">公斤(Kg)</option>'+
+                                '<option value="克">公克(g)</option>'+
+                                '<option value="车">车(cl.)</option>'+
+                                '<option value="箱">箱(trunk)</option>'+
+                                '<option value="根">根(bar)</option>'+
+                                '<option value="捆">捆(bundle)</option>'+
+                                '<option value="袋">袋(bag)</option>'+
+                                '<option value="个">个(one)</option>'+
+                                '</select>&nbsp;&nbsp;&nbsp;';
+                        }
+                        else if(rec.product_type=="粮食和粮食制品"||rec.product_type=="焙烤食品") {
+                            str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
+                                '<option value="公斤">默认单位(Kg)</option>'+
+                                '<option value="吨">吨(ton)</option>'+
+                                '<option value="公斤">公斤(Kg)</option>'+
+                                '<option value="克">公克(g)</option>'+
+                                '<option value="公升">公升(L)</option>'+
+                                '<option value="毫升">毫升(ml)</option>'+
+                                '<option value="车">车(cl.)</option>'+
+                                '<option value="包">包(pkt.)</option>'+
+                                '<option value="箱">箱(trunk)</option>'+
+                                '<option value="袋">袋(bag)</option>'+
+                                '</select>&nbsp;&nbsp;&nbsp;';
+                        }
+                        else if(rec.product_type=="蛋及蛋制品"||rec.product_type=="肉及肉制品"||rec.product_type=="水产品及其制品") {
+                            str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
+                                '<option value="公斤">默认单位(Kg)</option>'+
+                                '<option value="吨">吨(ton)</option>'+
+                                '<option value="公斤">公斤(Kg)</option>'+
+                                '<option value="克">公克(g)</option>'+
+                                '<option value="车">车(cl.)</option>'+
+                                '<option value="包">包(pkt.)</option>'+
+                                '<option value="箱">箱(trunk)</option>'+
+                                '<option value="磅">磅(pound)</option>'+
+                                '</select>&nbsp;&nbsp;&nbsp;';
+                        }
+                        else if(rec.product_type=="甜味料"||rec.product_type=="调味品") {
+                            str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
+                                '<option value="公升">默认单位(L)</option>'+
+                                '<option value="公升">公升(L)</option>'+
+                                '<option value="毫升">毫升(ml)</option>'+
+                                '<option value="包">包(pkt.)</option>'+
+                                '<option value="箱">箱(trunk)</option>'+
+                                '<option value="罐">罐(tin)</option>'+
+                                '<option value="袋">袋(bag)</option>'+
+                                '<option value="盒">盒(case)</option>'+
+                                '<option value="瓶">瓶(bot)</option>'+
+                                '<option value="件">件(pcs)</option>'+
+                                '</select>&nbsp;&nbsp;&nbsp;';
+                        }
+                        else if(rec.product_type=="特殊营养食品"||rec.product_type=="其他类") {
+                            str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
+                                '<option value="公斤">默认单位(Kg)</option>'+
+                                '<option value="吨">吨(ton)</option>'+
+                                '<option value="公斤">公斤(Kg)</option>'+
+                                '<option value="克">公克(g)</option>'+
+                                '<option value="公升">公升(L)</option>'+
+                                '<option value="毫升">毫升(ml)</option>'+
+                                '<option value="车">车(cl.)</option>'+
+                                '<option value="包">包(pkt.)</option>'+
+                                '<option value="箱">箱(trunk)</option>'+
+                                '<option value="根">根(bar)</option>'+
+                                '<option value="捆">捆(bundle)</option>'+
+                                '<option value="罐">罐(tin)</option>'+
+                                '<option value="磅">磅(pound)</option>'+
+                                '<option value="棒">棒(stick)</option>'+
+                                '<option value="袋">袋(bag)</option>'+
+                                '<option value="盒">盒(case)</option>'+
+                                '<option value="瓶">瓶(bot)</option>'+
+                                '<option value="个">个(one)</option>'+
+                                '<option value="件">件(pcs)</option>'+
+                                '</select>&nbsp;&nbsp;&nbsp;';
+                        }
+                        return str;
+                    }
+                },
                 {
                      formatter: function (value, rec) {
                         var str = '';
@@ -92,6 +210,16 @@
                     }
                 }
             ]],
+            toolbar: [
+                {
+                    id: 'purchase_list',
+                    text: '批量购买',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        purchase_list();
+                    }
+                }
+            ],
             onLoadError: function () {
                 $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
                 return;
@@ -100,6 +228,94 @@
         dgResize();
         showProduct_criteriaDetails(1, initPageSize);
     }
+
+
+    function purchase_list() {
+        var row = $('#tableData').datagrid('getChecked');
+        if (row.length == 0) {
+            $.messager.alert('购买提示', '没有记录被选中！', 'info');
+            return;
+        }
+        if (row.length > 0) {
+            $.messager.confirm('购买确认', '确定要购买选中的' + row.length + '条商品吗？', function (r) {
+                if (r) {
+                    var ids = "";
+                    for (var i = 0; i < row.length; i++) {
+                        if (i == row.length - 1) {
+                            ids += row[i].product_no;
+                            break;
+                        }
+                        ids += row[i].product_no + ",";
+                    }
+
+
+                    var counts = "";
+                    for (var i = 0; i < row.length; i++) {
+                        //$.messager.alert($.trim($("#count000"+(i+1)).val()));
+                        if (i == row.length - 1) {
+                            counts += $.trim($("#count"+row[i].product_no).val());
+                            break;
+                        }
+                        //counts += $.trim($("#count0001").val()) + ",";
+                         counts += $.trim($("#count"+row[i].product_no).val())+ ",";
+                     }
+
+
+                    var units = "";
+                    for (var i = 0; i < row.length; i++) {
+                        //$.messager.alert($.trim($("#count000"+(i+1)).val()));
+                        if (i == row.length - 1) {
+                            units += $.trim($("#unit"+row[i].product_no).val());
+                            break;
+                        }
+                        //counts += $.trim($("#count0001").val()) + ",";
+                        units += $.trim($("#unit"+row[i].product_no).val())+ ",";
+                    }
+
+                    $.ajax({
+                        type: "post",
+                        url: "/manufacturedesign/client_purchase",
+                        dataType: "json",
+                        async: false,
+                        data: ({
+                            ids: ids,
+                            counts: counts,
+                            units: units
+                        }),
+                        success: function (res) {
+                            if(res && res.code === 200) {
+                                $("#searchBtn").click();
+                                $(":checkbox").attr("checked", false);
+                            } else {
+                                if(res && res.code == 601){
+                                    var jsondata={};
+                                    jsondata.ids=ids;
+                                    jsondata.counts=counts;
+                                    jsondata.units=units;
+                                    jsondata.deleteType='2';
+                                    var type='batch';
+                                    batDeleteProduct_criteriaForceConfirm(res,"/manufacturedesign/client_purchase",jsondata,type);
+                                }else if(res && res.code == 600){
+                                    $.messager.alert('购买提示', res.msg, 'error');
+                                }else{
+                                    $.messager.alert('购买提示', '购买失败，请稍后再试！', 'error');
+                                }
+                            }
+                        },
+                        //此处添加错误处理
+                        error: function () {
+                            $.messager.alert('购买提示', '购买异常，请稍后再试！', 'error');
+                            return;
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+
+
+
     //初始化键盘enter事件
     $(document).keydown(function (event) {
         //兼容 IE和firefox 事件
