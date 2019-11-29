@@ -26,6 +26,9 @@ public class ProduceController {
     Manufacture_DesignService manufacture_designService;
 
     @Resource
+    Order_DetailsService order_detailsService;
+
+    @Resource
     Raw_Materials_CriteriaService raw_materials_criteriaService;
 
     @Resource
@@ -179,6 +182,45 @@ public class ProduceController {
         List<Product_Criteria> list = product_criteriaService.selectByConstraint(no,name,type);
         //获取分页查询后的数据
         PageInfo<Product_Criteria> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+
+    @GetMapping(value = "/purchase_list")
+    public String purchase_list(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                        @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                        @RequestParam(value = Constants.SEARCH, required = false) String search,
+                                        HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String no=parameterMap.get("no");
+        String name=parameterMap.get("name");
+        String type=parameterMap.get("type");
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Product_Popularity> list = order_detailsService.selectByConstraint(no,name,type);
+        //获取分页查询后的数据
+        PageInfo<Product_Popularity> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());

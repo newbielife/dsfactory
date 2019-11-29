@@ -101,7 +101,7 @@
                                                               where flag=0
                                                               GROUP BY Order_Details.Product_no) as a
                                                            on(Product_Criteria.Product_no=a.Product_no)
-          where  Product_Criteria.flag=0  and Product_Criteria.Payment_no like '%${Payment_no}%'
+          where  Product_Criteria.flag=0  and Product_Criteria.Product_no like '%${Product_no}%'
                 and Product_Criteria.Product_name like '%${Product_name}%'  and Product_Criteria.Product_type like '%${Product_type}%'
           order by a.num desc
     </select>
