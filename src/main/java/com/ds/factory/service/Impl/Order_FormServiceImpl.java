@@ -149,6 +149,7 @@ public class Order_FormServiceImpl implements Order_FormService {
 
     @Override
     public int deleteByPrimaryKey(String Order_no) {
+        order_detailsMapper.deleteLike(Order_no.trim());
         return order_formMapper.deleteByPrimaryKey(Order_no);
     }
 

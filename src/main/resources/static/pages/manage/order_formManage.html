@@ -72,10 +72,20 @@
             </tr>
             <tr>
                 <td>当前进程：</td>
-                <td style="padding:5px">
-                    <input name="Progress"class="easyui-validatebox" id="Progress"
-                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
-                </td>
+                <select name="Progress" id="Progress"style="width:100px;">
+                    <option value="客户提交成功">客户提交成功</option>
+                    <option value="销售员接单">销售员接单</option>
+                    <option value="会计核实完成">会计核实完成</option>
+                    <option value="预付款提交成功">预付款提交成功</option>
+                    <option value="生产计划中">生产计划中</option>
+                    <option value="车间工作中">车间工作中</option>
+                    <option value="原料出库结束">原料出库结束</option>
+                    <option value="成品入库结束">成品入库结束</option>
+                    <option value="成品出库">成品出库</option>
+                    <option value="成品运输">成品运输</option>
+                    <option value="客户收货成功">客户收货成功</option>
+                    <option value="售后服务">售后服务</option>
+                </select>
             </tr>
         </table>
     </form>
@@ -131,8 +141,18 @@
                 {title: '会计编号', field: 'staff_no', width: 100},
                 {title: '订单创建日期', field: 'order_Create_date', width: 120},
                 {title: '订单总金额（元）', field: 'order_sum_amount', width: 120},
-                {title: '当前进程', field: 'progress', width: 200},
-                {title: '违约金（元）', field: 'liquidated_damages', width: 100},
+                {title: '当前进程', field: 'progress', width: 200,formatter: function (value, rec,index) {
+                    var str = '';
+
+                    if (rec.progress == "客户提交成功" || rec.progress == "销售员接单" || rec.progress == "会计核实完成" || rec.progress == "预付款提交成功")
+                        str += '<font color="#00FF00" >'+rec.progress+'</font>&nbsp;&nbsp;';
+                    else if (rec.progress == "生产计划中" || rec.progress == "车间工作中" || rec.progress == "原料出库结束" || rec.progress == "成品入库结束")
+                        str += '<font color="#FF0000" >'+rec.progress+'</font>&nbsp;&nbsp;';
+                    else if (rec.progress == "成品出库" || rec.progress == "成品运输" || rec.progress == "客户收货成功" || rec.progress == "售后服务")
+                        str += '<font color="#0000FF" >'+rec.progress+'</font>&nbsp;&nbsp;';
+                    return str;
+                }},
+                {title: '现付款（元）', field: 'liquidated_damages', width: 100},
                 {title: '订单状态', field: 'check', width: 70 , formatter:function (value, rec) {
                         var str = '';
                         if(rec.check==0)
