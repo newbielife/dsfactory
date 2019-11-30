@@ -247,7 +247,7 @@
                     }
                     $.ajax({
                         type: "post",
-                        url: "/Raw_Materials_Warehouse/batchDeleteRaw_Materials_WarehouseByIds",
+                        url: "/warehouse/batchDeleteRawMaterialsByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -263,7 +263,7 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeleteRaw_Materials_WarehouseForceConfirm(res,"/Raw_Materials_Warehouse/batchDeleteRaw_Materials_WarehouseByIds",jsondata,type);
+                                    batDeleteRaw_Materials_WarehouseForceConfirm(res,"/warehouse/batchDeleteRawMaterialsByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{
@@ -273,7 +273,7 @@
                         },
                         //此处添加错误处理
                         error: function () {
-                            $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
+                            $.messager.alert('删除提示', '删除异常，请稍后再试！', 'error');
                             return;
                         }
                     });
@@ -301,12 +301,12 @@
                         }else if(res && res.code == 600){
                             $.messager.alert('删除提示', res.msg, 'error');
                         }else {
-                            $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
+                            $.messager.alert('删除提示', '删除异常，请稍后再试！', 'error');
                         }
                     },
                     //此处添加错误处理
                     error: function () {
-                        $.messager.alert('删除提示', '删除支付信息异常，请稍后再试！', 'error');
+                        $.messager.alert('删除提示', '删除异常，请稍后再试！', 'error');
                         return;
                     }
                 });
@@ -329,7 +329,7 @@
 
         oldRaw_Materials_Warehouse = "";
         Raw_Materials_WarehouseID = 0;
-        url = '/Raw_Materials_Warehouse/add';
+        url = '/warehouse/add';
     }
     //保存信息
     $("#saveRaw_Materials_Warehouse").off("click").on("click", function () {

@@ -3,6 +3,7 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
+import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.Export_Record;
 import com.ds.factory.datasource.entities.Order_Details;
 import com.ds.factory.datasource.entities.Order_Form;
@@ -14,10 +15,7 @@ import com.ds.factory.service.Service.Refund_ApplicationService;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -197,6 +195,19 @@ public class OrderController {
         queryInfo.setRows(list);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+    @PostMapping("/batchDeleteOrderByIds")
+    @ResponseBody
+    public Object batchDeleteClientByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+            //raw_materials_warehouseService.deleteByPrimaryKey(id[i].trim());
+            order_formService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
     }
 
 

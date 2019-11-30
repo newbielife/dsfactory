@@ -117,15 +117,6 @@
     function initConfig() {
         $("#btnSetDepart").hide();
         $("#btnSetCustomer").hide();
-        var config = getSystemConfig();
-        if(config) {
-            if(config.depotFlag == "1") {
-                $("#btnSetDepart").show();
-            }
-            if(config.customerFlag == "1") {
-                $("#btnSetCustomer").show();
-            }
-        }
     }
 
     //浏览器适配

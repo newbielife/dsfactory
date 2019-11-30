@@ -186,7 +186,7 @@ public class UserController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         //List<Staff> list = staffService.selectByConstraint();
-        List<Staff> list = staffService.getAll_Staff();
+        List<Staff> list = staffService.selectByConstrain(userName,loginName);
         //获取分页查询后的数据
         PageInfo<Staff> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);

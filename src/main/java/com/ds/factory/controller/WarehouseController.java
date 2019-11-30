@@ -5,10 +5,8 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
-import com.ds.factory.datasource.entities.Expired_Food;
-import com.ds.factory.datasource.entities.Manufacture_Design;
-import com.ds.factory.datasource.entities.Product_Warehouse;
-import com.ds.factory.datasource.entities.Raw_Materials_Warehouse;
+import com.ds.factory.constants.ExceptionConstants;
+import com.ds.factory.datasource.entities.*;
 import com.ds.factory.service.Service.Expired_FoodService;
 import com.ds.factory.service.Service.Export_RecordService;
 import com.ds.factory.service.Service.Product_WarehouseService;
@@ -16,10 +14,7 @@ import com.ds.factory.service.Service.Raw_Materials_WarehouseService;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -161,7 +156,26 @@ public class WarehouseController {
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
+    @PostMapping("/add")
+    @ResponseBody
+    public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Raw_Materials_Warehouse raw= JSON.parseObject(beanJson, Raw_Materials_Warehouse.class);
+        raw_materials_warehouseService.insertRaw_Materials_Warehouse(raw);
+        return result;
+    }
 
+    @PostMapping("/batchDeleteRawMaterialsByIds")
+    @ResponseBody
+    public Object batchDeleteClientByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+            raw_materials_warehouseService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
+    }
 
 
 }
