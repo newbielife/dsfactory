@@ -30,15 +30,14 @@ public class Refund_ApplicationServiceImpl implements Refund_ApplicationService 
     }
 
     @Override
-    public int insertPayment(String Order_no,String Client_no,String Reason) {
-        if(Order_no==null || Order_no.trim().compareTo("")==0
-            ||order_formMapper.exist_or_not(Order_no.trim())==0)
+    public int insertPayment(Refund_Application red) {
+        if(red.getOrder_no()==null || red.getOrder_no().trim().compareTo("")==0
+            ||order_formMapper.exist_or_not(red.getOrder_no().trim())==0)
             return 0;
-        if(Client_no==null || Client_no.trim().compareTo("")==0)
+        if(red.getClient_no()==null || red.getClient_no().trim().compareTo("")==0)
             return 0;
-        Refund_Application refund_application=new Refund_Application();
-        if(Reason==null || Reason.trim().compareTo("")==0)
-            refund_application.setReason("（该用户未填写原因）");
+        if(red.getReason()==null || red.getReason().trim().compareTo("")==0)
+            red.setReason("（该用户未填写原因）");
         int biggest_num=Integer.parseInt(refund_applicationMapper.select_Biggest_Refund_no());
         String biggest="";
         boolean flag=true;
@@ -61,11 +60,11 @@ public class Refund_ApplicationServiceImpl implements Refund_ApplicationService 
             if(refund_applicationMapper.exist_or_not(biggest)==0) flag=false;
         }
         if(biggest.length()>=11)  return 0;
-        refund_application.setRefund_no(biggest);
-        refund_application.setProgress("提交成功");
-        refund_application.setPermission(Long.parseLong("0"));
+        red.setRefund_no(biggest);
+        red.setProgress("提交成功");
+        red.setPermission(Long.parseLong("0"));
 
-        return refund_applicationMapper.insertSelective(refund_application);
+        return refund_applicationMapper.insertSelective(red);
     }
 
     @Override

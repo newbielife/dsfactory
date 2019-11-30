@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
-import com.ds.factory.datasource.entities.Export_Record;
-import com.ds.factory.datasource.entities.Order_Details;
-import com.ds.factory.datasource.entities.Order_Form;
-import com.ds.factory.datasource.entities.Refund_Application;
+import com.ds.factory.datasource.entities.*;
 import com.ds.factory.service.Service.Export_RecordService;
 import com.ds.factory.service.Service.Order_DetailsService;
 import com.ds.factory.service.Service.Order_FormService;
@@ -204,12 +201,20 @@ public class OrderController {
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
-            //raw_materials_warehouseService.deleteByPrimaryKey(id[i].trim());
             order_formService.deleteByPrimaryKey(id[i].trim());
         }
         return result;
     }
 
+    @PostMapping("/addRefund")
+    @ResponseBody
+    public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Refund_Application red= JSON.parseObject(beanJson, Refund_Application.class);
+        System.out.println(red);
+        refund_applicationService.insertPayment(red);
+        return result;
+    }
 
 
 }
