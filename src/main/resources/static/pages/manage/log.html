@@ -229,7 +229,7 @@
         var contentdetails = $.trim($("#searchDesc").val());
         $.ajax({
             type: "get",
-            url: "/log/list",
+            url: "/user/loglist",
             dataType: "json",
             data: ({
                 search: JSON.stringify({

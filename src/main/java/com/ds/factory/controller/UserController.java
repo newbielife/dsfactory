@@ -3,6 +3,7 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.datasource.entities.Client;
+import com.ds.factory.datasource.entities.Log;
 import com.ds.factory.datasource.entities.Product_Warehouse;
 import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.service.Service.ClientService;
@@ -211,6 +212,48 @@ public class UserController {
             res.data = "退出失败";
         }
         return res;
+    }
+
+    @GetMapping(value = "/loglist")
+    public String loglist(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                          @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                          @RequestParam(value = Constants.SEARCH, required = false) String search,
+                          HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String operation=parameterMap.get("operation");
+        String usernameID=parameterMap.get("usernameID");
+        String clientIp=parameterMap.get("clientIp");
+        String status=parameterMap.get("status");
+        String beginTime=parameterMap.get("beginTime");
+        String endTime=parameterMap.get("endTime");
+        String contentdetails=parameterMap.get("contentdetails");
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Log> list = logService.getLog();
+        //获取分页查询后的数据
+        PageInfo<Log> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
 }
