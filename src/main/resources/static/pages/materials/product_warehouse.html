@@ -181,7 +181,7 @@
         var storage_address = $.trim($("#searchStorage_address").val());
         $.ajax({
             type: "get",
-            url: "/Product_Warehouse/getAllStaff",
+            url: "/warehouse/getAllProductWarehouse",
             dataType: "json",
             data: ({
                 search: JSON.stringify({

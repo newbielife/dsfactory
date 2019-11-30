@@ -175,7 +175,7 @@
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.product_no + 'AaBb' + rec.product_name + 'AaBb' + rec.product_type + 'AaBb' + rec.ingredient_list+ 'AaBb' + rec.manufacture_duration+ 'AaBb' + rec.guarantee_period+ 'AaBb' + rec.unit_price;
+                        var rowInfo = rec.product_no + 'AaBb' + rec.product_name + 'AaBb' + rec.product_type + 'AaBb' + rec.ingredient_List+ 'AaBb' + rec.manufacture_duration+ 'AaBb' + rec.guarantee_period+ 'AaBb' + rec.unit_Price;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editProduct_criteria(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editProduct_criteria(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
                         //str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteProduct_criteria(' + rec.id + ');"/>&nbsp;<a onclick="deleteProduct_criteria(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
