@@ -11,6 +11,11 @@ import java.util.Objects;
 
 @Service
 public interface StaffService {
+    List<Staff> selectByConstrain(String username,String loginame);
+
+
+
+
     Staff getStaffByLoginame(String loginame);
 
     int update_Password_By_PrimaryKey(String username, String OldPassword, String NewPassword);
