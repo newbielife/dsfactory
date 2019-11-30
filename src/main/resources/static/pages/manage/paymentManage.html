@@ -75,8 +75,13 @@
             <tr>
                 <td>备注：</td>
                 <td style="padding:5px">
-                    <input name="Details"class="easyui-validatebox" id="Details"
-                           data-options="required:false,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
+                    <select name="Details" id="Details"style="width:70px;">
+                        <option value="预付款">预付款</option>
+                        <option value="补款">补款</option>
+                        <option value="尾款">尾款</option>
+                        <option value="违约金">违约金</option>
+                        <option value="其他">其他</option>
+                    </select>
                 </td>
             </tr>
         </table>

@@ -212,6 +212,12 @@
     where Order_no_details = #{Order_no_details,jdbcType=VARCHAR}
     </delete>
 
+    <delete id="deleteLike" parameterType="java.lang.String">
+    update Order_Details
+    set flag=1
+    where Order_no_details like '${Order_no}%'
+    </delete>
+
 
     <delete id="deleteByExample" parameterType="com.ds.factory.dao.Example.Order_DetailsExample">
     delete from Order_Details

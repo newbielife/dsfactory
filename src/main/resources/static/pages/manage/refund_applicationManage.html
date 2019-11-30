@@ -158,7 +158,17 @@
                 {title: '申诉原因', field: 'reason', width: 180},
                 {title: '审核人编号', field: 'staff_no_checker', width: 100},
                 {title: '审核进度', field: 'progress', width: 180},
-                {title: '结果', field: 'permission', width: 40},
+                {title: '结果', field: 'permission', width: 40, formatter:function (value, rec) {
+                        var str = '';
+                        if(rec.check==0)
+                            str += '<font color="#00FF00" >正在审核</font>&nbsp;&nbsp;';
+                        else if(rec.check==1)
+                            str += '<font color="#FF0000" >审核通过</font>&nbsp;&nbsp;';
+                        else
+                            str += '<font color="#0000FF" >不予允许</font>&nbsp;&nbsp;';
+                        return str;
+                    }
+                },
                 {title: '退款金额', field: 'refund_Payment', width: 80},
                 {
                     title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {

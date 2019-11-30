@@ -89,8 +89,18 @@
                 {title: '会计编号', field: 'staff_no', width: 100},
                 {title: '订单创建日期', field: 'order_Create_date', width: 120},
                 {title: '订单总金额（元）', field: 'order_sum_amount', width: 120},
-                {title: '当前进程', field: 'progress', width: 200},
-                {title: '违约金（元）', field: 'liquidated_damages', width: 100},
+                {title: '当前进程', field: 'progress', width: 200,formatter: function (value, rec,index) {
+                        var str = '';
+
+                        if (rec.progress == "客户提交成功" || rec.progress == "销售员接单" || rec.progress == "会计核实完成" || rec.progress == "预付款提交成功")
+                            str += '<font color="#00FF00" >'+rec.progress+'</font>&nbsp;&nbsp;';
+                        else if (rec.progress == "生产计划中" || rec.progress == "车间工作中" || rec.progress == "原料出库结束" || rec.progress == "成品入库结束")
+                            str += '<font color="#FF0000" >'+rec.progress+'</font>&nbsp;&nbsp;';
+                        else if (rec.progress == "成品出库" || rec.progress == "成品运输" || rec.progress == "客户收货成功" || rec.progress == "售后服务")
+                            str += '<font color="#0000FF" >'+rec.progress+'</font>&nbsp;&nbsp;';
+                        return str;
+                    }},
+                {title: '现付款（元）', field: 'liquidated_damages', width: 100},
                 {title: '订单状态', field: 'check', width: 70 , formatter:function (value, rec) {
                         var str = '';
                         if(rec.check==0)
