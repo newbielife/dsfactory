@@ -217,8 +217,8 @@ public class UserController {
     @GetMapping(value = "/loglist")
     public String loglist(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                          @RequestParam(value = Constants.SEARCH, required = false) String search,
-                          HttpServletRequest request)throws Exception {
+                          @RequestParam(value = Constants.SEARCH, required = false) String search
+                          )throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -226,13 +226,12 @@ public class UserController {
         for(String keyEach: key){
             parameterMap.put(keyEach,obj.getString(keyEach));
         }
-        String operation=parameterMap.get("operation");
-        String usernameID=parameterMap.get("usernameID");
-        String clientIp=parameterMap.get("clientIp");
-        String status=parameterMap.get("status");
-        String beginTime=parameterMap.get("beginTime");
-        String endTime=parameterMap.get("endTime");
-        String contentdetails=parameterMap.get("contentdetails");
+        String operation=obj.getString("operation")==null?"":obj.getString("operation").trim();
+        String clientIp=obj.getString("clientIp")==null?"":obj.getString("clientIp").trim();
+        String status=obj.getString("status")==null?"":obj.getString("status").trim();
+        Date begin=obj.getDate("beginTime")==null||(obj.getDate("beginTime")+"").compareTo("")==0?null:obj.getDate("beginTime");
+        Date end=obj.getDate("endTime")==null||(obj.getDate("endTime")+"").compareTo("")==0?null:obj.getDate("endTime");
+
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         if (pageSize == null || pageSize <= 0) {
@@ -242,7 +241,7 @@ public class UserController {
             currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
         PageHelper.startPage(currentPage,pageSize,true);
-        List<Log> list = logService.getLog();
+        List<Log> list = logService.selectByConstrain(operation,clientIp,status,begin,end);
         //获取分页查询后的数据
         PageInfo<Log> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);

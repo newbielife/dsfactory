@@ -33,6 +33,31 @@ public class LogService {
     @Resource
     private LogMapperEx logMapperEx;
 
+    public List<Log> selectByConstrain(String operation,String clientIP,String Status,Date begin,Date end){
+        if(begin==null||end==null)
+        {
+            if(Status.trim().compareTo("")==0)
+                return logMapper.selectByAll_noDate(operation.trim(),clientIP.trim());
+            else if(Status.trim().compareTo("失败")==0)
+                return logMapper.selectByFailed_noDate(operation.trim(),clientIP.trim());
+            else if(Status.trim().compareTo("成功")==0)
+                return logMapper.selectBySuccess_noDate(operation.trim(),clientIP.trim());
+        }
+        else{
+            if(Status.trim().compareTo("")==0)
+                return logMapper.selectByAll(operation.trim(),clientIP.trim(),begin,end);
+            else if(Status.trim().compareTo("失败")==0)
+                return logMapper.selectByFailed(operation.trim(),clientIP.trim(),begin,end);
+            else if(Status.trim().compareTo("成功")==0)
+                return logMapper.selectBySuccess(operation.trim(),clientIP.trim(),begin,end);
+        }
+        return null;
+    }
+
+
+
+
+
     public Log getLog(long id)throws Exception {
         Log result=null;
         try{

@@ -89,6 +89,56 @@
     -->
     id, userID, operation, clientIP, createtime, status, contentdetails, remark, tenant_id
   </sql>
+
+<select id="selectBySuccess"  resultMap="BaseResultMap">
+  select *
+  from DS_log
+  where createtime &lt; #{end,jdbcType=TIMESTAMP} and createtime &gt; #{begin,jdbcType=TIMESTAMP}
+        and operation like '%${operation}%' and clientIP like '%${clientIP}%' and status = 0
+</select>
+
+
+<select id="selectByFailed"  resultMap="BaseResultMap">
+  select *
+  from DS_log
+  where createtime &lt; #{end,jdbcType=TIMESTAMP} and createtime &gt; #{begin,jdbcType=TIMESTAMP}
+        and operation like '%${operation}%' and clientIP like '%${clientIP}%' and status = 1
+</select>
+
+<select id="selectByAll"  resultMap="BaseResultMap">
+  select *
+  from DS_log
+  where createtime &lt; #{end,jdbcType=TIMESTAMP} and createtime &gt; #{begin,jdbcType=TIMESTAMP}
+        and operation like '%${operation}%' and clientIP like '%${clientIP}%'
+</select>
+
+
+
+<select id="selectBySuccess_noDate" resultMap="BaseResultMap">
+  select *
+  from DS_log
+  where operation like '%${operation}%' and clientIP like '%${clientIP}%' and status = 0
+</select>
+
+
+<select id="selectByFailed_noDate" resultMap="BaseResultMap">
+  select *
+  from DS_log
+  where  operation like '%${operation}%' and clientIP like '%${clientIP}%' and status = 1
+</select>
+
+<select id="selectByAll_noDate"  resultMap="BaseResultMap">
+  select *
+  from DS_log
+  where  operation like '%${operation}%' and clientIP like '%${clientIP}%'
+</select>
+
+
+
+
+
+
+
   <select id="selectByExample" parameterType="com.ds.factory.dao.Example.LogExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbggenerated
