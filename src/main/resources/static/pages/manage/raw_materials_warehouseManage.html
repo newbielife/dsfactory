@@ -323,7 +323,7 @@
     function addRaw_Materials_Warehouse() {
         $("#Material_no").attr("disabled",false);
         $('#Raw_Materials_WarehouseFM').form('clear');
-        $('#Raw_Materials_WarehouseDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加支付信息');
+        $('#Raw_Materials_WarehouseDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加');
         $(".window-mask").css({width: webW, height: webH});
         $("#Stock_no").val("").focus();
 
@@ -355,7 +355,7 @@
             },
             //此处添加错误处理
             error: function () {
-                $.messager.alert('提示', '保存支付信息异常，请稍后再试！', 'error');
+                $.messager.alert('提示', '保存异常，请稍后再试！', 'error');
                 return;
             }
         });
