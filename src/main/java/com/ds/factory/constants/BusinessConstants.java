@@ -1,12 +1,5 @@
 package com.ds.factory.constants;
 
-/**
- * @ClassName:BusinessConstants
- * @Description 业务字典类
- * @Author qiankunpingtai
- * @Date 2019-3-6 17:58
- * @Version 1.0
- **/
 public class BusinessConstants {
 
     /**
@@ -83,13 +76,6 @@ public class BusinessConstants {
     /**
      * 商品类别根目录id
      * */
-    /**
-     * create by: qiankunpingtai
-     * create time: 2019/3/14 11:41
-     * description:
-     * 为了使用户可以自己建初始目录，设定根目录的父级目录id为-1
-     *
-     */
     public static final Long MATERIAL_CATEGORY_ROOT_PARENT_ID = -1L;
     /**
      * 商品类别状态

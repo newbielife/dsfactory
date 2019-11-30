@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 
-/**
- * @author jishenghua qq752718920  2018-10-7 15:26:27
- */
 public class ParamUtils {
     public static String getPageOffset(Integer currentPage, Integer pageSize) {
         if (currentPage != null && pageSize != null) {
@@ -29,6 +26,7 @@ public class ParamUtils {
                 return offset;
             }
         }
+
         return null;
     }
     public static Integer getNumberPageRows(Integer currentPage, Integer pageSize) {

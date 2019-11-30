@@ -176,6 +176,16 @@ public class WarehouseController {
         }
         return result;
     }
-
+    @PostMapping("/batchDeleteExpiredFoodByIds")
+    @ResponseBody
+    public Object batchDeleteExpiredFoodByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+//            expired_foodService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
+    }
 
 }
