@@ -62,6 +62,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public List<Staff> selectByConstrain(String username, String loginame) {
+        return staffMapper.two_select(username.trim(),loginame.trim());
+    }
+
+    @Override
     public Staff getStaffByLoginame(String loginame) {
         return staffMapper.selectByLoginame(loginame);
     }

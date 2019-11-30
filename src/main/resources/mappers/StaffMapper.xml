@@ -111,6 +111,13 @@
       </if>
     </select>
 
+    <select id="two_select"  resultMap="BaseResultMap">
+    select *
+    from Staff
+    where username like '%${username}%' and loginame like '%${loginame}%' and flag=0
+    </select>
+
+
 
 
     <select id="selectByDepartment" parameterType="java.lang.Long" resultMap="BaseResultMap">

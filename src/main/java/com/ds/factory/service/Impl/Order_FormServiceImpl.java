@@ -135,7 +135,7 @@ public class Order_FormServiceImpl implements Order_FormService {
             c.setCredit(Long.parseLong("5"));c.setClient_type("VIP01");
         }
         int vip_level=Integer.parseInt(c.getClient_type().substring(3));
-        order.setLiquidated_damages(Long.parseLong(""+sum_money/vip_level));
+        order.setLiquidated_damages(Long.parseLong("0"));
 
         order_formMapper.insertSelective(order);
 
