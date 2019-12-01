@@ -38,10 +38,6 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
     public int insertManufacture_Design(Manufacture_Design manufacture) {
         manufacture.setDeadline(new Date());
         manufacture.setManufacture_no("");
-        manufacture.setProduct_no(manufacture.getProduct_no()==null||manufacture.getProduct_no()==""?
-                "":manufacture.getProduct_no().trim());
-        manufacture.setProducts_requirement(manufacture.getProducts_requirement()==null||manufacture.getProducts_requirement()==""?
-                "":manufacture.getProducts_requirement());
         manufacture.setProgress("");
         manufacture.setRaw_materials_requirement("");
         manufacture.setStaff_no_design(manufacture.getStaff_no_design()==null||manufacture.getStaff_no_design()==""?
@@ -54,6 +50,10 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
                 "":manufacture.getWorkshop());
 
 
+        if(manufacture.getOrder_no_details()==""||order_detailsMapper.exist_or_not(manufacture.getOrder_no_details().trim())==0)
+            return 0;
+        manufacture.setProduct_no(order_detailsMapper.selectByPrimaryKey(manufacture.getOrder_no_details()).getProduct_no().trim());
+        manufacture.setProducts_requirement(order_detailsMapper.selectByPrimaryKey(manufacture.getOrder_no_details()).getProducts_requirement().trim());
         if(manufacture.getOrder_no_details()==""||order_detailsMapper.exist_or_not(manufacture.getOrder_no_details().trim())==0||
                 manufacture.getProduct_no()==""||product_criteriaMapper.exist_or_not(manufacture.getProduct_no().trim())==0||
                 manufacture.getProducts_requirement()=="")
@@ -142,7 +142,6 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
         }
         else
         {
-
             String sum="";
             String raw_requirements=product_criteria.getIngredient_List().split("：")[1].trim();
             String[] cut_details=raw_requirements.split("；");
@@ -215,7 +214,10 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
             manufacture_result.setStaff_no_manufacture(manufacture.getWorkshop());
             manufacture_result.setStock_no("0");
             manufacture_result.setUpdate_date(new Date());
-            manufacture_resultMapper.deleteByPrimaryKey(biggest);
+            System.out.println(manufacture_result);
+            System.out.println(manufacture);
+            manufacture.setDetails("该生产计划新增子订单："+manufacture.getOrder_no_details());
+            manufacture_resultMapper.deleteTrue(biggest);
             manufacture_resultMapper.insertSelective(manufacture_result);
 
             manufacture_designMapper.insertSelective(manufacture);
@@ -227,6 +229,7 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
 
     @Override
     public int deleteByPrimaryKey(String Manufacture_no) {
+        manufacture_resultMapper.deleteByPrimaryKey(Manufacture_no);
         return manufacture_designMapper.deleteByPrimaryKey(Manufacture_no);
     }
 

@@ -60,7 +60,7 @@
                 <td>详细订单编号：</td>
                 <td style="padding:5px">
                     <input name="Order_no_details"class="easyui-validatebox" id="Order_no_details"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
+                           data-options="required:true,validType:'length[2,65534]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
@@ -71,24 +71,10 @@
                 </td>
             </tr>
             <tr>
-                <td>产品编号：</td>
-                <td style="padding:5px">
-                    <input name="Product_no"class="easyui-validatebox" id="Product_no"
-                           data-options="required:true,validType:'length[0,20]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
                 <td>车间：</td>
                 <td style="padding:5px">
                     <input name="Workshop"class="easyui-validatebox" id="Workshop"
                            data-options="required:false,validType:'length[0,30]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>产品需求：</td>
-                <td>
-                    <input name="Products_requirement"class="easyui-validatebox" id="Products_requirement"
-                           data-options="required:true,validType:'length[0,20]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
@@ -216,22 +202,7 @@
         dgResize();
         showManufacture_designDetails(1, initPageSize);
     }
-    //初始化键盘enter事件
-    $(document).keydown(function (event) {
-        //兼容 IE和firefox 事件
-        var e = window.event || event;
-        var k = e.keyCode || e.which || e.charCode;
-        //兼容 IE,firefox 兼容
-        var obj = e.srcElement ? e.srcElement : e.target;
-        //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "manufacture_design_type" || obj.id == "manufacture_design_name")) {
-            $("#saveManufacture_design").click();
-        }
-        //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchOrder_no_details")) {
-            $("#searchBtn").click();
-        }
-    });
+
 
     //分页信息处理
     function ininPager() {
@@ -257,7 +228,7 @@
 
     //批量删除支付
     function batDeleteManufacture_design() {
-        var row = $('#tableData').datagrid('getRaw_materials_requiremented');
+        var row = $('#tableData').datagrid('getChecked');
         if (row.length == 0) {
             $.messager.alert('删除提示', '没有记录被选中！', 'info');
             return;
@@ -275,7 +246,7 @@
                     }
                     $.ajax({
                         type: "post",
-                        url: "/manufacturedesign/batchDeleteManufacture_designByIds",
+                        url: "/manufacturedesign/batchDeleteDesignByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -291,7 +262,7 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeleteManufacture_designForceConfirm(res,"/manufacturedesign/batchDeleteManufacture_designByIds",jsondata,type);
+                                    batDeleteManufacture_designForceConfirm(res,"/manufacturedesign/batchDeleteDesignByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{
@@ -350,8 +321,6 @@
 
     function addManufacture_design() {
         $("#Order_no_details").attr("disabled",false);
-        $("#Product_no").attr("disabled",false);
-        $("#Products_requirement").attr("disabled",false);
         $("#Details").attr("disabled",true);
 
         $('#manufacture_designFM').form('clear');
@@ -396,8 +365,6 @@
     //编辑信息
     function editManufacture_design(manufacture_designTotalInfo) {
         $("#Order_no_details").attr("disabled",true);
-        $("#Product_no").attr("disabled",true);
-        $("#Products_requirement").attr("disabled",true);
         $("#Details").attr("disabled",false);
 
         var manufacture_designInfo = manufacture_designTotalInfo.split("AaBb");
@@ -414,7 +381,7 @@
         manufacture_designID = manufacture_designInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(manufacture_designInfo[1]);
-        url = '/manufacturedesign/update?id=' + manufacture_designInfo[0];
+        url = '/manufacturedesign/updateDesign?id=' + manufacture_designInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

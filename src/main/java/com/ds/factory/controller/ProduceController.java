@@ -269,11 +269,48 @@ public class ProduceController {
     @PostMapping("/addDesign")
     @ResponseBody
     public Object addDesign(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
-        System.out.println("111");
         JSONObject result = ExceptionConstants.standardSuccess();
         Manufacture_Design manufacture_design= JSON.parseObject(beanJson, Manufacture_Design.class);
-        System.out.println(manufacture_design);
         manufacture_designService.insertManufacture_Design(manufacture_design);
+        return result;
+    }
+
+
+    @PostMapping("/updateDesign")
+    @ResponseBody
+    public Object updateDesign(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Manufacture_Design manufacture_design= JSON.parseObject(beanJson, Manufacture_Design.class);
+
+        System.out.println(manufacture_design);
+        String no=(id+"").trim();
+        //0000 0000 01
+        switch (no.length()){
+            case 1: no="000000000"+no;break;
+            case 2: no="00000000"+no;break;
+            case 3: no="0000000"+no;break;
+            case 4: no="000000"+no;break;
+            case 5: no="00000"+no;break;
+            case 7: no="0000"+no;break;
+            case 8: no="000"+no;break;
+            case 9: no="00"+no;break;
+            case 10: break;
+        }
+        manufacture_design.setManufacture_no(no+"");
+        manufacture_designService.update(manufacture_design);
+        return result;
+    }
+
+
+    @PostMapping("/batchDeleteDesignByIds")
+    @ResponseBody
+    public Object batchDeleteDesignByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+            manufacture_designService.deleteByPrimaryKey(id[i].trim());
+        }
         return result;
     }
 }

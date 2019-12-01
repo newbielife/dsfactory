@@ -147,7 +147,7 @@
           from Manufacture_Design
           where  Manufacture_no like '%${Manufacture_no}%'
                 and Staff_no_design like '%${Staff_no_design}%' and Order_no_details like '%${Order_no_details}%'
-                and Product_no like '%${Product_no}%' and Workshop like '%${Workshop}%'
+                and Product_no like '%${Product_no}%' and Workshop like '%${Workshop}%' and flag=0
     </select>
 
 

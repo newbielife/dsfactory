@@ -15,7 +15,7 @@ public interface Manufacture_ResultMapper {
     List<Manufacture_Result> selectByConstraint_no_date(@Param("Manufacture_no") String Manufacture_no,@Param("Product_no") String Product_no,
                                                 @Param("Staff_no_manufacture") String Staff_no_manufacture,@Param("Order_no_details") String Order_no_details);
 
-
+    int deleteTrue(@Param("Manufacture_no") String Manufacture_no);
     List<Manufacture_Result> selectAll();
     Manufacture_Result selectByOrder_no_details(@Param("Order_no_details") String Order_no_details);
     List<Manufacture_Result> selectByStaff_no_manufacture(@Param("Staff_no_manufacture") String Staff_no_manufacture);

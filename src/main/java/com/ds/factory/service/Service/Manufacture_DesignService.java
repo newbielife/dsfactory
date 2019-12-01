@@ -11,7 +11,6 @@ public interface Manufacture_DesignService {
                              String Order_no_details,String Product_no,String Workshop);
 
 
-
     int insertManufacture_Design(Manufacture_Design manufacture_design);
     int deleteByPrimaryKey(String Manufacture_no);
     int update(Manufacture_Design manufacture_design);

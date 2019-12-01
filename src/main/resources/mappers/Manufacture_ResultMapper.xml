@@ -152,7 +152,9 @@
     </select>
 
 
-
+    <delete id="deleteTrue" parameterType="java.lang.String">
+   delete from Manufacture_Result where Manufacture_no = #{Manufacture_no,jdbcType=VARCHAR}
+    </delete>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
