@@ -138,14 +138,46 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '制造编号', field: 'manufacture_no', width: 100},
-                {title: '详细订单信息', field: 'order_no_details', width: 100},
+                {title: '制造编号', field: 'manufacture_no', width: 80},
+                {title: '详细订单信息', field: 'order_no_details', width: 180,formatter: function (value, rec) {
+                        var str = '';
+                        var details_nos=rec.order_no_details.split("；");
+                        str+='<font color="#a52a2a" face="行楷"><b>该生产计划内包含</b><i><u>'+details_nos.length+'</u><i/><b>条子订单</b></font><br/>';
+                        for (var i = 0; i < details_nos.length; i++) {
+                            if(i%3==0)
+                                str+='<font color="#00FF00" >'+'第'+(i+1)+'条订单——'+details_nos[i]+'</font>&nbsp;&nbsp;';
+                            else if(i%3==1)
+                                str+='<font color="#FF0000" >'+'第'+(i+1)+'条订单——'+details_nos[i]+'</font>&nbsp;&nbsp;';
+                            else if(i%3==2)
+                                str+='<font color="#0000FF" >'+'第'+(i+1)+'条订单——'+details_nos[i]+'</font>&nbsp;&nbsp;';
+                            str+='<br/>';
+                        }
+                        return str;
+                    }
+                },
                 {title: '职工计划编号', field: 'staff_no_design', width: 100},
-                {title: '产品编号', field: 'product_no', width: 100},
-                {title: '截止日期', field: 'deadline', width: 100},
+                {title: '产品编号', field: 'product_no', width: 80},
+                {title: '截止日期', field: 'deadline', width: 80},
                 {title: '当前进程', field: 'progress', width: 60},
                 {title: '车间', field: 'workshop', width: 80},
-                {title: '原材料需求', field: 'raw_materials_requirement', width: 180},
+                {title: '原材料需求', field: 'raw_materials_requirement', width: 300, width: 300,formatter: function (value, rec) {
+                        var str = '';
+                        //$.messager.alert('删除提示', rec.raw_materials_requirement, 'error');
+                        var x=rec.raw_materials_requirement.split("：")[1];
+                        var details_nos=x.split("；");
+                        str+='<font color="#a52a2a" face="行楷"><b><i><u>原料所需'+details_nos.length+'种：</u><i/></b></font><br/>';
+                        for (var i = 0; i < details_nos.length; i++) {
+                            if(i%3==0)
+                                str+='<font color="#00FF00" >'+'第'+(i+1)+'种原料：<br/>'+details_nos[i]+'</font>&nbsp;&nbsp;';
+                            else if(i%3==1)
+                                str+='<font color="#FF0000" >'+'第'+(i+1)+'种原料：<br/>'+details_nos[i]+'</font>&nbsp;&nbsp;';
+                            else if(i%3==2)
+                                str+='<font color="#0000FF" >'+'第'+(i+1)+'种原料：<br/>'+details_nos[i]+'</font>&nbsp;&nbsp;';
+                            str+='<br/>';
+                        }
+                        return str;
+                    }
+                },
                 {title: '产品需求', field: 'products_requirement', width: 80},
                 {title: '备注', field: 'details', width: 150},
                 {
