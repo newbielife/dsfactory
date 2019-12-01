@@ -27,4 +27,9 @@ public class Raw_Materials_CriteriaImpl implements Raw_Materials_CriteriaService
     public Raw_Materials_Criteria selectByMaterial_no(String Material_no) {
         return raw_materials_criteriaMapper.selectByMaterial_name(Material_no);
     }
+
+    @Override
+    public Raw_Materials_Criteria selectByKey(String Material_no) {
+        return raw_materials_criteriaMapper.selectByPrimaryKey(Material_no);
+    }
 }

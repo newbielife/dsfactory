@@ -30,13 +30,14 @@ public class ProduceController {
     Order_FormService order_formService;
 
     @Resource
+    Product_CriteriaService product_criteriaService;
+
+    @Resource
     Raw_Materials_CriteriaService raw_materials_criteriaService;
 
     @Resource
     Manufacture_ResultService manufacture_resultService;
 
-    @Resource
-    Product_CriteriaService product_criteriaService;
 
     @GetMapping(value = "/getAllmanufacture")
     public String getAllmanufacture(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
@@ -312,5 +313,97 @@ public class ProduceController {
             manufacture_designService.deleteByPrimaryKey(id[i].trim());
         }
         return result;
+    }
+
+
+    @GetMapping(value = "/getAllProductCriteria2")
+    public String getAllProductCriteria2(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                     @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                     @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String no=parameterMap.get("no");
+        System.out.println("11"+no);
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Product_Criteria> list = new ArrayList<Product_Criteria>();
+        list.add(product_criteriaService.selectByProduct_no(no));
+        System.out.println(list.size());
+        //获取分页查询后的数据
+        PageInfo<Product_Criteria> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+
+
+    @GetMapping(value = "/getIngredient")
+    public String getIngredient(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                         @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                         @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String no=parameterMap.get("no");
+        System.out.println("11"+no);
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Raw_Materials_Criteria> list = new ArrayList<Raw_Materials_Criteria>();
+
+        String[] materials=no.split("；");
+        for(int i=0;i<materials.length;i++)
+        {
+            Raw_Materials_Criteria raw=raw_materials_criteriaService.selectByKey(materials[i].split("（")[0].trim());
+            if(raw==null){
+                raw=new Raw_Materials_Criteria();
+                raw.setMaterial_no(materials[i].split("（")[0].trim());
+                raw.setMaterial_name("未找到原料");
+                raw.setMaterial_type("其他类");
+                raw.setGuarantee_period("????--年/季/月/周/日");
+            }
+            list.add(raw);
+        }
+
+        //获取分页查询后的数据
+        PageInfo<Raw_Materials_Criteria> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 }
