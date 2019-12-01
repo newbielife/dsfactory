@@ -4,9 +4,12 @@ import com.ds.factory.dao.Example.Manufacture_DesignExample;
 import com.ds.factory.datasource.entities.Manufacture_Design;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface Manufacture_DesignMapper {
+    int existByDate_Product_no(@Param("Product_no") String Product_no,@Param("Deadline") Date Deadline);
+    Manufacture_Design selectByDate_Product_no(@Param("Product_no") String Product_no,@Param("Deadline") Date Deadline);
 
     List<Manufacture_Design> selectByConstraint(@Param("Manufacture_no") String Manufacture_no,
             @Param("Staff_no_design") String Staff_no_design,@Param("Order_no_details") String Order_no_details,

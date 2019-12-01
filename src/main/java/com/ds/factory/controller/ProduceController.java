@@ -264,4 +264,16 @@ public class ProduceController {
         order_formService.Add_new_Order_with_Details(list,"000001");
         return result;
     }
+
+
+    @PostMapping("/addDesign")
+    @ResponseBody
+    public Object addDesign(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        System.out.println("111");
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Manufacture_Design manufacture_design= JSON.parseObject(beanJson, Manufacture_Design.class);
+        System.out.println(manufacture_design);
+        manufacture_designService.insertManufacture_Design(manufacture_design);
+        return result;
+    }
 }

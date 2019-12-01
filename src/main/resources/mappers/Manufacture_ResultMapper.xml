@@ -238,26 +238,26 @@
     <update id="updateByExampleSelective" parameterType="map">
     update Manufacture_Result
     <set>
-      <if test="record.Product_no != null">
-        Product_no = #{record.Product_no,jdbcType=VARCHAR},
-      </if>
-      <if test="record.Product_name != null">
-        Product_name = #{record.Product_name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.Product_type != null">
-        Product_type = #{record.Product_type,jdbcType=VARCHAR},
-      </if>
-      <if test="record.Ingredient_List != null">
-        Ingredient_List = #{record.Ingredient_List,jdbcType=VARCHAR},
-      </if>
-      <if test="record.Manufacture_duration != null">
-        Manufacture_duration = #{record.Manufacture_duration,jdbcType=VARCHAR},
-      </if>
-      <if test="record.Guarantee_period != null">
-        Guarantee_period = #{record.Guarantee_period,jdbcType=VARCHAR},
-      </if>
-      <if test="record.Unit_Price != null">
-      Unit_Price = #{record.Unit_Price,jdbcType=BIGINT},
+    <if test="Manufacture_no != null">
+      #{Manufacture_no,jdbcType=VARCHAR},
+    </if>
+    <if test="Order_no_details != null">
+      #{Order_no_details,jdbcType=VARCHAR},
+    </if>
+    <if test="Staff_no_manufacture != null">
+      #{Staff_no_manufacture,jdbcType=VARCHAR},
+    </if>
+    <if test="Staff_no_design != null">
+      #{Staff_no_design,jdbcType=VARCHAR},
+    </if>
+    <if test="Product_no != null">
+      #{Product_no,jdbcType=VARCHAR},
+    </if>
+    <if test="Stock_no != null">
+      #{Stock_no,jdbcType=VARCHAR},
+    </if>
+    <if test="Update_date != null">
+      #{Update_date,jdbcType=BIGINT},
     </if>
     </set>
     <if test="_parameter != null">
@@ -284,29 +284,27 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.ds.factory.datasource.entities.Manufacture_Result">
     update Manufacture_Result
     <set>
+      <if test="Order_no_details != null">
+      Order_no_details =  #{Order_no_details,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no_manufacture != null">
+      Staff_no_manufacture =   #{Staff_no_manufacture,jdbcType=VARCHAR},
+      </if>
+      <if test="Staff_no_design != null">
+      Staff_no_design =  #{Staff_no_design,jdbcType=VARCHAR},
+      </if>
+
       <if test="Product_no != null">
-        Product_no = #{Product_no,jdbcType=VARCHAR},
+      Product_no =   #{Product_no,jdbcType=VARCHAR},
       </if>
-      <if test="Product_name != null">
-        Product_name = #{Product_name,jdbcType=VARCHAR},
+      <if test="Stock_no != null">
+      Stock_no =   #{Stock_no,jdbcType=VARCHAR},
       </if>
-      <if test="Product_type != null">
-        Product_type = #{Product_type,jdbcType=VARCHAR},
+      <if test="Update_date != null">
+       Update_date =  #{Update_date,jdbcType=TIMESTAMP},
       </if>
-      <if test="Ingredient_List != null">
-        Ingredient_List = #{Ingredient_List,jdbcType=VARCHAR},
-      </if>
-      <if test="Manufacture_duration != null">
-        Manufacture_duration = #{Manufacture_duration,jdbcType=VARCHAR},
-      </if>
-      <if test="Guarantee_period != null">
-        Guarantee_period = #{Guarantee_period,jdbcType=VARCHAR},
-      </if>
-      <if test="Unit_Price != null">
-      Unit_Price = #{Unit_Price,jdbcType=BIGINT},
-    </if>
     </set>
-    where Product_no = #{Product_no,jdbcType=VARCHAR}
+    where Manufacture_no = #{Manufacture_no,jdbcType=VARCHAR}
     </update>
 
 

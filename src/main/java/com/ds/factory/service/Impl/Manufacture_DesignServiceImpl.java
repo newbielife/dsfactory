@@ -35,80 +35,37 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
     }
 
     @Override
-    public int insertManufacture_Design(String Order_no_details,String loginame,String Department) {
-        if(Order_no_details==null||order_detailsMapper.exist_or_not(Order_no_details.trim())==0)
-            return 0;
-        if(loginame==null||staffMapper.exist_or_not(loginame.trim())==0)
+    public int insertManufacture_Design(Manufacture_Design manufacture) {
+        manufacture.setDeadline(new Date());
+        manufacture.setManufacture_no("");
+        manufacture.setProduct_no(manufacture.getProduct_no()==null||manufacture.getProduct_no()==""?
+                "":manufacture.getProduct_no().trim());
+        manufacture.setProducts_requirement(manufacture.getProducts_requirement()==null||manufacture.getProducts_requirement()==""?
+                "":manufacture.getProducts_requirement());
+        manufacture.setProgress("");
+        manufacture.setRaw_materials_requirement("");
+        manufacture.setStaff_no_design(manufacture.getStaff_no_design()==null||manufacture.getStaff_no_design()==""?
+                "":manufacture.getStaff_no_design());
+        manufacture.setDetails(manufacture.getDetails()==null||manufacture.getDetails()==""?
+                "":manufacture.getDetails());
+        manufacture.setOrder_no_details(manufacture.getOrder_no_details()==null||manufacture.getOrder_no_details()==""?
+                "":manufacture.getOrder_no_details());
+        manufacture.setWorkshop(manufacture.getWorkshop()==null||manufacture.getWorkshop()==""?
+                "":manufacture.getWorkshop());
+
+
+        if(manufacture.getOrder_no_details()==""||order_detailsMapper.exist_or_not(manufacture.getOrder_no_details().trim())==0||
+                manufacture.getProduct_no()==""||product_criteriaMapper.exist_or_not(manufacture.getProduct_no().trim())==0||
+                manufacture.getProducts_requirement()=="")
             return 0;
 
-        Order_Details ooo=order_detailsMapper.selectByPrimaryKey(Order_no_details);
+
+        Order_Details ooo=order_detailsMapper.selectByPrimaryKey(manufacture.getOrder_no_details());
         String Product_no=ooo.getProduct_no().trim();
         String Products_requirement=ooo.getProducts_requirement().trim();
 
-        if(Product_no==null||product_criteriaMapper.exist_or_not(Product_no.trim())==0)
-            return 0;
-        if(Products_requirement==null||Products_requirement.trim().compareTo("")==0)
-            return 0;
-        Manufacture_Design manufacture_design=new Manufacture_Design();
-        manufacture_design.setProduct_no(Product_no.trim());
-        manufacture_design.setStaff_no_design(loginame.trim());
-        manufacture_design.setWorkshop(Department);
-        manufacture_design.setProducts_requirement(Products_requirement);
-        int biggest_num=Integer.parseInt(manufacture_designMapper.select_Biggest_Manufacture_no());
-        String biggest="";
-        boolean flag=true;
-        while(flag)
-        {
-            biggest_num++;  biggest=""+biggest_num;
-            //System.out.println(no_+"");
-            switch (biggest.length())
-            {//00 0000  0001
-                case 1: biggest="000000000"+biggest;    break;
-                case 2: biggest="00000000"+biggest;     break;
-                case 3: biggest="0000000"+biggest;      break;
-                case 4: biggest="000000"+biggest;       break;
-                case 5: biggest="00000"+biggest;        break;
-                case 6: biggest="0000"+biggest;         break;
-                case 7: biggest="000"+biggest;          break;
-                case 8: biggest="00"+biggest;           break;
-                case 9: biggest="0"+biggest;            break;
-                case 10: break;
-            }
-            if(manufacture_designMapper.exist_or_not(biggest)==0) flag=false;
-        }
-        if(biggest.length()>=11)  return 0;
-        manufacture_design.setManufacture_no(biggest);
-        manufacture_design.setProgress("生产计划商论阶段");
         int requirement=Integer.parseInt(Products_requirement.split("-")[0]);
         Product_Criteria product_criteria=product_criteriaMapper.selectByPrimaryKey(Product_no.trim());
-
-
-        String sum="";
-        String raw_requirements=product_criteria.getIngredient_List().split("：")[1].trim();
-        String[] cut_details=raw_requirements.split("；");
-        for(int i=0;i<cut_details.length;i++)
-        {
-            sum+=cut_details[i].split("，")[0];
-            int strStartIndex = cut_details[i].indexOf("，");
-            int strEndIndex = cut_details[i].indexOf("--");
-            if (strStartIndex < 0 || strEndIndex < 0)
-                return 0;
-            String result = cut_details[i].substring(strStartIndex, strEndIndex).substring("，".length());
-
-
-            int strStartIndex2 = cut_details[i].indexOf("--");
-            int strEndIndex2 = cut_details[i].indexOf("）");
-            if (strStartIndex2 < 0 || strEndIndex2 < 0)
-                return 0;
-            String result2 = cut_details[i].substring(strStartIndex2, strEndIndex2).substring("--".length());
-
-            sum+="，"+(requirement*Integer.parseInt(result.trim()));
-            sum+="--"+cut_details[i].split("-")[1].trim();
-            sum=sum+result2.trim()+"）";
-            if(i!=cut_details.length-1) sum+="；";
-        }
-        manufacture_design.setRaw_materials_requirement("原料所需："+sum);
-
 
         String duration=product_criteria.getManufacture_duration();
         String duration_unit=duration.split("-")[duration.split("-").length-1];
@@ -128,37 +85,144 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
             calendar.add(calendar.YEAR,duration_number);
         else return -1;
         deadline=calendar.getTime();
-        manufacture_design.setDeadline(deadline);
+        manufacture.setDeadline(deadline);
 
 
-        Order_Details ooa=new Order_Details();
-        ooa.setOrder_no_details(Order_no_details);
-        Calendar calendar1 = new GregorianCalendar();
-        calendar1.setTime(deadline);
-        calendar1.add(calendar.DATE,1);
-        deadline=calendar1.getTime();
-        ooa.setDelivery_date(deadline);
-        order_detailsMapper.updateByPrimaryKeySelective(ooa);
+        if(manufacture_designMapper.existByDate_Product_no(manufacture.getProduct_no(),manufacture.getDeadline())!=0){
+            Manufacture_Design old_design=manufacture_designMapper.selectByDate_Product_no(manufacture.getProduct_no(),manufacture.getDeadline());
+            if(old_design.getOrder_no_details().contains(manufacture.getOrder_no_details()))
+                return 0;
+            String old_product=old_design.getProducts_requirement();
+            String old_materials=old_design.getRaw_materials_requirement().split("：")[1];
+            String ingredient=product_criteria.getIngredient_List().split("：")[1];
+
+            int sum_product=Integer.parseInt(old_product.split("--")[0])
+                    +Integer.parseInt(manufacture.getProducts_requirement().split("--")[0]);
+
+            manufacture.setProducts_requirement(sum_product+"--"+manufacture.getProducts_requirement().split("--")[1]);
 
 
-        Manufacture_Result manufacture_result=new Manufacture_Result();
-        List<Staff> staffs=staffMapper.selectByDepartment(Department);
-        String sum_="";
-        for(int i=0;i<staffs.size()&&staffs!=null;i++){
-            sum_+=staffs.get(i).getLoginame().trim();
-            if(i!=staffs.size()-1)sum_+=";";
+            String[] raw_materials_details=ingredient.split("；");
+            String[] old_raw_materials_details=old_materials.split("；");
+
+            String sum="";
+            for(int i=0;i<old_raw_materials_details.length;i++)
+            {
+                sum+=old_raw_materials_details[i].split("，")[0]+"，";
+                int old_require=Integer.parseInt((old_raw_materials_details[i].split("，")[1]).split("-")[0]);
+                int new_require=Integer.parseInt((raw_materials_details[i].split("，")[1]).split("-")[0]);
+                int sum_require=old_require+new_require*Integer.parseInt(manufacture.getProducts_requirement().split("-")[0]);
+                sum+=sum_require+"--"+old_raw_materials_details[i].split("，")[1].split("--")[1].trim();
+                if(i!=old_raw_materials_details.length-1) sum+="；";
+            }
+            sum="原料所需："+sum;
+            System.out.println(sum);
+            manufacture.setRaw_materials_requirement(sum);
+            manufacture.setManufacture_no(old_design.getManufacture_no().trim());
+            manufacture.setDetails("该生产计划新增子订单："+manufacture.getOrder_no_details());
+            manufacture.setOrder_no_details(old_design.getOrder_no_details().trim()+"；"+manufacture.getOrder_no_details().trim());
+            if(manufacture.getWorkshop().compareTo("")==0)
+                manufacture.setWorkshop(old_design.getWorkshop());
+            else{
+                if(old_design.getWorkshop().contains(manufacture.getWorkshop().trim()))
+                    manufacture.setWorkshop(old_design.getWorkshop().trim());
+                else
+                    manufacture.setWorkshop(old_design.getWorkshop().trim()+"；"+manufacture.getWorkshop().trim());
+            }
+
+            Manufacture_Result manufacture_result=new Manufacture_Result();
+            manufacture_result.setOrder_no_details(manufacture.getOrder_no_details());
+            manufacture_result.setManufacture_no(manufacture.getManufacture_no());
+            manufacture_result.setUpdate_date(new Date());
+            System.out.println(manufacture_result);
+            System.out.println(manufacture);
+            manufacture_resultMapper.updateByPrimaryKeySelective(manufacture_result);
+            manufacture_designMapper.updateByPrimaryKeySelective(manufacture);
+            return 0;
         }
-        manufacture_result.setManufacture_no(biggest);
-        manufacture_result.setOrder_no_details(Order_no_details);
-        manufacture_result.setProduct_no(Product_no);
-        manufacture_result.setStaff_no_design(loginame);
-        manufacture_result.setStaff_no_manufacture(sum_);
-        manufacture_result.setUpdate_date(new Date());
-        manufacture_resultMapper.deleteByPrimaryKey(biggest);
-        manufacture_resultMapper.insertSelective(manufacture_result);
+        else
+        {
+
+            String sum="";
+            String raw_requirements=product_criteria.getIngredient_List().split("：")[1].trim();
+            String[] cut_details=raw_requirements.split("；");
+            for(int i=0;i<cut_details.length;i++)
+            {
+                sum+=cut_details[i].split("，")[0];
+                int strStartIndex = cut_details[i].indexOf("，");
+                int strEndIndex = cut_details[i].indexOf("--");
+                if (strStartIndex < 0 || strEndIndex < 0)
+                    return 0;
+                String result = cut_details[i].substring(strStartIndex, strEndIndex).substring("，".length());
 
 
-        return manufacture_designMapper.insertSelective(manufacture_design);
+                int strStartIndex2 = cut_details[i].indexOf("--");
+                int strEndIndex2 = cut_details[i].indexOf("）");
+                if (strStartIndex2 < 0 || strEndIndex2 < 0)
+                    return 0;
+                String result2 = cut_details[i].substring(strStartIndex2, strEndIndex2).substring("--".length());
+
+                sum+="，"+(requirement*Integer.parseInt(result.trim()));
+                sum+="--"+cut_details[i].split("-")[1].trim();
+                sum=sum+result2.trim()+"）";
+                if(i!=cut_details.length-1) sum+="；";
+            }
+            manufacture.setRaw_materials_requirement("原料所需："+sum);
+
+
+            Order_Details ooa=new Order_Details();
+            ooa.setOrder_no_details(manufacture.getOrder_no_details());
+            Calendar calendar1 = new GregorianCalendar();
+            calendar1.setTime(deadline);
+            calendar1.add(calendar.DATE,1);
+            deadline=calendar1.getTime();
+            ooa.setDelivery_date(deadline);
+            order_detailsMapper.updateByPrimaryKeySelective(ooa);
+
+
+            int biggest_num=Integer.parseInt(manufacture_designMapper.select_Biggest_Manufacture_no());
+            String biggest="";
+            boolean flag=true;
+            while(flag)
+            {
+                biggest_num++;  biggest=""+biggest_num;
+                //System.out.println(no_+"");
+                switch (biggest.length())
+                {//00 0000  0001
+                    case 1: biggest="000000000"+biggest;    break;
+                    case 2: biggest="00000000"+biggest;     break;
+                    case 3: biggest="0000000"+biggest;      break;
+                    case 4: biggest="000000"+biggest;       break;
+                    case 5: biggest="00000"+biggest;        break;
+                    case 6: biggest="0000"+biggest;         break;
+                    case 7: biggest="000"+biggest;          break;
+                    case 8: biggest="00"+biggest;           break;
+                    case 9: biggest="0"+biggest;            break;
+                    case 10: break;
+                }
+                if(manufacture_designMapper.exist_or_not(biggest)==0) flag=false;
+            }
+            if(biggest.length()>=11)  return 0;
+            manufacture.setManufacture_no(biggest);
+
+
+            Manufacture_Result manufacture_result=new Manufacture_Result();
+
+            manufacture_result.setManufacture_no(biggest);
+            manufacture_result.setOrder_no_details(manufacture.getOrder_no_details());
+            manufacture_result.setProduct_no(Product_no);
+            manufacture_result.setStaff_no_design(manufacture.getStaff_no_design());
+            manufacture_result.setStaff_no_manufacture(manufacture.getWorkshop());
+            manufacture_result.setStock_no("0");
+            manufacture_result.setUpdate_date(new Date());
+            manufacture_resultMapper.deleteByPrimaryKey(biggest);
+            manufacture_resultMapper.insertSelective(manufacture_result);
+
+            manufacture_designMapper.insertSelective(manufacture);
+            return 1;
+        }
+
+        //return 0;
     }
 
     @Override

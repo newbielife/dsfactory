@@ -88,6 +88,21 @@
     </sql>
 
 
+
+    <select id="existByDate_Product_no"  resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM Manufacture_Design
+        WHERE Product_no = #{Product_no} and to_days(Deadline) = to_days(#{Deadline,jdbcType=TIMESTAMP}) and flag=0
+    </select>
+
+
+    <select id="selectByDate_Product_no"  resultMap="BaseResultMap">
+            SELECT *
+            FROM Manufacture_Design
+            WHERE Product_no = #{Product_no} and to_days(Deadline) = to_days(#{Deadline,jdbcType=TIMESTAMP}) and flag=0
+        </select>
+
+
     <select id="selectByExample" parameterType="com.ds.factory.dao.Example.Manufacture_DesignExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -340,35 +355,35 @@
     update Manufacture_Design
     <set>
         <if test="Manufacture_no != null">
-        #{Manufacture_no,jdbcType=VARCHAR},
+        Manufacture_no = #{Manufacture_no,jdbcType=VARCHAR},
         </if>
         <if test="Order_no_details != null">
-        #{Order_no_details,jdbcType=VARCHAR},
+        Order_no_details = #{Order_no_details,jdbcType=VARCHAR},
         </if>
         <if test="Staff_no_design != null">
-        #{Staff_no_design,jdbcType=VARCHAR},
+        Staff_no_design = #{Staff_no_design,jdbcType=VARCHAR},
         </if>
         <if test="Deadline != null">
-        #{Deadline,jdbcType=TIMESTAMP},
+        Deadline = #{Deadline,jdbcType=TIMESTAMP},
         </if>
         <if test="Progress != null">
-        #{Progress,jdbcType=VARCHAR},
+        Progress = #{Progress,jdbcType=VARCHAR},
         </if>
 
         <if test="Raw_materials_requirement != null">
-        #{Raw_materials_requirement,jdbcType=VARCHAR},
+        Raw_materials_requirement = #{Raw_materials_requirement,jdbcType=VARCHAR},
         </if>
         <if test="Products_requirement != null">
-        #{Products_requirement,jdbcType=VARCHAR},
+        Products_requirement = #{Products_requirement,jdbcType=VARCHAR},
         </if>
         <if test="Product_no != null">
-        #{Product_no,jdbcType=VARCHAR},
+        Product_no = #{Product_no,jdbcType=VARCHAR},
         </if>
         <if test="Workshop != null">
-        #{Workshop,jdbcType=VARCHAR},
+        Workshop = #{Workshop,jdbcType=VARCHAR},
         </if>
         <if test="Details != null">
-        #{Details,jdbcType=VARCHAR},
+        Details = #{Details,jdbcType=VARCHAR},
         </if>
     </set>
     where Manufacture_no = #{Manufacture_no,jdbcType=VARCHAR}
