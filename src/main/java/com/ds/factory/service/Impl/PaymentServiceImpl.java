@@ -71,9 +71,9 @@ public class PaymentServiceImpl implements PaymentService {
                 }
             }
         }
-
-        if(flag_)
-            upper_sum+=Integer.parseInt(o.getLiquidated_damages()+"");
+//      //不使用违约金了
+//        if(flag_)
+//            upper_sum+=Integer.parseInt(o.getLiquidated_damages()+"");
 
         if(upper_sum>pay_sum)
             return false;

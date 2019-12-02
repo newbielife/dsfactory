@@ -120,6 +120,16 @@
     from DS_functions
     where Id = #{id,jdbcType=BIGINT}
   </select>
+
+
+  <select id="selectByConstrain" resultMap="BaseResultMap">
+      select *
+      from DS_functions
+      where Name like '%${Name}%' and PNumber like '%${PNumber}%'
+    </select>
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--
       WARNING - @mbggenerated

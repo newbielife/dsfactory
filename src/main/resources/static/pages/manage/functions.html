@@ -25,14 +25,10 @@
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>类型:</td>
+            <td>编号:</td>
             <td>&nbsp;</td>
             <td>
-                <select name="searchType" id="searchType" style="width:100px; height:20px">
-                    <option value="">全部</option>
-                    <option value="电脑版">电脑版</option>
-                    <option value="手机版">手机版</option>
-                </select>
+                <input type="text" name="searchNo" id="searchNo" style="width:100px;"/>
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -165,17 +161,28 @@
                         return value ? "开" : "关";
                     }
                 },
-                {title: '类型', field: 'type', width: 50},
                 {
-                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
-                        var str = '';
-                        var rowInfo = rec.id + 'AaBb' + rec.number + 'AaBb' + rec.name + 'AaBb' + rec.pnumber + 'AaBb' + rec.url
-                            + 'AaBb' + rec.state + 'AaBb' + rec.sort + 'AaBb' + rec.enabled + 'AaBb' + rec.type + 'AaBb' + rec.pushbtn;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editFunctions(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editFunctions(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteFunctions(' + rec.id + ');"/>&nbsp;<a onclick="deleteFunctions(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
+                    title: '增删改禁用', field: 'change', width: 100, formatter: function (value,rec) {
+                        var str='';
+                        if(rec.url==""){
+                            str+='<span style="color:gold;background-color:black;height: 20px">下拉列表</span>&nbsp;&nbsp;' ;
+                            return str;
+                        }
+                        var details=rec.url.split("/");
+                        if (details[2]=="manage")
+                            str += '<font color="#00FF00" >启用</font>&nbsp;&nbsp;';
+                        else
+                        {
+                            if(rec.url=="/pages/materials/product_popularity.html")
+                                str += '<font color="#0000FF" >特殊启用</font>&nbsp;&nbsp;';
+                            else
+                                str += '<font color="#FF0000" >禁用</font>&nbsp;&nbsp;';
+                        }
                         return str;
                     }
                 }
+                //,
+                //{title: '类型', field: 'type', width: 50}
             ]],
             toolbar: [
                 {
@@ -471,7 +478,7 @@
 
     function showFunctionsDetails(pageNo, pageSize) {
         var name = $.trim($("#searchName").val());
-        var type = $.trim($("#searchType").val());
+        var no = $.trim($("#searchNo").val());
         $.ajax({
             type: "get",
             url: "/functions/list",
@@ -479,7 +486,7 @@
             data: ({
                 search: JSON.stringify({
                     name: name,
-                    type: type
+                    no: no
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize

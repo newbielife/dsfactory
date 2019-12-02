@@ -109,7 +109,7 @@ INSERT INTO `DS_functions` VALUES (228, '030108', '生产计划查询', '0301', 
 INSERT INTO `DS_functions` VALUES (235, '070408', '资金流水', '0704', '/pages/manage/paymentManage.html', b'0', '0410', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (239, '0801', '原料仓库', '0', '', b'0', '0420', b'1', '电脑版', '', 'icon-layers', '0');
 INSERT INTO `DS_functions` VALUES (240, '010104', '配方管理', '0101', '/pages/manage/product_criteriaManage.html', b'0', '0246', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (242, '060302', '销售订单', '0603', '/pages/manage/order_formManage.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (242, '060302', '销售订单', '0603', '/pages/manage/order_formManage_salesman.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (244, '080112', '原料入库', '0801', '/pages/manage/raw_materials_warehouseManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (245, '080113', '过期食品详情', '0801', '/pages/materials/expired_food.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (246, '080114', '过期食品处理', '0801', '/pages/manage/expired_foodManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');

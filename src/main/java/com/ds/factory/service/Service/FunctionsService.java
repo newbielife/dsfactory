@@ -128,6 +128,12 @@ public class FunctionsService {
         return result;
     }
 
+
+    public List<Functions>selectByConstrain(String Name,String no){
+        return functionsMapper.selectByConstrain(Name,no);
+    }
+
+
     public int checkIsNameExist(Long id, String name)throws Exception {
         FunctionsExample example = new FunctionsExample();
         example.createCriteria().andIdNotEqualTo(id).andNameEqualTo(name).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);

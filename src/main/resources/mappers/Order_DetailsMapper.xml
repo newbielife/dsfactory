@@ -133,7 +133,7 @@
     <select id="countLikeOrder_no_Check_zero" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(*)
         from Order_Details
-        where Order_no_details like '${part}%' and Order_Details.`Check` = 0 and flag=0
+        where Order_no_details like '${part}%'  and flag=0
     </select>
 
 

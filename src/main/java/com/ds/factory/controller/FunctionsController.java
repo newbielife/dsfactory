@@ -1,14 +1,18 @@
 package com.ds.factory.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.Functions;
 import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.exception.BusinessRunTimeException;
 import com.ds.factory.service.Service.FunctionsService;
 import com.ds.factory.service.Service.UserBusinessService;
-import com.ds.factory.utils.BaseResponseInfo;
+import com.ds.factory.utils.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -17,7 +21,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 
 /**
  * @author gyc_lyz_ztm
@@ -119,11 +127,41 @@ public class FunctionsController {
         return dataArray;
     }
 
-    /**
-     * 角色对应功能显示
-     * @param request
-     * @return
-     */
+    @GetMapping(value = "/list")
+    public String list(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                          @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                          @RequestParam(value = Constants.SEARCH, required = false) String search,
+                          HttpServletRequest request)throws Exception {
+        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
+        parameterMap.put(Constants.SEARCH, search);
+        JSONObject obj= JSON.parseObject(search);
+
+        String name=obj.getString("name")==null?"":obj.getString("name").trim();
+        String no=obj.getString("no")==null?"":obj.getString("no").trim();
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize != null && pageSize <= 0) {
+            pageSize = 10;
+        }
+        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
+        if (StringUtil.isNotEmpty(offset)) {
+            parameterMap.put(Constants.OFFSET, offset);
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Functions> list = functionsService.selectByConstrain(name,no);
+        PageInfo<Functions> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+
     @PostMapping(value = "/findRoleFunctions")
     public JSONArray findRoleFunctions(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
                                        HttpServletRequest request)throws Exception {
@@ -267,12 +305,7 @@ public class FunctionsController {
         return arr;
     }
 
-    /**
-     * 根据id列表查找功能信息
-     * @param functionsIds
-     * @param request
-     * @return
-     */
+
     @GetMapping(value = "/findByIds")
     public BaseResponseInfo findByIds(@RequestParam("functionsIds") String functionsIds,
                                       HttpServletRequest request)throws Exception {
@@ -317,4 +350,37 @@ public class FunctionsController {
         }
         return result;
     }
+
+
+    @PostMapping("/add")
+    @ResponseBody
+    public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Functions functions= JSON.parseObject(beanJson, Functions.class);
+        //clientService.insert_Client_details(client);
+        return result;
+    }
+
+
+    @PostMapping("/update")
+    @ResponseBody
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Functions client= JSON.parseObject(beanJson, Functions.class);
+
+//        String Client_no=(id+"").trim();
+//
+//        switch (Client_no.length()){
+//            case 1: Client_no="00000"+Client_no;break;
+//            case 2: Client_no="0000"+Client_no;break;
+//            case 3: Client_no="000"+Client_no;break;
+//            case 4: Client_no="00"+Client_no;break;
+//            case 5: Client_no="0"+Client_no;break;
+//            case 6: break;
+//        }
+//        client.setClient_no(Client_no);
+//        clientService.updateByPrimaryKeySelective(client);
+        return result;
+    }
+
 }
