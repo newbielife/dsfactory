@@ -59,7 +59,7 @@
             <tr>
                 <td>客户编号：</td>
                 <td style="padding:5px">
-                    <input name="Client_no"class="easyui-validatebox" id="Client_no"
+                    <input name="Client_no"class="easyui-validatebox" id="Client_no" disabled="true"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -67,7 +67,7 @@
                 <td>现付款：</td>
                 <td style="padding:5px">
                     <input name="Liquidated_Damages"class="easyui-validatebox" id="Liquidated_Damages"
-                           data-options="required:false,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
+                           data-options="required:false,validType:'length[0,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
@@ -340,11 +340,19 @@
             s_child[3].disabled=true;
             s_child[4].disabled=true;
         }
-        else if(progress=="售后服务")//违约金或退款
+        else if(progress=="售后服务"||progress=="违约金商谈阶段"||progress=="退款商谈阶段")//违约金或退款
         {
             s_child[0].disabled=true;
             s_child[1].disabled=true;
             s_child[2].disabled=true;
+        }
+        else if(progress=="订单终止")
+        {
+            s_child[0].disabled=true;
+            s_child[1].disabled=true;
+            s_child[2].disabled=true;
+            s_child[3].disabled=true;
+            s_child[4].disabled=true;
         }
 
 
@@ -358,12 +366,6 @@
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(order_formInfo[1]);
         url = '/order_form/update?id=' + order_formInfo[0];
-        // if($("#Liquidated_Damages").val()<order_formInfo[6])
-        //     $.messager.alert('修改提示', '该订单'+order_formInfo[0]+'钱款修改后比先前低！', 'error');
-        // else if(sum>=$("#Liquidated_Damages").val())
-        //     url = '/order_form/update?id=' + order_formInfo[0];
-        // else
-        //     $.messager.alert('修改提示', '该订单'+order_formInfo[0]+'交款总额已经超出最大限度！', 'error');
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

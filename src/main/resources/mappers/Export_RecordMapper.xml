@@ -290,6 +290,15 @@
     </if>
     </update>
 
+    <update id="update_end" parameterType="map">
+    update Export_Record
+    set Progress= #{Progress,jdbcType=VARCHAR}
+    where Order_no_details like '${Order_no}%'
+    </update>
+
+
+
+
 
     <update id="updateByExample" parameterType="map">
     update Export_Record
@@ -300,7 +309,7 @@
         Target_place = #{record.Target_place,jdbcType=VARCHAR},
         Delivery_date = #{record.Delivery_date,jdbcType=TIMESTAMP},
         Transport_link = #{record.Transport_link,jdbcType=VARCHAR},
-        Progress= #{record.Details,jdbcType=VARCHAR}
+        Progress= #{record.Progress,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

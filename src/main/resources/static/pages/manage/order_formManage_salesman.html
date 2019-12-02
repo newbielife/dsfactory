@@ -59,7 +59,7 @@
             <tr>
                 <td>客户编号：</td>
                 <td style="padding:5px">
-                    <input name="Client_no"class="easyui-validatebox" id="Client_no"
+                    <input name="Client_no"class="easyui-validatebox" id="Client_no" disabled="true"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -459,7 +459,6 @@
             s_child[1].disabled=true;
             s_child[2].disabled=true;
             s_child[3].disabled=true;
-            s_child[5].disabled=true;
         }
         else if(progress=="客户收货成功"||progress=="售后服务"||progress=="违约金商谈阶段"||progress=="退款商谈阶段")//允许售后
         {
@@ -469,6 +468,16 @@
             s_child[3].disabled=true;
             s_child[4].disabled=true;
         }
+        else if(progress=="订单终止")
+        {
+            s_child[0].disabled=true;
+            s_child[1].disabled=true;
+            s_child[2].disabled=true;
+            s_child[3].disabled=true;
+            s_child[4].disabled=true;
+            s_child[5].disabled=true;
+        }
+
 
 
         $("#Client_no").val(order_formInfo[1]);

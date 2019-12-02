@@ -2,12 +2,10 @@ package com.ds.factory.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.ds.factory.datasource.entities.Client;
-import com.ds.factory.datasource.entities.Log;
-import com.ds.factory.datasource.entities.Product_Warehouse;
-import com.ds.factory.datasource.entities.Staff;
+import com.ds.factory.datasource.entities.*;
 import com.ds.factory.service.Service.ClientService;
 import com.ds.factory.service.Service.LogService;
+import com.ds.factory.service.Service.Product_CriteriaService;
 import com.ds.factory.service.Service.StaffService;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
@@ -37,6 +35,9 @@ public class UserController {
 
     @Resource
     private LogService logService;
+
+    @Resource
+    private Product_CriteriaService product_criteriaService;
 
     private static String message = "成功";
     private static final String HTTP = "http://";
@@ -244,6 +245,44 @@ public class UserController {
         List<Log> list = logService.selectByConstrain(operation,clientIp,status,begin,end);
         //获取分页查询后的数据
         PageInfo<Log> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+
+
+    @GetMapping(value = "/unitlist")
+    public String unitlist(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                          @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                          @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Unit> list = product_criteriaService.SelectUnit();
+        System.out.println(list.get(0));
+        //获取分页查询后的数据
+        PageInfo<Unit> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());

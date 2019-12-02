@@ -141,6 +141,7 @@
           where  flag=0 and to_days(Update_date) = to_days(#{Update_date,jdbcType=TIMESTAMP})
                 and Manufacture_no like '%${Manufacture_no}%' and Order_no_details like '%${Order_no_details}%'
                 and Product_no like '%${Product_no}%' and Staff_no_manufacture like '%${Staff_no_manufacture}%'
+                order by Update_date desc
     </select>
 
     <select id="selectByConstraint_no_date" resultMap="BaseResultMap">
@@ -149,6 +150,7 @@
           where  flag=0
                 and Manufacture_no like '%${Manufacture_no}%' and Order_no_details like '%${Order_no_details}%'
                 and Product_no like '%${Product_no}%' and Staff_no_manufacture like '%${Staff_no_manufacture}%'
+                order by Update_date desc
     </select>
 
 

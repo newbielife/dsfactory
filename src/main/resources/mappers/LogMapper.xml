@@ -118,6 +118,7 @@
   select *
   from DS_log
   where operation like '%${operation}%' and clientIP like '%${clientIP}%' and status = 0
+  order by createtime desc
 </select>
 
 
@@ -125,12 +126,14 @@
   select *
   from DS_log
   where  operation like '%${operation}%' and clientIP like '%${clientIP}%' and status = 1
+  order by createtime desc
 </select>
 
 <select id="selectByAll_noDate"  resultMap="BaseResultMap">
   select *
   from DS_log
   where  operation like '%${operation}%' and clientIP like '%${clientIP}%'
+  order by createtime desc
 </select>
 
 

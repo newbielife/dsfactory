@@ -97,107 +97,131 @@
                         if(rec.product_type=="乳与乳制品" || rec.product_type=="冷冻饮品" || rec.product_type=="饮料类"||rec.product_type=="酒类"){
                             str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
                                 '<option value="公升">默认单位(L)</option>'+
+
                                 '<option value="公升">公升(L)</option>'+
                                 '<option value="毫升">毫升(ml)</option>'+
                                 '<option value="箱">箱(trunk)</option>'+
                                 '<option value="罐">罐(tin)</option>'+
                                 '<option value="磅">磅(pound)</option>'+
+
                                 '<option value="盒">盒(case)</option>'+
                                 '<option value="瓶">瓶(bot)</option>'+
+
                                 '</select>&nbsp;&nbsp;&nbsp;';
                         }
                         else if(rec.product_type=="脂肪、油和乳化脂肪制品") {
                             str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
                                 '<option value="公斤">默认单位(Kg)</option>'+
+
                                 '<option value="吨">吨(ton)</option>'+
                                 '<option value="公斤">公斤(Kg)</option>'+
                                 '<option value="克">公克(g)</option>'+
                                 '<option value="公升">公升(L)</option>'+
                                 '<option value="毫升">毫升(ml)</option>'+
+
                                 '<option value="车">车(cl.)</option>'+
                                 '<option value="包">包(pkt.)</option>'+
                                 '<option value="箱">箱(trunk)</option>'+
                                 '<option value="磅">磅(pound)</option>'+
                                 '<option value="盒">盒(case)</option>'+
+
                                 '<option value="瓶">瓶(bot)</option>'+
+
                                 '</select>&nbsp;&nbsp;&nbsp;';
                         }
                         else if(rec.product_type=="水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类"||rec.product_type=="可可制品、巧克力和巧克力制品、以及糖果") {
                             str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
                                 '<option value="公斤">默认单位(Kg)</option>'+
+
                                 '<option value="吨">吨(ton)</option>'+
                                 '<option value="公斤">公斤(Kg)</option>'+
                                 '<option value="克">公克(g)</option>'+
                                 '<option value="车">车(cl.)</option>'+
                                 '<option value="箱">箱(trunk)</option>'+
+
                                 '<option value="根">根(bar)</option>'+
                                 '<option value="捆">捆(bundle)</option>'+
                                 '<option value="袋">袋(bag)</option>'+
                                 '<option value="个">个(one)</option>'+
+
                                 '</select>&nbsp;&nbsp;&nbsp;';
                         }
                         else if(rec.product_type=="粮食和粮食制品"||rec.product_type=="焙烤食品") {
                             str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
                                 '<option value="公斤">默认单位(Kg)</option>'+
+
                                 '<option value="吨">吨(ton)</option>'+
                                 '<option value="公斤">公斤(Kg)</option>'+
                                 '<option value="克">公克(g)</option>'+
                                 '<option value="公升">公升(L)</option>'+
                                 '<option value="毫升">毫升(ml)</option>'+
+
                                 '<option value="车">车(cl.)</option>'+
                                 '<option value="包">包(pkt.)</option>'+
                                 '<option value="箱">箱(trunk)</option>'+
                                 '<option value="袋">袋(bag)</option>'+
+
                                 '</select>&nbsp;&nbsp;&nbsp;';
                         }
                         else if(rec.product_type=="蛋及蛋制品"||rec.product_type=="肉及肉制品"||rec.product_type=="水产品及其制品") {
                             str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
                                 '<option value="公斤">默认单位(Kg)</option>'+
+
                                 '<option value="吨">吨(ton)</option>'+
                                 '<option value="公斤">公斤(Kg)</option>'+
                                 '<option value="克">公克(g)</option>'+
                                 '<option value="车">车(cl.)</option>'+
                                 '<option value="打">打(dozen)</option>'+
+
                                 '<option value="包">包(pkt.)</option>'+
                                 '<option value="箱">箱(trunk)</option>'+
                                 '<option value="磅">磅(pound)</option>'+
+
                                 '</select>&nbsp;&nbsp;&nbsp;';
                         }
                         else if(rec.product_type=="甜味料"||rec.product_type=="调味品") {
                             str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
                                 '<option value="公升">默认单位(L)</option>'+
+
                                 '<option value="公升">公升(L)</option>'+
                                 '<option value="毫升">毫升(ml)</option>'+
                                 '<option value="包">包(pkt.)</option>'+
                                 '<option value="箱">箱(trunk)</option>'+
                                 '<option value="罐">罐(tin)</option>'+
+
                                 '<option value="袋">袋(bag)</option>'+
                                 '<option value="盒">盒(case)</option>'+
                                 '<option value="瓶">瓶(bot)</option>'+
                                 '<option value="件">件(pcs)</option>'+
+
                                 '</select>&nbsp;&nbsp;&nbsp;';
                         }
                         else if(rec.product_type=="特殊营养食品"||rec.product_type=="其他类") {
                             str += '    <select name="unit'+rec.product_no+'" id="unit'+rec.product_no+'" style="width:100px;">'+
                                 '<option value="公斤">默认单位(Kg)</option>'+
+
                                 '<option value="吨">吨(ton)</option>'+
                                 '<option value="公斤">公斤(Kg)</option>'+
                                 '<option value="克">公克(g)</option>'+
                                 '<option value="公升">公升(L)</option>'+
                                 '<option value="毫升">毫升(ml)</option>'+
+
                                 '<option value="车">车(cl.)</option>'+
                                 '<option value="包">包(pkt.)</option>'+
                                 '<option value="箱">箱(trunk)</option>'+
                                 '<option value="根">根(bar)</option>'+
                                 '<option value="捆">捆(bundle)</option>'+
+
                                 '<option value="罐">罐(tin)</option>'+
                                 '<option value="磅">磅(pound)</option>'+
                                 '<option value="棒">棒(stick)</option>'+
                                 '<option value="袋">袋(bag)</option>'+
                                 '<option value="盒">盒(case)</option>'+
+
                                 '<option value="瓶">瓶(bot)</option>'+
                                 '<option value="个">个(one)</option>'+
                                 '<option value="件">件(pcs)</option>'+
+
                                 '</select>&nbsp;&nbsp;&nbsp;';
                         }
                         return str;

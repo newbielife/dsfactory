@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface Export_RecordService {
-
+    int updateProgressByOrder_no(String Order_no,String Progress);
     List<Export_Record> selectByConstraint(Date Delivery_date,String Export_no,
                                            String Staff_no, String Order_no_details,
                                            String Target_place, String Source_place);

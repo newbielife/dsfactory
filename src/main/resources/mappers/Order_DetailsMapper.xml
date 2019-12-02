@@ -85,6 +85,7 @@
           from Order_Details
           where  flag=0 and Order_no_details like '%${Order_no_details}%' and Product_no like '%${Product_no}%'
                 and Client_no like '%${Client_no}%' and  Order_Details.`Check` = 0
+                order by Order_Details.`Check` desc
     </select>
 
     <select id="selectByConstraint_enabled" resultMap="BaseResultMap">
@@ -92,6 +93,7 @@
           from Order_Details
           where  flag=0 and Order_no_details like '%${Order_no_details}%' and Product_no like '%${Product_no}%'
                 and Client_no like '%${Client_no}%' and  Order_Details.`Check` = 1
+           order by Order_Details.`Check` desc
     </select>
 
     <select id="selectByConstraint_all" resultMap="BaseResultMap">
@@ -99,6 +101,7 @@
           from Order_Details
           where  flag=0 and Order_no_details like '%${Order_no_details}%' and Product_no like '%${Product_no}%'
                 and Client_no like '%${Client_no}%'
+                order by Order_Details.`Check` desc
     </select>
 
 
@@ -152,6 +155,13 @@
         where Client_no = #{Client_no} and flag=0
         order by Order_no_details asc
     </select>
+
+
+    <update id="updateCheckByOrder_no" parameterType="java.lang.String">
+        update Order_Details
+        set Order_Details.`Check` = 1
+        where Order_no_details like '${Order_no}%'
+    </update>
 
 
 

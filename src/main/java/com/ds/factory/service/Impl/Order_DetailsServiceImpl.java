@@ -52,6 +52,11 @@ public class Order_DetailsServiceImpl implements Order_DetailsService {
     }
 
     @Override
+    public int updateCheckByOrder_no(String Order_no) {
+        return order_detailsMapper.updateCheckByOrder_no(Order_no);
+    }
+
+    @Override
     public int deleteByOrder_no(String Order_no) {
         return 0;
     }

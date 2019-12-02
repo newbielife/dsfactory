@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ds.factory.datasource.mappers.UnitMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ds.factory.datasource.entities.Unit" >
+            <id column="Unit_no" jdbcType="VARCHAR" property="Unit_no" />
+            <result column="Unit_name" jdbcType="VARCHAR" property="Unit_name" />
+            <result column="Unit_name_en" jdbcType="VARCHAR" property="Unit_name_en" />
+            <result column="Unit_rate" jdbcType="VARCHAR" property="Unit_rate" />
+            <result column="Default_type" jdbcType="VARCHAR" property="Default_type" />
+            <result column="Food_type" jdbcType="VARCHAR" property="Food_type" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    Unit_no,Unit_name,Unit_name_en,Unit_rate,Default_type,Food_type
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from Unit
+    </select>
+
+</mapper>

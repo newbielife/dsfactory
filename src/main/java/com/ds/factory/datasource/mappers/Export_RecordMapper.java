@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface Export_RecordMapper {
 
+    int update_end(@Param("Order_no") String Order_no,@Param("Progress") String Progress);
     List<Export_Record> selectByConstraint(@Param("Delivery_date") Date Delivery_date, @Param("Export_no") String Export_no,
                                            @Param("Staff_no") String Staff_no, @Param("Order_no_details") String Order_no_details,
                                             @Param("Target_place") String Target_place, @Param("Source_place") String Source_place);
