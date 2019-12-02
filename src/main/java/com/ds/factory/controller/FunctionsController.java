@@ -5,9 +5,12 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
+import com.ds.factory.dao.Example.FunctionsExample;
 import com.ds.factory.datasource.entities.Functions;
 import com.ds.factory.datasource.entities.Staff;
+import com.ds.factory.datasource.mappers.FunctionsMapper;
 import com.ds.factory.exception.BusinessRunTimeException;
+import com.ds.factory.exception.DSException;
 import com.ds.factory.service.Service.FunctionsService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
@@ -34,6 +37,9 @@ import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
 @RequestMapping(value = "/functions")
 public class FunctionsController {
     private Logger logger = LoggerFactory.getLogger(FunctionsController.class);
+
+    @Resource
+    private FunctionsMapper functionsMapper;
 
     @Resource
     private FunctionsService functionsService;
@@ -340,13 +346,14 @@ public class FunctionsController {
 
     @RequestMapping(value = "/batchDeleteFunctionsByIds")
     public Object batchDeleteFunctionsByIds(@RequestParam("ids") String ids) throws Exception {
-        JSONObject result = ExceptionConstants.standardSuccess();
-        int i= functionsService.batchDeleteFunctionsByIds(ids);
-        if(i<1){
-            logger.error("异常码[{}],异常提示[{}],参数,ids[{}]",
-                    ExceptionConstants.FUNCTIONS_DELETE_FAILED_CODE,ExceptionConstants.FUNCTIONS_DELETE_FAILED_MSG,ids);
-            throw new BusinessRunTimeException(ExceptionConstants.FUNCTIONS_DELETE_FAILED_CODE,
-                    ExceptionConstants.FUNCTIONS_DELETE_FAILED_MSG);
+        List<Long> idList = StringUtil.strToLongList(ids);
+        FunctionsExample example = new FunctionsExample();
+        example.createCriteria().andIdIn(idList);
+        int result=0;
+        try{
+            result=functionsMapper.deleteByExample(example);
+        }catch(Exception e){
+            DSException.writeFail(logger, e);
         }
         return result;
     }
@@ -355,9 +362,13 @@ public class FunctionsController {
     @PostMapping("/add")
     @ResponseBody
     public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
-        JSONObject result = ExceptionConstants.standardSuccess();
-        Functions functions= JSON.parseObject(beanJson, Functions.class);
-        //clientService.insert_Client_details(client);
+        Functions depot = JSONObject.parseObject(beanJson, Functions.class);
+        int result=0;
+        try{
+            result=functionsMapper.insertSelective(depot);
+        }catch(Exception e){
+            DSException.writeFail(logger, e);
+        }
         return result;
     }
 
@@ -365,21 +376,14 @@ public class FunctionsController {
     @PostMapping("/update")
     @ResponseBody
     public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
-        JSONObject result = ExceptionConstants.standardSuccess();
-        Functions client= JSON.parseObject(beanJson, Functions.class);
-
-//        String Client_no=(id+"").trim();
-//
-//        switch (Client_no.length()){
-//            case 1: Client_no="00000"+Client_no;break;
-//            case 2: Client_no="0000"+Client_no;break;
-//            case 3: Client_no="000"+Client_no;break;
-//            case 4: Client_no="00"+Client_no;break;
-//            case 5: Client_no="0"+Client_no;break;
-//            case 6: break;
-//        }
-//        client.setClient_no(Client_no);
-//        clientService.updateByPrimaryKeySelective(client);
+        Functions depot = JSONObject.parseObject(beanJson, Functions.class);
+        depot.setId(id);
+        int result=0;
+        try{
+            result=functionsMapper.updateByPrimaryKeySelective(depot);
+        }catch(Exception e){
+            DSException.writeFail(logger, e);
+        }
         return result;
     }
 

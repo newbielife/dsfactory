@@ -149,7 +149,7 @@
                 {title: '编号 ', field: 'number', width: 60},
                 {title: '名称', field: 'name', width: 80},
                 {title: '上级编号', field: 'pnumber', width: 60},
-                {title: '链接', field: 'url', width: 200},
+                {title: '链接', field: 'url', width: 300},
                 {title: '排序', field: 'sort', width: 50},
                 {
                     title: '收缩', field: 'state', width: 50, formatter: function (value) {
@@ -180,9 +180,8 @@
                         }
                         return str;
                     }
-                }
-                //,
-                //{title: '类型', field: 'type', width: 50}
+                },
+                {title: '类型', field: 'type', width: 50}
             ]],
             toolbar: [
                 {
@@ -223,7 +222,7 @@
             $("#saveFunctions").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchName" || obj.id == "searchType")) {
+        if (k == "13" && (obj.id == "searchName" || obj.id == "searchNo")) {
             $("#searchBtn").click();
         }
     });
