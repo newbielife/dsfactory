@@ -11,7 +11,7 @@
  Target Server Version : 50635
  File Encoding         : 65001
 
- Date: 30/11/2019 11:36:45
+ Date: 02/12/2019 23:09:42
 */
 
 SET NAMES utf8mb4;
@@ -65,7 +65,7 @@ CREATE TABLE `DS_functions` (
   `icon` varchar(50) DEFAULT NULL COMMENT '图标',
   `delete_Flag` varchar(1) DEFAULT '0' COMMENT '删除标记，0未删除，1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=utf8 COMMENT='功能模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=260 DEFAULT CHARSET=utf8 COMMENT='功能模块表';
 
 -- ----------------------------
 -- Records of DS_functions
@@ -75,7 +75,7 @@ INSERT INTO `DS_functions` VALUES (1, '0001', '系统管理', '0', '', b'1', '09
 INSERT INTO `DS_functions` VALUES (13, '000102', '角色管理', '0001', '/pages/manage/role.html', b'0', '0130', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (14, '000103', '用户管理', '0001', '/pages/manage/user.html', b'0', '0140', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (15, '000104', '日志管理', '0001', '/pages/manage/log.html', b'0', '0160', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (16, '000105', '部门管理', '0001', '/pages/manage/functions.html', b'0', '0135', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (16, '000105', '功能管理', '0001', '/pages/manage/functions.html', b'0', '0135', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (21, '0101', '商品管理部', '0', '', b'0', '0620', b'1', '电脑版', NULL, 'icon-social-dropbox', '0');
 INSERT INTO `DS_functions` VALUES (22, '060301', '商品购买', '0603', '/pages/materials/product_popularity.html', b'0', '0230', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (23, '010102', '商品信息', '0101', '/pages/materials/product_popularity.html', b'0', '0240', b'1', '电脑版', NULL, 'icon-notebook', '0');
@@ -95,10 +95,10 @@ INSERT INTO `DS_functions` VALUES (195, '010205', '原料标准管理', '0102', 
 INSERT INTO `DS_functions` VALUES (198, '0301', '生产车间', '0', '', b'0', '0570', b'1', '电脑版', NULL, 'icon-pie-chart', '0');
 INSERT INTO `DS_functions` VALUES (200, '060305', '销售退货', '0603', '/pages/manage/refund_applicationManage.html', b'0', '0396', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (201, '040103', '生产计划制定', '0401', '/pages/manage/manufacture_designManage.html', b'0', '0403', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (204, '070404', '总订单查阅', '0704', '/pages/materials/order_form.html', b'0', '0475', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (204, '070404', '会计订单管理', '0704', '/pages/manage/order_formManage_accountant.html', b'0', '0475', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (206, '070406', '退款单', '0704', '/pages/manage/refund_applicationManage.html', b'0', '0490', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (207, '070412', '收款单', '0704', '/pages/materials/payment.html', b'0', '0610', b'1', '电脑版', NULL, 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (209, '060304', '订单细节设置', '0603', '/pages/manage/order_detailsManage.html', b'0', '0630', b'1', '电脑版', NULL, 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (209, '060304', '成品库查询', '0603', '/pages/materials/product_warehouse.html', b'0', '0630', b'1', '电脑版', NULL, 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (210, '040102', '订单详情查询', '0401', '/pages/materials/order_details.html', b'0', '0405', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (211, '040104', '原料库存查询', '0401', '/pages/materials/raw_materials_warehouse.html', b'0', '0407', b'1', '电脑版', '3,4,5', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (217, '01020102', '客户信息', '0102', '/pages/materials/client.html', b'0', '0262', b'1', '电脑版', '1,2', 'icon-notebook', '0');
@@ -109,7 +109,7 @@ INSERT INTO `DS_functions` VALUES (228, '030108', '生产计划查询', '0301', 
 INSERT INTO `DS_functions` VALUES (235, '070408', '资金流水', '0704', '/pages/manage/paymentManage.html', b'0', '0410', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (239, '0801', '原料仓库', '0', '', b'0', '0420', b'1', '电脑版', '', 'icon-layers', '0');
 INSERT INTO `DS_functions` VALUES (240, '010104', '配方管理', '0101', '/pages/manage/product_criteriaManage.html', b'0', '0246', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (242, '060302', '销售订单', '0603', '/pages/manage/order_formManage_salesman.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (242, '060302', '销售订单管理', '0603', '/pages/manage/order_formManage_salesman.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (244, '080112', '原料入库', '0801', '/pages/manage/raw_materials_warehouseManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (245, '080113', '过期食品详情', '0801', '/pages/materials/expired_food.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (246, '080114', '过期食品处理', '0801', '/pages/manage/expired_foodManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
@@ -117,6 +117,7 @@ INSERT INTO `DS_functions` VALUES (250, '0901', '成品仓库', '0', '', b'0', '
 INSERT INTO `DS_functions` VALUES (252, '090109', '成品入库', '0901', '/pages/manage/product_warehouseManage.html', b'0', '0902', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (253, '090113', '成品出库', '0901', '/pages/manage/export_recordManage.html', b'0', '0903', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (258, '090114', '过期食品处理', '0901', '/pages/manage/expired_foodManage.html', b'0', '0904', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (259, '000107', '部门管理', '0001', 'sss', b'1', '9011', b'1', '电脑版', NULL, NULL, '0');
 COMMIT;
 
 -- ----------------------------
@@ -135,7 +136,7 @@ CREATE TABLE `DS_log` (
   `tenant_id` bigint(20) DEFAULT NULL COMMENT '租户id',
   PRIMARY KEY (`id`),
   KEY `FKF2696AA13E226853` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6762 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=6906 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of DS_log
@@ -342,6 +343,150 @@ INSERT INTO `DS_log` VALUES (6758, 120, '用户', '127.0.0.1', '2019-11-30 00:51
 INSERT INTO `DS_log` VALUES (6759, 120, '用户', '127.0.0.1', '2019-11-30 01:05:55', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 INSERT INTO `DS_log` VALUES (6760, 120, '用户', '127.0.0.1', '2019-11-30 11:29:58', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 INSERT INTO `DS_log` VALUES (6761, 120, '用户', '127.0.0.1', '2019-11-30 11:31:47', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6762, 120, '用户', '127.0.0.1', '2019-11-30 11:38:29', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6763, 120, '用户', '127.0.0.1', '2019-11-30 11:46:49', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6764, 120, '用户', '127.0.0.1', '2019-11-30 11:48:55', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6765, 120, '用户', '127.0.0.1', '2019-11-30 11:49:55', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6766, 120, '用户', '127.0.0.1', '2019-11-30 11:52:30', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6767, 120, '用户', '127.0.0.1', '2019-11-30 11:53:58', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6768, 120, '序列号', '127.0.0.1', '2019-11-30 12:01:32', 0, '删除,id:10序列号', '删除,id:10序列号', NULL);
+INSERT INTO `DS_log` VALUES (6769, 120, '用户', '127.0.0.1', '2019-11-30 14:09:49', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6770, 120, '用户', '127.0.0.1', '2019-11-30 15:03:39', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6771, 120, '用户', '127.0.0.1', '2019-11-30 15:05:44', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6772, 120, '用户', '127.0.0.1', '2019-11-30 15:42:05', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6773, 120, '用户', '127.0.0.1', '2019-11-30 15:52:59', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6774, 120, '用户', '127.0.0.1', '2019-11-30 15:54:54', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6775, 120, '用户', '127.0.0.1', '2019-11-30 15:59:02', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6776, 120, '用户', '127.0.0.1', '2019-11-30 16:00:24', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6777, 120, '用户', '127.0.0.1', '2019-11-30 16:57:09', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6778, 120, '用户', '127.0.0.1', '2019-11-30 16:57:58', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6779, 120, '用户', '127.0.0.1', '2019-11-30 17:00:45', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6780, 120, '用户', '127.0.0.1', '2019-11-30 17:15:37', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6781, 120, '用户', '127.0.0.1', '2019-11-30 17:17:20', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6782, 120, '用户', '127.0.0.1', '2019-11-30 21:40:58', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6783, 120, '用户', '127.0.0.1', '2019-11-30 21:56:58', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6784, 120, '用户', '127.0.0.1', '2019-11-30 22:06:02', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6785, 120, '用户', '127.0.0.1', '2019-11-30 22:07:25', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6786, 120, '用户', '127.0.0.1', '2019-11-30 22:10:52', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6787, 120, '用户', '127.0.0.1', '2019-11-30 22:11:34', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6788, 120, '用户', '127.0.0.1', '2019-11-30 22:16:24', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6789, 120, '用户', '127.0.0.1', '2019-11-30 22:18:51', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6790, 120, '用户', '127.0.0.1', '2019-12-01 11:01:52', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6791, 120, '用户', '127.0.0.1', '2019-12-01 11:03:56', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6792, 120, '用户', '127.0.0.1', '2019-12-01 11:05:42', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6793, 120, '用户', '127.0.0.1', '2019-12-01 11:13:45', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6794, 120, '用户', '127.0.0.1', '2019-12-01 12:29:03', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6795, 120, '用户', '127.0.0.1', '2019-12-01 12:31:40', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6796, 120, '用户', '127.0.0.1', '2019-12-01 12:34:08', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6797, 120, '用户', '127.0.0.1', '2019-12-01 12:35:35', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6798, 120, '用户', '127.0.0.1', '2019-12-01 12:38:03', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6799, 120, '用户', '127.0.0.1', '2019-12-01 12:40:29', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6800, 120, '用户', '127.0.0.1', '2019-12-01 12:45:09', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6801, 120, '用户', '127.0.0.1', '2019-12-01 12:48:22', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6802, 120, '用户', '127.0.0.1', '2019-12-01 12:50:07', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6803, 120, '用户', '127.0.0.1', '2019-12-01 12:55:28', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6804, 120, '用户', '127.0.0.1', '2019-12-01 12:58:04', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6805, 120, '用户', '127.0.0.1', '2019-12-01 13:07:49', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6806, 120, '用户', '127.0.0.1', '2019-12-01 13:09:38', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6807, 120, '用户', '127.0.0.1', '2019-12-01 13:14:07', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6808, 120, '用户', '127.0.0.1', '2019-12-01 13:21:20', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6809, 120, '用户', '127.0.0.1', '2019-12-01 13:22:44', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6810, 120, '用户', '127.0.0.1', '2019-12-01 13:27:12', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6811, 120, '用户', '127.0.0.1', '2019-12-01 13:34:20', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6812, 120, '用户', '127.0.0.1', '2019-12-01 13:35:22', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6813, 120, '用户', '127.0.0.1', '2019-12-01 13:36:00', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6814, 120, '用户', '127.0.0.1', '2019-12-01 13:38:59', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6815, 120, '用户', '127.0.0.1', '2019-12-01 13:40:23', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6816, 120, '用户', '127.0.0.1', '2019-12-01 13:43:45', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6817, 120, '用户', '127.0.0.1', '2019-12-01 13:49:14', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6818, 120, '用户', '127.0.0.1', '2019-12-01 13:50:04', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6819, 120, '用户', '127.0.0.1', '2019-12-01 13:51:28', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6820, 120, '用户', '127.0.0.1', '2019-12-01 13:53:06', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6821, 120, '用户', '127.0.0.1', '2019-12-01 13:53:49', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6822, 120, '用户', '127.0.0.1', '2019-12-01 13:54:53', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6823, 120, '用户', '127.0.0.1', '2019-12-01 13:57:13', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6824, 120, '用户', '127.0.0.1', '2019-12-01 14:07:38', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6825, 120, '用户', '127.0.0.1', '2019-12-01 14:14:03', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6826, 120, '用户', '127.0.0.1', '2019-12-01 14:17:43', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6827, 120, '用户', '127.0.0.1', '2019-12-01 14:30:01', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6828, 120, '用户', '127.0.0.1', '2019-12-01 14:32:51', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6829, 120, '用户', '127.0.0.1', '2019-12-01 14:38:54', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6830, 120, '用户', '127.0.0.1', '2019-12-01 14:40:56', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6831, 120, '用户', '127.0.0.1', '2019-12-01 14:42:28', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6832, 120, '用户', '127.0.0.1', '2019-12-01 14:43:53', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6833, 120, '用户', '127.0.0.1', '2019-12-01 14:47:07', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6834, 120, '用户', '127.0.0.1', '2019-12-01 16:31:40', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6835, 120, '用户', '127.0.0.1', '2019-12-01 16:32:41', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6836, 120, '用户', '127.0.0.1', '2019-12-01 16:37:10', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6837, 120, '用户', '127.0.0.1', '2019-12-01 16:38:13', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6838, 120, '用户', '127.0.0.1', '2019-12-01 16:40:50', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6839, 120, '用户', '127.0.0.1', '2019-12-01 16:44:53', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6840, 120, '用户', '127.0.0.1', '2019-12-01 16:47:34', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6841, 120, '用户', '127.0.0.1', '2019-12-01 16:49:52', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6842, 120, '用户', '127.0.0.1', '2019-12-01 16:57:17', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6843, 120, '用户', '127.0.0.1', '2019-12-01 16:59:23', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6844, 120, '用户', '127.0.0.1', '2019-12-01 17:08:31', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6845, 120, '用户', '127.0.0.1', '2019-12-01 17:10:24', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6846, 120, '用户', '127.0.0.1', '2019-12-01 17:12:12', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6847, 120, '用户', '127.0.0.1', '2019-12-01 17:15:24', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6848, 120, '用户', '127.0.0.1', '2019-12-01 17:17:59', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6849, 120, '用户', '127.0.0.1', '2019-12-01 17:21:52', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6850, 120, '用户', '127.0.0.1', '2019-12-02 12:51:22', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6851, 120, '用户', '127.0.0.1', '2019-12-02 13:17:29', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6852, 120, '用户', '127.0.0.1', '2019-12-02 13:50:27', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6853, 120, '用户', '127.0.0.1', '2019-12-02 13:57:57', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6854, 120, '用户', '127.0.0.1', '2019-12-02 17:08:40', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6855, 120, '用户', '127.0.0.1', '2019-12-02 17:08:49', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6856, 120, '用户', '127.0.0.1', '2019-12-02 17:19:57', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6857, 120, '用户', '127.0.0.1', '2019-12-02 17:21:03', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6858, 120, '用户', '127.0.0.1', '2019-12-02 17:22:01', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6859, 120, '用户', '127.0.0.1', '2019-12-02 17:22:34', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6860, 120, '用户', '127.0.0.1', '2019-12-02 17:23:01', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6861, 120, '用户', '127.0.0.1', '2019-12-02 17:26:06', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6862, 120, '用户', '127.0.0.1', '2019-12-02 17:30:16', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6863, 120, '用户', '127.0.0.1', '2019-12-02 17:31:30', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6864, 120, '用户', '127.0.0.1', '2019-12-02 17:32:05', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6865, 120, '用户', '127.0.0.1', '2019-12-02 17:34:20', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6866, 120, '用户', '127.0.0.1', '2019-12-02 17:35:50', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6867, 120, '用户', '127.0.0.1', '2019-12-02 17:36:46', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6868, 120, '用户', '127.0.0.1', '2019-12-02 17:37:27', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6869, 120, '用户', '127.0.0.1', '2019-12-02 17:39:32', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6870, 120, '用户', '127.0.0.1', '2019-12-02 17:40:21', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6871, 120, '用户', '127.0.0.1', '2019-12-02 17:40:46', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6872, 120, '用户', '127.0.0.1', '2019-12-02 17:41:38', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6873, 120, '用户', '127.0.0.1', '2019-12-02 20:20:21', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6874, 120, '用户', '127.0.0.1', '2019-12-02 20:21:50', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6875, 120, '用户', '127.0.0.1', '2019-12-02 20:23:52', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6876, 120, '用户', '127.0.0.1', '2019-12-02 20:24:41', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6877, 120, '用户', '127.0.0.1', '2019-12-02 20:30:02', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6878, 120, '用户', '127.0.0.1', '2019-12-02 20:35:53', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6879, 120, '用户', '127.0.0.1', '2019-12-02 20:39:14', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6880, 120, '用户', '127.0.0.1', '2019-12-02 21:05:35', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6881, 120, '用户', '127.0.0.1', '2019-12-02 21:11:25', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6882, 120, '用户', '127.0.0.1', '2019-12-02 21:20:29', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6883, 120, '用户', '127.0.0.1', '2019-12-02 21:24:03', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6884, 120, '用户', '127.0.0.1', '2019-12-02 21:27:17', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6885, 120, '用户', '127.0.0.1', '2019-12-02 22:42:17', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6886, 120, '用户', '127.0.0.1', '2019-12-02 22:44:38', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6887, 120, '用户', '127.0.0.1', '2019-12-02 22:45:39', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6888, 120, '用户', '127.0.0.1', '2019-12-02 22:46:27', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6889, 120, '用户', '127.0.0.1', '2019-12-02 22:47:41', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6890, 120, '用户', '127.0.0.1', '2019-12-02 22:48:16', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6891, 120, '用户', '127.0.0.1', '2019-12-02 22:49:40', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6892, 120, '用户', '127.0.0.1', '2019-12-02 22:50:32', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6893, 120, '用户', '127.0.0.1', '2019-12-02 22:53:38', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6894, 120, '用户', '127.0.0.1', '2019-12-02 22:54:44', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6895, 120, '用户', '127.0.0.1', '2019-12-02 22:55:24', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6896, 120, '用户', '127.0.0.1', '2019-12-02 22:56:02', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6897, 120, '用户', '127.0.0.1', '2019-12-02 22:56:35', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6898, 120, '用户', '127.0.0.1', '2019-12-02 22:57:14', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6899, 120, '用户', '127.0.0.1', '2019-12-02 22:57:48', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6900, 120, '用户', '127.0.0.1', '2019-12-02 22:58:15', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6901, 120, '用户', '127.0.0.1', '2019-12-02 23:01:24', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6902, 120, '用户', '127.0.0.1', '2019-12-02 23:02:30', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6903, 120, '用户', '127.0.0.1', '2019-12-02 23:03:18', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6904, 120, '用户', '127.0.0.1', '2019-12-02 23:04:47', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (6905, 120, '用户', '127.0.0.1', '2019-12-02 23:07:34', 0, '登录,id:120用户', '登录,id:120用户', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -365,7 +510,7 @@ CREATE TABLE `DS_role` (
 BEGIN;
 INSERT INTO `DS_role` VALUES (4, '管理员', NULL, NULL, NULL, NULL, '0');
 INSERT INTO `DS_role` VALUES (5, '仓管员', NULL, NULL, NULL, NULL, '0');
-INSERT INTO `DS_role` VALUES (10, '租户', NULL, NULL, NULL, NULL, '0');
+INSERT INTO `DS_role` VALUES (10, '租户', NULL, NULL, NULL, NULL, '1');
 INSERT INTO `DS_role` VALUES (12, '角色123', NULL, NULL, NULL, 117, '0');
 INSERT INTO `DS_role` VALUES (13, '角色test', NULL, NULL, NULL, NULL, '0');
 INSERT INTO `DS_role` VALUES (14, '44444', NULL, NULL, NULL, NULL, '1');
@@ -473,6 +618,32 @@ INSERT INTO `DS_userbusiness` VALUES (68, 'UserRole', '133', '[10]', NULL, '0');
 COMMIT;
 
 -- ----------------------------
+-- Table structure for Department
+-- ----------------------------
+DROP TABLE IF EXISTS `Department`;
+CREATE TABLE `Department` (
+  `Dno` char(20) NOT NULL,
+  `Department` char(50) DEFAULT NULL,
+  `Workshop` char(255) DEFAULT NULL,
+  PRIMARY KEY (`Dno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of Department
+-- ----------------------------
+BEGIN;
+INSERT INTO `Department` VALUES ('', NULL, NULL);
+INSERT INTO `Department` VALUES ('01--001', '管理部门', '最高管理部');
+INSERT INTO `Department` VALUES ('02--001', '销售部', '销售部A');
+INSERT INTO `Department` VALUES ('03--001', '会计部', '会计部A');
+INSERT INTO `Department` VALUES ('04--001', '生产计划科', '生产计划科A');
+INSERT INTO `Department` VALUES ('05--001', '生产车间', '车间A');
+INSERT INTO `Department` VALUES ('06--001', '仓库', '原料库A');
+INSERT INTO `Department` VALUES ('06--002', '仓库', '成品库A');
+INSERT INTO `Department` VALUES ('07--001', '商品管理', '商品部A');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for Expired_Food
 -- ----------------------------
 DROP TABLE IF EXISTS `Expired_Food`;
@@ -573,12 +744,12 @@ COMMIT;
 DROP TABLE IF EXISTS `Manufacture_Design`;
 CREATE TABLE `Manufacture_Design` (
   `Manufacture_no` char(40) NOT NULL,
-  `Order_no_details` char(255) NOT NULL,
+  `Order_no_details` varchar(255) NOT NULL,
   `Staff_no_design` char(20) NOT NULL,
   `Product_no` char(20) NOT NULL,
   `Deadline` datetime DEFAULT NULL,
   `Progress` char(100) NOT NULL,
-  `Workshop` char(50) NOT NULL,
+  `Workshop` char(255) NOT NULL,
   `Raw_materials_requirement` char(255) NOT NULL,
   `Products_requirement` char(255) NOT NULL,
   `Details` char(255) NOT NULL,
@@ -590,19 +761,12 @@ CREATE TABLE `Manufacture_Design` (
 -- Records of Manufacture_Design
 -- ----------------------------
 BEGIN;
-INSERT INTO `Manufacture_Design` VALUES ('0000000001', '0000001-01', '', '', '2019-11-21 12:38:06', '', '', '', '', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000002', '0000001-01', '000002', '0001', '2020-02-22 00:56:40', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '第一个订单', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000003', '', '000002', '0001', '2020-02-22 01:01:42', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000004', '', '000002', '0001', '2020-02-22 01:03:04', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000005', '', '000002', '0001', '2020-02-22 01:19:09', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000006', '', '000002', '0001', '2020-02-22 09:38:00', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000007', '', '000002', '0001', '2020-02-22 09:46:18', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000008', '', '000002', '0001', '2020-02-22 09:56:04', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000009', '', '000002', '0001', '2020-02-22 09:58:34', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000010', '', '000002', '0001', '2020-02-22 10:03:04', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000011', '', '000002', '0001', '2020-02-23 02:12:28', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000012', '', '000002', '0001', '2020-02-23 02:15:54', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
-INSERT INTO `Manufacture_Design` VALUES ('0000000013', '', '000002', '0001', '2020-02-23 02:19:43', '生产计划商论阶段', '车间A', '原料所需：00001（30%，4000--公斤）；00002（40%，6000000--毫升）；00005（30%，30000--袋）', '2000--公斤', '', 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000001', '0000001-01', '', '1111', '2019-11-21 12:38:06', '', '', '原料所需：00008（70%，800--捆）；00017（30%，8932--打）', '', '', 1);
+INSERT INTO `Manufacture_Design` VALUES ('0000000002', '0000001-01', '000020', '0001', '2020-02-22 00:56:40', '生产计划商论阶段', '车间ABC', '原料所需：00041（30%，3948--公斤）；00023（70%，50760--袋）', '300--箱', '第一个订单修改', 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000003', '00000010-01；00000011-01；00000023-02；00000024-02', '000002', '0002', '2019-12-06 14:33:46', '', '车间A；车间B；车间C', '原料所需：00001（30%，6864--公斤）；00002（40%，10296000--毫升）；00005（30%，51480--袋）', '1288--公斤', '该生产计划新增子订单：00000024-02', 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000004', '00000021-02', '000001', '0001', '2020-03-01 14:14:59', '', '车间C', '原料所需：00041（30%，3948--公斤）；00023（70%，50760--袋）', '20--箱', '', 1);
+INSERT INTO `Manufacture_Design` VALUES ('0000000005', '00000021-02；00000023-01', '000001', '0001', '2020-03-01 14:30:41', '', '车间C；车间D', '原料所需：00041（30%，6363--公斤）；00023（70%，81810--袋）', '345--公斤', '该生产计划新增子订单：00000023-01', 0);
+INSERT INTO `Manufacture_Design` VALUES ('0000000006', '00000022-02', '000001', '0001', '2019-12-06 14:18:49', '', '车间C', '原料所需：00041（30%，3948--公斤）；00023（70%，50760--袋）', '300--箱', '该生产计划新增子订单：00000022-02', 1);
 COMMIT;
 
 -- ----------------------------
@@ -611,7 +775,7 @@ COMMIT;
 DROP TABLE IF EXISTS `Manufacture_Result`;
 CREATE TABLE `Manufacture_Result` (
   `Manufacture_no` char(40) NOT NULL,
-  `Order_no_details` char(255) NOT NULL,
+  `Order_no_details` varchar(255) NOT NULL,
   `Product_no` char(20) NOT NULL,
   `Staff_no_design` char(20) NOT NULL,
   `Staff_no_manufacture` char(255) NOT NULL,
@@ -625,19 +789,12 @@ CREATE TABLE `Manufacture_Result` (
 -- Records of Manufacture_Result
 -- ----------------------------
 BEGIN;
-INSERT INTO `Manufacture_Result` VALUES ('0000000001', '', '', '', '', '23', '2019-11-16 12:45:57', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000001', '', '', '', '', '23', '2019-11-16 12:45:57', 1);
 INSERT INTO `Manufacture_Result` VALUES ('0000000002', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 00:56:40', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000003', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 01:01:42', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000004', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 01:03:04', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000005', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 01:19:09', 1);
-INSERT INTO `Manufacture_Result` VALUES ('0000000006', '00000011-00', '0001', '000002', '000003;000004', '23', '2019-11-22 09:38:00', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000007', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 09:46:18', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000008', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 09:56:04', 1);
-INSERT INTO `Manufacture_Result` VALUES ('0000000009', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 09:58:34', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000010', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-22 10:03:04', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000011', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-23 02:12:28', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000012', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-23 02:15:54', 0);
-INSERT INTO `Manufacture_Result` VALUES ('0000000013', '00000011-00', '0001', '000002', '000003;000004', '', '2019-11-23 02:19:43', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000003', '00000010-01；00000011-01；00000023-02；00000024-02', '0002', '00002', '车间A', '0', '2019-12-01 14:33:46', 1);
+INSERT INTO `Manufacture_Result` VALUES ('0000000004', '00000021-02', '0001', '000001', '车间C', '0', '2019-12-01 14:14:59', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000005', '00000021-02；00000023-01', '0001', '000001', '车间C', '0', '2019-12-01 14:30:41', 0);
+INSERT INTO `Manufacture_Result` VALUES ('0000000006', '00000022-02', '0002', '000001', '车间C', '0', '2019-12-01 14:18:50', 1);
 COMMIT;
 
 -- ----------------------------
@@ -678,7 +835,7 @@ INSERT INTO `Order_Details` VALUES ('00000008-01', '0002', '500--车', '000001',
 INSERT INTO `Order_Details` VALUES ('00000009-00', '0001', '2000--公斤', '000001', '2020-02-19 17:03:06', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000009-01', '0002', '500--车', '000001', '2019-11-24 17:03:06', NULL, 1, 1);
 INSERT INTO `Order_Details` VALUES ('00000010-00', '0001', '2000--公斤', '000001', '2020-02-19 17:16:09', NULL, 1, 1);
-INSERT INTO `Order_Details` VALUES ('00000010-01', '0002', '500--车', '000001', '2019-11-24 17:16:09', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000010-01', '0002', '500--车', '000001', '2019-12-07 12:40:53', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000011-00', '0001', '2000--公斤', '000001', '2020-02-24 02:19:43', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000011-01', '0002', '500--车', '000001', '2019-11-24 17:41:53', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000012-00', '0001', '2000--公斤', '000001', '2020-02-19 17:50:45', NULL, 1, 1);
@@ -699,9 +856,9 @@ INSERT INTO `Order_Details` VALUES ('00000019-00', '0001', '2000--公斤', '0000
 INSERT INTO `Order_Details` VALUES ('00000019-01', '0002', '500--车', '000001', '2019-11-24 21:03:42', NULL, 1, 1);
 INSERT INTO `Order_Details` VALUES ('00000020-01', '0002', '222--公斤', '000001', '2019-12-05 07:52:29', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000020-02', '0001', '333--公斤', '000001', '2020-02-29 07:52:29', NULL, 1, 0);
-INSERT INTO `Order_Details` VALUES ('00000021-02', '0001', '564--公斤', '000001', '2020-02-29 07:56:59', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000021-02', '0001', '564--公斤', '000001', '2020-03-02 14:18:09', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000022-01', '0001', '33--公斤', '000001', '2020-02-29 07:57:48', NULL, 1, 0);
-INSERT INTO `Order_Details` VALUES ('00000022-02', '0002', '675745--公斤', '000001', '2019-12-05 07:57:48', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000022-02', '0002', '675745--公斤', '000001', '2019-12-07 14:18:49', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000023-01', '0001', '45--公斤', '000001', '2020-02-29 08:10:12', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000023-02', '0002', '44--公斤', '000001', '2019-12-05 08:10:12', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000024-01', '0001', '23--公斤', '000001', '2020-02-29 02:14:01', NULL, 1, 0);
@@ -710,9 +867,9 @@ INSERT INTO `Order_Details` VALUES ('00000025-01', '0001', '34--公斤', '000001
 INSERT INTO `Order_Details` VALUES ('00000026-01', '0002', '342--公斤', '000001', '2019-12-05 16:26:23', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000027-01', '0001', '43--箱', '000001', '2020-02-29 16:26:50', NULL, 1, 0);
 INSERT INTO `Order_Details` VALUES ('00000028-01', '0002', '33--个', '000001', '2019-12-05 16:28:22', NULL, 1, 0);
-INSERT INTO `Order_Details` VALUES ('00000029-01', '0001', '999--克', '000001', '2020-02-29 16:28:31', NULL, 1, 0);
-INSERT INTO `Order_Details` VALUES ('00000030-01', '0001', '545--车', '000001', '2020-02-29 16:28:43', NULL, 1, 0);
-INSERT INTO `Order_Details` VALUES ('00000030-02', '0002', '86--克', '000001', '2019-12-05 16:28:43', NULL, 1, 0);
+INSERT INTO `Order_Details` VALUES ('00000029-01', '0001', '999--克', '000001', '2020-02-29 16:28:31', NULL, 1, 1);
+INSERT INTO `Order_Details` VALUES ('00000030-01', '0001', '545--车', '000001', '2020-02-29 16:28:43', NULL, 1, 1);
+INSERT INTO `Order_Details` VALUES ('00000030-02', '0002', '86--克', '000001', '2019-12-05 16:28:43', NULL, 1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -736,36 +893,36 @@ CREATE TABLE `Order_Form` (
 -- Records of Order_Form
 -- ----------------------------
 BEGIN;
-INSERT INTO `Order_Form` VALUES ('00000001', '000001', '000001', '2019-11-16 16:19:12', 900, '尾款全部缴清，未违约', 100, 0, 0);
-INSERT INTO `Order_Form` VALUES ('00000002', '000002', '000003', '2019-11-23 02:19:42', 0, '进行中。。。', 0, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000003', '000001', '000002', '2019-11-18 15:49:11', 1450000, '尾款逾期，违约金及定金差3000元', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000004', '000001', '', '2019-11-18 16:39:35', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000005', '000001', '', '2019-11-18 16:40:46', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000006', '000001', '', '2019-11-18 16:46:03', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000007', '000001', '', '2019-11-18 16:52:26', 1450000, '尾款全部缴清，未违约', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000008', '000001', '', '2019-11-18 16:55:16', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000009', '000001', '', '2019-11-18 17:03:06', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000010', '000001', '', '2019-11-18 17:16:09', 1450000, '当前支付9000元，共计1次支付记录', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000011', '000001', '', '2019-11-18 17:41:53', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000012', '000001', '', '2019-11-18 17:50:45', 1450000, '正在生产计划与讨论。。。', 145000, 1, 1);
-INSERT INTO `Order_Form` VALUES ('00000013', '000001', '', '2019-11-18 17:55:22', 1450000, '当前支付78800元，共计3次支付记录', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000014', '000001', '', '2019-11-18 20:13:10', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000015', '000001', '', '2019-11-18 20:24:41', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000016', '000001', '', '2019-11-18 20:56:23', 1450000, '当前支付300元，共计2次支付记录', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000017', '000001', '', '2019-11-18 20:57:44', 1450000, '正在生产计划与讨论。。。', 145000, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000018', '000001', '', '2019-11-18 20:59:36', 1450000, '尾款全部缴清，未违约', 145000, 0, 1);
-INSERT INTO `Order_Form` VALUES ('00000019', '000001', '', '2019-11-18 21:03:42', 1450000, '正在生产计划与讨论。。。', 145000, 1, 1);
-INSERT INTO `Order_Form` VALUES ('00000020', '000001', '', '2019-11-29 07:52:29', 310800, '正在生产计划与讨论。。。', 31080, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000021', '000001', '', '2019-11-29 07:56:59', 3715400, '当前支付7862元，共计1次支付记录', 371540, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000022', '000001', '', '2019-11-29 07:57:48', 337892300, '正在生产计划与讨论。。。', 33789230, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000023', '000001', '', '2019-11-29 08:10:12', 49000, '正在生产计划与讨论。。。', 4900, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000024', '000001', '', '2019-11-29 02:14:01', 235800, '正在生产计划与讨论。。。', 23580, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000025', '000001', '', '2019-11-29 16:22:03', 20400, '当前支付300元，共计2次支付记录', 2040, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000026', '000001', '', '2019-11-29 16:26:23', 171000, '正在生产计划与讨论。。。', 17100, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000027', '000001', '', '2019-11-29 16:26:50', 25800, '审核通过', 2580, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000028', '000001', '', '2019-11-29 16:28:22', 16500, '正在生产计划与讨论。。。', 1650, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000029', '000001', '', '2019-11-29 16:28:31', 599400, '当前支付300元，共计2次支付记录', 59940, 1, 0);
-INSERT INTO `Order_Form` VALUES ('00000030', '000001', '', '2019-11-29 16:28:43', 370000, '当前未有支付记录', 37000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000001', '000001', '000001', '2019-11-16 16:19:12', 900, '会计初审完成', 100, 0, 0);
+INSERT INTO `Order_Form` VALUES ('00000002', '000002', '000003', '2019-11-23 02:19:42', 0, '客户提交成功', 0, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000003', '000001', '000002', '2019-11-18 15:49:11', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000004', '000001', '', '2019-11-18 16:39:35', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000005', '000001', '', '2019-11-18 16:40:46', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000006', '000001', '', '2019-11-18 16:46:03', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000007', '000001', '', '2019-11-18 16:52:26', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000008', '000001', '', '2019-11-18 16:55:16', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000009', '000001', '', '2019-11-18 17:03:06', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000010', '000001', '', '2019-11-18 17:16:09', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000011', '000001', '', '2019-11-18 17:41:53', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000012', '000001', '', '2019-11-18 17:50:45', 1450000, '客户提交成功', 145000, 1, 1);
+INSERT INTO `Order_Form` VALUES ('00000013', '000001', '', '2019-11-18 17:55:22', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000014', '000001', '', '2019-11-18 20:13:10', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000015', '000001', '', '2019-11-18 20:24:41', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000016', '000001', '', '2019-11-18 20:56:23', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000017', '000001', '', '2019-11-18 20:57:44', 1450000, '客户提交成功', 145000, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000018', '000001', '', '2019-11-18 20:59:36', 1450000, '客户提交成功', 145000, 0, 1);
+INSERT INTO `Order_Form` VALUES ('00000019', '000001', '', '2019-11-18 21:03:42', 1450000, '客户提交成功', 145000, 1, 1);
+INSERT INTO `Order_Form` VALUES ('00000020', '000001', '', '2019-11-29 07:52:29', 310800, '客户提交成功', 31080, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000021', '000001', '', '2019-11-29 07:56:59', 3715400, '客户提交成功', 371540, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000022', '000001', '', '2019-11-29 07:57:48', 337892300, '客户提交成功', 33789230, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000023', '000001', '', '2019-11-29 08:10:12', 49000, '客户提交成功', 4900, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000024', '000001', '', '2019-11-29 02:14:01', 235800, '客户提交成功', 23580, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000025', '000001', '', '2019-11-29 16:22:03', 20400, '会计初审完成', 2222, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000026', '000001', '', '2019-11-29 16:26:23', 171000, '客户提交成功', 17100, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000027', '000001', '', '2019-11-29 16:26:50', 25800, '客户提交成功', 2580, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000028', '000001', '', '2019-11-29 16:28:22', 16500, '客户提交成功', 1650, 1, 0);
+INSERT INTO `Order_Form` VALUES ('00000029', '000001', '000002', '2019-11-29 16:28:31', 599400, '订单终止', 59940, 1, 1);
+INSERT INTO `Order_Form` VALUES ('00000030', '000001', '', '2019-11-29 16:28:43', 370000, '客户提交成功', 37000, 1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -810,8 +967,9 @@ CREATE TABLE `Product_Criteria` (
 -- Records of Product_Criteria
 -- ----------------------------
 BEGIN;
-INSERT INTO `Product_Criteria` VALUES ('0001', '小面包', '焙烤食品', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '3--月', '12--月', 600, 0);
+INSERT INTO `Product_Criteria` VALUES ('0001', '小面包', '焙烤食品', '每单位：00041（30%，7--公斤）；00023（70%，90--袋）', '3--月', '12--月', 600, 0);
 INSERT INTO `Product_Criteria` VALUES ('0002', '巧克力', '可可制品、巧克力和巧克力制品、以及糖果', '每单位：00001（30%，2--公斤）；00002（40%，3000--毫升）；00005（30%，15--袋）', '5--天', '3--年', 500, 0);
+INSERT INTO `Product_Criteria` VALUES ('0003', '章鱼小丸子', '水产品及其制品', '每单位：00071（50%，12--个）；00014（20%，6--毫升）；00035（30%，15--根）', '1--天', '', 0, 0);
 COMMIT;
 
 -- ----------------------------
@@ -835,8 +993,8 @@ CREATE TABLE `Product_Warehouse` (
 -- Records of Product_Warehouse
 -- ----------------------------
 BEGIN;
-INSERT INTO `Product_Warehouse` VALUES ('00000001', '0001', '000002', '000003', '第一仓库', '2019-11-21 10:27:00', '300--千克', '', 1);
-INSERT INTO `Product_Warehouse` VALUES ('00000002', '0001', '000002', '000003', '第一仓库', '2019-11-01 10:27:00', '300--千克', '', 1);
+INSERT INTO `Product_Warehouse` VALUES ('00000001', '0001', '000002', '000003', '第一仓库', '2019-11-21 10:27:00', '300--千克', '', 0);
+INSERT INTO `Product_Warehouse` VALUES ('00000002', '0001', '000002', '000003', '第一仓库', '2019-11-01 10:27:00', '300--千克', '', 0);
 INSERT INTO `Product_Warehouse` VALUES ('00000003', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 11:30:13', '500--升', '', 0);
 INSERT INTO `Product_Warehouse` VALUES ('00000004', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 11:33:21', '500--升', '', 0);
 INSERT INTO `Product_Warehouse` VALUES ('00000005', '0001', '', '', '大山食品厂----7625254号厂房', '2019-11-21 18:33:55', '500--升', '', 0);
@@ -890,7 +1048,8 @@ CREATE TABLE `Raw_Materials_Criteria` (
 -- Records of Raw_Materials_Criteria
 -- ----------------------------
 BEGIN;
-INSERT INTO `Raw_Materials_Criteria` VALUES ('0001', '面粉', '谷物类', '3--年', 0);
+INSERT INTO `Raw_Materials_Criteria` VALUES ('00001', '面粉', '谷物类', '3--年', 0);
+INSERT INTO `Raw_Materials_Criteria` VALUES ('00002', '鸡蛋', '蛋白类', '7--天', 0);
 COMMIT;
 
 -- ----------------------------
@@ -1029,6 +1188,44 @@ INSERT INTO `Staff` VALUES (130, 'jsh666', 'jsh666', 'e10adc3949ba59abbe56e057f2
 INSERT INTO `Staff` VALUES (131, 'hahaha', NULL, '654321', NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0);
 INSERT INTO `Staff` VALUES (132, 'hahaha', 'hahaha', '123456', NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0);
 INSERT INTO `Staff` VALUES (133, 'cnmb', 'cnmb', '35a903b377414e8da7954ed1a8da490c', NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for Unit
+-- ----------------------------
+DROP TABLE IF EXISTS `Unit`;
+CREATE TABLE `Unit` (
+  `Unit_no` char(10) NOT NULL,
+  `Unit_name` char(20) DEFAULT NULL,
+  `Unit_name_en` char(20) DEFAULT NULL,
+  `Unit_rate` char(20) DEFAULT NULL,
+  `Default_type` char(20) DEFAULT NULL,
+  `Food_type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Unit_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of Unit
+-- ----------------------------
+BEGIN;
+INSERT INTO `Unit` VALUES ('001', '公斤', 'kg', '1:1', '公斤', '脂肪、油和乳化脂肪制品；水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；粮食和粮食制品；焙烤食品；蛋及蛋制品；肉及肉制品；水产品及其制品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('002', '公升', 'L', '1:1', '公升', '乳与乳制品；冷冻饮品；饮料类；酒类；粮食和粮食制品；焙烤食品；脂肪、油和乳化脂肪制品；特殊营养食品；其他类；甜味料；调味品');
+INSERT INTO `Unit` VALUES ('003', '毫升', 'ml', '1000:1', '毫升', '乳与乳制品；冷冻饮品；饮料类；酒类；粮食和粮食制品；焙烤食品；脂肪、油和乳化脂肪制品；甜味料；调味品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('004', '箱', 'trunk', '30:1', '个', '乳与乳制品；冷冻饮品；饮料类；酒类；水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；粮食和粮食制品；焙烤食品；蛋及蛋制品；肉及肉制品；水产品及其制品；甜味料；调味品；特殊营养食品；其他类；脂肪、油和乳化脂肪制品');
+INSERT INTO `Unit` VALUES ('005', '罐', 'tin', '3:2', '公升', '乳与乳制品；冷冻饮品；饮料类；酒类；甜味料；调味品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('006', '磅', 'pound', '9:20', '公斤', '乳与乳制品；冷冻饮品；饮料类；酒类；脂肪、油和乳化脂肪制品；蛋及蛋制品；肉及肉制品；水产品及其制品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('007', '盒', 'case', '20:1', '个', '乳与乳制品；冷冻饮品；饮料类；酒类；脂肪、油和乳化脂肪制品；甜味料；调味品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('008', '瓶', 'bot', '2:1', '公升', '乳与乳制品；冷冻饮品；饮料类；酒类；脂肪、油和乳化脂肪制品；甜味料；调味品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('009', '吨', 'ton', '1:1000', '公斤', '脂肪、油和乳化脂肪制品；水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；粮食和粮食制品；焙烤食品；蛋及蛋制品；肉及肉制品；水产品及其制品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('010', '克', 'g', '1000:1', '公斤', '脂肪、油和乳化脂肪制品；水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；粮食和粮食制品；焙烤食品；蛋及蛋制品；肉及肉制品；水产品及其制品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('011', '车', 'cl.', '1:500', '箱', '脂肪、油和乳化脂肪制品；水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；粮食和粮食制品；焙烤食品；蛋及蛋制品；肉及肉制品；水产品及其制品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('012', '根', 'bar', '1:1', '根', '水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('013', '捆', 'bundle', '1:6', '根', '水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('014', '袋', 'bag', '1:2', '公斤', '水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；粮食和粮食制品；焙烤食品；甜味料；调味品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('015', '个', 'one', '1:1', '个', '水果、蔬菜、豆类、食用菌、藻类、坚果以及籽类；可可制品、巧克力和巧克力制品、以及糖果；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('016', '件', 'pcs', '1:1', '个', '甜味料；调味品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('017', '包', 'pkt.', '1:10', '个', '脂肪、油和乳化脂肪制品；粮食和粮食制品；焙烤食品；蛋及蛋制品；肉及肉制品；水产品及其制品；甜味料；调味品；特殊营养食品；其他类');
+INSERT INTO `Unit` VALUES ('018', '打', 'dozen', '1:12', '个', '蛋及蛋制品；肉及肉制品；水产品及其制品；特殊营养食品；其他类');
 COMMIT;
 
 -- ----------------------------
