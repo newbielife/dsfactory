@@ -63,6 +63,13 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
+<div id="productDlg" class="easyui-window " title="Details" style=" width:700px;padding:10px 20px"
+     closed="true" modal="true" cache="false" collapsible="false" cloable="true">
+    <div>
+        <table id="tableDeData" style="top:300px;height:150px;border-bottom-color:#FFFFFF"></table>
+    </div>
+</div>
+
 <script type="text/javascript">
     //初始化界面
     $(function () {
@@ -94,7 +101,7 @@
             pageSize: initPageSize,
             pageList: initPageNum,
             columns: [[
-                {field: 'id', width: 35, align: "center", Detailsbox: true},
+                {field: 'id', width: 35, align: "center", checkbox: true},
                 {title: '成品库存编号', field: 'stock_no', width: 100},
                 {title: '成品编号', field: 'product_no', width: 80},
                 {title: '成品库负责人编号', field: 'staff_no_storage', width: 120},
@@ -104,9 +111,9 @@
                 {title: '车间负责人编号', field: 'staff_no_workshop', width: 120},
                 {title: '存货详情', field: 'details', width: 180},
                 {
-                    formatter: function (value, rec) {
+                    title: '操作', field: 'op', align: "center", width: 100,formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.stock_no + 'AaBb' + rec.product_no + 'AaBb' + rec.staff_no_storage + 'AaBb' + rec.manufacture_date+ 'AaBb' + rec.stock_num+ 'AaBb' + rec.storage_address+ 'AaBb' + rec.staff_no_workshop+ 'AaBb' + rec.details;
+                        str += '<img title="查看" src="/js/easyui-1.3.5/themes/icons/list.png" style="cursor: pointer;" onclick="showCriteria(\'' + rec.product_no + '\');"/>&nbsp;&nbsp;&nbsp;';
                         return str;
                     }
                 }
@@ -222,6 +229,78 @@
         }
     });
 
+    /********************************************************************/
+    function showCriteria(product_no) {
+        $('#productDlg').window('open').window('setTitle', '原料号  "'+product_no+'"  的详情');
+        $("#Order_no").val("").focus();
+        $(function () {
+            initTableDeData(product_no);
+        });
+        oldOrder_form = "";
+        order_formID = 0;
+    }
+
+
+    function initTableDeData(product_no) {
+        $('#tableDeData').datagrid({
+            height: heightInfo,
+            nowrap: false,
+            rownumbers: false,
+            animate: false,
+            singleSelect: true,
+            collapsible: false,
+            selectOnCheck: false,
+            pagination: true,
+            striped: true,
+            pageSize: initPageSize,
+            pageList: initPageNum,
+            columns: [[
+                {field: 'id', width: 35, align: "center", checkbox: true},
+                {title: '编号', field: 'product_no', width: 40},
+                {title: '产品名', field: 'product_name', width: 80},
+                {title: '分类', field: 'product_type', width: 280},
+                {title: '生产周期', field: 'manufacture_duration', width: 80},
+                {title: '保质期', field: 'guarantee_period', width: 80},
+                {title: '单价', field: 'unit_Price', width: 40}
+            ]],
+            onLoadError: function () {
+                $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
+                return;
+            }
+        });
+        dgResize();
+        showProduct_criteriaDetails2(1, initPageSize,product_no);
+    }
+
+
+    function showProduct_criteriaDetails2(pageNo, pageSize,product_no) {
+        var no = product_no;
+        $.ajax({
+            type: "get",
+            url: "/manufacturedesign/getProducts",
+            dataType: "json",
+            data: ({
+                search: JSON.stringify({
+                    no: no
+                }),
+                currentPage: pageNo,
+                pageSize: pageSize
+            }),
+            success: function (res) {
+                if(res && res.code === 200){
+                    if(res.data && res.data.page) {
+                        $("#tableDeData").datagrid('loadData', res.data.page);
+                    }
+                }
+            },
+            //此处添加错误处理
+            error: function () {
+                $.messager.alert('查询提示', '查询数据后台异常，请稍后再试！', 'error');
+                return;
+            }
+        });}
+
 </script>
 </body>
 </html>
+

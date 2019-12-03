@@ -113,6 +113,14 @@
     <a href="javascript:void(0)" id="cancelRaw_Materials_Warehouse" class="easyui-linkbutton" iconCls="icon-cancel"
        onclick="javascript:$('#Raw_Materials_WarehouseDlg').dialog('close')">取消</a>
 </div>
+
+<div id="productDlg" class="easyui-window " title="Details" style=" width:500px;padding:10px 20px"
+     closed="true" modal="true" cache="false" collapsible="false" cloable="true">
+    <div>
+        <table id="tableDeData" style="top:300px;height:150px;border-bottom-color:#FFFFFF"></table>
+    </div>
+</div>
+
 <script type="text/javascript">
     //初始化界面
     $(function () {
@@ -148,7 +156,7 @@
                 {title: '库存编号', field: 'stock_no', width: 100},
                 {title: '原料编号', field: 'material_no', width: 100},
                 {title: '库存量', field: 'stock_num', width: 60},
-                {title: '存放地址', field: 'storage_address', width: 140},
+                {title: '存放地址', field: 'storage_address', width: 180},
                 {title: '原料生产时间', field: 'product_date', width: 100},
                 {title: '仓库负责人编号', field: 'staff_no_storage', width: 100},
                 {title: '详情', field: 'details', width: 200},
@@ -157,7 +165,7 @@
                         var str = '';
                         var rowInfo = rec.stock_no + 'AaBb' + rec.material_no + 'AaBb' + rec.stock_num + 'AaBb' + rec.storage_address+ 'AaBb' + rec.product_date+ 'AaBb' + rec.staff_no_storage+ 'AaBb' + rec.details;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editRaw_Materials_Warehouse(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editRaw_Materials_Warehouse(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        //str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteRaw_Materials_Warehouse(' + rec.id + ');"/>&nbsp;<a onclick="deleteRaw_Materials_Warehouse(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
+                        str += '<img title="查看" src="/js/easyui-1.3.5/themes/icons/list.png" style="cursor: pointer;" onclick="showCriteria(\'' + rec.material_no + '\');"/>&nbsp;&nbsp;&nbsp;';
                         return str;
                     }
                 }
@@ -443,6 +451,79 @@
         }
     });
 
+    /********************************************************************/
+    function showCriteria(product_no) {
+        $('#productDlg').window('open').window('setTitle', '原料号  "'+product_no+'"  的详情');
+        $("#Order_no").val("").focus();
+        $(function () {
+            initTableDeData(product_no);
+        });
+        oldOrder_form = "";
+        order_formID = 0;
+    }
+
+
+    function initTableDeData(product_no) {
+        $('#tableDeData').datagrid({
+            height: heightInfo,
+            nowrap: false,
+            rownumbers: false,
+            animate: false,
+            singleSelect: true,
+            collapsible: false,
+            selectOnCheck: false,
+            pagination: true,
+            striped: true,
+            pageSize: initPageSize,
+            pageList: initPageNum,
+            columns: [[
+                {field: 'id', width: 35, align: "center", checkbox: true},
+                {title: '原料编号', field: 'material_no', width: 80},
+                {title: '原料名', field: 'material_name', width: 80},
+                {title: '原料分类', field: 'material_type', width: 80},
+                {title: '保质期', field: 'guarantee_period', width: 80}
+            ]],
+            onLoadError: function () {
+                $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
+                return;
+            }
+        });
+        dgResize();
+        showProduct_criteriaDetails2(1, initPageSize,product_no);
+    }
+
+
+    function showProduct_criteriaDetails2(pageNo, pageSize,product_no) {
+        var no = product_no;
+        $.ajax({
+            type: "get",
+            url: "/manufacturedesign/getMaterials",
+            dataType: "json",
+            data: ({
+                search: JSON.stringify({
+                    no: no
+                }),
+                currentPage: pageNo,
+                pageSize: pageSize
+            }),
+            success: function (res) {
+                if(res && res.code === 200){
+                    if(res.data && res.data.page) {
+                        $("#tableDeData").datagrid('loadData', res.data.page);
+                    }
+                }
+            },
+            //此处添加错误处理
+            error: function () {
+                $.messager.alert('查询提示', '查询数据后台异常，请稍后再试！', 'error');
+                return;
+            }
+        });}
+
+
+
+
 </script>
 </body>
 </html>
+

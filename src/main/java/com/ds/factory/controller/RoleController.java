@@ -126,4 +126,26 @@ public class RoleController {
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
+
+    @PostMapping("/add")
+    @ResponseBody
+    public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Role role= JSON.parseObject(beanJson, Role.class);
+        roleService.insert___(role);
+        return result;
+    }
+
+
+    @PostMapping("/update")
+    @ResponseBody
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Role role= JSON.parseObject(beanJson, Role.class);
+        role.setId(id);
+        roleService.update___(role);
+        return result;
+    }
+
+
 }

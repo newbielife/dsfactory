@@ -13,8 +13,7 @@ public interface Order_DetailsService {
     List<Order_Details> selectByConstraint(String Order_no_details, String Client_no,String Product_no,String Check);
     List<Product_Popularity> selectByConstraint(String Product_no,String Product_name,String Product_type);
     int updateCheckByOrder_no(String Order_no);
-
-
+    int updateCheckManufacture_permission(String Order_no);
 
 
     int deleteByOrder_no(String Order_no);

@@ -207,16 +207,20 @@
                 {title: '产品编号', field: 'product_no', width: 100},
                 {title: '产品需求', field: 'products_requirement', width: 180},
                 {title: '客户编号', field: 'client_no', width: 100},
-                {title: '运输日期', field: 'delivery_date', width: 100},
+                {title: '预计运输日期', field: 'delivery_date', width: 100},
                 {title: '支付截止日期', field: 'payment_deadline', width: 100},
-                {title: '订单状态', field: 'check', width: 70 , formatter:function (value, rec) {
+                {title: '订单状态', field: 'check', width: 100 , formatter:function (value, rec) {
                         var str = '';
-                        if(rec.check==0)
-                            str += '<font color="#00FF00" >已付清</font>&nbsp;&nbsp;';
-                        else if(rec.check==1)
-                            str += '<font color="#FF0000" >未付清</font>&nbsp;&nbsp;';
+                        var x=rec.check;
+                        if(x!=0&&x!=1&&x!=2)    x=-1;
+                        if(x==0)
+                            str += '<font color="#00FF00" >生产结束</font>&nbsp;&nbsp;';
+                        else if(x==1)
+                            str += '<font color="#FF0000" >等待审核</font>&nbsp;&nbsp;';
+                        else if(x==2)
+                            str += '<font color="#0000FF" >允许生产</font>&nbsp;&nbsp;';
                         else
-                            str += '<font color="#0000FF" >未知错误</font>&nbsp;&nbsp;';
+                            str+='<span style="color:gold;background-color:black">未知错误</span>&nbsp;&nbsp;' ;
                         return str;
                     }
                 }
@@ -305,7 +309,7 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeleteOrder_formForceConfirm(res,"/order_form/batchDeleteOrder_formByIds",jsondata,type);
+                                    batDeleteOrder_formForceConfirm(res,"/order/batchDeleteOrderByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{

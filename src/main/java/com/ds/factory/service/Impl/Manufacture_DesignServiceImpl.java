@@ -75,7 +75,8 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
         Date deadline=new Date(); //取时间
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(deadline);
-        if(duration_unit.trim().compareTo("天")==0)
+        if(duration_unit.trim().compareTo("天")==0||duration_unit.trim().compareTo("日")==0
+                ||duration_unit.trim().compareTo("时")==0||duration_unit.trim().compareTo("分")==0)
             calendar.add(calendar.DATE,duration_number);
         else if(duration_unit.trim().compareTo("周")==0)
             calendar.add(calendar.DATE,duration_number*7);

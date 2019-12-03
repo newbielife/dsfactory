@@ -105,4 +105,6 @@
                 and Product_Criteria.Product_name like '%${Product_name}%'  and Product_Criteria.Product_type like '%${Product_type}%'
           order by a.num desc
     </select>
+
+
 </mapper>

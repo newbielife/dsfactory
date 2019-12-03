@@ -12,12 +12,17 @@ public interface Order_DetailsMapper {
 
     int deleteLike(@Param("Order_no") String Order_no);
     int updateCheckByOrder_no(@Param("Order_no") String Order_no);
+    int updateCheckManufacture_permission(@Param("Order_no") String Order_no);
+
+
     List<Order_Details> selectByConstraint_disabled(@Param("Order_no_details") String Order_no_details,
                      @Param("Client_no") String Client_no,@Param("Product_no") String Product_no);
     List<Order_Details> selectByConstraint_enabled(@Param("Order_no_details") String Order_no_details,
                                                     @Param("Client_no") String Client_no,@Param("Product_no") String Product_no);
     List<Order_Details> selectByConstraint_all(@Param("Order_no_details") String Order_no_details,
                                                     @Param("Client_no") String Client_no,@Param("Product_no") String Product_no);
+    List<Order_Details> selectByConstraint_Permission(@Param("Order_no_details") String Order_no_details,
+                                               @Param("Client_no") String Client_no,@Param("Product_no") String Product_no);
 
 
     int exist_or_not(@Param("Order_no_details") String Order_no_details);

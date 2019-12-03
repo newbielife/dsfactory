@@ -66,7 +66,8 @@ public class OrderFormController {
         }
         else if(order_form.getProgress().compareTo("生产计划与车间工作中")==0)
         {
-           order_detailsService.selectByOrder_no(Order_no);
+            order_detailsService.updateCheckManufacture_permission(Order_no);
+            order_detailsService.selectByOrder_no(Order_no);
         }
         else if(order_form.getProgress().compareTo("订单终止")==0)
         {

@@ -31,12 +31,13 @@
             <td>
                 <input name="searchClient_no" id="searchClient_no"style="width:70px;"/>
             </td>
-            <td>审查：</td>
+            <td>订单状态：</td>
             <td>
-                <select name="searchCheck" id="searchCheck"style="width:100px;">
+                <select name="searchCheck" id="searchCheck"style="width:160px;">
+                    <option value="允许生产">默认（允许生产）</option>
                     <option value="">全部</option>
-                    <option value="已完成">生产结束</option>
-                    <option value="正在进行">等待生产</option>
+                    <option value="生产结束">生产结束</option>
+                    <option value="等待审核">等待审核</option>
                 </select>
             </td>
 
@@ -50,6 +51,13 @@
         </tr>
     </table>
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
+</div>
+
+<div id="productDlg" class="easyui-window " title="Details" style=" width:700px;padding:10px 20px"
+     closed="true" modal="true" cache="false" collapsible="false" cloable="true">
+    <div>
+        <table id="tableDeData" style="top:300px;height:150px;border-bottom-color:#FFFFFF"></table>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -90,21 +98,25 @@
                 {title: '客户编号', field: 'client_no', width: 100},
                 {title: '运输日期', field: 'delivery_date', width: 100},
                 {title: '支付截止日期', field: 'payment_deadline', width: 100},
-                {title: '订单状态', field: 'check', width: 70 , formatter:function (value, rec) {
+                {title: '订单状态', field: 'check', width: 100 , formatter:function (value, rec) {
                         var str = '';
-                        if(rec.check==0)
+                        var x=rec.check;
+                        if(x!=0&&x!=1&&x!=2)    x=-1;
+                        if(x==0)
                             str += '<font color="#00FF00" >生产结束</font>&nbsp;&nbsp;';
-                        else if(rec.check==1)
-                            str += '<font color="#FF0000" >等待生产</font>&nbsp;&nbsp;';
+                        else if(x==1)
+                            str += '<font color="#FF0000" >等待审核</font>&nbsp;&nbsp;';
+                        else if(x==2)
+                            str += '<font color="#0000FF" >允许生产</font>&nbsp;&nbsp;';
                         else
-                            str += '<font color="#0000FF" >未知错误</font>&nbsp;&nbsp;';
+                            str+='<span style="color:gold;background-color:black">未知错误</span>&nbsp;&nbsp;' ;
                         return str;
                     }
                 },
                 {
-                    formatter: function (value, rec) {
+                    title: '操作', field: 'op', align: "center", width: 60, formatter: function (value, rec) {
                         var str = '';
-                        var rowInfo = rec.order_no_details + 'AaBb' + rec.product_no + 'AaBb' + rec.products_requirement + 'AaBb' + rec.client_no+ 'AaBb' + rec.delivery_date+ 'AaBb' + rec.payment_deadline+ 'AaBb' + rec.check;
+                        str += '<img title="查看" src="/js/easyui-1.3.5/themes/icons/list.png" style="cursor: pointer;" onclick="showCriteria(\'' + rec.product_no + '\');"/>&nbsp;&nbsp;&nbsp;';
                         return str;
                     }
                 }
@@ -155,11 +167,195 @@
             $.messager.alert('异常处理提示', "分页信息异常 :  " + e.name + ": " + e.message, 'error');
         }
     }
-     //搜索处理
+
+    function deleteOrder_details(id) {
+        $.ajax({
+            type: "post",
+            url: "/order/batchDeleteOrder_detailsByIds",
+            dataType: "json",
+            async: false,
+            data: ({
+                id: id
+            }),
+            success: function (res) {
+                if(res && res.code === 200) {
+                } else {
+                    if(res && res.code == 601){
+                        var jsondata={};
+                        jsondata.id=id;
+                        jsondata.deleteType='2';
+                        var type='batch';
+                        batDeleteOrder_detailsForceConfirm(res,"/order/batchDeleteOrder_detailsByIds",jsondata,type);
+                    }else if(res && res.code == 600){
+                        $.messager.alert('删除提示', res.msg, 'error');
+                    }else{
+                        $.messager.alert('删除提示', '删除失败，请稍后再试！', 'error');
+                    }
+                }
+            },
+            //此处添加错误处理
+            error: function () {
+                $.messager.alert('删除提示', '删除异常，请稍后再试！', 'error');
+                return;
+            }
+        });
+    }
+
+
+
+
+    //批量删除支付
+    function batDeleteOrder_details() {
+        var row = $('#tableData').datagrid('getChecked');
+        if (row.length == 0) {
+            $.messager.alert('删除提示', '没有记录被选中！', 'info');
+            return;
+        }
+        if (row.length > 0) {
+            $.messager.confirm('删除确认', '确定要删除选中的' + row.length + '条吗？', function (r) {
+                if (r) {
+                    var ids = "";
+                    for (var i = 0; i < row.length; i++) {
+                        if (i == row.length - 1) {
+                            ids += row[i].order_no_details;
+                            break;
+                        }
+                        ids += row[i].order_no_details + ",";
+                    }
+                    $.ajax({
+                        type: "post",
+                        url: "/order_details/batchDeleteOrder_detailsByIds",
+                        dataType: "json",
+                        async: false,
+                        data: ({
+                            ids: ids
+                        }),
+                        success: function (res) {
+                            if(res && res.code === 200) {
+                                $("#searchBtn").click();
+                                $(":checkbox").attr("checked", false);
+                            } else {
+                                if(res && res.code == 601){
+                                    var jsondata={};
+                                    jsondata.ids=ids;
+                                    jsondata.deleteType='2';
+                                    var type='batch';
+                                    batDeleteOrder_detailsForceConfirm(res,"/order_details/batchDeleteOrder_detailsByIds",jsondata,type);
+                                }else if(res && res.code == 600){
+                                    $.messager.alert('删除提示', res.msg, 'error');
+                                }else{
+                                    $.messager.alert('删除提示', '删除失败，请稍后再试！', 'error');
+                                }
+                            }
+                        },
+                        //此处添加错误处理
+                        error: function () {
+                            $.messager.alert('删除提示', '删除异常，请稍后再试！', 'error');
+                            return;
+                        }
+                    });
+                }
+            });
+        }
+    }
+    /**
+     * 确认强制删除
+     * */
+    function batDeleteOrder_detailsForceConfirm(res,url,jsondata,type) {
+        $.messager.confirm('删除确认', res.msg, function (r) {
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    dataType: "json",
+                    data: (jsondata),
+                    success: function (res) {
+                        if(res && res.code == 200) {
+                            $("#searchBtn").click();
+                            if(type=='batch'){
+                                $(":checkbox").attr("checked", false);
+                            }
+                        }else if(res && res.code == 600){
+                            $.messager.alert('删除提示', res.msg, 'error');
+                        }else {
+                            $.messager.alert('删除提示', '删除异常，请稍后再试！', 'error');
+                        }
+                    },
+                    //此处添加错误处理
+                    error: function () {
+                        $.messager.alert('删除提示', '删除异常，请稍后再试！', 'error');
+                        return;
+                    }
+                });
+            }
+        });
+    }
+
+    //增加
+    var url;
+    var order_detailsID = 0;
+    //保存编辑前的名称
+    var oldOrder_details = "";
+
+    function addOrder_details() {
+        $('#order_detailsFM').form('clear');
+        $('#order_detailsDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加');
+        $(".window-mask").css({width: webW, height: webH});
+        $("#Order_no_details").val("").focus();
+
+        oldOrder_details = "";
+        order_detailsID = 0;
+        url = '/order_details/add';
+    }
+    //保存信息
+    $("#saveOrder_details").off("click").on("click", function () {
+        if (!$("#Product_no").val()) {
+            $.messager.alert('提示', '请输入编号！', 'warning');
+            return;
+        }
+        $.ajax({
+            url: url,
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: ({
+                info: JSON.stringify($("#order_detailsFM").serializeObject())
+            }),
+            success: function(res) {
+                if(res && res.code === 200) {
+                    $('#order_detailsDlg').dialog('close');
+                    //加载完以后重新初始化
+                    var opts = $("#tableData").datagrid('options');
+                    showOrder_detailsDetails(opts.pageNumber, opts.pageSize);
+                }
+            },
+            //此处添加错误处理
+            error: function () {
+                $.messager.alert('提示', '保存异常，请稍后再试！', 'error');
+                return;
+            }
+        });
+    });
+
+    //编辑信息
+    function editOrder_details(order_detailsTotalInfo) {
+        var order_detailsInfo = order_detailsTotalInfo.split("AaBb");
+
+        $("#Product_no").val(order_detailsInfo[1]);
+        $("#Products_requirement").val(order_detailsInfo[2]);
+        $("#Client_no").val(order_detailsInfo[3]);
+
+        $('#order_detailsDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑订单详细信息');
+        $(".window-mask").css({width: webW, height: webH});
+        order_detailsID = order_detailsInfo[0];
+        //焦点在名称输入框==定焦在输入文字后面
+        $("#Name").val("").focus().val(order_detailsInfo[1]);
+        url = '/order_details/update?id=' + order_detailsInfo[0];
+    }
+    //搜索处理
     $("#searchBtn").unbind().bind({
         click: function () {
             showOrder_detailsDetails(1, initPageSize);
-            var name = $.trim($("#searchName").val());
             var opts = $("#tableData").datagrid('options');
             var pager = $("#tableData").datagrid('getPager');
             opts.pageNumber = 1;
@@ -211,12 +407,85 @@
             $("#searchOrder_no_details").val("");
             $("#searchProduct_no").val("");
             $("#searchClient_no").val("");
-            $("#searchCheck").val("");
+            $("#searchCheck").val("允许生产");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
     });
 
+    /********************************************************************/
+    function showCriteria(product_no) {
+        $('#productDlg').window('open').window('setTitle', '原料号  "'+product_no+'"  的详情');
+        $("#Order_no").val("").focus();
+        $(function () {
+            initTableDeData(product_no);
+        });
+        oldOrder_form = "";
+        order_formID = 0;
+    }
+
+
+    function initTableDeData(product_no) {
+        $('#tableDeData').datagrid({
+            height: heightInfo,
+            nowrap: false,
+            rownumbers: false,
+            animate: false,
+            singleSelect: true,
+            collapsible: false,
+            selectOnCheck: false,
+            pagination: true,
+            striped: true,
+            pageSize: initPageSize,
+            pageList: initPageNum,
+            columns: [[
+                {field: 'id', width: 35, align: "center", checkbox: true},
+                {title: '编号', field: 'product_no', width: 40},
+                {title: '产品名', field: 'product_name', width: 80},
+                {title: '分类', field: 'product_type', width: 280},
+                {title: '生产周期', field: 'manufacture_duration', width: 80},
+                {title: '保质期', field: 'guarantee_period', width: 80},
+                {title: '单价', field: 'unit_Price', width: 40}
+            ]],
+            onLoadError: function () {
+                $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');
+                return;
+            }
+        });
+        dgResize();
+        showProduct_criteriaDetails2(1, initPageSize,product_no);
+    }
+
+
+    function showProduct_criteriaDetails2(pageNo, pageSize,product_no) {
+        var no = product_no;
+        $.ajax({
+            type: "get",
+            url: "/manufacturedesign/getProducts",
+            dataType: "json",
+            data: ({
+                search: JSON.stringify({
+                    no: no
+                }),
+                currentPage: pageNo,
+                pageSize: pageSize
+            }),
+            success: function (res) {
+                if(res && res.code === 200){
+                    if(res.data && res.data.page) {
+                        $("#tableDeData").datagrid('loadData', res.data.page);
+                    }
+                }
+            },
+            //此处添加错误处理
+            error: function () {
+                $.messager.alert('查询提示', '查询数据后台异常，请稍后再试！', 'error');
+                return;
+            }
+        });}
+
 </script>
 </body>
 </html>
+
+

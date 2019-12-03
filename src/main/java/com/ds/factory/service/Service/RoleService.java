@@ -44,6 +44,15 @@ public class RoleService {
         return result;
     }
 
+    public int update___(Role role){
+        return roleMapper.updateByPrimaryKeySelective(role);
+    }
+
+    public int insert___(Role role){
+        return  roleMapper.insertSelective(role);
+    }
+
+
     public List<Role> getRole()throws Exception {
         RoleExample example = new RoleExample();
         example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);

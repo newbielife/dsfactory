@@ -36,11 +36,13 @@ public class Order_DetailsServiceImpl implements Order_DetailsService {
 
     @Override
     public List<Order_Details> selectByConstraint(String Order_no_details, String Client_no, String Product_no,String Check) {
-        if(Check==null||Check.trim().compareTo("全部")==0||Check.trim().compareTo("")==0)
+        if(Check.trim().compareTo("允许生产")==0)
+            return order_detailsMapper.selectByConstraint_Permission(Order_no_details.trim(),Client_no.trim(),Product_no.trim());
+        else if(Check==null||Check.trim().compareTo("全部")==0||Check.trim().compareTo("")==0)
             return order_detailsMapper.selectByConstraint_all(Order_no_details.trim(),Client_no.trim(),Product_no.trim());
-        else if(Check.trim().compareTo("已完成")==0)
+        else if(Check.trim().compareTo("生产结束")==0)
             return order_detailsMapper.selectByConstraint_enabled(Order_no_details.trim(),Client_no.trim(),Product_no.trim());
-        else if(Check.trim().compareTo("正在进行")==0)
+        else if(Check.trim().compareTo("等待审核")==0)
             return order_detailsMapper.selectByConstraint_disabled(Order_no_details.trim(),Client_no.trim(),Product_no.trim());
         else
             return null;
@@ -54,6 +56,11 @@ public class Order_DetailsServiceImpl implements Order_DetailsService {
     @Override
     public int updateCheckByOrder_no(String Order_no) {
         return order_detailsMapper.updateCheckByOrder_no(Order_no);
+    }
+
+    @Override
+    public int updateCheckManufacture_permission(String Order_no) {
+        return order_detailsMapper.updateCheckManufacture_permission(Order_no);
     }
 
     @Override

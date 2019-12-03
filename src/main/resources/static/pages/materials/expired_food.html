@@ -89,14 +89,7 @@
                 {title: '过期日期', field: 'expired_date', width: 180},
                 {title: '损失数量', field: 'loss_num', width: 80},
                 {title: '损失金额', field: 'loss_money', width: 180},
-                {title: '处理方法', field: 'processing_method', width: 180},
-                {
-                    formatter: function (value, rec) {
-                        var str = '';
-                        var rowInfo = rec.food_no + 'AaBb' + rec.food_type + 'AaBb' + rec.food_name + 'AaBb' + rec.expired_date+ 'AaBb' + rec.loss_num+ 'AaBb' + rec.loss_money+ 'AaBb' + rec.processing_method;
-                        return str;
-                    }
-                }
+                {title: '处理方法', field: 'processing_method', width: 180}
             ]],
             onLoadError: function () {
                 $.messager.alert('页面加载提示', '页面加载异常，请稍后再试！', 'error');

@@ -406,4 +406,79 @@ public class ProduceController {
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
+
+
+    @GetMapping(value = "/getMaterials")
+    public String getMaterials(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String no=parameterMap.get("no");
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Raw_Materials_Criteria> list = new ArrayList<Raw_Materials_Criteria>();
+        list.add(raw_materials_criteriaService.selectByKey(no));
+
+        //获取分页查询后的数据
+        PageInfo<Raw_Materials_Criteria> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+    @GetMapping(value = "/getProducts")
+    public String getProducts(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                               @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                               @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String no=parameterMap.get("no");
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Product_Criteria> list = new ArrayList<Product_Criteria>();
+        list.add(product_criteriaService.selectByProduct_no(no));
+
+        //获取分页查询后的数据
+        PageInfo<Product_Criteria> pageInfo = new PageInfo<>(list);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
 }
