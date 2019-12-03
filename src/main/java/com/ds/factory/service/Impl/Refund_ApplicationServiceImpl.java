@@ -25,6 +25,8 @@ public class Refund_ApplicationServiceImpl implements Refund_ApplicationService 
             return refund_applicationMapper.selectByConstraint_enabled(Refund_no.trim(),Order_no.trim(),Client_no.trim(),Staff_no_checker.trim());
         else if(Check.trim().compareTo("正在审核")==0)
             return refund_applicationMapper.selectByConstraint_disabled(Refund_no.trim(),Order_no.trim(),Client_no.trim(),Staff_no_checker.trim());
+        else if(Check.trim().compareTo("不予通过")==0)
+            return refund_applicationMapper.selectByConstraint_forbidden(Refund_no.trim(),Order_no.trim(),Client_no.trim(),Staff_no_checker.trim());
         else
             return null;
     }
@@ -33,8 +35,6 @@ public class Refund_ApplicationServiceImpl implements Refund_ApplicationService 
     public int insertPayment(Refund_Application red) {
         if(red.getOrder_no()==null || red.getOrder_no().trim().compareTo("")==0
             ||order_formMapper.exist_or_not(red.getOrder_no().trim())==0)
-            return 0;
-        if(red.getClient_no()==null || red.getClient_no().trim().compareTo("")==0)
             return 0;
         if(red.getReason()==null || red.getReason().trim().compareTo("")==0)
             red.setReason("（该用户未填写原因）");
@@ -62,7 +62,8 @@ public class Refund_ApplicationServiceImpl implements Refund_ApplicationService 
         if(biggest.length()>=11)  return 0;
         red.setRefund_no(biggest);
         red.setProgress("提交成功");
-        red.setPermission(Long.parseLong("0"));
+        red.setPermission(Long.parseLong("1"));
+        red.setClient_no(order_formMapper.selectByPrimaryKey(red.getOrder_no()).getClient_no());
 
         return refund_applicationMapper.insertSelective(red);
     }

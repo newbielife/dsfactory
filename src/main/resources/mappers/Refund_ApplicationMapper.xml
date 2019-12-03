@@ -134,16 +134,25 @@
           where  flag=0 and Refund_no like '%${Refund_no}%' and Order_no like '%${Order_no}%'
                 and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
                 and  Permission=0
-                order by Refund_no desc
+          order by Permission asc, Refund_no desc
     </select>
 
     <select id="selectByConstraint_enabled" resultMap="BaseResultMap">
         select *
         from Refund_Application
         where  flag=0 and Refund_no like '%${Refund_no}%' and Order_no like '%${Order_no}%'
-          and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
-          and  Permission=1
-          order by Refund_no desc
+              and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
+              and  Permission=1
+        order by Permission asc, Refund_no desc
+    </select>
+
+    <select id="selectByConstraint_forbidden" resultMap="BaseResultMap">
+        select *
+        from Refund_Application
+        where  flag=0 and Refund_no like '%${Refund_no}%' and Order_no like '%${Order_no}%'
+                and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
+                and  Permission=2
+        order by Permission asc, Refund_no desc
     </select>
 
     <select id="selectByConstraint_all" resultMap="BaseResultMap">
@@ -151,7 +160,7 @@
         from Refund_Application
         where  flag=0 and Refund_no like '%${Refund_no}%' and Order_no like '%${Order_no}%'
               and Client_no like '%${Client_no}%'  and Staff_no_checker like '%${Staff_no_checker}%'
-              order by Refund_no desc
+        order by Permission asc, Refund_no desc
     </select>
 
 

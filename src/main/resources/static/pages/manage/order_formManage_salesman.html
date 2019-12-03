@@ -74,12 +74,12 @@
                 <td>当前进程：</td>
                 <td>
                 <select name="Progress" id="Progress"style="width:200px;">
-                    <option value="客户提交成功">默认（客户提交成功）</option>
-                    <option value="销售员接单">销售员接单</option>
-                    <option value="生产计划与车间工作中">生产计划与车间工作中</option>
-                    <option value="客户收货成功">客户收货成功</option>
-                    <option value="售后服务">售后服务</option>
-                    <option value="订单终止">订单终止</option>
+<!--                    <option value="客户提交成功">默认（客户提交成功）</option>-->
+<!--                    <option value="销售员接单">销售员接单</option>-->
+<!--                    <option value="生产计划与车间工作中">生产计划与车间工作中</option>-->
+<!--                    <option value="客户收货成功">客户收货成功</option>-->
+<!--                    <option value="售后服务">售后服务</option>-->
+<!--                    <option value="订单终止">订单终止</option>-->
                 </select>
                 </td>
             </tr>
@@ -134,16 +134,17 @@
                 {field: 'id', width: 35, align: "center", checkbox: true},
                 {title: '订单编号', field: 'order_no', width: 100},
                 {title: '客户编号', field: 'client_no', width: 100},
-                {title: '会计编号', field: 'staff_no', width: 100},
+                {title: '销售员编号', field: 'staff_no', width: 100},
                 {title: '订单创建日期', field: 'order_Create_date', width: 120},
+                {title: '订单更新日期', field: 'update_date', width: 120},
                 {title: '订单总金额（元）', field: 'order_sum_amount', width: 120},
                 {title: '当前进程', field: 'progress', width: 200,formatter: function (value, rec,index) {
                     var str = '';
-                    if (rec.progress == "客户提交成功" || rec.progress == "销售员接单" || rec.progress == "会计初审完成")
+                    if (rec.progress == "客户提交成功" || rec.progress == "销售员接单" || rec.progress == "会计初审完成"|| rec.progress == "生产计划与车间工作中")
                         str += '<font color="#00FF00" >'+rec.progress+'</font>&nbsp;&nbsp;';
                     else if (rec.progress == "预付款提交成功" || rec.progress == "尾款缴纳成功" || rec.progress == "违约金商谈阶段"|| rec.progress == "退款商谈阶段")
                         str += '<font color="#FF0000" >'+rec.progress+'</font>&nbsp;&nbsp;';
-                    else if (rec.progress == "客户收货成功" || rec.progress == "售后服务" || rec.progress == "订单终止" || rec.progress == "生产计划与车间工作中")
+                    else if (rec.progress == "客户收货成功" || rec.progress == "售后服务" || rec.progress == "订单终止"|| rec.progress == "审查结果拒绝接单" )
                         str += '<font color="#0000FF" >'+rec.progress+'</font>&nbsp;&nbsp;';
                     return str;
                 }},
@@ -416,73 +417,48 @@
         var order_formInfo = order_formTotalInfo.split("AaBb");
         var progress=order_formInfo[5];
 
-        var select_=document.getElementById('Progress');
-        var s_child=select_.children;
-        s_child[0].disabled=false;
-        s_child[1].disabled=false;
-        s_child[2].disabled=false;
-        s_child[3].disabled=false;
-        s_child[4].disabled=false;
-        s_child[5].disabled=false;
+        var obj = document.getElementById("Progress");
+        obj.options.length = 0;
 
-        if(progress=="客户提交成功"){
-            s_child[0].disabled=true;
-            s_child[1].disabled=true;
-            s_child[2].disabled=true;
-            s_child[3].disabled=true;
-            s_child[4].disabled=true;
-            s_child[5].disabled=true;
-        }
-        else if(progress=="会计初审完成")//允许接单
+        obj.add(new Option("（默认）"+progress,progress));
+        switch(progress)
         {
-            s_child[0].disabled=true;
-            s_child[2].disabled=true;
-            s_child[3].disabled=true;
-            s_child[4].disabled=true;
-            s_child[5].disabled=true;
+            case "客户提交成功":
+                obj.add(new Option("销售员接单","销售员接单"));
+                break;
+            case "销售员接单":
+                break;
+            case "会计初审完成":
+                break;
+            case "审查结果拒绝接单":
+                obj.add(new Option("订单终止","订单终止"));
+                break;
+            case "预付款提交成功":
+                obj.add(new Option("生产计划与车间工作中","生产计划与车间工作中"));
+                break;
+            case "生产计划与车间工作中":
+                break;
+            case "尾款缴纳成功":
+                obj.add(new Option("客户收货成功","客户收货成功"));
+                break;
+            case "客户收货成功":
+                obj.add(new Option("售后服务","售后服务"));
+                obj.add(new Option("订单终止","订单终止"));
+                break;
+            case "售后服务":
+                obj.add(new Option("订单终止","订单终止"));
+                break;
+            case "违约金商谈阶段":
+                obj.add(new Option("订单终止","订单终止"));
+                break;
+            case "退款商谈阶段":
+                obj.add(new Option("订单终止","订单终止"));
+                break;
+            case "订单终止":
+                break;
+            default:
+                break;
         }
-        else if(progress=="预付款提交成功")//允许工厂生产或成品运输
-        {
-            s_child[0].disabled=true;
-            s_child[1].disabled=true;
-            s_child[3].disabled=true;
-            s_child[4].disabled=true;
-            s_child[5].disabled=true;
-        }
-        else if(progress=="生产计划与车间工作中"||progress=="尾款缴纳成功")//修改为收货成功
-        {
-            s_child[0].disabled=true;
-            s_child[1].disabled=true;
-            s_child[2].disabled=true;
-            s_child[4].disabled=true;
-            s_child[5].disabled=true;
-        }
-        else if(progress=="客户收货成功"||progress=="尾款缴纳成功")//允许售后
-        {
-            s_child[0].disabled=true;
-            s_child[1].disabled=true;
-            s_child[2].disabled=true;
-            s_child[3].disabled=true;
-        }
-        else if(progress=="客户收货成功"||progress=="售后服务"||progress=="违约金商谈阶段"||progress=="退款商谈阶段")//允许售后
-        {
-            s_child[0].disabled=true;
-            s_child[1].disabled=true;
-            s_child[2].disabled=true;
-            s_child[3].disabled=true;
-            s_child[4].disabled=true;
-        }
-        else if(progress=="订单终止")
-        {
-            s_child[0].disabled=true;
-            s_child[1].disabled=true;
-            s_child[2].disabled=true;
-            s_child[3].disabled=true;
-            s_child[4].disabled=true;
-            s_child[5].disabled=true;
-        }
-
-
 
         $("#Client_no").val(order_formInfo[1]);
         $("#Staff_no").val(order_formInfo[2]);

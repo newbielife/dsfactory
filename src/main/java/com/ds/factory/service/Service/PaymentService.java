@@ -10,9 +10,8 @@ import java.util.List;
 public interface PaymentService {
     List<Payment> selectByConstraint(Date Payment_date, String Order_no, String Staff_no_accountant, String Payment_no);
 
-
     boolean Pay_in_Full(String Order_no);
-    int insertPayment(String Order_no, Long Money, String Details);
+    int insertPayment(String Order_no,String Staff_no, Long Money, String Details);
     int updateByPrimaryKey(Payment payment);
     List<Payment> selectByClient_no(String Client_no);
     List<Payment> selectByStaff_no_accountant(String Staff_no_accountant);

@@ -3,6 +3,7 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
+import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.Manufacture_Result;
 import com.ds.factory.datasource.entities.Payment;
 import com.ds.factory.service.Service.PaymentService;
@@ -10,10 +11,7 @@ import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -70,5 +68,12 @@ public class PaymentController {
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
-
+    @PostMapping("/add")
+    @ResponseBody
+    public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Payment payment= JSON.parseObject(beanJson, Payment.class);
+        paymentService.insertPayment(payment.getOrder_no(),payment.getStaff_no_accountant(),payment.getMoney(),payment.getDetails());
+        return result;
+    }
 }

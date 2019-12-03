@@ -3,10 +3,12 @@ package com.ds.factory.service.Impl;
 import com.ds.factory.datasource.entities.Order_Details;
 import com.ds.factory.datasource.entities.Order_Form;
 import com.ds.factory.datasource.entities.Payment;
+import com.ds.factory.datasource.entities.Refund_Application;
 import com.ds.factory.datasource.mappers.Order_DetailsMapper;
 import com.ds.factory.datasource.mappers.Order_FormMapper;
 import com.ds.factory.datasource.mappers.PaymentMapper;
 import com.ds.factory.service.Service.PaymentService;
+import com.ds.factory.service.Service.Refund_ApplicationService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +19,9 @@ import java.util.List;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
+    @Resource
+    Refund_ApplicationService refund_applicationService;
+
     @Resource
     PaymentMapper paymentMapper;
 
@@ -47,30 +52,30 @@ public class PaymentServiceImpl implements PaymentService {
             i+=Integer.parseInt(p.get(i).getMoney()+"");
         }
 
-        boolean flag_=false;
-        List<Order_Details> order_details=order_detailsMapper.selectLikeOrder_no(Order_no);
-        for(int i=0;i<order_details.size();i++)
-        {
-            if(order_details.get(i).getPayment_deadline()!=null)
-            {
-                Date currentTime = new Date();
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String beginTime = formatter.format(order_details.get(i).getPayment_deadline());
-                String endTime = formatter.format(currentTime);
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                try {
-                    Date date1 = format.parse(beginTime);
-                    Date date2 = format.parse(endTime);
-                    if (date1.before(date2)){
-                        flag_=true;
-                        if(o.getLiquidated_damages()==null)
-                            flag_=false;
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        boolean flag_=false;
+//        List<Order_Details> order_details=order_detailsMapper.selectLikeOrder_no(Order_no);
+//        for(int i=0;i<order_details.size();i++)
+//        {
+//            if(order_details.get(i).getPayment_deadline()!=null)
+//            {
+//                Date currentTime = new Date();
+//                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                String beginTime = formatter.format(order_details.get(i).getPayment_deadline());
+//                String endTime = formatter.format(currentTime);
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                try {
+//                    Date date1 = format.parse(beginTime);
+//                    Date date2 = format.parse(endTime);
+//                    if (date1.before(date2)){
+//                        flag_=true;
+//                        if(o.getLiquidated_damages()==null)
+//                            flag_=false;
+//                    }
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
 //      //不使用违约金了
 //        if(flag_)
 //            upper_sum+=Integer.parseInt(o.getLiquidated_damages()+"");
@@ -82,18 +87,40 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public int insertPayment(String Order_no,Long Money,String Details) {
+    public int insertPayment(String Order_no,String Staff_no,Long Money,String Details) {
         if(Order_no==null || Order_no.trim().compareTo("")==0
                 ||order_formMapper.exist_or_not(Order_no.trim())==0)
             return 0;
 
-        if(this.Pay_in_Full(Order_no)==true)
-            return 0;//尾单已经结算
+        if(Details.compareTo("预付款")==0||Details.compareTo("补款")==0||Details.compareTo("尾款")==0){
+            if(this.Pay_in_Full(Order_no)==true)
+                return 0;//该订单已经付清，不必再加价
+        }
+        else if(Details.compareTo("违约金")==0){
+            Order_Form order_form=new Order_Form();
+            order_form.setOrder_no(Order_no);
+            order_form.setProgress("违约金商谈阶段");
+            order_formMapper.updateByPrimaryKeySelective(order_form);
+        }
+        else if(Details.compareTo("退款")==0){
+            Refund_Application red=new Refund_Application();
+            red.setOrder_no(Order_no);
+            red.setReason("");
+            red.setRefund_Payment(Money);
+            red.setStaff_no_checker(Staff_no==null?"":Staff_no.trim());
+            refund_applicationService.insertPayment(red);
+
+            Order_Form order_form=new Order_Form();
+            order_form.setOrder_no(Order_no);
+            order_form.setProgress("退款商谈阶段");
+            order_formMapper.updateByPrimaryKeySelective(order_form);
+        }
 
         Payment payment=new Payment();
         payment.setDetails(Details);
         payment.setMoney(Money);
         payment.setOrder_no(Order_no);
+        payment.setStaff_no_accountant(Staff_no==null?"":Staff_no.trim());
         if(Money==null)
             payment.setMoney(Long.parseLong("0"));
         if(Details==null || Details.trim().compareTo("")==0)
@@ -126,6 +153,10 @@ public class PaymentServiceImpl implements PaymentService {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(date);
         payment.setPayment_date(date);
+
+        Order_Form o=order_formMapper.selectByPrimaryKey(Order_no);
+        o.setLiquidated_damages(Long.parseLong(Integer.parseInt(""+Money)+Integer.parseInt(o.getLiquidated_damages()+"")+""));
+        order_formMapper.updateByPrimaryKeySelective(o);
 
         return paymentMapper.insertSelective(payment);
     }

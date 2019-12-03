@@ -33,7 +33,7 @@
             </td>
             <td>支付日期：</td>
             <td>
-                <input name="searchPayment_date" id="searchPayment_date" class="easyui-datetimebox" style="width:150px;"/>
+                <input name="searchPayment_date" value="${notices.release_time}"  id="searchPayment_date" class="easyui-datetimebox" style="width:150px;"/>
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -80,6 +80,7 @@
                         <option value="补款">补款</option>
                         <option value="尾款">尾款</option>
                         <option value="违约金">违约金</option>
+                        <option value="退款">退款</option>
                         <option value="其他">其他</option>
                     </select>
                 </td>
@@ -301,6 +302,7 @@
 
     function addPayment() {
         $("#Order_no").attr("disabled",false);
+        $("#Details").attr("disabled",false);
         $('#paymentFM').form('clear');
         $('#paymentDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加');
         $(".window-mask").css({width: webW, height: webH});
@@ -343,6 +345,7 @@
     //编辑信息
     function editPayment(paymentTotalInfo) {
         $("#Order_no").attr("disabled",true);
+        $("#Details").attr("disabled",true);
         var paymentInfo = paymentTotalInfo.split("AaBb");
 
         $("#Order_no").val(paymentInfo[1]);

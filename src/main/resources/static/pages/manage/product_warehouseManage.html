@@ -272,7 +272,7 @@
                         success: function (res) {
                             if(res && res.code === 200) {
                                 $("#searchBtn").click();
-                                $(":Detailsbox").attr("Detailsed", false);
+                                $(":checkbox").attr("Detailsed", false);
                             } else {
                                 if(res && res.code == 601){
                                     var jsondata={};
@@ -312,7 +312,7 @@
                         if(res && res.code == 200) {
                             $("#searchBtn").click();
                             if(type=='batch'){
-                                $(":Detailsbox").attr("Detailsed", false);
+                                $(":checkbox").attr("Detailsed", false);
                             }
                         }else if(res && res.code == 600){
                             $.messager.alert('删除提示', res.msg, 'error');

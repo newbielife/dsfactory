@@ -38,9 +38,10 @@
             <td>申诉结果：</td>
             <td>
                 <select name="searchPermission" id="searchPermission"style="width:100px;">
+                    <option value="正在审核">正在审核</option>
                     <option value="">全部</option>
                     <option value="审核通过">审核通过</option>
-                    <option value="正在审核">正在审核</option>
+                    <option value="不予通过">不予通过</option>
                 </select>
             </td>
 
@@ -64,13 +65,6 @@
                 <td>订单编号：</td>
                 <td style="padding:5px">
                     <input name="Order_no"class="easyui-validatebox" id="Order_no"
-                           data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>客户编号：</td>
-                <td style="padding:5px">
-                    <input name="Client_no"class="easyui-validatebox" id="Client_no"
                            data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -102,6 +96,7 @@
                     <select name="Permission" id="Permission"style="width:100px;">
                         <option value="0">正在审核</option>
                         <option value="1">审核通过</option>
+                        <option value="2">不予通过</option>
                     </select>
                 </td>
             </tr>
@@ -160,11 +155,11 @@
                 {title: '审核进度', field: 'progress', width: 180},
                 {title: '结果', field: 'permission', width: 80, formatter:function (value, rec) {
                         var str = '';
-                        if(rec.check==0)
+                        if(rec.permission==0)
                             str += '<font color="#00FF00" >正在审核</font>&nbsp;&nbsp;';
-                        else if(rec.check==1)
+                        else if(rec.permission==1)
                             str += '<font color="#FF0000" >审核通过</font>&nbsp;&nbsp;';
-                        else
+                        else if(rec.permission==2)
                             str += '<font color="#0000FF" >不予允许</font>&nbsp;&nbsp;';
                         return str;
                     }
@@ -181,14 +176,6 @@
                 }
             ]],
             toolbar: [
-                {
-                    id: 'addRefund_Application',
-                    text: '增加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        addRefund_Application();
-                    }
-                },
                 {
                     id: 'deleteRefund_Application',
                     text: '删除',
@@ -275,7 +262,7 @@
                         success: function (res) {
                             if(res && res.code === 200) {
                                 $("#searchBtn").click();
-                                $(":Refund_Paymentbox").attr("Refund_Paymented", false);
+                                $(":checkbox").attr("Refund_Paymented", false);
                             } else {
                                 if(res && res.code == 601){
                                     var jsondata={};
@@ -315,7 +302,7 @@
                         if(res && res.code == 200) {
                             $("#searchBtn").click();
                             if(type=='batch'){
-                                $(":Refund_Paymentbox").attr("Refund_Paymented", false);
+                                $(":checkbox").attr("Refund_Paymented", false);
                             }
                         }else if(res && res.code == 600){
                             $.messager.alert('删除提示', res.msg, 'error');
@@ -388,7 +375,6 @@
         var Refund_ApplicationInfo = Refund_ApplicationTotalInfo.split("AaBb");
 
         $("#Order_no").val(Refund_ApplicationInfo[1]);
-        $("#Client_no").val(Refund_ApplicationInfo[2]);
         $("#Reason").val(Refund_ApplicationInfo[3]);
         $("#Staff_no_checker").val(Refund_ApplicationInfo[4]);
         $("#Progress").val(Refund_ApplicationInfo[5]);
@@ -460,7 +446,7 @@
             $("#searchOrder_no").val("");
             $("#searchClient_no").val("");
             $("#searchStaff_no_checker").val("");
-            $("#searchPermission").val("");
+            $("#searchPermission").val("正在审核");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

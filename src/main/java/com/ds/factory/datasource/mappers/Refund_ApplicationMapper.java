@@ -14,6 +14,8 @@ public interface Refund_ApplicationMapper {
                                                          @Param("Client_no") String Client_no,@Param("Staff_no_checker") String Staff_no_checker);
     List<Refund_Application> selectByConstraint_all(@Param("Refund_no") String Refund_no,@Param("Order_no") String Order_no,
                                                          @Param("Client_no") String Client_no,@Param("Staff_no_checker") String Staff_no_checker);
+    List<Refund_Application> selectByConstraint_forbidden(@Param("Refund_no") String Refund_no,@Param("Order_no") String Order_no,
+                                                    @Param("Client_no") String Client_no,@Param("Staff_no_checker") String Staff_no_checker);
 
 
 

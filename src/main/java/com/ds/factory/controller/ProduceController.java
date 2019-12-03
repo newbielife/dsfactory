@@ -24,6 +24,9 @@ public class ProduceController {
     Manufacture_DesignService manufacture_designService;
 
     @Resource
+    ClientService clientService;
+
+    @Resource
     Order_DetailsService order_detailsService;
 
     @Resource
@@ -238,13 +241,11 @@ public class ProduceController {
     @PostMapping(value = "/client_purchase")
     @ResponseBody
     public Object client_purchase(@RequestParam("ids") String ids,@RequestParam("counts") String counts,
-                                  @RequestParam("units") String units)throws Exception{
+                                  @RequestParam("units") String units,@RequestParam("client_no") String client_no)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
-        System.out.println(ids);
-        System.out.println(counts);
-        System.out.println(units);
-//        Object userInfo = request.getSession().getAttribute("user");
-//        System.out.println(userInfo);
+        if(!clientService.exist_or_not(client_no))
+            return "用户不存在";
+
         String[] id=ids.split(",");
         String[] count=counts.split(",");
         String[] unit=units.split(",");
@@ -262,7 +263,7 @@ public class ProduceController {
             product_purchase_details.setPurchase_numbers(Long.parseLong(count[i]==null||count[i].trim().compareTo("")==0?"0":count[i].trim()));
             list.add(product_purchase_details);
         }
-        order_formService.Add_new_Order_with_Details(list,"000001");
+        order_formService.Add_new_Order_with_Details(list,client_no);
         return result;
     }
 

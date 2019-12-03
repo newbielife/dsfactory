@@ -13,6 +13,7 @@ public class Order_Form {
     private String Progress;
     private Long Liquidated_damages;//违约金
     private Long Check;
+    private Date Update_date;
 
 
     public String getOrder_no() {return Order_no;}
@@ -45,7 +46,8 @@ public class Order_Form {
 
     public Order_Form(String Order_no,	        String Client_no,	        String Staff_no,
                       Date Order_Create_date,	Long Order_sum_amount,
-                      String Progress,	        Long Liquidated_damages,    Long Check) {
+                      String Progress,	        Long Liquidated_damages,    Long Check,
+                      Date Update_date) {
         this.Order_no=Order_no;
         this.Client_no=Client_no;
         this.Staff_no=Staff_no;
@@ -54,5 +56,14 @@ public class Order_Form {
         this.Progress=Progress;
         this.Liquidated_damages=Liquidated_damages;
         this.Check=Check;
+        this.Update_date=Update_date;
+    }
+
+    public Date getUpdate_date() {
+        return Update_date;
+    }
+
+    public void setUpdate_date(Date update_date) {
+        Update_date = update_date;
     }
 }
