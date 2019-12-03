@@ -41,7 +41,7 @@
             </td>
             <td>运输日期：</td>
             <td>
-                <input name="searchDelivery_date" id="searchDelivery_date" class="easyui-datetimebox" style="width:150px;"/>
+                <input name="searchDelivery_date" value="${notices.release_time}" id="searchDelivery_date" class="easyui-datetimebox" style="width:150px;"/>
             </td>
 
             <td>&nbsp;</td>
@@ -212,11 +212,18 @@
             $("#searchOrder_no_details").val("");
             $("#searchSource_place").val("");
             $("#searchTarget_place").val("");
-            $("#searchDelivery_date").datebox("clear");
+            $("#searchDelivery_date").datebox('setValue', formatterDate(new Date()));
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
     });
+
+    formatterDate = function(date) {
+        var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+        var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0"
+            + (date.getMonth() + 1);
+        return date.getFullYear() + '-' + month + '-' + day;
+    };
 
 </script>
 </body>

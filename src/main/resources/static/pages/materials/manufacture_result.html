@@ -37,7 +37,7 @@
             </td>
             <td>更新日期：</td>
             <td>
-                <input name="searchUpdate_date" id="searchUpdate_date" class="easyui-datetimebox" style="width:150px;"/>
+                <input name="searchUpdate_date" value="${notices.release_time}" id="searchUpdate_date" class="easyui-datetimebox" style="width:150px;"/>
             </td>
 
             <td>&nbsp;</td>
@@ -205,11 +205,18 @@
             $("#searchOrder_no_details").val("");
             $("#searchProduct_no").val("");
             $("#searchStaff_no_manufacture").val("");
-            $("#searchUpdate_date").datebox("clear");
+            $("#searchUpdate_date").datebox('setValue', formatterDate(new Date()));
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
     });
+
+    formatterDate = function(date) {
+        var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+        var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0"
+            + (date.getMonth() + 1);
+        return date.getFullYear() + '-' + month + '-' + day;
+    };
 
 </script>
 </body>

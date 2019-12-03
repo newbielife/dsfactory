@@ -34,9 +34,9 @@
             <td>订单状态：</td>
             <td>
                 <select name="searchCheck" id="searchCheck"style="width:100px;">
+                    <option value="正在进行">正在进行</option>
                     <option value="">全部</option>
                     <option value="已完成">已完成</option>
-                    <option value="正在进行">正在进行</option>
                 </select>
             </td>
 
@@ -152,9 +152,9 @@
                 {title: '订单状态', field: 'check', width: 70 , formatter:function (value, rec) {
                         var str = '';
                         if(rec.check==0)
-                            str += '<font color="#00FF00" >已付清</font>&nbsp;&nbsp;';
+                            str += '<font color="#00FF00" >已完成</font>&nbsp;&nbsp;';
                         else if(rec.check==1)
-                            str += '<font color="#FF0000" >未付清</font>&nbsp;&nbsp;';
+                            str += '<font color="#FF0000" >正在进行</font>&nbsp;&nbsp;';
                         else
                             str += '<font color="#0000FF" >未知错误</font>&nbsp;&nbsp;';
                         return str;
@@ -556,7 +556,7 @@
             $("#searchOrder_no").val("");
             $("#searchClient_no").val("");
             $("#searchStaff_no").val("");
-            $("#searchCheck").val("");
+            $("#searchCheck").val("正在进行");
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

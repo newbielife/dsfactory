@@ -41,8 +41,8 @@
             <td>生产日期：</td>
             <td>
                 <select name="searchManufacture_date" id="searchManufacture_date"style="width:70px;">
-                    <option value="">全部</option>
                     <option value="本日">本日</option>
+                    <option value="">全部</option>
                     <option value="本周">本周</option>
                     <option value="本月">本月</option>
                     <option value="本季">本季</option>
@@ -222,7 +222,7 @@
             $("#searchStock_no").val("");
             $("#searchProduct_no").val("");
             $("#searchStaff_no_storage").val("");
-            $("#searchManufacture_date").val("");
+            $("#searchManufacture_date").val("本日");
             $("#searchStorage_address").val("");
             //加载完以后重新初始化
             $("#searchBtn").click();

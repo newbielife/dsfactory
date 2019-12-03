@@ -37,7 +37,7 @@
             </td>
             <td>过期日期：</td>
             <td>
-                <input name="searchExpired_date" id="searchExpired_date" class="easyui-datetimebox" style="width:150px;"/>
+                <input name="searchExpired_date" value="${notices.release_time}" id="searchExpired_date" class="easyui-datetimebox" style="width:150px;"/>
             </td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -421,11 +421,18 @@
             $("#searchFood_no").val("");
             $("#searchFood_type").val("");
             $("#searchFood_name").val("");
-            $("#searchExpired_date").datebox("clear");
+            $("#searchExpired_date").datebox('setValue', formatterDate(new Date()));
             //加载完以后重新初始化
             $("#searchBtn").click();
         }
     });
+
+    formatterDate = function(date) {
+        var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+        var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0"
+            + (date.getMonth() + 1);
+        return date.getFullYear() + '-' + month + '-' + day;
+    };
     
 </script>
 </body>
