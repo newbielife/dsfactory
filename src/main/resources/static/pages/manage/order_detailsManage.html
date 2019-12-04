@@ -159,14 +159,6 @@
             ]],
             toolbar: [
                 {
-                    id: 'addOrder_details',
-                    text: '增加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        addOrder_details();
-                    }
-                },
-                {
                     id: 'deleteOrder_details',
                     text: '删除',
                     iconCls: 'icon-remove',
@@ -242,7 +234,7 @@
                     }
                     $.ajax({
                         type: "post",
-                        url: "/order_details/batchDeleteOrder_detailsByIds",
+                        url: "/order/batDeleteOrderdetailsByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -258,7 +250,7 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeleteOrder_detailsForceConfirm(res,"/order_details/batchDeleteOrder_detailsByIds",jsondata,type);
+                                    batDeleteOrder_detailsForceConfirm(res,"/order/batDeleteOrderdetailsByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{

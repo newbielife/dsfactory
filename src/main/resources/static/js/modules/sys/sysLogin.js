@@ -13,7 +13,7 @@ $("#username, #password").on("focus blur", function () {
         }
     }, 100)
 }).blur();
-
+//var verifyCode = new GVerify("imgCaptcha");
 var userName = localStorage.getItem("username");
 var password = localStorage.getItem("password");
 if(userName){
@@ -72,6 +72,9 @@ function loginFun() {
     if (username != null && username.length != 0
         && password != null && password.length != 0) {
         $("#username").focus();
+        //&&$("#validCode").val()
+        //var res = verifyCode.validate($("#validCode").val());
+        //注册按钮绑定处理事件
         $.ajax({
             type: "post",
             url: "/user/login",

@@ -235,7 +235,7 @@
 
     //批量删除支付
     function batDeleteRefund_Application() {
-        var row = $('#tableData').datagrid('getRefund_Paymented');
+        var row = $('#tableData').datagrid('getChecked');
         if (row.length == 0) {
             $.messager.alert('删除提示', '没有记录被选中！', 'info');
             return;
@@ -325,10 +325,12 @@
     var Refund_ApplicationID = 0;
     //保存编辑前的名称
     var oldRefund_Application = "";
+    var Client_no;
+    var Refund_no;
 
     function addRefund_Application() {
         $("#Order_no").attr("disabled",false);
-        $("#Client_no").attr("disabled",false);
+        //$("#Client_no").attr("disabled",false);
         $('#Refund_ApplicationFM').form('clear');
         $('#Refund_ApplicationDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加');
         $(".window-mask").css({width: webW, height: webH});
@@ -350,7 +352,9 @@
             dataType: "json",
             async: false,
             data: ({
-                info: JSON.stringify($("#Refund_ApplicationFM").serializeObject())
+                info: JSON.stringify($("#Refund_ApplicationFM").serializeObject()),
+                clientno: Client_no,
+                refund_no: Refund_no
             }),
             success: function(res) {
                 if(res && res.code === 200) {
@@ -370,10 +374,11 @@
 
     //编辑信息
     function editRefund_Application(Refund_ApplicationTotalInfo) {
-        $("#Order_no").attr("disabled",true);
-        $("#Client_no").attr("disabled",true);
+        //$("#Order_no").attr("disabled",true);
+        //$("#Client_no").attr("disabled",true);
         var Refund_ApplicationInfo = Refund_ApplicationTotalInfo.split("AaBb");
-
+        Client_no=Refund_ApplicationInfo[2];
+        Refund_no=Refund_ApplicationInfo[0];
         $("#Order_no").val(Refund_ApplicationInfo[1]);
         $("#Reason").val(Refund_ApplicationInfo[3]);
         $("#Staff_no_checker").val(Refund_ApplicationInfo[4]);
@@ -386,7 +391,7 @@
         Refund_ApplicationID = Refund_ApplicationInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(Refund_ApplicationInfo[2]);
-        url = '/Refund_Application/update?id=' + Refund_ApplicationInfo[0];
+        url = '/order/RefundUpdate?id=' + Refund_ApplicationInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
