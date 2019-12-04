@@ -91,7 +91,7 @@
 <div id="dlg-buttons">
     <a href="javascript:void(0)" id="savePayment" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
     <a href="javascript:void(0)" id="cancelPayment" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#PaymentDlg').dialog('close')">取消</a>
+       onclick="javascript:$('#paymentDlg').dialog('close')">取消</a>
 </div>
 <script type="text/javascript">
     //初始化界面
@@ -358,7 +358,7 @@
         paymentID = paymentInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(paymentInfo[1]);
-        url = '/payment/update?id=' + paymentInfo[0];
+        url = '/payment/PayUpdate?id=' + paymentInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

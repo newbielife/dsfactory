@@ -6,6 +6,7 @@ import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.Manufacture_Result;
 import com.ds.factory.datasource.entities.Payment;
+import com.ds.factory.datasource.entities.Refund_Application;
 import com.ds.factory.service.Service.PaymentService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
@@ -74,6 +75,16 @@ public class PaymentController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Payment payment= JSON.parseObject(beanJson, Payment.class);
         paymentService.insertPayment(payment.getOrder_no(),payment.getStaff_no_accountant(),payment.getMoney(),payment.getDetails());
+        return result;
+    }
+
+    @PostMapping("/PayUpdate")
+    @ResponseBody
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") String id)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Payment payment= JSON.parseObject(beanJson, Payment.class);
+        payment.setPayment_no(id);
+        paymentService.updateByPrimaryKey(payment);
         return result;
     }
 }
