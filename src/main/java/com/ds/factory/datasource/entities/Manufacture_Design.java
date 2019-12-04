@@ -15,6 +15,7 @@ public class Manufacture_Design {
     private String Product_no;//成品库编号
     private String Products_requirement;
     private String Details;
+    private Date Update_date;
 
 
     public String getManufacture_no() {
@@ -74,7 +75,8 @@ public class Manufacture_Design {
                               String Staff_no_design,               Date Deadline,
                               String Progress,                      String Raw_materials_requirement,
                               String Workshop,                      String Product_no,
-                              String Products_requirement,          String Details) {
+                              String Products_requirement,          String Details,
+                              Date Update_date) {
         this.Manufacture_no=Manufacture_no;
         this.Order_no_details=Order_no_details;
         this.Staff_no_design=Staff_no_design;
@@ -85,6 +87,15 @@ public class Manufacture_Design {
         this.Product_no=Product_no;
         this.Products_requirement=Products_requirement;
         this.Details=Details;
+        this.Update_date=Update_date;
+    }
+
+    public Date getUpdate_date() {
+        return Update_date;
+    }
+
+    public void setUpdate_date(Date update_date) {
+        Update_date = update_date;
     }
 }
 

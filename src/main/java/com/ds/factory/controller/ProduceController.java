@@ -273,7 +273,18 @@ public class ProduceController {
     public Object addDesign(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Manufacture_Design manufacture_design= JSON.parseObject(beanJson, Manufacture_Design.class);
-        manufacture_designService.insertManufacture_Design(manufacture_design);
+
+        String[] order_no_details_s=manufacture_design.getOrder_no_details().split("；");
+        if(order_no_details_s.length==1)
+            manufacture_designService.insertManufacture_Design(manufacture_design);
+        else
+        {
+            for(int i=0;i<order_no_details_s.length;i++)
+            {
+                manufacture_design.setOrder_no_details(order_no_details_s[i]);
+                manufacture_designService.insertManufacture_Design(manufacture_design);
+            }
+        }
         return result;
     }
 

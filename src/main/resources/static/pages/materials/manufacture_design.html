@@ -85,7 +85,7 @@
             animate: false,
             singleSelect: true,
             collapsible: false,
-            selectOnRaw_materials_requirement: false,
+            selectOnCheck: false,
             pagination: true,
             striped: true,
             pageSize: initPageSize,
@@ -112,6 +112,7 @@
                 {title: '职工计划编号', field: 'staff_no_design', width: 100},
                 {title: '产品编号', field: 'product_no', width: 80},
                 {title: '截止日期', field: 'deadline', width: 80},
+                {title: '更新时期', field: 'update_date', width: 80},
                 {title: '当前进程', field: 'progress', width: 60},
                 {title: '车间', field: 'workshop', width: 80},
                 {title: '原材料需求', field: 'raw_materials_requirement', width: 300, formatter: function (value, rec) {
