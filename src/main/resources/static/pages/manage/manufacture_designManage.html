@@ -134,7 +134,7 @@
             pageList: initPageNum,
             columns: [[
                 {field: 'id', width: 35, align: "center", checkbox: true},
-                {title: '制造编号', field: 'manufacture_no', width: 80},
+                {title: '生产编号', field: 'manufacture_no', width: 80},
                 {title: '详细订单信息', field: 'order_no_details', width: 180,formatter: function (value, rec) {
                         var str = '';
                         var details_nos=rec.order_no_details.split("；");
@@ -203,6 +203,14 @@
                     handler: function () {
                         batDeleteManufacture_design();
                     }
+                },
+                {
+                    id: 'copy_details',
+                    text: '复制生产计划信息（支持多条）',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        copy_order_no_details();
+                    }
                 }
             ],
             onLoadError: function () {
@@ -213,6 +221,58 @@
         dgResize();
         showManufacture_designDetails(1, initPageSize);
     }
+
+
+    function copy_order_no_details() {
+        var row = $('#tableData').datagrid('getChecked');
+        if (row.length == 0) {
+            $.messager.alert('复制提示', '没有记录被复制！', 'info');
+            return;
+        }
+        if (row.length > 0) {
+            $.messager.confirm('删除确认', '确定要复制选中的' + row.length + '条详情数据吗？', function (r) {
+                if (r) {
+                    var ids = "";
+                    for (var i = 0; i < row.length; i++) {
+                        if (i == row.length - 1) {
+                            ids +="生产编号："+ row[i].manufacture_no+";\n"
+                                +"子订单编号："+ row[i].order_no_details+";\n"
+                                +"职工计划编号："+ row[i].staff_no_design+";\n"
+                                +"产品编号："+ row[i].product_no+";\n"
+                                +"截止日期："+ row[i].deadline+";\n"
+                                +"当前进程："+ row[i].progress+";\n"
+                                +"车间："+ row[i].workshop+";\n"
+                                +"成品需求："+ row[i].products_requirement+";\n"
+                                +"原材料需求："+ row[i].raw_materials_requirement+";\n"
+                                +"备注："+ row[i].details+";\n";
+                            break;
+                        }
+                        ids +="生产编号："+ row[i].manufacture_no+";\n"
+                            +"子订单编号："+ row[i].order_no_details+";\n"
+                            +"职工计划编号："+ row[i].staff_no_design+";\n"
+                            +"产品编号："+ row[i].product_no+";\n"
+                            +"截止日期："+ row[i].deadline+";\n"
+                            +"当前进程："+ row[i].progress+";\n"
+                            +"车间："+ row[i].workshop+";\n"
+                            +"成品需求："+ row[i].products_requirement+";\n"
+                            +"原材料需求："+ row[i].raw_materials_requirement+";\n"
+                            +"备注："+ row[i].details+";\n\n\n\n";
+                    }
+                    const textarea = document.createElement('textarea');
+                    textarea.value = ids;
+                    document.body.appendChild(textarea);
+
+                    textarea.select();
+                    if (document.execCommand('copy')) {
+                        document.execCommand('copy');
+                        alert(row.length+"条生产计划信息复制成功");
+                    }
+                    document.body.removeChild(textarea);
+                }
+            });
+        }
+    }
+
 
 
     //分页信息处理
