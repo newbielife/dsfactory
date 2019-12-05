@@ -48,6 +48,7 @@ public class UserController {
                                   @RequestParam(value = "password", required = false) String password,
                                   HttpServletRequest request)throws Exception {
         logger.info("============用户登录 login 方法调用开始==============");
+        System.out.println(loginame+"      "+password);
         String msgTip = "";
         Staff user=null;
         BaseResponseInfo res = new BaseResponseInfo();
