@@ -1,5 +1,6 @@
 package com.ds.factory.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.UserBusiness;
@@ -102,6 +103,17 @@ public class UserBusinessController {
             throw new BusinessRunTimeException(ExceptionConstants.USER_BUSINESS_DELETE_FAILED_CODE,
                     ExceptionConstants.USER_BUSINESS_DELETE_FAILED_MSG);
         }
+        return result;
+    }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        System.out.println(id);
+        UserBusiness userBusiness= JSON.parseObject(beanJson, UserBusiness.class);
+        userBusiness.setId(id);
+        userBusinessService.updateSelective(userBusiness);
         return result;
     }
 }
