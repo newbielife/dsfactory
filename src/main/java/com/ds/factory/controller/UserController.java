@@ -2,6 +2,7 @@ package com.ds.factory.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.*;
 import com.ds.factory.service.Service.ClientService;
 import com.ds.factory.service.Service.LogService;
@@ -293,6 +294,28 @@ public class UserController {
         queryInfo.setRows(list);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+    @PostMapping("/addUser")
+    @ResponseBody
+    public Object addUser(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Staff sta= JSON.parseObject(beanJson, Staff.class);
+        sta.setPassword("e10adc3949ba59abbe56e057f20f883e");
+        staffService.insertSelective(sta);
+        return result;
+    }
+
+    @PostMapping("/batchDeleteUser")
+    @ResponseBody
+    public Object batchDeleteClientByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+            staffService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
     }
 
 }

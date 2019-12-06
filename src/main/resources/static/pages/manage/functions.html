@@ -271,6 +271,7 @@
                     success: function (res) {
                         if(res && res.code == 200) {
                             $("#searchBtn").click();
+                            $.messager.alert('删除提示', '删除功能信息成功');
                         } else {
                             $.messager.alert('删除提示', '删除功能信息失败，请稍后再试！', 'error');
                         }
@@ -348,33 +349,58 @@
     }
 
     //保存信息
+    // $("#saveFunctions").off("click").on("click", function () {
+    //     // if (checkFunctionsName()) {
+    //     //     return;
+    //     // }
+    //     var infoObj = $("#functionsFM").serializeObject();
+    //     infoObj.State = $("#State").is(':checked');
+    //     infoObj.Enabled = $("#Enabled").is(':checked');
+    //     var PushBtn = JSON.stringify($("#PushBtn").combobox('getValues'));
+    //     infoObj.PushBtn = PushBtn.replace(/\"/g, "").replace(/\[|]/g,"");
+    //     $.ajax({
+    //         url: url,
+    //         type: "post",
+    //         dataType: "json",
+    //         data: ({
+    //             info: JSON.stringify(infoObj)
+    //         }),
+    //         success: function(res) {
+    //             if(res && res.code === 200) {
+    //                 $('#functionsDlg').dialog('close');
+    //                 //加载完以后重新初始化
+    //                 var opts = $("#tableData").datagrid('options');
+    //                 showFunctionsDetails(opts.pageNumber, opts.pageSize);
+    //             }
+    //         },
+    //         //此处添加错误处理
+    //         error: function () {
+    //             $.messager.alert('提示', '保存功能信息异常，请稍后再试！', 'error');
+    //             return;
+    //         }
+    //     });
+    // });
+    //保存信息
     $("#saveFunctions").off("click").on("click", function () {
-        if (checkFunctionsName()) {
-            return;
-        }
-        var infoObj = $("#functionsFM").serializeObject();
-        infoObj.State = $("#State").is(':checked');
-        infoObj.Enabled = $("#Enabled").is(':checked');
-        var PushBtn = JSON.stringify($("#PushBtn").combobox('getValues'));
-        infoObj.PushBtn = PushBtn.replace(/\"/g, "").replace(/\[|]/g,"");
         $.ajax({
             url: url,
             type: "post",
             dataType: "json",
+            async: false,
             data: ({
-                info: JSON.stringify(infoObj)
+                info: JSON.stringify($("#functionsFM").serializeObject())
             }),
             success: function(res) {
                 if(res && res.code === 200) {
                     $('#functionsDlg').dialog('close');
                     //加载完以后重新初始化
                     var opts = $("#tableData").datagrid('options');
-                    showFunctionsDetails(opts.pageNumber, opts.pageSize);
+                    showPaymentDetails(opts.pageNumber, opts.pageSize);
                 }
             },
             //此处添加错误处理
             error: function () {
-                $.messager.alert('提示', '保存功能信息异常，请稍后再试！', 'error');
+                $.messager.alert('提示', '保存异常，请稍后再试！', 'error');
                 return;
             }
         });
