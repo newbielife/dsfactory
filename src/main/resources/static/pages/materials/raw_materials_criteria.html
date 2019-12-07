@@ -103,11 +103,9 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "Raw_Materials_Criteria_type" || obj.id == "Raw_Materials_Criteria_name")) {
-            $("#saveRaw_Materials_Criteria").click();
-        }
+
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchMaterial_name")) {
+        if (k == "13" && ((obj.id == "searchMaterial_no")||(obj.id == "searchMaterial_name")||(obj.id == "searchMaterial_type"))) {
             $("#searchBtn").click();
         }
     });

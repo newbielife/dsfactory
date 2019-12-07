@@ -204,11 +204,12 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "Raw_Materials_Warehouse_type" || obj.id == "Raw_Materials_Warehouse_name")) {
+        if (k == "13" && ((obj.id == "Material_no") || (obj.id == "Stock_num")||(obj.id == "Storage_address") || (obj.id == "Staff_no_storage")|| (obj.id == "Details"))) {
             $("#saveRaw_Materials_Warehouse").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchMaterial_no")) {
+        if (k == "13" && ((obj.id == "searchStock_no")||(obj.id == "searchMaterial_no")||(obj.id == "searchStaff_no_storage")
+            ||(obj.id == "searchStorage_address")||(obj.id == "searchProduct_date"))) {
             $("#searchBtn").click();
         }
     });
