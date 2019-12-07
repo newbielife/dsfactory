@@ -130,9 +130,9 @@
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchOperation" || obj.id == "searchUsernameID" || obj.id == "searchIP"
-                || obj.id == "searchStatus" || obj.id == "searchBeginTime" || obj.id == "searchEndTime"
-                || obj.id == "searchDesc")) {
+        if (k == "13" && ((obj.id == "searchOperation") || (obj.id == "searchUsernameID") || (obj.id == "searchIP")
+                || (obj.id == "searchStatus") || (obj.id == "searchBeginTime") ||( obj.id == "searchEndTime")
+                ||(obj.id == "searchDesc"))) {
             $("#searchBtn").click();
         }
     });
