@@ -183,6 +183,7 @@ public class BusinessConstants {
     public static final String LOG_INTERFACE_NAME_SERIAL_NUMBER= "serialNumber";
     public static final String LOG_MODULE_NAME_ORGANIZATION= "机构";
     public static final String LOG_INTERFACE_NAME_ORGANIZATION= "organization";
+    public static final String LOG_MODULE_NAME_ORDER= "订单";
 
     public static final String TYPE_NAME_ROLE_APP = "RoleAPP";
     public static final String TYPE_NAME_ROLE_FUNCTIONS = "RoleFunctions";

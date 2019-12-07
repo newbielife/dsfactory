@@ -5,14 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.*;
-import com.ds.factory.service.Service.Export_RecordService;
-import com.ds.factory.service.Service.Order_DetailsService;
-import com.ds.factory.service.Service.Order_FormService;
-import com.ds.factory.service.Service.Refund_ApplicationService;
+import com.ds.factory.service.Service.*;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +28,9 @@ public class OrderController {
 
     @Resource
     Order_DetailsService order_detailsService;
+
+    @Resource
+    private LogService logService;
 
     @Resource
     Export_RecordService export_recordService;
@@ -336,13 +338,17 @@ public class OrderController {
 
     @PostMapping("/batchDeleteOrderByIds")
     @ResponseBody
-    public Object batchDeleteClientByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteClientByIds(@RequestParam("ids") String ids,HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             order_formService.deleteByPrimaryKey(id[i].trim());
         }
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -352,6 +358,10 @@ public class OrderController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Refund_Application red= JSON.parseObject(beanJson, Refund_Application.class);
         refund_applicationService.insertPayment(red);
+        String userid=request.getSession().getAttribute("userId").toString();
+        logService.insertLog(BusinessConstants.LOG_OPERATION_TYPE_ADD,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_LOGIN).append(userid).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 

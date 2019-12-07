@@ -217,6 +217,8 @@ public class LogService {
                 moduleName = BusinessConstants.LOG_MODULE_NAME_SERIAL_NUMBER; break;
             case BusinessConstants.LOG_INTERFACE_NAME_ORGANIZATION:
                 moduleName = BusinessConstants.LOG_MODULE_NAME_ORGANIZATION; break;
+            case BusinessConstants.LOG_MODULE_NAME_ORDER:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_ORDER; break;
         }
         return moduleName;
     }
