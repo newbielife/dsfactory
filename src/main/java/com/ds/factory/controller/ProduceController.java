@@ -80,8 +80,8 @@ public class ProduceController {
             log.setOrder_no_details(list.get(i).getOrder_no_details());
             log.setProduct_no(list.get(i).getProduct_no());
             log.setStaff_no_design(list.get(i).getStaff_no_design());
-            log.setUpdate_date(sdf1.format(list.get(i).getUpdate_date()));
-            log.setDeadline(sdf1.format(list.get(i).getDeadline()));
+            log.setUpdate_date(list.get(i).getUpdate_date()==null?"更新错误":sdf1.format(list.get(i).getUpdate_date()));
+            log.setDeadline(list.get(i).getDeadline()==null?"无截止日期":sdf1.format(list.get(i).getDeadline()));
             log.setDetails(list.get(i).getDetails());
             log.setProducts_requirement(list.get(i).getProducts_requirement());
             log.setProgress(list.get(i).getProgress());
@@ -181,7 +181,7 @@ public class ProduceController {
             log.setStaff_no_design(list.get(i).getStaff_no_design());
             log.setStaff_no_manufacture(list.get(i).getManufacture_no());
             log.setStock_no(list.get(i).getStock_no());
-            log.setUpdate_date(sdf1.format(list.get(i).getUpdate_date()));
+            log.setUpdate_date(list.get(i).getUpdate_date()==null?"更新错误":sdf1.format(list.get(i).getUpdate_date()));
             list2.add(log);
         }
 
