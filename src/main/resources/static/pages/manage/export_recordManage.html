@@ -249,7 +249,7 @@
                     }
                     $.ajax({
                         type: "post",
-                        url: "/export_record/batchDeleteExport_recordByIds",
+                        url: "/order/batchDeleteExportrecordByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -331,7 +331,7 @@
 
         oldExport_record = "";
         export_recordID = 0;
-        url = '/export_record/add';
+        url = '/order/addExport';
     }
     //保存信息
     $("#saveExport_record").off("click").on("click", function () {

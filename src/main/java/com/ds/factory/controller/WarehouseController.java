@@ -210,4 +210,17 @@ public class WarehouseController {
         return result;
     }
 
+    @PostMapping("/update")
+    @ResponseBody
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id,
+                         @RequestParam(value = "Product_no", required = false) String Product_no,
+                         @RequestParam(value = "prodate", required = false) Date prodate)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Product_Warehouse raw= JSON.parseObject(beanJson, Product_Warehouse.class);
+        raw.setStock_no(id.toString());
+        raw.setProduct_no(Product_no);
+        raw.setManufacture_date(prodate);
+        product_warehouseService.updateProduct_Warehouse(raw);
+        return result;
+    }
 }

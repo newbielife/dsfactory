@@ -351,6 +351,7 @@
     }
     //保存信息
     $("#saveProduct_Warehouse").off("click").on("click", function () {
+        var Product_no=$("#Product_no")
         if (!$("#Product_no").val()) {
             $.messager.alert('提示', '请输入产品编号！', 'warning');
             return;
@@ -378,7 +379,6 @@
             }
         });
     });
-
     //编辑信息
     function editProduct_Warehouse(Product_WarehouseTotalInfo) {
         $("#Product_no").attr("disabled",true);
@@ -386,6 +386,7 @@
 
         $("#Product_no").val(Product_WarehouseInfo[1]);
         $("#Staff_no_storage").val(Product_WarehouseInfo[2]);
+        prodate=Product_WarehouseInfo[3]
         $("#Stock_num").val(Product_WarehouseInfo[4]);
         $("#Storage_address").val(Product_WarehouseInfo[5]);
         $("#Staff_no_workshop").val(Product_WarehouseInfo[6]);
@@ -396,7 +397,7 @@
         Product_WarehouseID = Product_WarehouseInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(Product_WarehouseInfo[1]);
-        url = '/Product_Warehouse/update?id=' + Product_WarehouseInfo[0];
+        url = '/warehouse/update?id=' + Product_WarehouseInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
