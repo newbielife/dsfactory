@@ -13,7 +13,7 @@ public interface Export_RecordService {
     List<Export_Record> selectByConstraint(Date Delivery_date,String Export_no,
                                            String Staff_no, String Order_no_details,
                                            String Target_place, String Source_place);
-
+    int deleteByPrimaryKey(String Export_no);
     int insertExport_Record(Export_Record export_record);
     int update(Export_Record export_record);
     List<Export_Record> selectByClient_no(String Client_no);

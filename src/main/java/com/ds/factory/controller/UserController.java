@@ -246,7 +246,7 @@ public class UserController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Log> list = logService.selectByConstrain(operation,clientIp,status,begin,end);
-        System.out.println(list.size());
+        //System.out.println(list.size());
         List<Log2> list2=new ArrayList<Log2>();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
        // String str1 = sdf1.format(date);

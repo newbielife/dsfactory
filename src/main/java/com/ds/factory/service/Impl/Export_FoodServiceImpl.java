@@ -36,6 +36,11 @@ public class Export_FoodServiceImpl implements Export_RecordService {
     }
 
     @Override
+    public int deleteByPrimaryKey(String Export_no) {
+        return export_recordMapper.deleteByPrimaryKey(Export_no);
+    }
+
+    @Override
     public int insertExport_Record(Export_Record export_record) {
         System.out.println(export_record);
         if(export_record.getOrder_no_details()==null
