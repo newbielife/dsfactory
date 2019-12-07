@@ -414,7 +414,7 @@ public class OrderController {
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
-            //export_recordService.deleteByPrimaryKey(id[i].trim());
+            export_recordService.deleteByPrimaryKey(id[i].trim());
         }
         return result;
     }

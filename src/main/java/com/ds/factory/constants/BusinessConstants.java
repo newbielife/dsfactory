@@ -130,7 +130,7 @@ public class BusinessConstants {
     public static final String LOG_OPERATION_TYPE_EDIT = "修改,id:";
     public static final String LOG_OPERATION_TYPE_DELETE = "删除,id:";
     public static final String LOG_OPERATION_TYPE_LOGIN = "登录,id:";
-    public static final String LOG_OPERATION_TYPE_IMPORT = "导入";
+    public static final String LOG_OPERATION_TYPE_BUY = "购买";
 
     /**
      * 数据数量单位
