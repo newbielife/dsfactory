@@ -382,7 +382,17 @@ public class FunctionsController {
 //        }
         JSONObject result = ExceptionConstants.standardSuccess();
         try{
-            functionsMapper.insertSelective(depot);
+            String[] PNumber=depot.getPnumber().split("；");
+            if(PNumber.length==1)
+                functionsMapper.insertSelective(depot);
+            else
+            {
+                for(int i=0;i<PNumber.length;i++)
+                {
+                    depot.setPnumber(PNumber[i]);
+                    functionsMapper.insertSelective(depot);
+                }
+            }
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }
