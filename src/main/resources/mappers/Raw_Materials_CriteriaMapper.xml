@@ -13,6 +13,14 @@
                 SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_no = #{Material_no}
         </select>
 
+
+        <select id="select_Biggest_Material_no"  resultType="java.lang.String">
+                select Material_no
+                from Raw_Materials_Criteria
+                order by Material_no desc
+                limit 1
+            </select>
+
      <select id="exist_or_notByName"  resultType="java.lang.Integer">
              SELECT count(*) FROM Raw_Materials_Criteria WHERE Material_name = #{Material_name}
      </select>

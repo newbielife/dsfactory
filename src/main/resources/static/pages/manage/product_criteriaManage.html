@@ -295,7 +295,7 @@
                     }
                     $.ajax({
                         type: "post",
-                        url: "/Product_criteria/batchDeleteProduct_criteriaByIds",
+                        url: "/criteria/batchDeleteProductByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -311,7 +311,7 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeleteProduct_criteriaForceConfirm(res,"/Product_criteria/batchDeleteProduct_criteriaByIds",jsondata,type);
+                                    batDeleteProduct_criteriaForceConfirm(res,"/criteria/batchDeleteProductByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{
@@ -378,7 +378,7 @@
 
         oldProduct_criteria = "";
         Product_criteriaID = 0;
-        url = '/Product_criteria/add';
+        url = '/criteria/product_add';
     }
     //保存信息
     $("#saveProduct_criteria").off("click").on("click", function () {
@@ -428,7 +428,7 @@
         Product_criteriaID = Product_criteriaInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(Product_criteriaInfo[1]);
-        url = '/Product_criteria/update?id=' + Product_criteriaInfo[0];
+        url = '/criteria/product_update?id=' + Product_criteriaInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

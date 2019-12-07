@@ -207,7 +207,7 @@
                     }
                     $.ajax({
                         type: "post",
-                        url: "/Raw_Materials_Criteria/batchDeleteRaw_Materials_CriteriaByIds",
+                        url: "/criteria/batchDeleteMaterialByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -223,7 +223,7 @@
                                     jsondata.ids=ids;
                                     jsondata.deleteType='2';
                                     var type='batch';
-                                    batDeleteRaw_Materials_CriteriaForceConfirm(res,"/Raw_Materials_Criteria/batchDeleteRaw_Materials_CriteriaByIds",jsondata,type);
+                                    batDeleteRaw_Materials_CriteriaForceConfirm(res,"/criteria/batchDeleteMaterialByIds",jsondata,type);
                                 }else if(res && res.code == 600){
                                     $.messager.alert('删除提示', res.msg, 'error');
                                 }else{
@@ -290,7 +290,7 @@
 
         oldRaw_Materials_Criteria = "";
         Raw_Materials_CriteriaID = 0;
-        url = '/Raw_Materials_Criteria/add';
+        url = '/criteria/material_add';
     }
     //保存信息
     $("#saveRaw_Materials_Criteria").off("click").on("click", function () {
@@ -337,7 +337,7 @@
         Raw_Materials_CriteriaID = Raw_Materials_CriteriaInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(Raw_Materials_CriteriaInfo[2]);
-        url = '/Raw_Materials_Criteria/update?id=' + Raw_Materials_CriteriaInfo[0];
+        url = '/criteria/material_update?id=' + Raw_Materials_CriteriaInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

@@ -12,4 +12,8 @@ public interface Product_CriteriaService {
     List<Unit> SelectUnit();
     List<Product_Criteria> getAll();
     Product_Criteria selectByProduct_no(String Product_no);
+
+    int insert(Product_Criteria product_criteria);
+    int delete(String Product_no);
+    int update(Product_Criteria product_criteria);
 }
