@@ -83,7 +83,7 @@ public class OrderController {
             list2.add(log);
         }
         //获取分页查询后的数据
-        PageInfo<Order_Form2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Order_Form> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -137,7 +137,7 @@ public class OrderController {
         }
 
         //获取分页查询后的数据
-        PageInfo<Order_Details2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Order_Details> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -189,7 +189,7 @@ public class OrderController {
             list2.add(order_details2);
         }
         //获取分页查询后的数据
-        PageInfo<Order_Details2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Order_Details> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -242,7 +242,7 @@ public class OrderController {
         }
 
         //获取分页查询后的数据
-        PageInfo<Order_Details2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Order_Details> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());

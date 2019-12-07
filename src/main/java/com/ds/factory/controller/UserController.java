@@ -246,7 +246,7 @@ public class UserController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Log> list = logService.selectByConstrain(operation,clientIp,status,begin,end);
-
+        System.out.println(list.size());
         List<Log2> list2=new ArrayList<Log2>();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
        // String str1 = sdf1.format(date);
@@ -256,7 +256,7 @@ public class UserController {
             log.setId(list.get(i).getId());
             log.setClientip(list.get(i).getClientip());
             log.setContentdetails(list.get(i).getContentdetails());
-            log.setCreatetime(list.get(i).getCreatetime()==null?"登录有误":sdf1.format(list.get(i).getCreatetime()));
+            log.setCreatetime(list.get(i).getCreatetime()==null?"数据有误":sdf1.format(list.get(i).getCreatetime()));
             log.setOperation(list.get(i).getOperation());
             log.setRemark(list.get(i).getRemark());
             log.setStatus(list.get(i).getStatus());
@@ -265,11 +265,10 @@ public class UserController {
             list2.add(log);
         }
 
-
         //获取分页查询后的数据
-        PageInfo<Log2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Log> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
-        if (list2 == null) {
+        if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
             queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
