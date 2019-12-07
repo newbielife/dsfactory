@@ -212,7 +212,7 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
             manufacture_result.setOrder_no_details(manufacture.getOrder_no_details());
             manufacture_result.setProduct_no(Product_no);
             manufacture_result.setStaff_no_design(manufacture.getStaff_no_design());
-            manufacture_result.setStaff_no_manufacture(manufacture.getWorkshop());
+            manufacture_result.setStaff_no_manufacture("");
             manufacture_result.setStock_no("0");
             manufacture_result.setUpdate_date(new Date());
             System.out.println(manufacture_result);

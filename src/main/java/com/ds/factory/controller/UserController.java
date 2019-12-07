@@ -21,6 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
@@ -245,15 +246,35 @@ public class UserController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Log> list = logService.selectByConstrain(operation,clientIp,status,begin,end);
+
+        List<Log2> list2=new ArrayList<Log2>();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       // String str1 = sdf1.format(date);
+        for(int i=0;i<list.size();i++)
+        {
+            Log2 log=new Log2();
+            log.setId(list.get(i).getId());
+            log.setClientip(list.get(i).getClientip());
+            log.setContentdetails(list.get(i).getContentdetails());
+            log.setCreatetime(sdf1.format(list.get(i).getCreatetime()));
+            log.setOperation(list.get(i).getOperation());
+            log.setRemark(list.get(i).getRemark());
+            log.setStatus(list.get(i).getStatus());
+            log.setTenantId(list.get(i).getTenantId());
+            log.setUserid(list.get(i).getUserid());
+            list2.add(log);
+        }
+
+
         //获取分页查询后的数据
-        PageInfo<Log> pageInfo = new PageInfo<>(list);
+        PageInfo<Log2> pageInfo = new PageInfo<>(list2);
         objectMap.put("page", queryInfo);
-        if (list == null) {
+        if (list2 == null) {
             queryInfo.setRows(new ArrayList<Object>());
             queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
-        queryInfo.setRows(list);
+        queryInfo.setRows(list2);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }

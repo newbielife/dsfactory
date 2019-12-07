@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
@@ -61,15 +62,33 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Order_Form> list = order_formService.selectByConstraint(order_no,client_no,staff_no,check);
+
+        List<Order_Form2> list2=new ArrayList<Order_Form2>();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // String str1 = sdf1.format(date);
+        for(int i=0;i<list.size();i++)
+        {
+            Order_Form2 log=new Order_Form2();
+            log.setCheck(list.get(i).getCheck());
+            log.setClient_no(list.get(i).getClient_no());
+            log.setLiquidated_damages(list.get(i).getLiquidated_damages());
+            log.setUpdate_date(sdf1.format(list.get(i).getUpdate_date()));
+            log.setOrder_Create_date(sdf1.format(list.get(i).getOrder_Create_date()));
+            log.setOrder_no(list.get(i).getOrder_no());
+            log.setOrder_sum_amount(list.get(i).getOrder_sum_amount());
+            log.setProgress(list.get(i).getProgress());
+            log.setStaff_no(list.get(i).getStaff_no());
+            list2.add(log);
+        }
         //获取分页查询后的数据
-        PageInfo<Order_Form> pageInfo = new PageInfo<>(list);
+        PageInfo<Order_Form2> pageInfo = new PageInfo<>(list2);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
             queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
-        queryInfo.setRows(list);
+        queryInfo.setRows(list2);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
@@ -99,15 +118,31 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Order_Details> list = order_detailsService.selectByConstraint(no,client_no,product_no,check);
+        List<Order_Details2> list2=new ArrayList<Order_Details2>();
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // String str1 = sdf1.format(date);
+        for(int i=0;i<list.size();i++)
+        {
+            Order_Details2 order_details2=new Order_Details2();
+            order_details2.setCheck(list.get(i).getCheck());
+            order_details2.setClient_no(list.get(i).getClient_no());
+            order_details2.setDelivery_date(list.get(i).getDelivery_date()==null?"异常信息":sdf2.format(list.get(i).getDelivery_date()));
+            order_details2.setProducts_requirement(list.get(i).getProducts_requirement());
+            order_details2.setOrder_no_details(list.get(i).getOrder_no_details());
+            order_details2.setProduct_no(list.get(i).getProduct_no());
+            order_details2.setPayment_deadline(list.get(i).getPayment_deadline()==null?"尚未指定截止日期":sdf2.format(list.get(i).getPayment_deadline()));
+            list2.add(order_details2);
+        }
+
         //获取分页查询后的数据
-        PageInfo<Order_Details> pageInfo = new PageInfo<>(list);
+        PageInfo<Order_Details2> pageInfo = new PageInfo<>(list2);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
             queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
-        queryInfo.setRows(list);
+        queryInfo.setRows(list2);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
@@ -136,16 +171,83 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Order_Details> list = order_detailsService.selectByOrder_no(order_no);
-        System.out.println(list.size());
+        List<Order_Details2> list2=new ArrayList<Order_Details2>();
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // String str1 = sdf1.format(date);
+        for(int i=0;i<list.size();i++)
+        {
+            Order_Details2 order_details2=new Order_Details2();
+            order_details2.setCheck(list.get(i).getCheck());
+            order_details2.setClient_no(list.get(i).getClient_no());
+            order_details2.setDelivery_date(list.get(i).getDelivery_date()==null?"异常信息":sdf2.format(list.get(i).getDelivery_date()));
+            order_details2.setProducts_requirement(list.get(i).getProducts_requirement());
+            order_details2.setOrder_no_details(list.get(i).getOrder_no_details());
+            order_details2.setProduct_no(list.get(i).getProduct_no());
+            order_details2.setPayment_deadline(list.get(i).getPayment_deadline()==null?"尚未指定截止日期":sdf2.format(list.get(i).getPayment_deadline()));
+            list2.add(order_details2);
+        }
         //获取分页查询后的数据
-        PageInfo<Order_Details> pageInfo = new PageInfo<>(list);
+        PageInfo<Order_Details2> pageInfo = new PageInfo<>(list2);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
             queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
-        queryInfo.setRows(list);
+        queryInfo.setRows(list2);
+        queryInfo.setTotal(pageInfo.getTotal());
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+
+    @GetMapping(value = "/getAllOrderDetail3")
+    public String getAllOrderDetail3(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                     @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                     @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        //查询参数
+        JSONObject obj= JSON.parseObject(search);
+        Set<String> key= obj.keySet();
+        for(String keyEach: key){
+            parameterMap.put(keyEach,obj.getString(keyEach));
+        }
+        String order_no=parameterMap.get("no");
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize == null || pageSize <= 0) {
+            pageSize = BusinessConstants.DEFAULT_PAGINATION_PAGE_SIZE;
+        }
+        if (currentPage == null || currentPage <= 0) {
+            currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
+        }
+        PageHelper.startPage(currentPage,pageSize,true);
+        List<Order_Details> list = order_detailsService.selectByOrder_no(order_no);
+        List<Order_Details2> list2=new ArrayList<Order_Details2>();
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // String str1 = sdf1.format(date);
+        Order_Form o= order_formService.selectByPrimaryKey(order_no);
+        for(int i=0;i<list.size();i++)
+        {
+            Order_Details2 order_details2=new Order_Details2();
+            order_details2.setCheck(list.get(i).getCheck());
+            order_details2.setClient_no(list.get(i).getClient_no());
+            order_details2.setDelivery_date(o.getOrder_Create_date()==null?"异常信息":sdf2.format(o.getOrder_Create_date()));
+            order_details2.setProducts_requirement(list.get(i).getProducts_requirement());
+            order_details2.setOrder_no_details(list.get(i).getOrder_no_details());
+            order_details2.setProduct_no(list.get(i).getProduct_no());
+            order_details2.setPayment_deadline(list.get(i).getPayment_deadline()==null?"尚未指定截止日期":sdf2.format(list.get(i).getPayment_deadline()));
+            list2.add(order_details2);
+        }
+
+        //获取分页查询后的数据
+        PageInfo<Order_Details2> pageInfo = new PageInfo<>(list2);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list2);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }

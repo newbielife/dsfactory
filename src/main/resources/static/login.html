@@ -128,6 +128,20 @@
 
 
 <script>
+
+    //初始化键盘enter事件
+    $(document).keydown(function (event) {
+        //兼容 IE和firefox 事件
+        var e = window.event || event;
+        var k = e.keyCode || e.which || e.charCode;
+        //兼容 IE,firefox 兼容
+        var obj = e.srcElement ? e.srcElement : e.target;
+        //绑定键盘事件为 username 和password的输入框才可以触发键盘事件 13键盘事件
+        if (k == "13" && (obj.id == "username" || obj.id == "password"||obj.id == "validCode" ))
+            loginFun();
+    });
+
+
     $("#username, #password").on("focus blur", function () {
         var a = this;
         setTimeout(function () {
@@ -139,7 +153,12 @@
     }).blur();
     var verifyCode = new GVerify("imgCaptcha");
     //注册按钮绑定处理事件
+
     $("#btnSubmit").off("click").on("click", function () {
+        loginFun();
+    });
+
+    function loginFun() {
         if($("#validCode").val()) {
             var res = verifyCode.validate($("#validCode").val());
             if(res){
@@ -199,11 +218,13 @@
                 });
             } else{
                 alert("验证码错误!");
+                $("#validCode").val("");
             }
         } else {
             alert("验证码为空!");
+            $("#validCode").val("");
         }
-    });
+    }
 </script>
 
 
