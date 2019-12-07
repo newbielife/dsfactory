@@ -4,16 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
-import com.ds.factory.datasource.entities.Manufacture_Result;
-import com.ds.factory.datasource.entities.Payment;
-import com.ds.factory.datasource.entities.Payment2;
-import com.ds.factory.datasource.entities.Refund_Application;
+import com.ds.factory.datasource.entities.*;
+import com.ds.factory.service.Service.LogService;
 import com.ds.factory.service.Service.PaymentService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +29,8 @@ public class PaymentController {
     @Resource
     PaymentService paymentService;
 
+    @Resource
+    LogService logService;
     @Resource
     private UserBusinessService userBusinessService;
 
@@ -59,6 +61,12 @@ public class PaymentController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Payment> list = paymentService.selectByConstraint(date,order_no,staff_no,payment_no);
+//        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PAYMENT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         List<Payment2> list2=new ArrayList<Payment2>();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // String str1 = sdf1.format(date);
@@ -91,16 +99,24 @@ public class PaymentController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Payment payment= JSON.parseObject(beanJson, Payment.class);
         paymentService.insertPayment(payment.getOrder_no(),payment.getStaff_no_accountant(),payment.getMoney(),payment.getDetails());
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PAYMENT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
     @PostMapping("/PayUpdate")
     @ResponseBody
-    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") String id)throws Exception{
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") String id, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Payment payment= JSON.parseObject(beanJson, Payment.class);
         payment.setPayment_no(id);
         paymentService.updateByPrimaryKey(payment);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PAYMENT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 }

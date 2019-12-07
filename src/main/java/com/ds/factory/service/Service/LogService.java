@@ -219,6 +219,10 @@ public class LogService {
                 moduleName = BusinessConstants.LOG_MODULE_NAME_ORGANIZATION; break;
             case BusinessConstants.LOG_MODULE_NAME_ORDER:
                 moduleName = BusinessConstants.LOG_MODULE_NAME_ORDER; break;
+            case BusinessConstants.LOG_MODULE_NAME_PAYMENT:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_PAYMENT; break;
+            case BusinessConstants.LOG_MODULE_NAME_WAREHOUSE:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_WAREHOUSE; break;
         }
         return moduleName;
     }

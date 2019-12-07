@@ -7,14 +7,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.*;
-import com.ds.factory.service.Service.Expired_FoodService;
-import com.ds.factory.service.Service.Export_RecordService;
-import com.ds.factory.service.Service.Product_WarehouseService;
-import com.ds.factory.service.Service.Raw_Materials_WarehouseService;
+import com.ds.factory.service.Service.*;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +28,8 @@ public class WarehouseController {
     @Resource
     Product_WarehouseService product_warehouseService;
 
+    @Resource
+    LogService logService;
     @Resource
     Expired_FoodService expired_foodService;
 
@@ -62,6 +63,11 @@ public class WarehouseController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Product_Warehouse> list = product_warehouseService.selectByConstraint(stock_no,product_no,staff_no,storage_address,manufacture_date);
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Product_Warehouse> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -103,6 +109,11 @@ public class WarehouseController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Raw_Materials_Warehouse> list = raw_materials_warehouseService.selectByConstraint(no,material_no,storage_address,staff_no_storage,product_date);
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Raw_Materials_Warehouse> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -143,6 +154,11 @@ public class WarehouseController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Expired_Food> list = expired_foodService.selectByConstraint(no,type,name,date);
+//        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Expired_Food> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -162,42 +178,62 @@ public class WarehouseController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Raw_Materials_Warehouse raw= JSON.parseObject(beanJson, Raw_Materials_Warehouse.class);
         raw_materials_warehouseService.insertRaw_Materials_Warehouse(raw);
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
     @PostMapping("/batchDeleteRawMaterialsByIds")
     @ResponseBody
-    public Object batchDeleteRawMaterialsByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteRawMaterialsByIds(@RequestParam("ids") String ids, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             raw_materials_warehouseService.deleteByPrimaryKey(id[i].trim());
         }
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
     @PostMapping("/batchDeleteProductWarehouseByIds")
     @ResponseBody
-    public Object batchDeleteProductWarehouseByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteProductWarehouseByIds(@RequestParam("ids") String ids, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             product_warehouseService.deleteByPrimaryKey(id[i].trim());
         }
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
 
     @PostMapping("/batchDeleteExpiredFoodByIds")
     @ResponseBody
-    public Object batchDeleteExpiredFoodByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteExpiredFoodByIds(@RequestParam("ids") String ids, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             //expired_foodService.deleteByPrimaryKey(id[i].trim());
         }
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -207,6 +243,11 @@ public class WarehouseController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Product_Warehouse raw= JSON.parseObject(beanJson, Product_Warehouse.class);
         product_warehouseService.insertProduct_Warehouse(raw);
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -214,13 +255,18 @@ public class WarehouseController {
     @ResponseBody
     public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id,
                          @RequestParam(value = "Product_no", required = false) String Product_no,
-                         @RequestParam(value = "prodate", required = false) Date prodate)throws Exception{
+                         @RequestParam(value = "prodate", required = false) Date prodate, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Product_Warehouse raw= JSON.parseObject(beanJson, Product_Warehouse.class);
         raw.setStock_no(id.toString());
         raw.setProduct_no(Product_no);
         raw.setManufacture_date(prodate);
         product_warehouseService.updateProduct_Warehouse(raw);
+        //        log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 }

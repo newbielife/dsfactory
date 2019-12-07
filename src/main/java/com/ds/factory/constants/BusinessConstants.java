@@ -131,7 +131,7 @@ public class BusinessConstants {
     public static final String LOG_OPERATION_TYPE_DELETE = "删除,id:";
     public static final String LOG_OPERATION_TYPE_LOGIN = "登录,id:";
     public static final String LOG_OPERATION_TYPE_BUY = "购买";
-
+    public static final String LOG_OPERATION_TYPE_SEARCH = "查询";
     /**
      * 数据数量单位
      * 条
@@ -184,6 +184,8 @@ public class BusinessConstants {
     public static final String LOG_MODULE_NAME_ORGANIZATION= "机构";
     public static final String LOG_INTERFACE_NAME_ORGANIZATION= "organization";
     public static final String LOG_MODULE_NAME_ORDER= "订单";
+    public static final String LOG_MODULE_NAME_PAYMENT= "收款";
+    public static final String LOG_MODULE_NAME_WAREHOUSE= "仓库";
 
     public static final String TYPE_NAME_ROLE_APP = "RoleAPP";
     public static final String TYPE_NAME_ROLE_FUNCTIONS = "RoleFunctions";
