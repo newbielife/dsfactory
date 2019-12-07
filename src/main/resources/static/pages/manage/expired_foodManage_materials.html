@@ -85,7 +85,7 @@
             <tr>
                 <td>处理方法：</td>
                 <td style="padding:5px">
-                    <input name="Processing_method"class="easyui-validatebox" id="Processing_method"
+                        <input name="Processing_method"class="easyui-validatebox" id="Processing_method"
                            data-options="required:true,validType:'length[0,500]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -95,7 +95,7 @@
 <div id="dlg-buttons">
     <a href="javascript:void(0)" id="saveExpired_food" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
     <a href="javascript:void(0)" id="cancelExpired_food" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#Expired_foodDlg').dialog('close')">取消</a>
+       onclick="javascript:$('#expired_foodDlg').dialog('close')">取消</a>
 </div>
 <script type="text/javascript">
     //初始化界面
@@ -180,14 +180,7 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && ((obj.id == "Order_no_details") || (obj.id == "Staff_no_design")||(obj.id == "Workshop") || (obj.id == "Details"))) {
-            $("#saveManufacture_design").click();
-        }
-        //搜索按钮添加快捷键
-        if (k == "13" && ((obj.id == "searchManufacture_no")||(obj.id == "searchOrder_no_details")||(obj.id == "searchStaff_no_design")
-            ||(obj.id == "searchProduct_no")||(obj.id == "searchWorkshop"))) {
-            $("#searchBtn").click();
-        }
+        expired_food.html
     });
 
     //分页信息处理
