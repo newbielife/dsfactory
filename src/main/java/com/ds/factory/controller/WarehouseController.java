@@ -227,7 +227,7 @@ public class WarehouseController {
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
-            //expired_foodService.deleteByPrimaryKey(id[i].trim());
+            expired_foodService.deleteByKey(id[i].trim());
         }
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
