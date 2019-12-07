@@ -58,6 +58,11 @@ public class Expired_FoodServiceImpl implements Expired_FoodService {
     }
 
     @Override
+    public int deleteByKey(String Food_no) {
+        return expired_foodMapper.deleteByPrimaryKey(Food_no);
+    }
+
+    @Override
     public int insertExpired_Food(String Food_type,String Food_name,String Loss_num,String Processing_method) {
         Expired_Food expired_food=new Expired_Food();
         if(Food_type.trim().compareTo("原料")==0) {
