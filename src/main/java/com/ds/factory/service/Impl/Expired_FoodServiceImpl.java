@@ -58,6 +58,11 @@ public class Expired_FoodServiceImpl implements Expired_FoodService {
     }
 
     @Override
+    public int updateByPrimaryKey(Expired_Food expired_food) {
+        return expired_foodMapper.updateByPrimaryKey(expired_food);
+    }
+
+    @Override
     public int deleteByKey(String Food_no) {
         return expired_foodMapper.deleteByPrimaryKey(Food_no);
     }
