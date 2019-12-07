@@ -94,7 +94,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <a href="register.html" class="pull-left">[ 还没账号？立即注册 ]</a>
+                    <a href="register.html" class="pull-left">[ 还没账号？立即登录 ]</a>
                     <div class="dropdown pull-right">使用
                         <a href="#" class="dropdown-toggle">
                             <i class="fa icon-globe"></i> MIT许可
@@ -138,7 +138,7 @@
         }, 100)
     }).blur();
     var verifyCode = new GVerify("imgCaptcha");
-    //注册按钮绑定处理事件
+    //登录按钮绑定处理事件
     $("#btnSubmit").off("click").on("click", function () {
         if($("#validCode").val()) {
             var res = verifyCode.validate($("#validCode").val());

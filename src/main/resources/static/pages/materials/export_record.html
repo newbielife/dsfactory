@@ -124,7 +124,8 @@
             $("#saveExport_record").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchStaff_no")) {
+        if (k == "13" && ((obj.id == "searchExport_no")||(obj.id == "searchStaff_no")||(obj.id == "searchOrder_no_details")
+                ||(obj.id == "searchSource_place")||(obj.id == "searchTarget_place")||(obj.id == "searchDelivery_date"))) {
             $("#searchBtn").click();
         }
     });

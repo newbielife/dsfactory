@@ -205,7 +205,8 @@
             $("#saveRefund_Application").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchOrder_no")) {
+        if (k == "13" && ((obj.id == "searchRefund_no")||(obj.id == "searchOrder_no")||(obj.id == "searchClient_no")
+                ||(obj.id == "searchStaff_no_checker")||(obj.id == "searchPermission"))) {
             $("#searchBtn").click();
         }
     });

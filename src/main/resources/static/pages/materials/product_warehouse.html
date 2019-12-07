@@ -138,7 +138,8 @@
             $("#saveProduct_Warehouse").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchProduct_no")) {
+        if (k == "13" && ((obj.id == "searchStock_no")||(obj.id == "searchProduct_no")||(obj.id == "searchStaff_no_storage")
+            ||(obj.id == "searchStorage_address")||(obj.id == "searchManufacture_date"))){
             $("#searchBtn").click();
         }
     });

@@ -246,7 +246,7 @@
             $("#saveOrder_form").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchClient_no")) {
+        if (k == "13" && ((obj.id == "searchOrder_no")||(obj.id == "searchClient_no")||(obj.id == "searchStaff_no")||(obj.id == "searchCheck"))) {
             $("#searchBtn").click();
         }
     });
