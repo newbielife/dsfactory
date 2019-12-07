@@ -11,55 +11,80 @@
     <link rel="shortcut icon" href="images/dslogo.ico" type="image/x-icon"/>
     <script src="js/global.min.js?ctx=/js/a"></script>
     <script src="js/jquery/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="js/adminlte/css/AdminLTE.css">
+    <script src="js/adminlte/js/adminlte.js"></script>
 </head>
-<body background="images/memphis-colorful.png" class="hold-transition ">
-    <h1 style="text-align:center"><img src="images/shanda.jpg" height="75" width="121"/></h1>
-    <h1 style="text-align:center">欢迎来到大山食品厂！!</h1>
-    <h3 style="text-align: center; color:red">此项目为课设作品，Produced By </h3>
-    <h3 style="text-align: center; color:#66ccff" >201700800421 郭煜畅; </h3>
-    <h3 style="text-align: center; color:#66ccff" >201700800450 陆勇作; </h3>
-    <h3 style="text-align: center; color:#66ccff" >201700800498 张天萌; </h3>
+<body class="hold-transition ">
+<section class="content">
+    <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-danger elevation-1">
+<!--                        <i class="fa fa-thumbs-up"></i>-->
+                        <img src="js/images/like.png" class="user-image">
+                    </span>
 
-    <!--a href="pages/manage/paymentManage.html">paymentManage</a>
-    <a href="pages/materials/payment.html">payment</a>
-    <br>
-    <a href="pages/manage/expired_foodManage_materials.html">expired_foodManage</a>
-    <a href="pages/materials/expired_food.html">expired_food</a>
-    <br>
-    <a href="pages/manage/export_recordManage.html">export_recordManage</a>
-    <a href="pages/materials/export_record.html">export_record</a>
-    <br>
-    <a href="pages/manage/order_detailsManage.html">order_detailsManage</a>
-    <a href="pages/materials/order_details.html">order_details</a>
-    <br>
-    <a href="pages/manage/order_formManage_salesman.html">order_formManage</a>
-    <a href="pages/materials/order_form.html">order_form</a>
-    <br>
-    <a href="pages/manage/manufacture_designManage.html">manufacture_designManage</a>
-    <a href="pages/materials/manufacture_design.html">manufacture_design</a>
-    <br>
-    <a href="pages/manage/manufacture_resultManage.html">manufacture_resultManage</a>
-    <a href="pages/materials/manufacture_result.html">manufacture_result</a>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Likes</span>
+                        <span class="info-box-number">41</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
 
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
 
-    <br>
-    <a href="pages/manage/product_criteriaManage.html">product_criteriaManage</a>
-    <a href="pages/materials/product_criteria.html">product_criteria</a>
-    <br>
-    <a href="pages/materials/product_popularity.html">product_popularity</a>
-    <br>
-    <a href="pages/manage/product_warehouseManage.html">product_warehouseManage</a>
-    <a href="pages/materials/product_warehouse.html">product_warehouse</a>
-    <br>
-    <a href="pages/manage/raw_materials_criteriaManage.html">raw_materials_criteriaManage</a>
-    <a href="pages/materials/raw_materials_criteria.html">raw_materials_criteria</a>
-    <br>
-    <a href="pages/manage/raw_materials_warehouseManage.html">raw_materials_warehouseManage</a>
-    <a href="pages/materials/raw_materials_warehouse.html">raw_materials_warehouse</a>
-    <br>
-    <a href="pages/manage/refund_applicationManage.html">refund_applicationManage</a>
-    <a href="pages/materials/refund_application.html">refund_application</a-->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-success elevation-1">
+<!--                        <i class="fa fa-shopping-cart"></i>-->
+                        <img src="js/images/sales.png" class="user-image">
+                    </span>
 
+                    <div class="info-box-content">
+                        <span class="info-box-text">Sales</span>
+                        <span class="info-box-number">60</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1">
+<!--                        <i class="fa fa-users"></i>-->
+                        <img src="js/images/member.png" class="user-image">
+                    </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">New Members</span>
+                        <span class="info-box-number">20</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+<div style="text-align: center">
+    <b>您有</b><a href="javascript:" data-href="pages/manage/order_formManage_salesman.html" class="addTabPage" title="查看登录日志" data-code="41" data-tab-id="tabpanel-98f8491039">
+        <span><b>12</b></span>
+    </a><b>条新订单待处理</b>
+    <br><br>
+    <a href="javascript:" data-href="pages/manage/log.html" class="addTabPage" title="查看登录日志" data-code="41" data-tab-id="tabpanel-98f8491039">
+        <span><b>查看登录日志</b></span>
+    </a>
+
+</div>
 </body>
 <a id="scroll-up" href="#" class="btn btn-sm"><i class="fa fa-angle-double-up"></i></a>
 <script src="js/bootstrap/js/bootstrap.min.js"></script>
