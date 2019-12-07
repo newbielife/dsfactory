@@ -108,7 +108,7 @@
 <div id="dlg-buttons">
     <a href="javascript:void(0)" id="saveExport_record" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
     <a href="javascript:void(0)" id="cancelExport_record" class="easyui-linkbutton" iconCls="icon-cancel"
-       onclick="javascript:$('#Export_recordDlg').dialog('close')">取消</a>
+       onclick="javascript:$('#export_recordDlg').dialog('close')">取消</a>
 </div>
 <script type="text/javascript">
     //初始化界面
@@ -194,11 +194,13 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "export_record_type" || obj.id == "export_record_name")) {
+        if (k == "13" && ((obj.id == "Staff_no") || (obj.id == "Order_no_details")||(obj.id == "Source_place") || (obj.id == "Target_place")
+            || (obj.id == "Transport_link")|| (obj.id == "Progress"))) {
             $("#saveExport_record").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchStaff_no")) {
+        if (k == "13" && ((obj.id == "searchStaff_no")||(obj.id == "searchOrder_no_details")||(obj.id == "searchSource_place")
+            ||(obj.id == "searchTarget_place")||(obj.id == "searchDelivery_date"))) {
             $("#searchBtn").click();
         }
     });

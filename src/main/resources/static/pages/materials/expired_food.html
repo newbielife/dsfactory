@@ -107,11 +107,9 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "expired_food_type" || obj.id == "expired_food_name")) {
-            $("#saveExpired_food").click();
-        }
+
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchFood_type")) {
+        if (k == "13" && ((obj.id == "searchFood_no")||(obj.id == "searchFood_type")||(obj.id == "searchFood_name")||(obj.id == "searchExpired_date"))) {
             $("#searchBtn").click();
         }
     });
