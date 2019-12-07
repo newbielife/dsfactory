@@ -398,4 +398,25 @@ public class OrderController {
     }
 
 
+    @PostMapping("/addExport")
+    @ResponseBody
+    public Object addExport(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Export_Record rec= JSON.parseObject(beanJson, Export_Record.class);
+        export_recordService.insertExport_Record(rec);
+        return result;
+    }
+
+    @PostMapping("/batchDeleteExportrecordByIds")
+    @ResponseBody
+    public Object batchDeleteExportrecordByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+            //export_recordService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
+    }
+
 }

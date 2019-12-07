@@ -167,7 +167,7 @@ public class WarehouseController {
 
     @PostMapping("/batchDeleteRawMaterialsByIds")
     @ResponseBody
-    public Object batchDeleteClientByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteRawMaterialsByIds(@RequestParam("ids") String ids)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
@@ -176,6 +176,19 @@ public class WarehouseController {
         }
         return result;
     }
+    @PostMapping("/batchDeleteProductWarehouseByIds")
+    @ResponseBody
+    public Object batchDeleteProductWarehouseByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+            product_warehouseService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
+    }
+
+
     @PostMapping("/batchDeleteExpiredFoodByIds")
     @ResponseBody
     public Object batchDeleteExpiredFoodByIds(@RequestParam("ids") String ids)throws Exception{
@@ -188,4 +201,26 @@ public class WarehouseController {
         return result;
     }
 
+    @PostMapping("/Productadd")
+    @ResponseBody
+    public Object Productadd(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Product_Warehouse raw= JSON.parseObject(beanJson, Product_Warehouse.class);
+        product_warehouseService.insertProduct_Warehouse(raw);
+        return result;
+    }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id,
+                         @RequestParam(value = "Product_no", required = false) String Product_no,
+                         @RequestParam(value = "prodate", required = false) Date prodate)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Product_Warehouse raw= JSON.parseObject(beanJson, Product_Warehouse.class);
+        raw.setStock_no(id.toString());
+        raw.setProduct_no(Product_no);
+        raw.setManufacture_date(prodate);
+        product_warehouseService.updateProduct_Warehouse(raw);
+        return result;
+    }
 }
