@@ -128,7 +128,6 @@
         ininPager();
         initForm();
     });
-
     //防止表单提交重复
     function initForm() {
         $('#Raw_Materials_WarehouseFM').form({
@@ -213,7 +212,6 @@
             $("#searchBtn").click();
         }
     });
-
     //分页信息处理
     function ininPager() {
         try {
@@ -235,7 +233,6 @@
             $.messager.alert('异常处理提示', "分页信息异常 :  " + e.name + ": " + e.message, 'error');
         }
     }
-
     //批量删除支付
     function batDeleteRaw_Materials_Warehouse() {
         var row = $('#tableData').datagrid('getChecked');
@@ -322,20 +319,17 @@
             }
         });
     }
-
     //增加
     var url;
     var Raw_Materials_WarehouseID = 0;
     //保存编辑前的名称
     var oldRaw_Materials_Warehouse = "";
-
     function addRaw_Materials_Warehouse() {
         $("#Material_no").attr("disabled",false);
         $('#Raw_Materials_WarehouseFM').form('clear');
         $('#Raw_Materials_WarehouseDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/edit_add.png"/>&nbsp;增加');
         $(".window-mask").css({width: webW, height: webH});
         $("#Stock_no").val("").focus();
-
         oldRaw_Materials_Warehouse = "";
         Raw_Materials_WarehouseID = 0;
         url = '/warehouse/add';
@@ -369,18 +363,15 @@
             }
         });
     });
-
     //编辑信息
     function editRaw_Materials_Warehouse(Raw_Materials_WarehouseTotalInfo) {
         $("#Material_no").attr("disabled",true);
         var Raw_Materials_WarehouseInfo = Raw_Materials_WarehouseTotalInfo.split("AaBb");
-
         $("#Material_no").val(Raw_Materials_WarehouseInfo[1]);
         $("#Stock_num").val(Raw_Materials_WarehouseInfo[2]);
         $("#Storage_address").val(Raw_Materials_WarehouseInfo[3]);
         $("#Staff_no_storage").val(Raw_Materials_WarehouseInfo[5]);
         $("#Details").val(Raw_Materials_WarehouseInfo[6]);
-
         $('#Raw_Materials_WarehouseDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑产品标准');
         $(".window-mask").css({width: webW, height: webH});
         Raw_Materials_WarehouseID = Raw_Materials_WarehouseInfo[0];
@@ -402,7 +393,6 @@
             });
         }
     });
-
     function showRaw_Materials_WarehouseDetails(pageNo, pageSize) {
         var no = $.trim($("#searchStock_no").val());
         var material_no = $.trim($("#searchMaterial_no").val());
@@ -438,7 +428,6 @@
             }
         });
     }
-
     //重置按钮
     $("#searchResetBtn").unbind().bind({
         click: function () {
@@ -451,7 +440,6 @@
             $("#searchBtn").click();
         }
     });
-
     /********************************************************************/
     function showCriteria(product_no) {
         $('#productDlg').window('open').window('setTitle', '原料号  "'+product_no+'"  的详情');
@@ -462,8 +450,6 @@
         oldOrder_form = "";
         order_formID = 0;
     }
-
-
     function initTableDeData(product_no) {
         $('#tableDeData').datagrid({
             height: heightInfo,
@@ -492,8 +478,6 @@
         dgResize();
         showProduct_criteriaDetails2(1, initPageSize,product_no);
     }
-
-
     function showProduct_criteriaDetails2(pageNo, pageSize,product_no) {
         var no = product_no;
         $.ajax({
@@ -520,11 +504,6 @@
                 return;
             }
         });}
-
-
-
-
 </script>
 </body>
 </html>
-

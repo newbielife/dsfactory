@@ -60,6 +60,7 @@ public class ProduceController {
         String staff_no_design=parameterMap.get("staff_no_design");
         String product_no=parameterMap.get("product_no");
         String workshop=parameterMap.get("workshop");
+        Date date=obj.getDate("date")==null||(obj.getDate("date")+"").compareTo("")==0?null:obj.getDate("date");
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         if (pageSize == null || pageSize <= 0) {
@@ -69,7 +70,7 @@ public class ProduceController {
             currentPage = BusinessConstants.DEFAULT_PAGINATION_PAGE_NUMBER;
         }
         PageHelper.startPage(currentPage,pageSize,true);
-        List<Manufacture_Design> list = manufacture_designService.selectByConstraint(manufacture_no,staff_no_design,order_no_details,product_no,workshop);
+        List<Manufacture_Design> list = manufacture_designService.selectByConstraint(manufacture_no,staff_no_design,order_no_details,product_no,workshop,date);
         List<Manufacture_Design2> list2=new ArrayList<Manufacture_Design2>();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // String str1 = sdf1.format(date);

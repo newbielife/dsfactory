@@ -3,12 +3,13 @@ package com.ds.factory.service.Service;
 import com.ds.factory.datasource.entities.Manufacture_Design;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public interface Manufacture_DesignService {
-    List<Manufacture_Design> selectByConstraint(String Manufacture_no,String Staff_no_design,
-                             String Order_no_details,String Product_no,String Workshop);
+    List<Manufacture_Design> selectByConstraint(String Manufacture_no, String Staff_no_design,
+                                                String Order_no_details, String Product_no, String Workshop, Date date);
 
 
     int insertManufacture_Design(Manufacture_Design manufacture_design);

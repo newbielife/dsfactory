@@ -61,23 +61,16 @@
     <form id="manufacture_designFM" method="post" novalidate>
         <table>
             <tr>
-                <td>详细订单编号：</td>
+                <td>详细订单信息：</td>
                 <td style="padding:5px">
                     <input name="Order_no_details"class="easyui-validatebox" id="Order_no_details"
-                           data-options="required:true,validType:'length[2,65534]'" style="width: 230px;height: 20px"/>
+                         disabled="true"  data-options="required:true,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
             <tr>
-                <td>生产计划负责人编号：</td>
+                <td>进度：</td>
                 <td style="padding:5px">
-                    <input name="Staff_no_design"class="easyui-validatebox" id="Staff_no_design"
-                           data-options="required:false,validType:'length[2,30]'" style="width: 230px;height: 20px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>车间：</td>
-                <td style="padding:5px">
-                    <input name="Workshop"class="easyui-validatebox" id="Workshop"
+                    <input name="Progress"class="easyui-validatebox" id="Progress"
                            data-options="required:false,validType:'length[0,30]'" style="width: 230px;height: 20px"/>
                 </td>
             </tr>
@@ -182,32 +175,16 @@
                 {title: '产品需求', field: 'products_requirement', width: 80},
                 {title: '备注', field: 'details', width: 150},
                 {
-                    title: '操作', field: 'op', align: "center", width: 100, formatter: function (value, rec) {
+                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
                         var str = '';
                         var rowInfo = rec.manufacture_no + 'AaBb' + rec.order_no_details + 'AaBb' + rec.staff_no_design + 'AaBb' + rec.product_no+ 'AaBb' + rec.deadline+ 'AaBb' + rec.progress+ 'AaBb' + rec.workshop+ 'AaBb' + rec.raw_materials_requirement+ 'AaBb' + rec.products_requirement+ 'AaBb' + rec.details;
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editManufacture_design(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editManufacture_design(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
+                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editManufacture_design(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editManufacture_design(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑进度</a>&nbsp;&nbsp;';
                         str += '<img title="查看" src="/js/easyui-1.3.5/themes/icons/list.png" style="cursor: pointer;" onclick="showCriteria(\'' + rec.product_no + '\');"/>&nbsp;&nbsp;&nbsp;';
                         return str;
                     }
                 }
             ]],
             toolbar: [
-                {
-                    id: 'addManufacture_design',
-                    text: '增加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        addManufacture_design();
-                    }
-                },
-                {
-                    id: 'deleteManufacture_design',
-                    text: '删除',
-                    iconCls: 'icon-remove',
-                    handler: function () {
-                        batDeleteManufacture_design();
-                    }
-                },
                 {
                     id: 'copy_details',
                     text: '复制生产计划信息（支持多条）',
@@ -454,16 +431,9 @@
 
     //编辑信息
     function editManufacture_design(manufacture_designTotalInfo) {
-        $("#Order_no_details").attr("disabled",true);
-        $("#Details").attr("disabled",false);
-
         var manufacture_designInfo = manufacture_designTotalInfo.split("AaBb");
-
         $("#Order_no_details").val(manufacture_designInfo[1]);
-        $("#Staff_no_design").val(manufacture_designInfo[2]);
-        $("#Product_no").val(manufacture_designInfo[3]);
-        $("#Workshop").val(manufacture_designInfo[6]);
-        $("#Products_requirement").val(manufacture_designInfo[8]);
+        $("#Progress").val(manufacture_designInfo[5]);
         $("#Details").val(manufacture_designInfo[9]);
 
         $('#manufacture_designDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑');
@@ -506,7 +476,7 @@
                     staff_no_design: staff_no_design,
                     product_no: product_no,
                     workshop: workshop,
-                    date : date
+                    date: date
                 }),
                 currentPage: pageNo,
                 pageSize: pageSize
@@ -535,7 +505,6 @@
             $("#searchProduct_no").val("");
             $("#searchWorkshop").val("");
             $("#searchUpdate_date").datebox('setValue', formatterDate(new Date()));
-
             //加载完以后重新初始化
             $("#searchBtn").click();
         }

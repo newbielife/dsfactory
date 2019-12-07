@@ -29,9 +29,13 @@ public class Manufacture_DesignServiceImpl implements Manufacture_DesignService 
     StaffMapper staffMapper;
 
     @Override
-    public List<Manufacture_Design> selectByConstraint(String Manufacture_no, String Staff_no_design, String Order_no_details, String Product_no, String Workshop) {
-        return manufacture_designMapper.selectByConstraint(Manufacture_no.trim(),Staff_no_design.trim(),
+    public List<Manufacture_Design> selectByConstraint(String Manufacture_no, String Staff_no_design, String Order_no_details, String Product_no, String Workshop,Date date) {
+        if(date==null)
+            return manufacture_designMapper.selectByConstraint(Manufacture_no.trim(),Staff_no_design.trim(),
                 Order_no_details.trim(),Product_no.trim(),Workshop.trim());
+        else
+            return manufacture_designMapper.selectByConstraint_today(Manufacture_no.trim(),Staff_no_design.trim(),
+                    Order_no_details.trim(),Product_no.trim(),Workshop.trim(),date);
     }
 
     @Override
