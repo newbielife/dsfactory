@@ -68,7 +68,7 @@ public class PaymentController {
             log.setDetails(list.get(i).getDetails());
             log.setMoney(list.get(i).getMoney());
             log.setOrder_no(list.get(i).getOrder_no());
-            log.setPayment_date(sdf1.format(list.get(i).getPayment_date()));
+            log.setPayment_date(list.get(i).getPayment_date()==null?"时间格式有误":sdf1.format(list.get(i).getPayment_date()));
             log.setPayment_no(list.get(i).getPayment_no());
             log.setStaff_no_accountant(list.get(i).getStaff_no_accountant());
             list2.add(log);

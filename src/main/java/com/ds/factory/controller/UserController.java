@@ -256,7 +256,7 @@ public class UserController {
             log.setId(list.get(i).getId());
             log.setClientip(list.get(i).getClientip());
             log.setContentdetails(list.get(i).getContentdetails());
-            log.setCreatetime(sdf1.format(list.get(i).getCreatetime()));
+            log.setCreatetime(list.get(i).getCreatetime()==null?"登录有误":sdf1.format(list.get(i).getCreatetime()));
             log.setOperation(list.get(i).getOperation());
             log.setRemark(list.get(i).getRemark());
             log.setStatus(list.get(i).getStatus());

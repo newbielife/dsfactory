@@ -72,8 +72,8 @@ public class OrderController {
             log.setCheck(list.get(i).getCheck());
             log.setClient_no(list.get(i).getClient_no());
             log.setLiquidated_damages(list.get(i).getLiquidated_damages());
-            log.setUpdate_date(sdf1.format(list.get(i).getUpdate_date()));
-            log.setOrder_Create_date(sdf1.format(list.get(i).getOrder_Create_date()));
+            log.setUpdate_date(list.get(i).getUpdate_date()==null?"更新错误":sdf1.format(list.get(i).getUpdate_date()));
+            log.setOrder_Create_date(list.get(i).getOrder_Create_date()==null?"订单失效":sdf1.format(list.get(i).getOrder_Create_date()));
             log.setOrder_no(list.get(i).getOrder_no());
             log.setOrder_sum_amount(list.get(i).getOrder_sum_amount());
             log.setProgress(list.get(i).getProgress());
