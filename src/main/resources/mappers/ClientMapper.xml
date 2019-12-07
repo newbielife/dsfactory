@@ -104,7 +104,7 @@
     <select id="selectBy_partName_and_Type" resultMap="BaseResultMap">
         select *
         from Client
-        where Client_name like '%${part}%' and Client_type like '%${Client_type}%' and flag=0
+        where Client_no like '%${Client_no}%' and Client_name like '%${part}%' and Client_type like '%${Client_type}%' and flag=0
     </select>
 
 

@@ -19,6 +19,10 @@
 <div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="客户信息" iconCls="icon-list">
     <table id="searchTable">
         <tr>
+            <td>客户编号:</td>
+            <td>
+                <input name="searchclient_no" id="searchclient_no"style="width:70px;"/>
+            </td>
             <td>姓名:</td>
             <td>
                 <input name="searchclient_name" id="searchclient_name"style="width:70px;"/>
@@ -211,11 +215,11 @@
         //兼容 IE,firefox 兼容
         var obj = e.srcElement ? e.srcElement : e.target;
         //绑定键盘事件为 id是指定的输入框才可以触发键盘事件 13键盘事件 ---遗留问题 enter键效验 对话框会关闭问题
-        if (k == "13" && (obj.id == "client_type" || obj.id == "client_name")) {
+        if (k == "13" && (obj.id == "Client_name" || obj.id == "Details")) {
             $("#saveClient").click();
         }
         //搜索按钮添加快捷键
-        if (k == "13" && (obj.id == "searchclient_type")||(obj.id == "searchclient_name")) {
+        if (k == "13" && (obj.id == "searchclient_no")||(obj.id == "searchclient_name")) {
             $("#searchBtn").click();
         }
     });
@@ -407,6 +411,7 @@
     });
 
     function showClientDetails(pageNo, pageSize) {
+        var no = $.trim($("#searchclient_no").val());
         var name = $.trim($("#searchclient_name").val());
         var type = $.trim($("#searchclient_type").val());
         $.ajax({
@@ -415,6 +420,7 @@
             dataType: "json",
             data: ({
                 search: JSON.stringify({
+                    no: no,
                     name: name,
                     type: type
                 }),
@@ -439,6 +445,7 @@
     //重置按钮
     $("#searchResetBtn").unbind().bind({
         click: function () {
+            $("#searchclient_no").val("");
             $("#searchclient_name").val("");
             $("#searchclient_type").val("");
             //加载完以后重新初始化

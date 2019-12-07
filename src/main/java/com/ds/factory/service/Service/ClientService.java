@@ -24,7 +24,7 @@ public interface ClientService {
     List<Client> getAll_Client()throws Exception;
     //全员信息
 
-    List<Client> selectBy_partName_and_Type(String part,String type);
+    List<Client> selectBy_partName_and_Type(String Client_no,String part,String type);
 
     List<Client> orderBy_Credit();
     List<Client> orderBy_Client_type();

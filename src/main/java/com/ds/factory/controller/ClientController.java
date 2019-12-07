@@ -47,7 +47,6 @@ public class ClientController {
                           @RequestParam(value = Constants.SEARCH, required = false) String search,
                           HttpServletRequest request)throws Exception {
         //Object userInfo = request.getSession().getAttribute("user");
-
         //System.out.println(userInfo);
 
 
@@ -56,6 +55,7 @@ public class ClientController {
         //System.out.println(search);
         JSONObject obj= JSON.parseObject(search);
 
+        String no=obj.getString("no")==null?"":obj.getString("no").trim();
         String name=obj.getString("name")==null?"":obj.getString("name").trim();
         String type=obj.getString("type")==null?"":obj.getString("type").trim();
         //System.out.println(type);
@@ -69,7 +69,7 @@ public class ClientController {
             parameterMap.put(Constants.OFFSET, offset);
         }
         PageHelper.startPage(currentPage,pageSize,true);
-        List<Client> list = clientService.selectBy_partName_and_Type(name,type);
+        List<Client> list = clientService.selectBy_partName_and_Type(no,name,type);
         PageInfo<Client> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
