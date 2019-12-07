@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.ds.factory.utils.ResponseJsonUtil.returnJson;
@@ -69,15 +70,35 @@ public class ProduceController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Manufacture_Design> list = manufacture_designService.selectByConstraint(manufacture_no,staff_no_design,order_no_details,product_no,workshop);
+        List<Manufacture_Design2> list2=new ArrayList<Manufacture_Design2>();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // String str1 = sdf1.format(date);
+        for(int i=0;i<list.size();i++)
+        {
+            Manufacture_Design2 log=new Manufacture_Design2();
+            log.setManufacture_no(list.get(i).getManufacture_no());
+            log.setOrder_no_details(list.get(i).getOrder_no_details());
+            log.setProduct_no(list.get(i).getProduct_no());
+            log.setStaff_no_design(list.get(i).getStaff_no_design());
+            log.setUpdate_date(sdf1.format(list.get(i).getUpdate_date()));
+            log.setDeadline(sdf1.format(list.get(i).getDeadline()));
+            log.setDetails(list.get(i).getDetails());
+            log.setProducts_requirement(list.get(i).getProducts_requirement());
+            log.setProgress(list.get(i).getProgress());
+            log.setRaw_materials_requirement(list.get(i).getRaw_materials_requirement());
+            log.setWorkshop(list.get(i).getWorkshop());
+            list2.add(log);
+        }
+
         //获取分页查询后的数据
-        PageInfo<Manufacture_Design> pageInfo = new PageInfo<>(list);
+        PageInfo<Manufacture_Design2> pageInfo = new PageInfo<>(list2);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
             queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
-        queryInfo.setRows(list);
+        queryInfo.setRows(list2);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
@@ -147,15 +168,32 @@ public class ProduceController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Manufacture_Result> list = manufacture_resultService.selectByConstraint(date,manufacture_no,product_no,staff_no,order_no_details);
+
+        List<Manufacture_Result2> list2=new ArrayList<Manufacture_Result2>();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // String str1 = sdf1.format(date);
+        for(int i=0;i<list.size();i++)
+        {
+            Manufacture_Result2 log=new Manufacture_Result2();
+            log.setManufacture_no(list.get(i).getManufacture_no());
+            log.setOrder_no_details(list.get(i).getOrder_no_details());
+            log.setProduct_no(list.get(i).getProduct_no());
+            log.setStaff_no_design(list.get(i).getStaff_no_design());
+            log.setStaff_no_manufacture(list.get(i).getManufacture_no());
+            log.setStock_no(list.get(i).getStock_no());
+            log.setUpdate_date(sdf1.format(list.get(i).getUpdate_date()));
+            list2.add(log);
+        }
+
         //获取分页查询后的数据
-        PageInfo<Manufacture_Result> pageInfo = new PageInfo<>(list);
+        PageInfo<Manufacture_Result2> pageInfo = new PageInfo<>(list2);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
             queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
             return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
         }
-        queryInfo.setRows(list);
+        queryInfo.setRows(list2);
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }

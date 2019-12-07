@@ -262,71 +262,69 @@
                 if (r) {
                     var client_no=$.trim($("#Client_no").val());
                     var ids = "";
+                    var counts = "";
+                    var units = "";
+                    var purhase_details="";
+
                     for (var i = 0; i < row.length; i++) {
+                        var z=i+1;
                         if (i == row.length - 1) {
                             ids += row[i].product_no;
+                            counts += $.trim($("#count"+row[i].product_no).val());
+                            units += $.trim($("#unit"+row[i].product_no).val());
+                            purhase_details+="第"+z+"件商品：编号"+row[i].product_no+"；购买量："
+                                +$.trim($("#count"+row[i].product_no).val())
+                                +$.trim($("#unit"+row[i].product_no).val());
                             break;
                         }
                         ids += row[i].product_no + ",";
-                    }
-
-
-                    var counts = "";
-                    for (var i = 0; i < row.length; i++) {
-                        //$.messager.alert($.trim($("#count000"+(i+1)).val()));
-                        if (i == row.length - 1) {
-                            counts += $.trim($("#count"+row[i].product_no).val());
-                            break;
-                        }
-                         counts += $.trim($("#count"+row[i].product_no).val())+ ",";
-                     }
-
-
-                    var units = "";
-                    for (var i = 0; i < row.length; i++) {
-                        //$.messager.alert($.trim($("#count000"+(i+1)).val()));
-                        if (i == row.length - 1) {
-                            units += $.trim($("#unit"+row[i].product_no).val());
-                            break;
-                        }
+                        counts += $.trim($("#count"+row[i].product_no).val())+ ",";
                         units += $.trim($("#unit"+row[i].product_no).val())+ ",";
+                        purhase_details+="第"+z+"件商品：编号"+row[i].product_no+"；购买量："
+                            +$.trim($("#count"+row[i].product_no).val())
+                            +$.trim($("#unit"+row[i].product_no).val())+"<br/>";
                     }
 
-                    $.ajax({
-                        type: "post",
-                        url: "/manufacturedesign/client_purchase",
-                        dataType: "json",
-                        async: false,
-                        data: ({
-                            ids: ids,
-                            counts: counts,
-                            units: units,
-                            client_no:client_no
-                        }),
-                        success: function (res) {
-                            if(res && res.code === 200) {
-                                $("#searchBtn").click();
-                                $(":checkbox").attr("checked", false);
-                            } else {
-                                if(res && res.code == 601){
-                                    var jsondata={};
-                                    jsondata.ids=ids;
-                                    jsondata.counts=counts;
-                                    jsondata.units=units;
-                                    jsondata.deleteType='2';
-                                    var type='batch';
-                                    batDeleteProduct_criteriaForceConfirm(res,"/manufacturedesign/client_purchase",jsondata,type);
-                                }else if(res && res.code == 600){
-                                    $.messager.alert('购买提示', res.msg, 'error');
-                                }else{
-                                    $.messager.alert('购买提示', '购买失败，请稍后再试！', 'error');
+                    $.messager.confirm('购买确认', '为客户编号'+client_no+'购买选中的' + row.length + '条商品：<br/>'+purhase_details, function (r2) {
+                        if(r2){
+
+                            $.ajax({
+                                type: "post",
+                                url: "/manufacturedesign/client_purchase",
+                                dataType: "json",
+                                async: false,
+                                data: ({
+                                    ids: ids,
+                                    counts: counts,
+                                    units: units,
+                                    client_no:client_no
+                                }),
+                                success: function (res) {
+                                    if(res && res.code === 200) {
+                                        $("#searchBtn").click();
+                                        $(":checkbox").attr("checked", false);
+                                    } else {
+                                        if(res && res.code == 601){
+                                            var jsondata={};
+                                            jsondata.ids=ids;
+                                            jsondata.counts=counts;
+                                            jsondata.units=units;
+                                            jsondata.deleteType='2';
+                                            var type='batch';
+                                            batDeleteProduct_criteriaForceConfirm(res,"/manufacturedesign/client_purchase",jsondata,type);
+                                        }else if(res && res.code == 600){
+                                            $.messager.alert('购买提示', res.msg, 'error');
+                                        }else{
+                                            $.messager.alert('购买提示', '购买失败，请稍后再试！', 'error');
+                                        }
+                                    }
+                                },
+                                //此处添加错误处理
+                                error: function () {
+                                    $.messager.alert('购买提示', '购买异常，请稍后再试！', 'error');
+                                    return;
                                 }
-                            }
-                        },
-                        //此处添加错误处理
-                        error: function () {
-                            $.messager.alert('购买提示', '购买异常，请稍后再试！', 'error');
-                            return;
+                            });
                         }
                     });
                 }

@@ -1,13 +1,11 @@
 package com.ds.factory.datasource.entities;
 
-import java.util.Date;
-
-public class Log {
+public class Log2 {
     private Long id;
     private Long userid;
     private String operation;
     private String clientip;
-    private Date createtime;
+    private String createtime;
     private Byte status;
     private String contentdetails;
     private String remark;
@@ -41,10 +39,10 @@ public class Log {
         this.clientip = clientip == null ? null : clientip.trim();
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 
