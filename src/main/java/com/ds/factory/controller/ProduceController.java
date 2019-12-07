@@ -10,6 +10,8 @@ import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +44,8 @@ public class ProduceController {
     @Resource
     Manufacture_ResultService manufacture_resultService;
 
+    @Resource
+    LogService logService;
 
     @GetMapping(value = "/getAllmanufacture")
     public String getAllmanufacture(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
@@ -71,6 +75,12 @@ public class ProduceController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Manufacture_Design> list = manufacture_designService.selectByConstraint(manufacture_no,staff_no_design,order_no_details,product_no,workshop,date);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_MANUFACTURE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         List<Manufacture_Design2> list2=new ArrayList<Manufacture_Design2>();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // String str1 = sdf1.format(date);
@@ -129,6 +139,12 @@ public class ProduceController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Raw_Materials_Criteria> list = raw_materials_criteriaService.selectByConstraint(no,name,type);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_RAW_MATERIALS_CRITERIA,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         //获取分页查询后的数据
         PageInfo<Raw_Materials_Criteria> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -169,6 +185,11 @@ public class ProduceController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Manufacture_Result> list = manufacture_resultService.selectByConstraint(date,manufacture_no,product_no,staff_no,order_no_details);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_MANUFACTURE_RESULT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
 
         List<Manufacture_Result2> list2=new ArrayList<Manufacture_Result2>();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -224,6 +245,11 @@ public class ProduceController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Product_Criteria> list = product_criteriaService.selectByConstraint(no,name,type);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_CRITERIA,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Product_Criteria> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -263,6 +289,11 @@ public class ProduceController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Product_Popularity> list = order_detailsService.selectByConstraint(no,name,type);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PURCHASE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Product_Popularity> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -280,7 +311,7 @@ public class ProduceController {
     @PostMapping(value = "/client_purchase")
     @ResponseBody
     public Object client_purchase(@RequestParam("ids") String ids,@RequestParam("counts") String counts,
-                                  @RequestParam("units") String units,@RequestParam("client_no") String client_no)throws Exception{
+                                  @RequestParam("units") String units,@RequestParam("client_no") String client_no, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         if(!clientService.exist_or_not(client_no))
             return "用户不存在";
@@ -303,6 +334,11 @@ public class ProduceController {
             list.add(product_purchase_details);
         }
         order_formService.Add_new_Order_with_Details(list,client_no);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PURCHASE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_BUY).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -324,13 +360,18 @@ public class ProduceController {
                 manufacture_designService.insertManufacture_Design(manufacture_design);
             }
         }
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_CRITERIA,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
 
     @PostMapping("/updateDesign")
     @ResponseBody
-    public Object updateDesign(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+    public Object updateDesign(@RequestParam("info") String beanJson,@RequestParam("id") Long id, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Manufacture_Design manufacture_design= JSON.parseObject(beanJson, Manufacture_Design.class);
 
@@ -350,19 +391,29 @@ public class ProduceController {
         }
         manufacture_design.setManufacture_no(no+"");
         manufacture_designService.update(manufacture_design);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_CRITERIA,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
 
     @PostMapping("/batchDeleteDesignByIds")
     @ResponseBody
-    public Object batchDeleteDesignByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteDesignByIds(@RequestParam("ids") String ids, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             manufacture_designService.deleteByPrimaryKey(id[i].trim());
         }
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_CRITERIA,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -370,7 +421,7 @@ public class ProduceController {
     @GetMapping(value = "/getAllProductCriteria2")
     public String getAllProductCriteria2(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                      @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                     @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                                     @RequestParam(value = Constants.SEARCH, required = false) String search, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -391,6 +442,11 @@ public class ProduceController {
         PageHelper.startPage(currentPage,pageSize,true);
         List<Product_Criteria> list = new ArrayList<Product_Criteria>();
         list.add(product_criteriaService.selectByProduct_no(no));
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_CRITERIA,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         System.out.println(list.size());
         //获取分页查询后的数据
         PageInfo<Product_Criteria> pageInfo = new PageInfo<>(list);
@@ -410,7 +466,7 @@ public class ProduceController {
     @GetMapping(value = "/getIngredient")
     public String getIngredient(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                          @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                         @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                                         @RequestParam(value = Constants.SEARCH, required = false) String search, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -444,7 +500,11 @@ public class ProduceController {
             }
             list.add(raw);
         }
-
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_INGREDIENT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Raw_Materials_Criteria> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -462,7 +522,7 @@ public class ProduceController {
     @GetMapping(value = "/getMaterials")
     public String getMaterials(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                 @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                                @RequestParam(value = Constants.SEARCH, required = false) String search, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -482,6 +542,11 @@ public class ProduceController {
         PageHelper.startPage(currentPage,pageSize,true);
         List<Raw_Materials_Criteria> list = new ArrayList<Raw_Materials_Criteria>();
         list.add(raw_materials_criteriaService.selectByKey(no));
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_MATERIALS_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
 
         //获取分页查询后的数据
         PageInfo<Raw_Materials_Criteria> pageInfo = new PageInfo<>(list);
@@ -499,7 +564,7 @@ public class ProduceController {
     @GetMapping(value = "/getProducts")
     public String getProducts(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                               @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                               @RequestParam(value = Constants.SEARCH, required = false) String search, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -519,6 +584,11 @@ public class ProduceController {
         PageHelper.startPage(currentPage,pageSize,true);
         List<Product_Criteria> list = new ArrayList<Product_Criteria>();
         list.add(product_criteriaService.selectByProduct_no(no));
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
 
         //获取分页查询后的数据
         PageInfo<Product_Criteria> pageInfo = new PageInfo<>(list);

@@ -64,7 +64,11 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Order_Form> list = order_formService.selectByConstraint(order_no,client_no,staff_no,check);
-
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         List<Order_Form2> list2=new ArrayList<Order_Form2>();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // String str1 = sdf1.format(date);
@@ -98,7 +102,7 @@ public class OrderController {
     @GetMapping(value = "/getAllOrderDetail")
     public String getAllOrderDetail(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                              @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                             @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                                             @RequestParam(value = Constants.SEARCH, required = false) String search, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -120,6 +124,11 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Order_Details> list = order_detailsService.selectByConstraint(no,client_no,product_no,check);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         List<Order_Details2> list2=new ArrayList<Order_Details2>();
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // String str1 = sdf1.format(date);
@@ -154,7 +163,7 @@ public class OrderController {
     @GetMapping(value = "/getAllOrderDetail2")
     public String getAllOrderDetail2(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                     @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                    @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                                    @RequestParam(value = Constants.SEARCH, required = false) String search, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -173,6 +182,11 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Order_Details> list = order_detailsService.selectByOrder_no(order_no);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         List<Order_Details2> list2=new ArrayList<Order_Details2>();
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // String str1 = sdf1.format(date);
@@ -205,7 +219,7 @@ public class OrderController {
     @GetMapping(value = "/getAllOrderDetail3")
     public String getAllOrderDetail3(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                      @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                     @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                                     @RequestParam(value = Constants.SEARCH, required = false) String search, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -224,6 +238,11 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Order_Details> list = order_detailsService.selectByOrder_no(order_no);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         List<Order_Details2> list2=new ArrayList<Order_Details2>();
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // String str1 = sdf1.format(date);
@@ -282,6 +301,11 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Export_Record> list = export_recordService.selectByConstraint(delivery_date,export_no,staff_no,order_no_details,target_place,source_place);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_EXPORT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Export_Record> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -323,6 +347,11 @@ public class OrderController {
         }
         PageHelper.startPage(currentPage,pageSize,true);
         List<Refund_Application> list = refund_applicationService.selectByConstraint(refund_no,order_no,client_no,staff_no,permission);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_REFUND,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
         PageInfo<Refund_Application> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
@@ -345,9 +374,10 @@ public class OrderController {
         {
             order_formService.deleteByPrimaryKey(id[i].trim());
         }
+        //log
         Staff sta=(Staff)request.getSession().getAttribute("user");
         logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(sta.getId()).toString(),
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
@@ -358,9 +388,10 @@ public class OrderController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Refund_Application red= JSON.parseObject(beanJson, Refund_Application.class);
         refund_applicationService.insertPayment(red);
-        String userid=request.getSession().getAttribute("userId").toString();
-        logService.insertLog(BusinessConstants.LOG_OPERATION_TYPE_ADD,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_LOGIN).append(userid).toString(),
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_REFUND,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
@@ -371,29 +402,45 @@ public class OrderController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Order_Details red= JSON.parseObject(beanJson, Order_Details.class);
         order_detailsService.insert(red);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
     @PostMapping("/batDeleteOrderdetailsByIds")
     @ResponseBody
-    public Object batDeleteOrderdetailsByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batDeleteOrderdetailsByIds(@RequestParam("ids") String ids, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             order_detailsService.deleteByPrimaryKey(id[i].trim());
         }
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
     @PostMapping("/RefundUpdate")
     @ResponseBody
-    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id,@RequestParam("clientno") String clientno,@RequestParam("refund_no") String refund_no)throws Exception{
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id,@RequestParam("clientno")
+            String clientno,@RequestParam("refund_no") String refund_no, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Refund_Application refund_application= JSON.parseObject(beanJson, Refund_Application.class);
         refund_application.setRefund_no(refund_no);
         refund_application.setClient_no(clientno);
         refund_applicationService.updateByPrimaryKey(refund_application);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_REFUND,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -404,18 +451,28 @@ public class OrderController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Export_Record rec= JSON.parseObject(beanJson, Export_Record.class);
         export_recordService.insertExport_Record(rec);
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_EXPORT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
     @PostMapping("/batchDeleteExportrecordByIds")
     @ResponseBody
-    public Object batchDeleteExportrecordByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteExportrecordByIds(@RequestParam("ids") String ids, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             export_recordService.deleteByPrimaryKey(id[i].trim());
         }
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_EXPORT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 

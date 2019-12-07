@@ -4,20 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
-import com.ds.factory.datasource.entities.Export_Record;
-import com.ds.factory.datasource.entities.Order_Details;
-import com.ds.factory.datasource.entities.Order_Form;
-import com.ds.factory.datasource.entities.Refund_Application;
-import com.ds.factory.service.Service.Export_RecordService;
-import com.ds.factory.service.Service.Order_DetailsService;
-import com.ds.factory.service.Service.Order_FormService;
-import com.ds.factory.service.Service.Refund_ApplicationService;
+import com.ds.factory.datasource.entities.*;
+import com.ds.factory.service.Service.*;
 import com.ds.factory.utils.Constants;
 import com.ds.factory.utils.ErpInfo;
 import com.ds.factory.utils.PageQueryInfo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -40,9 +36,12 @@ public class OrderFormController {
     @Resource
     Refund_ApplicationService refund_applicationService;
 
+    @Resource
+    LogService logService;
+
     @PostMapping("/update")
     @ResponseBody
-    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Order_Form order_form= JSON.parseObject(beanJson, Order_Form.class);
         String Order_no=(id+"").trim();
@@ -73,7 +72,11 @@ public class OrderFormController {
         {
             order_formService.deleteByPrimaryKey(Order_no);
         }
-
+        //log
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ORDER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 

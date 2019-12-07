@@ -229,6 +229,21 @@ public class LogService {
                 moduleName = BusinessConstants.LOG_MODULE_NAME_MATERIALS_WAREHOUSE; break;
             case BusinessConstants.LOG_MODULE_NAME_EXPIRED:
                 moduleName = BusinessConstants.LOG_MODULE_NAME_EXPIRED; break;
+            case BusinessConstants.LOG_MODULE_NAME_MANUFACTURE:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_MANUFACTURE; break;
+            case BusinessConstants.LOG_MODULE_NAME_MANUFACTURE_RESULT:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_MANUFACTURE_RESULT; break;
+            case BusinessConstants.LOG_MODULE_NAME_PRODUCT_CRITERIA:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_PRODUCT_CRITERIA; break;
+            case BusinessConstants.LOG_MODULE_NAME_PURCHASE:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_PURCHASE; break;
+            case BusinessConstants.LOG_MODULE_NAME_INGREDIENT:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_INGREDIENT; break;
+            case BusinessConstants.LOG_MODULE_NAME_EXPORT:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_EXPORT; break;
+            case BusinessConstants.LOG_MODULE_NAME_REFUND:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_REFUND; break;
+
         }
         return moduleName;
     }

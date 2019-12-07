@@ -31,6 +31,7 @@ public class PaymentController {
 
     @Resource
     LogService logService;
+
     @Resource
     private UserBusinessService userBusinessService;
 
@@ -64,7 +65,7 @@ public class PaymentController {
 //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
         logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PAYMENT,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(sta.getId()).toString(),
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
 
         List<Payment2> list2=new ArrayList<Payment2>();
@@ -99,9 +100,10 @@ public class PaymentController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Payment payment= JSON.parseObject(beanJson, Payment.class);
         paymentService.insertPayment(payment.getOrder_no(),payment.getStaff_no_accountant(),payment.getMoney(),payment.getDetails());
+        //log
         Staff sta=(Staff)request.getSession().getAttribute("user");
         logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PAYMENT,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(sta.getId()).toString(),
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
@@ -113,9 +115,10 @@ public class PaymentController {
         Payment payment= JSON.parseObject(beanJson, Payment.class);
         payment.setPayment_no(id);
         paymentService.updateByPrimaryKey(payment);
+        //log
         Staff sta=(Staff)request.getSession().getAttribute("user");
         logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PAYMENT,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(sta.getId()).toString(),
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
