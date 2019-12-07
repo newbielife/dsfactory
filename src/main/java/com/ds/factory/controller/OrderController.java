@@ -249,8 +249,39 @@ public class OrderController {
     public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Refund_Application red= JSON.parseObject(beanJson, Refund_Application.class);
-        System.out.println(red);
         refund_applicationService.insertPayment(red);
+        return result;
+    }
+
+    @PostMapping("/addOrderdetails")
+    @ResponseBody
+    public Object addOrderdetails(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Order_Details red= JSON.parseObject(beanJson, Order_Details.class);
+        order_detailsService.insert(red);
+        return result;
+    }
+
+    @PostMapping("/batDeleteOrderdetailsByIds")
+    @ResponseBody
+    public Object batDeleteOrderdetailsByIds(@RequestParam("ids") String ids)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        String[] id=ids.split(",");
+        for(int i=0;i<id.length;i++)
+        {
+            order_detailsService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
+    }
+
+    @PostMapping("/RefundUpdate")
+    @ResponseBody
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id,@RequestParam("clientno") String clientno,@RequestParam("refund_no") String refund_no)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Refund_Application refund_application= JSON.parseObject(beanJson, Refund_Application.class);
+        refund_application.setRefund_no(refund_no);
+        refund_application.setClient_no(clientno);
+        refund_applicationService.updateByPrimaryKey(refund_application);
         return result;
     }
 

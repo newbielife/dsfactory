@@ -16,8 +16,8 @@ public interface PaymentMapper {
                                      @Param("Staff_no_accountant") String Staff_no_accountant, @Param("Payment_no") String Payment_no);
 
     List<Payment> selectByStaff_no_accountant(@Param("Staff_no_accountant") String Staff_no_accountant);
-    List<Payment> selectByOrder_no(@Param("Staff_no_accountant") String Staff_no_accountant);
-    List<Payment> selectByClient_no(@Param("Staff_no_accountant") String Staff_no_accountant);
+    List<Payment> selectByOrder_no(@Param("Order_no") String Order_no);
+    List<Payment> selectByClient_no(@Param("Client_no") String Client_no);
     List<Payment> getAll();
 
     int exist_or_not(@Param("Payment_no") String Payment_no);

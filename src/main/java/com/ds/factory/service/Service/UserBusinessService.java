@@ -37,6 +37,11 @@ public class UserBusinessService {
     @Resource
     private FunctionsService functionsService;
 
+    public int updateSelective(UserBusiness record){
+        return userBusinessMapper.updateByPrimaryKeySelective(record);
+    }
+
+
 
     public UserBusiness getUserBusiness(long id)throws Exception {
         UserBusiness result=null;

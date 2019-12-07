@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>过期食物管理</title>
+    <title>过期食品管理</title>
     <meta charset="utf-8">
     <!-- 指定以IE8的方式来渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -16,7 +16,7 @@
 </head>
 <body>
 <!-- 数据显示table -->
-<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="过期食物管理" iconCls="icon-list">
+<div id="tablePanel" class="easyui-panne" data-options="fit:true" style="padding: 1px;top: 300px;" title="过期食品管理" iconCls="icon-list">
     <table id="searchTable">
         <tr>
             <td>食物编号：</td>
@@ -26,8 +26,6 @@
             <td>食物类型：</td>
             <td>
                 <select name="searchFood_type" id="searchFood_type"style="width:70px;">
-                    <option value="">全部</option>
-                    <option value="原料">原料</option>
                     <option value="成品">成品</option>
                 </select>
             </td>
@@ -59,7 +57,6 @@
                 <td>食物类型：</td>
                 <td style="padding:5px">
                     <select name="Food_type" id="Food_type"style="width:70px;">
-                        <option value="原料">原料</option>
                         <option value="成品">成品</option>
                     </select>
                 </td>
@@ -419,7 +416,7 @@
     $("#searchResetBtn").unbind().bind({
         click: function () {
             $("#searchFood_no").val("");
-            $("#searchFood_type").val("");
+            $("#searchFood_type").val("成品");
             $("#searchFood_name").val("");
             $("#searchExpired_date").datebox('setValue', formatterDate(new Date()));
             //加载完以后重新初始化

@@ -73,12 +73,6 @@
                 <td style="padding:5px"><input name="Sort" id="Sort" class="easyui-textbox" style="width: 230px;height: 20px"/></td>
             </tr>
             <tr>
-                <td>功能按钮</td>
-                <td style="padding:5px">
-                    <input id="PushBtn" name="PushBtn" style="width:230px;"/>
-                </td>
-            </tr>
-            <tr>
                 <td>收缩</td>
                 <td style="padding:5px"><input name="State" id="State" type="checkbox" style="width: 230px;height: 20px"/></td>
             </tr>
@@ -181,7 +175,16 @@
                         return str;
                     }
                 },
-                {title: '类型', field: 'type', width: 50}
+                {title: '类型', field: 'type', width: 50},
+                {
+                    title: '操作', field: 'op', align: "center", width: 130, formatter: function (value, rec) {
+                        var str = '';
+                        var rowInfo = rec.id + 'AaBb' + rec.name;
+                        str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editFunctions(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editFunctions(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
+                        str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteFunctions(' + rec.id + ');"/>&nbsp;<a onclick="deleteFunctions(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
+                        return str;
+                    }
+                }
             ]],
             toolbar: [
                 {
@@ -277,6 +280,7 @@
                     success: function (res) {
                         if(res && res.code == 200) {
                             $("#searchBtn").click();
+                            $.messager.alert('删除提示', '删除功能信息成功');
                         } else {
                             $.messager.alert('删除提示', '删除功能信息失败，请稍后再试！', 'error');
                         }
@@ -354,33 +358,58 @@
     }
 
     //保存信息
+    // $("#saveFunctions").off("click").on("click", function () {
+    //     // if (checkFunctionsName()) {
+    //     //     return;
+    //     // }
+    //     var infoObj = $("#functionsFM").serializeObject();
+    //     infoObj.State = $("#State").is(':checked');
+    //     infoObj.Enabled = $("#Enabled").is(':checked');
+    //     var PushBtn = JSON.stringify($("#PushBtn").combobox('getValues'));
+    //     infoObj.PushBtn = PushBtn.replace(/\"/g, "").replace(/\[|]/g,"");
+    //     $.ajax({
+    //         url: url,
+    //         type: "post",
+    //         dataType: "json",
+    //         data: ({
+    //             info: JSON.stringify(infoObj)
+    //         }),
+    //         success: function(res) {
+    //             if(res && res.code === 200) {
+    //                 $('#functionsDlg').dialog('close');
+    //                 //加载完以后重新初始化
+    //                 var opts = $("#tableData").datagrid('options');
+    //                 showFunctionsDetails(opts.pageNumber, opts.pageSize);
+    //             }
+    //         },
+    //         //此处添加错误处理
+    //         error: function () {
+    //             $.messager.alert('提示', '保存功能信息异常，请稍后再试！', 'error');
+    //             return;
+    //         }
+    //     });
+    // });
+    //保存信息
     $("#saveFunctions").off("click").on("click", function () {
-        if (checkFunctionsName()) {
-            return;
-        }
-        var infoObj = $("#functionsFM").serializeObject();
-        infoObj.State = $("#State").is(':checked');
-        infoObj.Enabled = $("#Enabled").is(':checked');
-        var PushBtn = JSON.stringify($("#PushBtn").combobox('getValues'));
-        infoObj.PushBtn = PushBtn.replace(/\"/g, "").replace(/\[|]/g,"");
         $.ajax({
             url: url,
             type: "post",
             dataType: "json",
+            async: false,
             data: ({
-                info: JSON.stringify(infoObj)
+                info: JSON.stringify($("#functionsFM").serializeObject())
             }),
             success: function(res) {
                 if(res && res.code === 200) {
                     $('#functionsDlg').dialog('close');
                     //加载完以后重新初始化
                     var opts = $("#tableData").datagrid('options');
-                    showFunctionsDetails(opts.pageNumber, opts.pageSize);
+                    showPaymentDetails(opts.pageNumber, opts.pageSize);
                 }
             },
             //此处添加错误处理
             error: function () {
-                $.messager.alert('提示', '保存功能信息异常，请稍后再试！', 'error');
+                $.messager.alert('提示', '保存异常，请稍后再试！', 'error');
                 return;
             }
         });
@@ -390,31 +419,31 @@
     function editFunctions(functionsTotalInfo) {
         var functionsInfo = functionsTotalInfo.split("AaBb");
 
-        $("#Number").focus().val(functionsInfo[1]);
-        $("#Name").focus().val(functionsInfo[2]);
-        $("#PNumber").focus().val(functionsInfo[3]);
-        $("#URL").focus().val(functionsInfo[4]);
+        $("#Number").focus().val(functionsInfo[0]);
+        $("#Name").focus().val(functionsInfo[1]);
+        $("#PNumber").focus().val(functionsInfo[2]);
+        $("#URL").focus().val(functionsInfo[3]);
         $("#State").attr("checked", functionsInfo[5] == 'true' ? true : false);
-        $("#Sort").focus().val(functionsInfo[6]);
-        $("#Enabled").attr("checked", functionsInfo[7] == 'true' ? true : false);
+        $("#Sort").focus().val(functionsInfo[4]);
+        $("#Enabled").attr("checked", functionsInfo[6] == 'true' ? true : false);
         $("#Type").focus().val(functionsInfo[8]);
-        if (functionsInfo[9] !== "undefined" && functionsInfo[9] !== "") {
-            var arr = functionsInfo[9].split(",");
-            var pushBtnArray = [];
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i]) {
-                    pushBtnArray.push(arr[i]);
-                }
-            }
-            if (pushBtnArray.length) {
-                $("#PushBtn").combobox('setValues', pushBtnArray);
-            }
-        }
-        else {
-            $("#PushBtn").combobox('setValues', '');
-        }
-
-        oldFunctions = functionsInfo[2];
+        // if (functionsInfo[9] !== "undefined" && functionsInfo[9] !== "") {
+        //     var arr = functionsInfo[9].split(",");
+        //     var pushBtnArray = [];
+        //     for (var i = 0; i < arr.length; i++) {
+        //         if (arr[i]) {
+        //             pushBtnArray.push(arr[i]);
+        //         }
+        //     }
+        //     if (pushBtnArray.length) {
+        //         $("#PushBtn").combobox('setValues', pushBtnArray);
+        //     }
+        // }
+        // else {
+        //     $("#PushBtn").combobox('setValues', '');
+        // }
+        //
+        // oldFunctions = functionsInfo[2];
         $('#functionsDlg').dialog('open').dialog('setTitle', '<img src="/js/easyui-1.3.5/themes/icons/pencil.png"/>&nbsp;编辑功能信息');
         $(".window-mask").css({width: webW, height: webH});
         functionsID = functionsInfo[0];

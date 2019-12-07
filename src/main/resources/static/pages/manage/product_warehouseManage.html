@@ -153,7 +153,7 @@
             animate: false,
             singleSelect: true,
             collapsible: false,
-            selectOnDetails: false,
+            selectOnCheck: false,
             pagination: true,
             striped: true,
             pageSize: initPageSize,
@@ -272,7 +272,7 @@
                         success: function (res) {
                             if(res && res.code === 200) {
                                 $("#searchBtn").click();
-                                $(":checkbox").attr("Detailsed", false);
+                                $(":checkbox").attr("checked", false);
                             } else {
                                 if(res && res.code == 601){
                                     var jsondata={};
@@ -312,7 +312,7 @@
                         if(res && res.code == 200) {
                             $("#searchBtn").click();
                             if(type=='batch'){
-                                $(":checkbox").attr("Detailsed", false);
+                                $(":checkbox").attr("checked", false);
                             }
                         }else if(res && res.code == 600){
                             $.messager.alert('删除提示', res.msg, 'error');

@@ -112,11 +112,11 @@ INSERT INTO `DS_functions` VALUES (240, '010104', '配方管理', '0101', '/page
 INSERT INTO `DS_functions` VALUES (242, '060302', '销售订单管理', '0603', '/pages/manage/order_formManage_salesman.html', b'0', '0392', b'1', '电脑版', '3', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (244, '080112', '原料入库', '0801', '/pages/manage/raw_materials_warehouseManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (245, '080113', '过期食品详情', '0801', '/pages/materials/expired_food.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (246, '080114', '过期食品处理', '0801', '/pages/manage/expired_foodManage.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (246, '080114', '过期食品处理', '0801', '/pages/manage/expired_foodManage_materials.html', b'0', '0812', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (250, '0901', '成品仓库', '0', '', b'0', '0901', b'1', '电脑版', '', 'icon-layers', '0');
 INSERT INTO `DS_functions` VALUES (252, '090109', '成品入库', '0901', '/pages/manage/product_warehouseManage.html', b'0', '0902', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (253, '090113', '成品出库', '0901', '/pages/manage/export_recordManage.html', b'0', '0903', b'1', '电脑版', '', 'icon-notebook', '0');
-INSERT INTO `DS_functions` VALUES (258, '090114', '过期食品处理', '0901', '/pages/manage/expired_foodManage.html', b'0', '0904', b'1', '电脑版', '', 'icon-notebook', '0');
+INSERT INTO `DS_functions` VALUES (258, '090114', '过期食品处理', '0901', '/pages/manage/expired_foodManage_materials.html', b'0', '0904', b'1', '电脑版', '', 'icon-notebook', '0');
 INSERT INTO `DS_functions` VALUES (259, '000107', '部门管理', '0001', 'sss', b'1', '9011', b'1', '电脑版', NULL, NULL, '0');
 COMMIT;
 

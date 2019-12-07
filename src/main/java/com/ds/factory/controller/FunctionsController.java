@@ -349,9 +349,9 @@ public class FunctionsController {
         List<Long> idList = StringUtil.strToLongList(ids);
         FunctionsExample example = new FunctionsExample();
         example.createCriteria().andIdIn(idList);
-        int result=0;
+        JSONObject result = ExceptionConstants.standardSuccess();
         try{
-            result=functionsMapper.deleteByExample(example);
+            functionsMapper.deleteByExample(example);
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }
@@ -362,10 +362,27 @@ public class FunctionsController {
     @PostMapping("/add")
     @ResponseBody
     public Object add(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
-        Functions depot = JSONObject.parseObject(beanJson, Functions.class);
-        int result=0;
+        JSONObject obj = JSONObject.parseObject(beanJson, JSONObject.class);
+        String a=obj.get("Enabled").toString();
+        Functions depot=new Functions();
+        depot.setNumber(obj.get("Number").toString());
+        depot.setPnumber(obj.get("PNumber").toString());
+        depot.setName(obj.get("Name").toString());
+        depot.setSort(obj.get("Sort").toString());
+        depot.setUrl(obj.get("URL").toString());
+        if (obj.get("Enabled").toString().equals("on")){
+            depot.setEnabled(true);
+        }else {
+            depot.setEnabled(false);
+        }
+//        if (obj.get("State").toString().equals("on")){
+//            depot.setState(true);
+//        }else {
+//            depot.setState(false);
+//        }
+        JSONObject result = ExceptionConstants.standardSuccess();
         try{
-            result=functionsMapper.insertSelective(depot);
+            functionsMapper.insertSelective(depot);
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }
@@ -376,11 +393,28 @@ public class FunctionsController {
     @PostMapping("/update")
     @ResponseBody
     public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
-        Functions depot = JSONObject.parseObject(beanJson, Functions.class);
+        JSONObject obj = JSONObject.parseObject(beanJson, JSONObject.class);
+        String a=obj.get("Enabled").toString();
+        Functions depot=new Functions();
+        depot.setNumber(obj.get("Number").toString());
+        depot.setPnumber(obj.get("PNumber").toString());
+        depot.setName(obj.get("Name").toString());
+        depot.setSort(obj.get("Sort").toString());
+        depot.setUrl(obj.get("URL").toString());
         depot.setId(id);
-        int result=0;
+        if (obj.get("Enabled").toString().equals("on")){
+            depot.setEnabled(true);
+        }else {
+            depot.setEnabled(false);
+        }
+//        if (obj.get("State").toString().equals("on")){
+//            depot.setState(true);
+//        }else {
+//            depot.setState(false);
+//        }
+        JSONObject result = ExceptionConstants.standardSuccess();
         try{
-            result=functionsMapper.updateByPrimaryKeySelective(depot);
+            functionsMapper.updateByPrimaryKeySelective(depot);
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }

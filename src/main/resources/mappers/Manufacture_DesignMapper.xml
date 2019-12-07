@@ -13,6 +13,7 @@
             <result column="Stock_no_products" jdbcType="VARCHAR" property="Stock_no_products" />
             <result column="Products_requirement" jdbcType="VARCHAR" property="Products_requirement" />
             <result column="Details" jdbcType="VARCHAR" property="Details" />
+            <result column="Update_date" jdbcType="TIMESTAMP" property="Update_date" />
     </resultMap>
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
@@ -148,6 +149,7 @@
           where  Manufacture_no like '%${Manufacture_no}%'
                 and Staff_no_design like '%${Staff_no_design}%' and Order_no_details like '%${Order_no_details}%'
                 and Product_no like '%${Product_no}%' and Workshop like '%${Workshop}%' and flag=0
+          order by Update_date desc
     </select>
 
 

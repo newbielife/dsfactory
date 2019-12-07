@@ -134,12 +134,12 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public int insertSelective(Staff record) {
-        return 0;
+        return staffMapper.insertSelective(record);
     }
 
     @Override
     public int deleteByPrimaryKey(String Staff_no){
-        return 0;
+        return staffMapper.deleteByPrimaryKey(Long.parseLong(Staff_no));
     }
 
     @Override

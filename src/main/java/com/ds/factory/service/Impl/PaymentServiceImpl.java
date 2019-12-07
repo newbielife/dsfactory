@@ -49,7 +49,8 @@ public class PaymentServiceImpl implements PaymentService {
         int pay_sum=0;
         for(int i=0;i<p.size();i++){
             if(p.get(i).getMoney()==null)   p.get(i).setMoney(Long.parseLong("0"));
-            i+=Integer.parseInt(p.get(i).getMoney()+"");
+            if(Integer.parseInt(p.get(i).getMoney()+"")>0)
+                pay_sum+=Integer.parseInt(p.get(i).getMoney()+"");
         }
 
 //        boolean flag_=false;
@@ -93,8 +94,43 @@ public class PaymentServiceImpl implements PaymentService {
             return 0;
 
         if(Details.compareTo("预付款")==0||Details.compareTo("补款")==0||Details.compareTo("尾款")==0){
-            if(this.Pay_in_Full(Order_no)==true)
-                return 0;//该订单已经付清，不必再加价
+//            if(this.Pay_in_Full(Order_no)==true)
+//                return 0;
+            if(Integer.parseInt(Money+"")<0)
+                Money=Long.parseLong(""+(-Integer.parseInt(Money+"")));
+            int difference_upper=Integer.parseInt(order_formMapper.selectByPrimaryKey(Order_no).getOrder_sum_amount()+"")
+                    -Integer.parseInt(order_formMapper.selectByPrimaryKey(Order_no).getLiquidated_damages()+"");
+            if(difference_upper<=0)
+                return 0;
+            int difference=Integer.parseInt(Money+"");
+            System.out.println(difference+"");
+            System.out.println(difference_upper+"");
+
+            switch(Details.trim())
+            {
+                case "预付款":
+                    if(difference>=difference_upper){
+                        Money=Long.parseLong(difference_upper+"");
+                        Details="尾款";
+                    }
+                    else{
+                        if(Integer.parseInt(order_formMapper.selectByPrimaryKey(Order_no).getOrder_sum_amount()+"")!=0)
+                            Details="补款";
+                    }
+                    break;
+                case "补款":
+                    if(difference>=difference_upper){
+                        Money=Long.parseLong(difference_upper+"");
+                        Details="尾款";
+                    }
+                    break;
+                case "尾款":
+                    if(difference<difference_upper){
+                        Money=Long.parseLong(difference_upper+"");
+                        Details="补款";
+                    }
+                    break;
+            }
         }
         else if(Details.compareTo("违约金")==0){
             Order_Form order_form=new Order_Form();
@@ -103,6 +139,9 @@ public class PaymentServiceImpl implements PaymentService {
             order_formMapper.updateByPrimaryKeySelective(order_form);
         }
         else if(Details.compareTo("退款")==0){
+            if(Integer.parseInt(Money+"")>0)
+                Money=Long.parseLong(""+(-Integer.parseInt(Money+"")));
+            System.out.println(""+Money);
             Refund_Application red=new Refund_Application();
             red.setOrder_no(Order_no);
             red.setReason("");
