@@ -30,7 +30,7 @@ public interface ClientMapper{
     String select_Biggest_Client_no();
 
     List<Client> selectByExample(ClientExample example);
-    List<Client> selectBy_partName_and_Type(@Param("part") String part, @Param("Client_type") String type);
+    List<Client> selectBy_partName_and_Type(@Param("Client_no") String Client_no,@Param("part") String part, @Param("Client_type") String type);
     List<Client> orderBy_Credit();
     List<Client> orderBy_Client_type();
 }
