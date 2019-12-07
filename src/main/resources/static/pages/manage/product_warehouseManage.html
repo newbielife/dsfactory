@@ -245,9 +245,9 @@
         }
     }
 
-    //批量删除支付
+    //批量删除
     function batDeleteProduct_Warehouse() {
-        var row = $('#tableData').datagrid('getDetailsed');
+        var row = $('#tableData').datagrid('getChecked');
         if (row.length == 0) {
             $.messager.alert('删除提示', '没有记录被选中！', 'info');
             return;
@@ -265,7 +265,7 @@
                     }
                     $.ajax({
                         type: "post",
-                        url: "/Product_Warehouse/batchDeleteProduct_WarehouseByIds",
+                        url: "/warehouse/batchDeleteProductWarehouseByIds",
                         dataType: "json",
                         async: false,
                         data: ({
@@ -347,7 +347,7 @@
 
         oldProduct_Warehouse = "";
         Product_WarehouseID = 0;
-        url = '/Product_Warehouse/add';
+        url = '/warehouse/Productadd';
     }
     //保存信息
     $("#saveProduct_Warehouse").off("click").on("click", function () {
