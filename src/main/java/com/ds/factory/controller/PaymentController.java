@@ -74,7 +74,7 @@ public class PaymentController {
             list2.add(log);
         }
         //获取分页查询后的数据
-        PageInfo<Payment2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Payment> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());

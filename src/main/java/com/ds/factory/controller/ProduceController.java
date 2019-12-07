@@ -91,7 +91,7 @@ public class ProduceController {
         }
 
         //获取分页查询后的数据
-        PageInfo<Manufacture_Design2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Manufacture_Design> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
@@ -186,7 +186,7 @@ public class ProduceController {
         }
 
         //获取分页查询后的数据
-        PageInfo<Manufacture_Result2> pageInfo = new PageInfo<>(list2);
+        PageInfo<Manufacture_Result> pageInfo = new PageInfo<>(list);
         objectMap.put("page", queryInfo);
         if (list == null) {
             queryInfo.setRows(new ArrayList<Object>());
