@@ -186,6 +186,12 @@ public class BusinessConstants {
     public static final String LOG_MODULE_NAME_ORDER= "订单";
     public static final String LOG_MODULE_NAME_PAYMENT= "收款";
     public static final String LOG_MODULE_NAME_WAREHOUSE= "仓库";
+    public static final String LOG_MODULE_NAME_PRODUCT_WAREHOUSE= "成品仓库";
+    public static final String LOG_MODULE_NAME_MATERIALS_WAREHOUSE= "原料仓库";
+    public static final String LOG_MODULE_NAME_EXPIRED= "过期食品";
+//    public static final String LOG_MODULE_NAME_WAREHOUSE= "仓库";
+//    public static final String LOG_MODULE_NAME_WAREHOUSE= "仓库";
+//    public static final String LOG_MODULE_NAME_WAREHOUSE= "仓库";
 
     public static final String TYPE_NAME_ROLE_APP = "RoleAPP";
     public static final String TYPE_NAME_ROLE_FUNCTIONS = "RoleFunctions";

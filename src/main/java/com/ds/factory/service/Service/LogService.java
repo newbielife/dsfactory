@@ -223,6 +223,12 @@ public class LogService {
                 moduleName = BusinessConstants.LOG_MODULE_NAME_PAYMENT; break;
             case BusinessConstants.LOG_MODULE_NAME_WAREHOUSE:
                 moduleName = BusinessConstants.LOG_MODULE_NAME_WAREHOUSE; break;
+            case BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE; break;
+            case BusinessConstants.LOG_MODULE_NAME_MATERIALS_WAREHOUSE:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_MATERIALS_WAREHOUSE; break;
+            case BusinessConstants.LOG_MODULE_NAME_EXPIRED:
+                moduleName = BusinessConstants.LOG_MODULE_NAME_EXPIRED; break;
         }
         return moduleName;
     }

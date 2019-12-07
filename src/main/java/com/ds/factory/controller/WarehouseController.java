@@ -65,7 +65,7 @@ public class WarehouseController {
         List<Product_Warehouse> list = product_warehouseService.selectByConstraint(stock_no,product_no,staff_no,storage_address,manufacture_date);
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
@@ -111,7 +111,7 @@ public class WarehouseController {
         List<Raw_Materials_Warehouse> list = raw_materials_warehouseService.selectByConstraint(no,material_no,storage_address,staff_no_storage,product_date);
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_MATERIALS_WAREHOUSE,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
@@ -156,7 +156,7 @@ public class WarehouseController {
         List<Expired_Food> list = expired_foodService.selectByConstraint(no,type,name,date);
 //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_EXPIRED,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         //获取分页查询后的数据
@@ -180,7 +180,7 @@ public class WarehouseController {
         raw_materials_warehouseService.insertRaw_Materials_Warehouse(raw);
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_MATERIALS_WAREHOUSE,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
@@ -197,7 +197,7 @@ public class WarehouseController {
         }
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_MATERIALS_WAREHOUSE,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
@@ -213,7 +213,7 @@ public class WarehouseController {
         }
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
@@ -231,7 +231,7 @@ public class WarehouseController {
         }
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_EXPIRED,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
@@ -245,7 +245,7 @@ public class WarehouseController {
         product_warehouseService.insertProduct_Warehouse(raw);
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
@@ -264,7 +264,7 @@ public class WarehouseController {
         product_warehouseService.updateProduct_Warehouse(raw);
         //        log
         Staff sta=(Staff)request.getSession().getAttribute("user");
-        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_WAREHOUSE,
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
