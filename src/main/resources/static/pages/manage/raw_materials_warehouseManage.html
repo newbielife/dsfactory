@@ -365,7 +365,7 @@
     });
     //编辑信息
     function editRaw_Materials_Warehouse(Raw_Materials_WarehouseTotalInfo) {
-        $("#Material_no").attr("disabled",true);
+        //$("#Material_no").attr("disabled",true);
         var Raw_Materials_WarehouseInfo = Raw_Materials_WarehouseTotalInfo.split("AaBb");
         $("#Material_no").val(Raw_Materials_WarehouseInfo[1]);
         $("#Stock_num").val(Raw_Materials_WarehouseInfo[2]);
@@ -377,7 +377,7 @@
         Raw_Materials_WarehouseID = Raw_Materials_WarehouseInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(Raw_Materials_WarehouseInfo[2]);
-        url = '/Raw_Materials_Warehouse/update?id=' + Raw_Materials_WarehouseInfo[0];
+        url = '/warehouse/updateMaterials?id=' + Raw_Materials_WarehouseInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

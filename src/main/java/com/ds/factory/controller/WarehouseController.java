@@ -269,4 +269,26 @@ public class WarehouseController {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
+
+    @PostMapping("/updateMaterials")
+    @ResponseBody
+    public Object updateMaterials(@RequestParam("info") String beanJson,@RequestParam("id") String id,
+                         @RequestParam(value = "Product_no", required = false) String Product_no,
+                         @RequestParam(value = "prodate", required = false) Date prodate, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+//        Product_Warehouse raw= JSON.parseObject(beanJson, Product_Warehouse.class);
+//        raw.setStock_no(id.toString());
+//        raw.setProduct_no(Product_no);
+//        raw.setManufacture_date(prodate);
+//        product_warehouseService.updateProduct_Warehouse(raw);
+//        log
+        Raw_Materials_Warehouse rmw=JSON.parseObject(beanJson, Raw_Materials_Warehouse.class);
+        rmw.setStock_no(id.toString());
+        raw_materials_warehouseService.updateRaw_Materials_Warehouse(rmw);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+        return result;
+    }
 }

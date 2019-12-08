@@ -366,7 +366,7 @@
       <if test="Storage_address != null">
         Storage_address = #{Storage_address,jdbcType=VARCHAR},
       </if>
-      <if test="Manufacture_duration != null">
+      <if test="Product_date != null">
         Product_date = #{Product_date,jdbcType=TIMESTAMP},
       </if>
       <if test="Staff_no_storage != null">
