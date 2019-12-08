@@ -195,7 +195,6 @@
                         var str = '';
                         var rowInfo = rec.id + 'AaBb' + rec.number+ 'AaBb' + rec.name+ 'AaBb' + rec.pnumber+ 'AaBb' + rec.url+ 'AaBb' + rec.sort+ 'AaBb' + rec.state+ 'AaBb' + rec.enabled+ 'AaBb' + rec.change+ 'AaBb' + rec.type;
                         str += '<img src="/js/easyui-1.3.5/themes/icons/pencil.png" style="cursor: pointer;" onclick="editFunctions(\'' + rowInfo + '\');"/>&nbsp;<a onclick="editFunctions(\'' + rowInfo + '\');" style="text-decoration:none;color:black;" href="javascript:void(0)">编辑</a>&nbsp;&nbsp;';
-                        str += '<img src="/js/easyui-1.3.5/themes/icons/edit_remove.png" style="cursor: pointer;" onclick="deleteFunctions(' + rec.id + ');"/>&nbsp;<a onclick="deleteFunctions(' + rec.id + ');" style="text-decoration:none;color:black;" href="javascript:void(0)">删除</a>&nbsp;&nbsp;';
                         return str;
                     }
                 }

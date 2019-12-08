@@ -371,6 +371,7 @@ public class UserController {
     @RequestMapping(value = "/getUserAmount", method = RequestMethod.POST)
     public JsonResult<Map<String, Integer>> getUserAmount() {
         JsonResult<Map<String, Integer>> result = new JsonResult<>();
+        //Staff sta=(Staff)request.getSession().getAttribute("user");
         System.out.println("111111111111");
         try {
             Integer order_details = order_detailsMapper.count_sum();
