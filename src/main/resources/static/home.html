@@ -19,6 +19,19 @@
     <script src="js/adminlte/js/adminlte.js"></script>
 </head>
 <body class="hold-transition " onload="getSignedAmount()">
+
+<div style="text-align: center">
+    <b>本月共计</b><a href="javascript:" data-href="pages/manage/paymentManage.html" class="addTabPage" title="资金流水" data-code="41" data-tab-id="tabpanel-98f8491039">
+    <span><b><label id="payment_sum"/></b></span></a><b>条收支记录,</b>
+    <b>共计收入</b><a href="javascript:" data-href="pages/manage/paymentManage.html" class="addTabPage" title="资金流水" data-code="41" data-tab-id="tabpanel-98f8491039">
+    <span><b><label id="payment_money"/></b></span></a><b>元</b>
+    <br/>
+    <br/>
+    <b>本月过期食品与原料共计损失</b>
+    <span><b><label id="expired_money"/></b></span><b>元</b>
+
+</div>
+
 <section class="content">
     <div class="container-fluid">
         <!-- Info boxes -->
@@ -215,13 +228,20 @@
                 document.getElementById('storage2').innerHTML ="成品仓："+storage2+"条存储记录更新";
 
 
+                var payment_sum = amount.payment_sum;
+                document.getElementById('payment_sum').innerHTML =payment_sum;
+                var payment_money = amount.payment_money;
+                document.getElementById('payment_money').innerHTML =payment_money;
+                var expired_money = amount.expired_money;
+                document.getElementById('expired_money').innerHTML =expired_money;
+
+
 
                 var order_details = amount.order_details;
                 document.getElementById('Order_details').innerHTML =order_details;
                 var users = amount.users;
                 document.getElementById('members').innerHTML ="当前系统，工作人员： "+users+" 人";
                 document.getElementById('System').innerHTML ="系统功能与权限管理";
-                var logMessage = data.message;
             }
         });
     }

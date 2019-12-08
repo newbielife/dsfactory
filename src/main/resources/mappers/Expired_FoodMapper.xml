@@ -16,6 +16,15 @@
                 SELECT count(*) FROM Expired_Food WHERE Food_no = #{Food_no}
         </select>
 
+
+    <select id="count_sum"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Expired_Food WHERE flag=0 and DATE_FORMAT( Expired_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    </select>
+
+    <select id="money_sum"  resultType="java.lang.Integer">
+            SELECT  COALESCE(sum(Loss_money),0)  FROM Expired_Food WHERE flag=0 and DATE_FORMAT( Expired_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    </select>
+
     <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

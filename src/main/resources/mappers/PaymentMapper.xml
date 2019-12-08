@@ -17,6 +17,15 @@
     </select>
 
 
+    <select id="count_sum"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Payment WHERE flag=0 and DATE_FORMAT( Payment_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    </select>
+
+    <select id="money_sum"  resultType="java.lang.Integer">
+            SELECT  COALESCE(sum(Money),0)  FROM Payment WHERE flag=0 and DATE_FORMAT( Payment_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    </select>
+
+
     <sql id="Example_Where_Clause">
     <where>
     <foreach collection="oredCriteria" item="criteria" separator="or">

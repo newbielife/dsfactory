@@ -8,7 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface Expired_FoodMapper {
-
+    int count_sum();
+    int money_sum();
     List<Expired_Food> selectByConstraint(@Param("Food_no") String Food_no,
                                           @Param("Food_type") String Food_type,@Param("Food_name") String Food_name,
                                           @Param("Expired_date") Date Expired_date);

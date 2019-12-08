@@ -61,6 +61,12 @@ public class UserController {
     private Raw_Materials_WarehouseMapper raw_materials_warehouseMapper;
 
     @Resource
+    private PaymentMapper paymentMapper;
+
+    @Resource
+    private Expired_FoodMapper expired_foodMapper;
+
+    @Resource
     private StaffMapper staffMapper;
 
     private static String message = "成功";
@@ -376,6 +382,11 @@ public class UserController {
             Integer storage2 = product_warehouseMapper.count_sum();
             Integer sales = product_criteriaMapper.count_sum();
 
+            Integer expired_sum=expired_foodMapper.count_sum();
+            Integer expired_money=expired_foodMapper.money_sum();
+            Integer payment_sum=paymentMapper.count_sum();
+            Integer payment_money=paymentMapper.money_sum();
+
             Map<String, Integer> amountMap = new HashMap<>();
             amountMap.put("order_details", order_details);
             amountMap.put("users", users);
@@ -385,6 +396,12 @@ public class UserController {
             amountMap.put("storage1", storage1);
             amountMap.put("storage2", storage2);
             amountMap.put("sales", sales);
+
+            amountMap.put("expired_sum", expired_sum);
+            amountMap.put("expired_money", expired_money);
+            amountMap.put("payment_sum", payment_sum);
+            amountMap.put("payment_money", payment_money);
+
             result.setData(amountMap);
             //这里举个例子，如果觉得setData穿的信息不够，还可以用setMessage方法多传一个字符串过去
             result.setMessage("这是签到界面");
