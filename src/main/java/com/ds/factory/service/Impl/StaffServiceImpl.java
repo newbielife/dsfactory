@@ -94,7 +94,7 @@ public class StaffServiceImpl implements StaffService {
         ubObj.put("type", "UserRole");
         ubObj.put("keyid", staff.getId());
         JSONArray ubArr = new JSONArray();
-        ubArr.add(manageRoleId);
+        ubArr.add(0);
         ubObj.put("value", ubArr.toString());
         userBusinessService.insertUserBusiness(ubObj.toString(), ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
 
