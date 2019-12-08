@@ -412,4 +412,19 @@ public class UserController {
         return result;
     }
 
+
+
+    @PostMapping("/updateUser")
+    @ResponseBody
+    public Object updateUser(@RequestParam("info") String beanJson,@RequestParam("id") Long id, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Staff rmw=JSON.parseObject(beanJson, Staff.class);
+        rmw.setId(id);
+        staffService.updateByPrimaryKeySelective(rmw);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+        return result;
+    }
 }
