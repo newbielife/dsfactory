@@ -291,4 +291,21 @@ public class WarehouseController {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
+
+
+    @PostMapping("/updateExpired")
+    @ResponseBody
+    public Object updateExpired(@RequestParam("info") String beanJson,@RequestParam("id") String id,
+                                  @RequestParam(value = "Product_no", required = false) String Product_no,
+                                  @RequestParam(value = "prodate", required = false) Date prodate, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Expired_Food rmw=JSON.parseObject(beanJson, Expired_Food.class);
+        rmw.setFood_no(id.toString());
+        expired_foodService.updateByPrimaryKey(rmw);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_EXPIRED,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+        return result;
+    }
 }

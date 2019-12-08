@@ -59,7 +59,7 @@ public class Expired_FoodServiceImpl implements Expired_FoodService {
 
     @Override
     public int updateByPrimaryKey(Expired_Food expired_food) {
-        return expired_foodMapper.updateByPrimaryKey(expired_food);
+        return expired_foodMapper.updateByPrimaryKeySelective(expired_food);
     }
 
     @Override

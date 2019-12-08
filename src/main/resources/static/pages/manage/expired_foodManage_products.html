@@ -148,14 +148,6 @@
             ]],
             toolbar: [
                 {
-                    id: 'addExpired_food',
-                    text: '增加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        addExpired_food();
-                    }
-                },
-                {
                     id: 'deleteExpired_food',
                     text: '删除',
                     iconCls: 'icon-remove',
@@ -362,7 +354,7 @@
         expired_foodID = expired_foodInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(expired_foodInfo[1]);
-        url = '/expired_food/update?id=' + expired_foodInfo[0];
+        url = '/warehouse/updateExpired?id=' + expired_foodInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({
