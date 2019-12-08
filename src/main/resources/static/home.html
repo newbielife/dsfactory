@@ -205,46 +205,55 @@
 
 
     function getSignedAmount(){
-        $.ajax({
-            type: "post",
-            url :  "/user/getUserAmount",
-            dataType:'json',
-            data: {
-            },
-            success: function(data){
-                var amount = data.data;
-                var sales = amount.sales;
-                document.getElementById('sales').innerHTML ="当前更新商品共"+sales+" 种";
-                var Order1 = amount.Order1;
-                document.getElementById('Order1').innerHTML ="致销售员：您有"+Order1+"条订单更新";
-                var Order2 = amount.Order2;
-                document.getElementById('Order2').innerHTML ="致会计：您有"+Order2+"条订单更新";
-
-
-                var design = amount.design;
-                document.getElementById('design').innerHTML ="当日有"+design+" 条生产计划更新";
-                var storage1 = amount.storage1;
-                document.getElementById('storage1').innerHTML ="原料仓："+storage1+"条存储记录更新";
-                var storage2 = amount.storage2;
-                document.getElementById('storage2').innerHTML ="成品仓："+storage2+"条存储记录更新";
-
-
-                var payment_sum = amount.payment_sum;
-                document.getElementById('payment_sum').innerHTML =payment_sum;
-                var payment_money = amount.payment_money;
-                document.getElementById('payment_money').innerHTML =payment_money;
-                var expired_money = amount.expired_money;
-                document.getElementById('expired_money').innerHTML =expired_money;
+        var id=sessionStorage.getItem("userId")
+        if(id=='120')
+        {
 
 
 
-                var order_details = amount.order_details;
-                document.getElementById('Order_details').innerHTML =order_details;
-                var users = amount.users;
-                document.getElementById('members').innerHTML ="当前系统，工作人员： "+users+" 人";
-                document.getElementById('System').innerHTML ="系统功能与权限管理";
-            }
-        });
+            $.ajax({
+                type: "post",
+                url :  "/user/getUserAmount",
+                dataType:'json',
+                data: {
+                },
+                success: function(data){
+                    var amount = data.data;
+                    var sales = amount.sales;
+                    document.getElementById('sales').innerHTML ="当前更新商品共"+sales+" 种";
+                    var Order1 = amount.Order1;
+                    document.getElementById('Order1').innerHTML ="致销售员：您有"+Order1+"条订单更新";
+                    var Order2 = amount.Order2;
+                    document.getElementById('Order2').innerHTML ="致会计：您有"+Order2+"条订单更新";
+
+
+                    var design = amount.design;
+                    document.getElementById('design').innerHTML ="当日有"+design+" 条生产计划更新";
+                    var storage1 = amount.storage1;
+                    document.getElementById('storage1').innerHTML ="原料仓："+storage1+"条存储记录更新";
+                    var storage2 = amount.storage2;
+                    document.getElementById('storage2').innerHTML ="成品仓："+storage2+"条存储记录更新";
+
+
+                    var payment_sum = amount.payment_sum;
+                    document.getElementById('payment_sum').innerHTML =payment_sum;
+                    var payment_money = amount.payment_money;
+                    document.getElementById('payment_money').innerHTML =payment_money;
+                    var expired_money = amount.expired_money;
+                    document.getElementById('expired_money').innerHTML =expired_money;
+
+
+
+                    var order_details = amount.order_details;
+                    document.getElementById('Order_details').innerHTML =order_details;
+                    var users = amount.users;
+                    document.getElementById('members').innerHTML ="当前系统，工作人员： "+users+" 人";
+                    document.getElementById('System').innerHTML ="系统功能与权限管理";
+                }
+            });
+
+
+        }
     }
 </script>
 
