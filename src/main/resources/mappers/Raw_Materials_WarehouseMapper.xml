@@ -16,6 +16,10 @@
             SELECT count(*) FROM Raw_Materials_Warehouse WHERE Stock_no = #{Stock_no}
     </select>
 
+     <select id="count_sum"  resultType="java.lang.Integer">
+                SELECT count(*) FROM Raw_Materials_Warehouse WHERE flag=0 and to_days(Product_date) = to_days(now())
+        </select>
+
     <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

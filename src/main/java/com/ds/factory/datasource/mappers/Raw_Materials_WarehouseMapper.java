@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface Raw_Materials_WarehouseMapper {
     List<Raw_Materials_Warehouse> orderByDate();
-
+    int count_sum();
     int exist_or_not(@Param("Stock_no") String Stock_no);
     String select_Biggest_Stock_no();
     Raw_Materials_Warehouse selectByPrimaryKey(@Param("Stock_no") String Stock_no);

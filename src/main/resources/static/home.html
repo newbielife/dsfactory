@@ -12,9 +12,13 @@
     <script src="js/global.min.js?ctx=/js/a"></script>
     <script src="js/jquery/jquery-1.12.4.min.js"></script>
     <link rel="stylesheet" href="js/adminlte/css/AdminLTE.css">
+<!--    <link href="css/common.css" rel="stylesheet" type="text/css" media="all"/>-->
+<!--    <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>-->
+<!--    <link href="css/img/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>-->
+<!--    <link href="css/font-icons.min.css" rel="stylesheet" type="text/css" media="all"/>-->
     <script src="js/adminlte/js/adminlte.js"></script>
 </head>
-<body class="hold-transition ">
+<body class="hold-transition " onload="getSignedAmount()">
 <section class="content">
     <div class="container-fluid">
         <!-- Info boxes -->
@@ -30,13 +34,112 @@
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Sales</span>
-                        <span class="info-box-number">60</span>
+                        <span class="info-box-text">商品购买</span>
+                        <span class="info-box-number">
+                        <a href="javascript:" data-href="pages/materials/product_purchase.html" class="addTabPage" title="商品购物" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                <span><b><label id="sales"/></b></span>
+                        </a>
+                        </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
+
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1">
+<!--                        <i class="fa fa-users"></i>-->
+                        <img src="js/images/Order.png" class="user-image">
+                    </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">订单管理</span>
+                        <span class="info-box-number">
+                            <a href="javascript:" data-href="pages/manage/order_formManage_salesman.html" class="addTabPage" title="订单管理——销售" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                    <span><b><label id="Order1"/></b></span>
+                            </a>
+                            <br/>
+                            <a href="javascript:" data-href="pages/manage/order_formManage_accountant.html" class="addTabPage" title="订单管理——会计" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                    <span><label id="Order2"/></b></span>
+                            </a>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1">
+<!--                        <i class="fa fa-users"></i>-->
+                        <img src="js/images/Design.png" class="user-image">
+                    </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">生产计划</span>
+                        <span class="info-box-number">
+                            <a href="javascript:" data-href="pages/manage/manufacture_designManage.html" class="addTabPage" title="查看生产计划" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                    <span><b><label id="design"/></b></span>
+                            </a>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1">
+<!--                        <i class="fa fa-users"></i>-->
+                        <img src="js/images/Storage.png" class="user-image">
+                    </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">仓库库存</span>
+                        <span class="info-box-number">
+                            <a href="javascript:" data-href="pages/manage/raw_materials_warehouseManage.html" class="addTabPage" title="今日原料仓库" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                    <span><b><label id="storage1"/></b></span>
+                            </a>
+                            <br/>
+                            <a href="javascript:" data-href="pages/manage/product_warehouseManage.html" class="addTabPage" title="今日成品仓库" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                    <span><b><label id="storage2"/></b></span>
+                            </a>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1">
+<!--                        <i class="fa fa-users"></i>-->
+                        <img src="js/images/System.png" class="user-image">
+                    </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">系统管理</span>
+                        <span class="info-box-number">
+                            <a href="javascript:" data-href="pages/manage/functions.html" class="addTabPage" title="功能管理" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                    <span><b><label id="System"/></b></span>
+                            </a>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+
+
+
             <!-- /.col -->
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
@@ -46,22 +149,27 @@
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">New Members</span>
-                        <span class="info-box-number">20</span>
+                        <span class="info-box-text">注册成员总数</span>
+                        <span class="info-box-number">
+                            <a href="javascript:" data-href="pages/manage/user.html" class="addTabPage" title="查看用户信息" data-code="41" data-tab-id="tabpanel-98f8491039">
+                                    <span><b><label id="members"/></b></span>
+                            </a>
+                        </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
+
         </div>
         <!-- /.row -->
     </div>
 </section>
 <div style="text-align: center">
-    <b>您有</b><a href="javascript:" data-href="pages/manage/order_formManage_salesman.html" class="addTabPage" title="查看登录日志" data-code="41" data-tab-id="tabpanel-98f8491039">
-        <span><b>12</b></span>
-    </a><b>条新订单待处理</b>
+    <b>您有</b><a href="javascript:" data-href="pages/manage/order_formManage_salesman.html" class="addTabPage" title="订单处理" data-code="41" data-tab-id="tabpanel-98f8491039">
+        <span><b><label id="Order_details"/></b></span>
+    </a><b>条新 "详情子订单" 待处理</b>
     <br><br>
     <a href="javascript:" data-href="pages/manage/log.html" class="addTabPage" title="查看登录日志" data-code="41" data-tab-id="tabpanel-98f8491039">
         <span><b>查看登录日志</b></span>
@@ -78,4 +186,44 @@
 <script src="js/common/DSerp.js"></script>
 <script src="js/common/i18n/DSerp_zh_CN.js"></script>
 <script src="js/jquery/jquery-ui-sortable-1.12.1.min.js"></script>
+
+<script type="text/javascript">
+
+
+    function getSignedAmount(){
+        $.ajax({
+            type: "post",
+            url :  "/user/getUserAmount",
+            dataType:'json',
+            data: {
+            },
+            success: function(data){
+                var amount = data.data;
+                var sales = amount.sales;
+                document.getElementById('sales').innerHTML ="当前更新商品共"+sales+" 种";
+                var Order1 = amount.Order1;
+                document.getElementById('Order1').innerHTML ="致销售员：您有"+Order1+"条订单更新";
+                var Order2 = amount.Order2;
+                document.getElementById('Order2').innerHTML ="致会计：您有"+Order2+"条订单更新";
+
+
+                var design = amount.design;
+                document.getElementById('design').innerHTML ="当日有"+design+" 条生产计划更新";
+                var storage1 = amount.storage1;
+                document.getElementById('storage1').innerHTML ="原料仓："+storage1+"条存储记录更新";
+                var storage2 = amount.storage2;
+                document.getElementById('storage2').innerHTML ="成品仓："+storage2+"条存储记录更新";
+
+
+
+                var order_details = amount.order_details;
+                document.getElementById('Order_details').innerHTML =order_details;
+                var users = amount.users;
+                document.getElementById('members').innerHTML ="当前系统，工作人员： "+users+" 人";
+                document.getElementById('System').innerHTML ="系统功能与权限管理";
+                var logMessage = data.message;
+            }
+        });
+    }
+</script>
 

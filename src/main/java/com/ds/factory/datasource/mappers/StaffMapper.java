@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StaffMapper {
     List<Staff> two_select(@Param("username") String username,@Param("loginame") String loginame);
-
+    int count_sum();
 
 
     Staff selectByLoginame(@Param("loginame") String loginame);

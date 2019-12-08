@@ -9,6 +9,9 @@ import java.util.List;
 
 
 public interface Order_FormMapper {
+    int count_sum_accountant();
+    int count_sum_salesman();
+
 
     List<Order_Form> selectByConstraint_disabled(@Param("Order_no") String Order_no,
                                          @Param("Client_no") String Client_no, @Param("Staff_no") String Staff_no);

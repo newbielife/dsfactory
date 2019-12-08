@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public interface Order_DetailsMapper {
-
+    int count_sum();
     int deleteLike(@Param("Order_no") String Order_no);
     int updateCheckByOrder_no(@Param("Order_no") String Order_no);
     int updateCheckManufacture_permission(@Param("Order_no") String Order_no);

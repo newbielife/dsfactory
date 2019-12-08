@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface Product_WarehouseMapper {
-
+    int count_sum();
     int exist_or_not(@Param("Stock_no") String Stock_no);
     String select_Biggest_Stock_no();
     Product_Warehouse selectByPrimaryKey(@Param("Stock_no") String Stock_no);

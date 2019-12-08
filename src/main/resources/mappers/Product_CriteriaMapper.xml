@@ -12,6 +12,10 @@
             <result column="Unit_Price" jdbcType="BIGINT" property="Unit_Price" />
     </resultMap>
 
+<select id="count_sum"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Product_Criteria WHERE flag=0
+    </select>
+
 
     <select id="exist_or_not"  resultType="java.lang.Integer">
             SELECT count(*) FROM Product_Criteria WHERE Product_no = #{Product_no}

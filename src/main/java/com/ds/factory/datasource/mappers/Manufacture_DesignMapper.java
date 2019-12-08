@@ -10,6 +10,7 @@ import java.util.List;
 public interface Manufacture_DesignMapper {
     int existByDate_Product_no(@Param("Product_no") String Product_no,@Param("Deadline") Date Deadline);
     Manufacture_Design selectByDate_Product_no(@Param("Product_no") String Product_no,@Param("Deadline") Date Deadline);
+    int count_sum();
 
     List<Manufacture_Design> selectByConstraint(@Param("Manufacture_no") String Manufacture_no,
             @Param("Staff_no_design") String Staff_no_design,@Param("Order_no_details") String Order_no_details,

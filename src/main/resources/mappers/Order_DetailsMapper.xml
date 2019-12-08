@@ -112,7 +112,9 @@
           order by Order_Details.`Check` desc, Delivery_date asc
     </select>
 
-
+    <select id="count_sum"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Order_Details WHERE Order_Details.`Check` = 2 and flag=0
+    </select>
 
 
 

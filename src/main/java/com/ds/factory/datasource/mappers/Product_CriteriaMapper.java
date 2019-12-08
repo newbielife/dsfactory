@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface Product_CriteriaMapper {
-
+    int count_sum();
     List<Product_Criteria> selectByConstraint(@Param("Product_no") String Product_no,@Param("Product_name") String Product_name,@Param("Product_type") String Product_type);
 
     int exist_or_not(@Param("Product_no") String Product_no);

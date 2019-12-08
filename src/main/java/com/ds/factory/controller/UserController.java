@@ -3,14 +3,14 @@ package com.ds.factory.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ds.factory.constants.ExceptionConstants;
+import com.ds.factory.dao.Example.Raw_Materials_WarehouseExample;
 import com.ds.factory.datasource.entities.*;
-import com.ds.factory.service.Service.ClientService;
-import com.ds.factory.service.Service.LogService;
-import com.ds.factory.service.Service.Product_CriteriaService;
-import com.ds.factory.service.Service.StaffService;
+import com.ds.factory.datasource.mappers.*;
+import com.ds.factory.service.Service.*;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.tomcat.util.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +40,28 @@ public class UserController {
 
     @Resource
     private Product_CriteriaService product_criteriaService;
+
+
+    @Resource
+    private Product_CriteriaMapper product_criteriaMapper;
+
+    @Resource
+    private Manufacture_DesignMapper manufacture_designMapper;
+
+    @Resource
+    private Order_FormMapper order_formMapper;
+
+    @Resource
+    private Order_DetailsMapper order_detailsMapper;
+
+    @Resource
+    private Product_WarehouseMapper product_warehouseMapper;
+
+    @Resource
+    private Raw_Materials_WarehouseMapper raw_materials_warehouseMapper;
+
+    @Resource
+    private StaffMapper staffMapper;
 
     private static String message = "成功";
     private static final String HTTP = "http://";
@@ -334,6 +356,40 @@ public class UserController {
         for(int i=0;i<id.length;i++)
         {
             staffService.deleteByPrimaryKey(id[i].trim());
+        }
+        return result;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/getUserAmount", method = RequestMethod.POST)
+    public JsonResult<Map<String, Integer>> getUserAmount() {
+        JsonResult<Map<String, Integer>> result = new JsonResult<>();
+        System.out.println("111111111111");
+        try {
+            Integer order_details = order_detailsMapper.count_sum();
+            Integer users = staffMapper.count_sum();
+            Integer design = manufacture_designMapper.count_sum();
+            Integer Order1 = order_formMapper.count_sum_salesman();
+            Integer Order2 = order_formMapper.count_sum_accountant();
+            Integer storage1 = raw_materials_warehouseMapper.count_sum();
+            Integer storage2 = product_warehouseMapper.count_sum();
+            Integer sales = product_criteriaMapper.count_sum();
+
+            Map<String, Integer> amountMap = new HashMap<>();
+            amountMap.put("order_details", order_details);
+            amountMap.put("users", users);
+            amountMap.put("design", design);
+            amountMap.put("Order1", Order1);
+            amountMap.put("Order2", Order2);
+            amountMap.put("storage1", storage1);
+            amountMap.put("storage2", storage2);
+            amountMap.put("sales", sales);
+            result.setData(amountMap);
+            //这里举个例子，如果觉得setData穿的信息不够，还可以用setMessage方法多传一个字符串过去
+            result.setMessage("这是签到界面");
+        } catch (Exception e) {
+
         }
         return result;
     }

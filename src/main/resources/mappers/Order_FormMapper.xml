@@ -102,6 +102,22 @@
     </select>
 
 
+    <select id="count_sum_accountant"  resultType="java.lang.Integer">
+            SELECT count(*)
+            FROM Order_Form
+            WHERE flag=0 and to_days(Update_date) = to_days(now())
+            and Progress in ('销售员接单','会计初审完成','预付款提交成功','生产计划与车间工作中','售后服务')
+    </select>
+
+    <select id="count_sum_salesman"  resultType="java.lang.Integer">
+            SELECT count(*)
+            FROM Order_Form
+            WHERE flag=0 and to_days(Update_date) = to_days(now())
+            and Progress in ('客户提交成功','审查结果拒绝接单','预付款提交成功','尾款缴纳成功','客户收货成功','售后服务','违约金商谈阶段','退款商谈阶段')
+    </select>
+
+
+
     <select id="selectByConstraint_disabled" resultMap="BaseResultMap">
           select *
           from Order_Form

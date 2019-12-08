@@ -20,6 +20,10 @@
         SELECT count(*) FROM Manufacture_Design WHERE Manufacture_no = #{Manufacture_no}
     </select>
 
+    <select id="count_sum"  resultType="java.lang.Integer">
+            SELECT count(*) FROM Manufacture_Design WHERE flag=0 and to_days(Update_date) = to_days(now())
+    </select>
+
     <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
