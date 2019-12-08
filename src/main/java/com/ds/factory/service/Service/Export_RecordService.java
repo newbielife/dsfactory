@@ -20,4 +20,5 @@ public interface Export_RecordService {
     List<Export_Record> selectByOrder_no(String Order_no);
     Export_Record selectByOrder_no_details(String Order_no_details);
     List<Export_Record> getAll_orderByDelivery_date();
+    int updateSelective(Export_Record export_record);
 }

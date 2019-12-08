@@ -91,7 +91,7 @@ public class Export_FoodServiceImpl implements Export_RecordService {
     @Override
     public int update(Export_Record export_record) {
         if( export_record.getExport_no()==null||export_record.getExport_no().trim().compareTo("")==0)  return 0;
-        return export_recordMapper.updateByPrimaryKeySelective(export_record);
+        return export_recordMapper.updateByPrimaryKey(export_record);
     }
 
     @Override
@@ -119,5 +119,10 @@ public class Export_FoodServiceImpl implements Export_RecordService {
     @Override
     public List<Export_Record> getAll_orderByDelivery_date() {
         return export_recordMapper.getAll_orderByDelivery_date();
+    }
+
+    @Override
+    public int updateSelective(Export_Record export_record) {
+        return export_recordMapper.updateByPrimaryKeySelective(export_record);
     }
 }

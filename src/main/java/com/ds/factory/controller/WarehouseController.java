@@ -308,4 +308,21 @@ public class WarehouseController {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
+
+
+    @PostMapping("/updateproductwarehouse")
+    @ResponseBody
+    public Object updateproductwarehouse(@RequestParam("info") String beanJson,@RequestParam("id") String id,
+                                @RequestParam(value = "Product_no", required = false) String Product_no,
+                                @RequestParam(value = "prodate", required = false) Date prodate, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Product_Warehouse rmw=JSON.parseObject(beanJson, Product_Warehouse.class);
+        rmw.setStock_no(id.toString());
+        product_warehouseService.updateProduct_Warehouse(rmw);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_PRODUCT_WAREHOUSE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+        return result;
+    }
 }

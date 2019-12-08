@@ -380,7 +380,7 @@
         export_recordID = export_recordInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(export_recordInfo[1]);
-        url = '/export_record/update?id=' + export_recordInfo[0];
+        url = '/order/updateExport?id=' + export_recordInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

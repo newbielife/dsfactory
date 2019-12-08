@@ -325,8 +325,8 @@
       <if test="Staff_no != null">
         Staff_no = #{Staff_no,jdbcType=VARCHAR},
       </if>
-      <if test="Order_no_Progress!= null">
-        Order_no_Progress= #{Order_no_details,jdbcType=VARCHAR},
+      <if test="Order_no_details!= null">
+        Order_no_details= #{Order_no_details,jdbcType=VARCHAR},
       </if>
       <if test="Source_place != null">
         Source_place = #{Source_place,jdbcType=VARCHAR},
@@ -341,7 +341,7 @@
           Transport_link = #{Transport_link,jdbcType=VARCHAR},
         </if>
         <if test="Progress!= null">
-          Progress= #{Details,jdbcType=VARCHAR},
+          Progress= #{Progress,jdbcType=VARCHAR},
         </if>
     </set>
     where Export_no = #{Export_no,jdbcType=VARCHAR}
@@ -352,12 +352,12 @@
     update Export_Record
     set Export_no = #{Export_no,jdbcType=VARCHAR},
         Staff_no = #{Staff_no,jdbcType=VARCHAR},
-        Order_no_Progress= #{Order_no_details,jdbcType=VARCHAR},
+        Order_no_details= #{Order_no_details,jdbcType=VARCHAR},
         Source_place = #{Source_place,jdbcType=VARCHAR},
         Target_place = #{Target_place,jdbcType=VARCHAR},
         Delivery_date = #{Delivery_date,jdbcType=TIMESTAMP},
         Transport_link = #{Transport_link,jdbcType=VARCHAR},
-        Progress= #{Details,jdbcType=VARCHAR}
+        Progress= #{Progress,jdbcType=VARCHAR}
     where Export_no = #{Export_no,jdbcType=VARCHAR}
     </update>
 

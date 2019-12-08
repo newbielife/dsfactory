@@ -397,7 +397,7 @@
         Product_WarehouseID = Product_WarehouseInfo[0];
         //焦点在名称输入框==定焦在输入文字后面
         $("#Name").val("").focus().val(Product_WarehouseInfo[1]);
-        url = '/warehouse/update?id=' + Product_WarehouseInfo[0];
+        url = '/warehouse/updateproductwarehouse?id=' + Product_WarehouseInfo[0];
     }
     //搜索处理
     $("#searchBtn").unbind().bind({

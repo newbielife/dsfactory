@@ -476,4 +476,20 @@ public class OrderController {
         return result;
     }
 
+    @PostMapping("/updateExport")
+    @ResponseBody
+    public Object updateExport(@RequestParam("info") String beanJson,@RequestParam("id") String id,
+                                @RequestParam(value = "Product_no", required = false) String Product_no,
+                                @RequestParam(value = "prodate", required = false) Date prodate, HttpServletRequest request)throws Exception{
+        JSONObject result = ExceptionConstants.standardSuccess();
+        Export_Record rmw=JSON.parseObject(beanJson, Export_Record.class);
+        rmw.setExport_no(id.toString());
+        export_recordService.updateSelective(rmw);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_EXPORT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+        return result;
+    }
+
 }
