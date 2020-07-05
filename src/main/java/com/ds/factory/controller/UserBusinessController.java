@@ -2,9 +2,12 @@ package com.ds.factory.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
+import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.datasource.entities.UserBusiness;
 import com.ds.factory.exception.BusinessRunTimeException;
+import com.ds.factory.service.Service.LogService;
 import com.ds.factory.service.Service.StaffService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.BaseResponseInfo;
@@ -12,6 +15,8 @@ import com.ds.factory.utils.ErpInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +35,9 @@ public class UserBusinessController {
     private Logger logger = LoggerFactory.getLogger(UserBusinessController.class);
 
     @Resource
+    LogService logService;
+
+    @Resource
     private UserBusinessService userBusinessService;
 
     @GetMapping(value = "/getBasicData")
@@ -43,6 +51,11 @@ public class UserBusinessController {
             mapData.put("userBusinessList", list);
             res.code = 200;
             res.data = mapData;
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER_BUSINESS,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         } catch (Exception e) {
             e.printStackTrace();
             res.code = 500;
@@ -83,6 +96,10 @@ public class UserBusinessController {
                 res.code = 200;
                 res.data = "成功";
             }
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER_BUSINESS,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT +"  按钮修改").append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         } catch (Exception e) {
             e.printStackTrace();
             res.code = 500;
@@ -93,7 +110,7 @@ public class UserBusinessController {
 
 
     @RequestMapping(value = "/batchDeleteUserBusinessByIds")
-    public Object batchDeleteUserBusinessByIds(@RequestParam("ids") String ids) throws Exception {
+    public Object batchDeleteUserBusinessByIds(@RequestParam("ids") String ids, HttpServletRequest request) throws Exception {
 
         JSONObject result = ExceptionConstants.standardSuccess();
         int i= userBusinessService.batchDeleteUserBusinessByIds(ids);
@@ -103,17 +120,25 @@ public class UserBusinessController {
             throw new BusinessRunTimeException(ExceptionConstants.USER_BUSINESS_DELETE_FAILED_CODE,
                     ExceptionConstants.USER_BUSINESS_DELETE_FAILED_MSG);
         }
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER_BUSINESS,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_BATCH_delete).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
     @PostMapping("/update")
     @ResponseBody
-    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         System.out.println(id);
         UserBusiness userBusiness= JSON.parseObject(beanJson, UserBusiness.class);
         userBusiness.setId(id);
         userBusinessService.updateSelective(userBusiness);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER_BUSINESS,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 }

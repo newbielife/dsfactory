@@ -7,7 +7,9 @@ import com.ds.factory.constants.BusinessConstants;
 import com.ds.factory.constants.ExceptionConstants;
 import com.ds.factory.datasource.entities.Product_Warehouse;
 import com.ds.factory.datasource.entities.Role;
+import com.ds.factory.datasource.entities.Staff;
 import com.ds.factory.exception.BusinessRunTimeException;
+import com.ds.factory.service.Service.LogService;
 import com.ds.factory.service.Service.RoleService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
@@ -16,6 +18,8 @@ import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +41,8 @@ public class RoleController {
     @Resource
     private UserBusinessService userBusinessService;
 
+    @Resource
+    LogService logService;
     /**
      * 角色对应应用显示
      * @param request
@@ -66,6 +72,11 @@ public class RoleController {
                     arr.add(item);
                 }
             }
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ROLE,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,11 +85,16 @@ public class RoleController {
 
     @GetMapping(value = "/list")
     public List<Role> list(HttpServletRequest request)throws Exception {
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ROLE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return roleService.getRole();
     }
 
     @RequestMapping(value = "/batchDeleteRoleByIds")
-    public Object batchDeleteRoleByIds(@RequestParam("ids") String ids) throws Exception {
+    public Object batchDeleteRoleByIds(@RequestParam("ids") String ids, HttpServletRequest request) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i= roleService.batchDeleteRoleByIds(ids);
         if(i<1){
@@ -87,6 +103,10 @@ public class RoleController {
             throw new BusinessRunTimeException(ExceptionConstants.ROLE_DELETE_FAILED_CODE,
                     ExceptionConstants.ROLE_DELETE_FAILED_MSG);
         }
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ROLE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_BATCH_delete).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -123,6 +143,11 @@ public class RoleController {
         }
         queryInfo.setRows(list);
         queryInfo.setTotal(pageInfo.getTotal());
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ROLE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
@@ -133,17 +158,25 @@ public class RoleController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Role role= JSON.parseObject(beanJson, Role.class);
         roleService.insert___(role);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ROLE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
 
     @PostMapping("/update")
     @ResponseBody
-    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Role role= JSON.parseObject(beanJson, Role.class);
         role.setId(id);
         roleService.update___(role);
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ROLE,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 

@@ -12,6 +12,7 @@ import com.ds.factory.datasource.mappers.FunctionsMapper;
 import com.ds.factory.exception.BusinessRunTimeException;
 import com.ds.factory.exception.DSException;
 import com.ds.factory.service.Service.FunctionsService;
+import com.ds.factory.service.Service.LogService;
 import com.ds.factory.service.Service.UserBusinessService;
 import com.ds.factory.utils.*;
 import com.github.pagehelper.PageHelper;
@@ -20,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +43,9 @@ public class FunctionsController {
 
     @Resource
     private FunctionsMapper functionsMapper;
+
+    @Resource
+    LogService logService;
 
     @Resource
     private FunctionsService functionsService;
@@ -127,6 +133,12 @@ public class FunctionsController {
                     dataArray.add(item);
                 }
             }
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_FUNCTIONS,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         } catch (DataAccessException e) {
             logger.error(">>>>>>>>>>>>>>>>>>>查找应用异常", e);
         }
@@ -164,6 +176,12 @@ public class FunctionsController {
         }
         queryInfo.setRows(list);
         queryInfo.setTotal(pageInfo.getTotal());
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_FUNCTIONS,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
@@ -305,6 +323,12 @@ public class FunctionsController {
                 outer.put("children", dataArray);
                 arr.add(outer);
             }
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_ROLE,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -335,6 +359,12 @@ public class FunctionsController {
             outer.put("rows", dataArray);
             res.code = 200;
             res.data = outer;
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_FUNCTIONS,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         } catch (Exception e) {
             e.printStackTrace();
             res.code = 500;
@@ -345,7 +375,7 @@ public class FunctionsController {
 
 
     @RequestMapping(value = "/batchDeleteFunctionsByIds")
-    public Object batchDeleteFunctionsByIds(@RequestParam("ids") String ids) throws Exception {
+    public Object batchDeleteFunctionsByIds(@RequestParam("ids") String ids, HttpServletRequest request) throws Exception {
         List<Long> idList = StringUtil.strToLongList(ids);
         FunctionsExample example = new FunctionsExample();
         example.createCriteria().andIdIn(idList);
@@ -355,6 +385,11 @@ public class FunctionsController {
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_FUNCTIONS,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_BATCH_delete).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
@@ -393,6 +428,12 @@ public class FunctionsController {
                     functionsMapper.insertSelective(depot);
                 }
             }
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_FUNCTIONS,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }
@@ -402,7 +443,7 @@ public class FunctionsController {
 
     @PostMapping("/update")
     @ResponseBody
-    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id, HttpServletRequest request)throws Exception{
         JSONObject obj = JSONObject.parseObject(beanJson, JSONObject.class);
         String a=obj.get("Enabled").toString();
         Functions depot=new Functions();
@@ -425,6 +466,11 @@ public class FunctionsController {
         JSONObject result = ExceptionConstants.standardSuccess();
         try{
             functionsMapper.updateByPrimaryKeySelective(depot);
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_FUNCTIONS,
+                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }

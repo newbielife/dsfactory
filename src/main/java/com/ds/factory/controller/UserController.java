@@ -229,6 +229,12 @@ public class UserController {
         }
         queryInfo.setRows(list);
         queryInfo.setTotal(pageInfo.getTotal());
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
@@ -238,6 +244,12 @@ public class UserController {
         try {
             request.getSession().removeAttribute("user");
             response.sendRedirect("/login.html");
+
+            Staff sta=(Staff)request.getSession().getAttribute("user");
+            logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER,
+                    ("id: "+sta.getId()+"  用户安全退出").toString(),
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         } catch(Exception e){
             e.printStackTrace();
             res.code = 500;
@@ -249,8 +261,8 @@ public class UserController {
     @GetMapping(value = "/loglist")
     public String loglist(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                          @RequestParam(value = Constants.SEARCH, required = false) String search
-                          )throws Exception {
+                          @RequestParam(value = Constants.SEARCH, required = false) String search,
+                          HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -303,6 +315,12 @@ public class UserController {
         }
         queryInfo.setRows(list2);
         queryInfo.setTotal(pageInfo.getTotal());
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog("登录日志",
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
@@ -311,7 +329,8 @@ public class UserController {
     @GetMapping(value = "/unitlist")
     public String unitlist(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                           @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                          @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+                          @RequestParam(value = Constants.SEARCH, required = false) String search,
+                           HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = new HashMap<String, String>();
         //查询参数
         JSONObject obj= JSON.parseObject(search);
@@ -341,6 +360,12 @@ public class UserController {
         }
         queryInfo.setRows(list);
         queryInfo.setTotal(pageInfo.getTotal());
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_UNIT,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
@@ -351,18 +376,30 @@ public class UserController {
         Staff sta= JSON.parseObject(beanJson, Staff.class);
         sta.setPassword("e10adc3949ba59abbe56e057f20f883e");
         staffService.insertSelective(sta);
+
+        Staff sta1=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta1.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return result;
     }
 
     @PostMapping("/batchDeleteUser")
     @ResponseBody
-    public Object batchDeleteClientByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteClientByIds(@RequestParam("ids") String ids,HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             staffService.deleteByPrimaryKey(id[i].trim());
         }
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_USER,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_BATCH_delete).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return result;
     }
 

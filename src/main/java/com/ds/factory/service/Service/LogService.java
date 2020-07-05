@@ -258,8 +258,13 @@ public class LogService {
         log.setStatus(status);
         log.setContentdetails(type + getModule(apiName));
         log.setRemark(type + getModule(apiName));
+//        System.out.print(apiName);
+        System.out.print(type);
+//        System.out.print(getUserId(request));
         try{
+            log.setOperation(apiName);
             logMapper.insertSelective(log);
+            System.out.println(log.toString());
         }catch(Exception e){
             DSException.writeFail(logger, e);
         }

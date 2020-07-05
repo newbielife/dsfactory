@@ -34,6 +34,9 @@ public class ClientController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Resource
+    LogService logService;
+
+    @Resource
     private ClientService clientService;
 
     private static String message = "成功";
@@ -79,19 +82,31 @@ public class ClientController {
         }
         queryInfo.setRows(list);
         queryInfo.setTotal(pageInfo.getTotal());
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_client,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_SEARCH).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
 
 
     @PostMapping("/batchDeleteClientByIds")
     @ResponseBody
-    public Object batchDeleteClientByIds(@RequestParam("ids") String ids)throws Exception{
+    public Object batchDeleteClientByIds(@RequestParam("ids") String ids,HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         String[] id=ids.split(",");
         for(int i=0;i<id.length;i++)
         {
             clientService.deleteByPrimaryKey(id[i].trim());
         }
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_client,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_BATCH_delete).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return result;
     }
 
@@ -102,13 +117,19 @@ public class ClientController {
         JSONObject result = ExceptionConstants.standardSuccess();
         Client client= JSON.parseObject(beanJson, Client.class);
         clientService.insert_Client_details(client);
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_client,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_ADD).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+
         return result;
     }
 
 
     @PostMapping("/update")
     @ResponseBody
-    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id)throws Exception{
+    public Object update(@RequestParam("info") String beanJson,@RequestParam("id") Long id, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         Client client= JSON.parseObject(beanJson, Client.class);
         String Client_no=(id+"").trim();
@@ -123,6 +144,11 @@ public class ClientController {
         }
         client.setClient_no(Client_no);
         clientService.updateByPrimaryKeySelective(client);
+
+        Staff sta=(Staff)request.getSession().getAttribute("user");
+        logService.insertLog(BusinessConstants.LOG_MODULE_NAME_client,
+                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(", id: "+sta.getId()).toString(),
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         return result;
     }
 
