@@ -382,7 +382,6 @@ public class UserController {
             Integer storage1 = raw_materials_warehouseMapper.count_sum();
             Integer storage2 = product_warehouseMapper.count_sum();
             Integer sales = product_criteriaMapper.count_sum();
-
             Integer expired_sum=expired_foodMapper.count_sum();
             Integer expired_money=expired_foodMapper.money_sum();
             Integer payment_sum=paymentMapper.count_sum();

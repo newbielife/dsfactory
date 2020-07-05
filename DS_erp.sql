@@ -11,7 +11,7 @@
  Target Server Version : 50635
  File Encoding         : 65001
 
- Date: 03/07/2020 17:40:19
+ Date: 05/07/2020 10:44:00
 */
 
 SET NAMES utf8mb4;
@@ -138,7 +138,7 @@ CREATE TABLE `DS_log` (
   `tenant_id` bigint(20) DEFAULT NULL COMMENT '租户id',
   PRIMARY KEY (`id`),
   KEY `FKF2696AA13E226853` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7202 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=7207 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of DS_log
@@ -785,6 +785,11 @@ INSERT INTO `DS_log` VALUES (7198, 120, '收款', '127.0.0.1', '2019-12-18 15:34
 INSERT INTO `DS_log` VALUES (7199, 120, '退货单', '127.0.0.1', '2019-12-18 15:34:39', 0, '查询, id: 120退货单', '查询, id: 120退货单', NULL);
 INSERT INTO `DS_log` VALUES (7200, 120, '订单', '127.0.0.1', '2019-12-18 15:34:40', 0, '查询, id: 120订单', '查询, id: 120订单', NULL);
 INSERT INTO `DS_log` VALUES (7201, 120, '用户', '127.0.0.1', '2020-06-24 11:41:12', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (7202, 120, '用户', '127.0.0.1', '2020-07-03 18:25:12', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (7203, 120, '订单', '127.0.0.1', '2020-07-03 18:25:16', 0, '查询, id: 120订单', '查询, id: 120订单', NULL);
+INSERT INTO `DS_log` VALUES (7204, 120, '用户', '127.0.0.1', '2020-07-05 10:28:28', 0, '登录,id:120用户', '登录,id:120用户', NULL);
+INSERT INTO `DS_log` VALUES (7205, 120, '商品购买', '127.0.0.1', '2020-07-05 10:28:33', 0, '查询, id: 120商品购买', '查询, id: 120商品购买', NULL);
+INSERT INTO `DS_log` VALUES (7206, 120, '商品购买', '127.0.0.1', '2020-07-05 10:28:45', 0, '查询, id: 120商品购买', '查询, id: 120商品购买', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -1047,7 +1052,7 @@ CREATE TABLE `Manufacture_Design` (
   `Products_requirement` char(255) NOT NULL,
   `Details` char(255) NOT NULL,
   `flag` int(4) NOT NULL DEFAULT '0',
-  `Update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `Update_date` datetime COMMENT '创建时间',
   PRIMARY KEY (`Manufacture_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1077,7 +1082,7 @@ CREATE TABLE `Manufacture_Result` (
   `Staff_no_design` char(20) NOT NULL,
   `Staff_no_manufacture` char(255) NOT NULL,
   `Stock_no` char(20) NOT NULL,
-  `Update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `Update_date` datetime COMMENT '创建时间',
   `flag` int(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Manufacture_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1197,7 +1202,7 @@ CREATE TABLE `Order_Form` (
   `Liquidated_damages` int(255) NOT NULL DEFAULT '0' COMMENT '违约金',
   `Check` int(255) NOT NULL DEFAULT '0',
   `flag` int(4) NOT NULL DEFAULT '0',
-  `Update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `Update_date` datetime COMMENT '创建时间',
   PRIMARY KEY (`Order_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
